@@ -1,0 +1,22 @@
+.nav {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.link {
+  padding: 6px 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+.active {
+  background: var(--accent-weak);
+  outline: 1px solid var(--accent);
+  text-decoration: none;
+}
+@media (max-width: 640px){
+  .nav { gap: 12px; padding: 12px; }
+}
