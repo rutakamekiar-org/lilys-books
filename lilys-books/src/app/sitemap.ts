@@ -10,6 +10,5 @@ export default async function sitemap() {
     { url: `${base}/books`, lastModified: now },
     ...books.map((b) => ({ url: `${base}/books/${b.slug}`, lastModified: now })),
     { url: `${base}/about`, lastModified: now },
-    { url: `${base}/contact`, lastModified: now },
   ];
 }

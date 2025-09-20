@@ -11,6 +11,15 @@ export default function BookCard({ book }: { book: Book }) {
   return (
     <Link href={`/books/${book.slug}`} className={styles.card}>
       <div className={styles.thumb}>
+        {book.ageRating && (
+          <span
+            className={`${styles.ageBadge} ${styles["age" + book.ageRating.replace("+", "p")]}`}
+            aria-label={`Вікове обмеження: ${book.ageRating}`}
+            title={`Вікове обмеження: ${book.ageRating}`}
+          >
+            {book.ageRating}
+          </span>
+        )}
         <Image src={book.coverUrl} alt={book.title} width={240} height={360} />
       </div>
       <div className={styles.meta}>

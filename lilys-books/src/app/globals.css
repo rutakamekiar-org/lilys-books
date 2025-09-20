@@ -62,7 +62,18 @@ footer{
   padding: 18px 16px 40px;
   border-top:1px solid var(--border);
   color: var(--muted);
+  text-align: center;
 }
+
+/* Contacts */
+.visuallyHidden{ position:absolute !important; left:-9999px; width:1px; height:1px; overflow:hidden; }
+.socialLinks{
+  list-style:none; padding:0; margin:12px 0 10px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center;
+}
+.socialLinks a{
+  display:inline-block; padding:6px 10px; border:1px solid var(--border); border-radius:999px; background:var(--surface);
+}
+.socialLinks a:hover{ text-decoration:none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-weak) inset; }
 
 button{
   font: inherit;

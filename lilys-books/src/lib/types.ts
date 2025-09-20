@@ -1,5 +1,7 @@
 export type BookFormat = "paper" | "digital";
 
+export type AgeRating = "0+" | "6+" | "12+" | "16+" | "18+";
+
 export interface BookFormatInfo {
   type: BookFormat;
   price: number;
@@ -13,13 +15,13 @@ export interface Book {
   slug: string;
   title: string;
   author: string;
-  description: string;
   coverUrl: string; // absolute or /images/...
   rating?: { value: number; count: number; reviews: number };
   formats: BookFormatInfo[];
   links?: { goodreads?: string; amazon?: string };
-  excerptHtml?: string;
-  descriptionHtml?: string; // optional rich HTML description from static content
+  excerptHtml?: TrustedHTML;
+  descriptionHtml?: TrustedHTML; // optional rich HTML description from static content
+  ageRating?: AgeRating; // optional age rating label like "16+"
 }
 
 export interface CheckoutResponse {
