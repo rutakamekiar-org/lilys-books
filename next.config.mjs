@@ -10,10 +10,10 @@ const repo = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? '';
 const config = {
   output: 'export',
   basePath: isCI && repo ? `/${repo}` : '',
-  assetPrefix: isCI && repo ? `/${repo}/` : '',
+  // assetPrefix: isCI && repo ? `/${repo}/` : '',
   images: { unoptimized: true },
   env: {
-    NEXT_PUBLIC_BASE_PATH: isCI && repo ? `/${repo}` : '',
+    // NEXT_PUBLIC_BASE_PATH: isCI && repo ? `/${repo}` : '',
     NEXT_PUBLIC_BUILD_ID: process.env.GITHUB_SHA?.slice(0, 7) || String(Date.now()),
   },
 };
