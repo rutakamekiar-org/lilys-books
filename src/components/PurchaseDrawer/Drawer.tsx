@@ -13,6 +13,7 @@ export default function Drawer({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
+  const [touched, setTouched] = useState<{ email: boolean; phone: boolean }>({ email: false, phone: false });
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
@@ -27,6 +28,7 @@ export default function Drawer({
     if (open) {
       lastActiveEl.current = document.activeElement as HTMLElement;
       setErrors({});
+      setTouched({ email: false, phone: false });
       setLoading(false);
       if (format === "digital") {
         setTimeout(() => firstFieldRef.current?.focus(), 0);
@@ -58,6 +60,16 @@ export default function Drawer({
   const validEmail = useMemo(() => /^\S+@\S+\.\S+$/.test(email), [email]);
   const validPhone = useMemo(() => /^\+?\d{10,14}$/.test(phone), [phone]);
   const digitalValid = format === "paper" ? true : (validEmail && validPhone);
+
+  // Live validation feedback for digital inputs once fields are touched
+  useEffect(() => {
+    if (format !== "digital") return;
+    const next: { email?: string; phone?: string } = {};
+    if (touched.email && !validEmail) next.email = "Введіть дійсний email";
+    if (touched.phone && !validPhone) next.phone = "Введіть дійсний телефон (10–14 цифр, можна з +)";
+    setErrors(next);
+  }, [email, phone, validEmail, validPhone, touched, format]);
+
   const selected = useMemo(() => book.formats.find(f => f.type === format)!, [book, format]);
 
   if (!open) return null;
@@ -75,6 +87,7 @@ export default function Drawer({
       if (!validEmail) newErrors.email = "Введіть дійсний email";
       if (!validPhone) newErrors.phone = "Введіть дійсний телефон (10–14 цифр, можна з +)";
       if (newErrors.email || newErrors.phone) {
+        setTouched({ email: true, phone: true });
         setErrors(newErrors);
         setLoading(false);
         return;
@@ -118,6 +131,7 @@ export default function Drawer({
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onBlur={() => setTouched((t) => ({ ...t, email: true }))}
                   autoComplete="email"
                   aria-invalid={!!errors.email}
                   aria-describedby={errors.email ? "err-email" : undefined}
@@ -129,6 +143,7 @@ export default function Drawer({
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
                   autoComplete="tel"
                   placeholder="+380XXXXXXXXX"
                   aria-invalid={!!errors.phone}
