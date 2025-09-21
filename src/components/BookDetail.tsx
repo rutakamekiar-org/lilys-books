@@ -5,6 +5,7 @@ import type { Book, BookFormat } from "@/lib/types";
 import Drawer from "./PurchaseDrawer/Drawer";
 import styles from "./BookDetail.module.css";
 import GoodreadsRating from "./GoodreadsRating";
+import { addBasePath } from "@/lib/paths";
 
 export default function BookDetail({ book }: { book: Book }) {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,7 @@ export default function BookDetail({ book }: { book: Book }) {
     <section className={styles.wrap}>
       <div className={styles.grid}>
         <div className={styles.cover}>
-          <Image src={book.coverUrl} alt={book.title} width={320} height={480} />
+          <Image src={addBasePath(book.coverUrl)} alt={book.title} width={320} height={480} />
         </div>
         <div className={styles.content}>
           <h1 className={styles.titleRow}>

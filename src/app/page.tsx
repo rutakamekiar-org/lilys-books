@@ -83,7 +83,7 @@ export default async function HomePage() {
                   {featured.ageRating}
                 </span>
               )}
-              <Image src={featured.coverUrl} alt={featured.title} width={360} height={540} />
+              <Image src={addBasePath(featured.coverUrl)} alt={featured.title} width={360} height={540} />
             </>
           ) : (
             <Image src={addBasePath("/images/book.jpg")} alt="Обкладинка книги" width={360} height={540} />

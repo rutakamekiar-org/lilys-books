@@ -4,6 +4,7 @@ import Image from "next/image";
 import { createPaperCheckoutMock as createPaperCheckout, createDigitalInvoiceMock as createDigitalInvoice } from "@/lib/api.mock";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
+import { addBasePath } from "@/lib/paths";
 
 export default function Drawer({
   open, onClose, book, format,
@@ -133,13 +134,13 @@ export default function Drawer({
         {isPaper ? (
           <div className={styles.checkoutFooter}>
             <button className={styles.imageBtn} onClick={onPurchase} aria-label="Monobank Checkout" disabled={loading}>
-              <Image src="/images/monocheckout_button_black_normal.svg" alt="" width={200} height={60} />
+              <Image src={addBasePath("/images/monocheckout_button_black_normal.svg")} alt="" width={200} height={60} />
             </button>
           </div>
         ) : (
           <div className={styles.digitalCta}>
             <button className={styles.imageBtn} onClick={onPurchase} aria-label="Оплатити" disabled={loading || !digitalValid}>
-              <Image src="/images/plata_dark_bg.svg" alt="" width={150} height={40} />
+              <Image src={addBasePath("/images/plata_dark_bg.svg")} alt="" width={150} height={40} />
             </button>
           </div>
         )}
