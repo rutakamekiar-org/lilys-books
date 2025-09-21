@@ -19,20 +19,20 @@ export function addBasePath(urlOrPath: string): string {
   return urlOrPath;
 }
 
-// Adds basePath and appends a version query (?v=BUILD_ID) for cache-busting of pages/links.
-// This should be used for internal navigation links that point to HTML pages.
+// Appends a version query (?v=BUILD_ID) for cache-busting of pages/links.
+// Do NOT add basePath here because Next.js <Link> and routing already account for basePath.
+// Use this for internal navigation links that point to HTML pages.
 export function withCacheBust(path: string): string {
   if (!path) return path;
   // Keep absolute URLs as-is
   if (/^https?:\/\//i.test(path)) return path;
 
   const version = process.env.NEXT_PUBLIC_BUILD_ID || "";
-  const withBase = addBasePath(path);
 
-  // Only apply to root-relative paths ("/..."), otherwise return as-is
-  if (!withBase.startsWith("/")) return withBase;
-  if (!version) return withBase;
+  // Only apply to root-relative paths ("/...") and only when version is available
+  if (!version) return path;
+  if (!path.startsWith("/")) return path;
 
   // If a query already exists, append with &; otherwise add ?
-  return withBase.includes("?") ? `${withBase}&v=${encodeURIComponent(version)}` : `${withBase}?v=${encodeURIComponent(version)}`;
+  return path.includes("?") ? `${path}&v=${encodeURIComponent(version)}` : `${path}?v=${encodeURIComponent(version)}`;
 }
