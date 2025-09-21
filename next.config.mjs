@@ -12,6 +12,9 @@ const config = {
   basePath: isCI && repo ? `/${repo}` : '',
   assetPrefix: isCI && repo ? `/${repo}/` : '',
   images: { unoptimized: true },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isCI && repo ? `/${repo}` : '',
+  },
 };
 
 export default config;

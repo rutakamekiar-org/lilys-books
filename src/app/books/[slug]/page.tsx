@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getBookBySlugMock as getBookBySlug, getBooksMock as getBooks } from "@/lib/api.mock";
 import BookDetail from "@/components/BookDetail";
 import type { Book } from "@/lib/types";
+import { addBasePath } from "@/lib/paths";
 
  type Props = { params: Promise<{ slug: string }> };
 
@@ -22,11 +23,12 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const book = await getBookBySlug(slug).catch(() => null);
   if (!book) return { title: "Книга не знайдена" };
 
+  const coverUrl = addBasePath(book.coverUrl);
   return {
     title: `${book.title} — ${book.author}`,
     description: book.descriptionHtml?.toString(),
-    openGraph: { title: book.title, description: book.descriptionHtml?.toString(), images: [{ url: book.coverUrl }] },
-    alternates: { canonical: `/books/${book.slug}` },
+    openGraph: { title: book.title, description: book.descriptionHtml?.toString(), images: [{ url: coverUrl }] },
+    alternates: { canonical: addBasePath(`/books/${book.slug}`) },
   };
 }
 
@@ -39,7 +41,7 @@ export default async function BookPage(props: Props) {
     "@type": "Book",
     name: book.title,
     author: { "@type": "Person", name: book.author },
-    image: book.coverUrl,
+    image: addBasePath(book.coverUrl),
     description: stripTags(book.descriptionHtml?.toString() ?? ''),
     workExample: book.formats.map((f: Book["formats"][number]) => ({
       "@type": "Book",
