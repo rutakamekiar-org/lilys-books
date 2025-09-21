@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Book } from "@/lib/types";
 import styles from "./BookCard.module.css";
+import {addBasePath} from "@/lib/paths";
 
 export default function BookCard({ book }: { book: Book }) {
   const available = book.formats.filter(f => f.available);
@@ -20,7 +21,7 @@ export default function BookCard({ book }: { book: Book }) {
             {book.ageRating}
           </span>
         )}
-        <Image src={book.coverUrl} alt={book.title} width={240} height={360} />
+        <Image src={addBasePath(book.coverUrl)} alt={book.title} width={240} height={360} />
       </div>
       <div className={styles.meta}>
         <h3>{book.title}</h3>
