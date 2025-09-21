@@ -1,7 +1,6 @@
-import type { NextConfig } from "next";
+// This file is intentionally minimal. The project uses next.config.mjs as the
+// single source of truth (configured for GitHub Pages static export).
+// Keeping this file avoids tooling errors when TypeScript expects a TS config.
+// Next.js will prefer next.config.mjs when both exist.
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+export default {} as const;
