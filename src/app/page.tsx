@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { getBooksMock } from "@/lib/api.mock";
 import GoodreadsRating from "@/components/GoodreadsRating";
-import {addBasePath} from "@/lib/paths";
+import {addBasePath, withCacheBust} from "@/lib/paths";
 
 export const metadata: Metadata = {
   title: "Лілія Кухарець — офіційний сайт",
@@ -59,14 +59,14 @@ export default async function HomePage() {
               )}
 
               <div className={styles.actions}>
-                <Link href={`/books/${featured.slug}`} className={styles.cta}>Детальніше</Link>
-                <Link href="/books" className={styles.secondary}>Перейти до каталогу</Link>
+                <Link href={withCacheBust(`/books/${featured.slug}`)} className={styles.cta}>Детальніше</Link>
+                <Link href={withCacheBust("/books")} className={styles.secondary}>Перейти до каталогу</Link>
               </div>
             </>
           ) : (
             <div className={styles.actions}>
-              <Link href="/books" className={styles.cta}>Перейти до каталогу</Link>
-              <Link href="/about" className={styles.secondary}>Про мене</Link>
+              <Link href={withCacheBust("/books")} className={styles.cta}>Перейти до каталогу</Link>
+              <Link href={withCacheBust("/about")} className={styles.secondary}>Про мене</Link>
             </div>
           )}
         </div>

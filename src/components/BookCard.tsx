@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Book } from "@/lib/types";
 import styles from "./BookCard.module.css";
-import {addBasePath} from "@/lib/paths";
+import {addBasePath, withCacheBust} from "@/lib/paths";
 
 export default function BookCard({ book }: { book: Book }) {
   const available = book.formats.filter(f => f.available);
   const minPrice = available.length ? Math.min(...available.map(f => f.price)) : null;
 
   return (
-    <Link href={`/books/${book.slug}`} className={styles.card}>
+    <Link href={withCacheBust(`/books/${book.slug}`)} className={styles.card}>
       <div className={styles.thumb}>
         {book.ageRating && (
           <span
