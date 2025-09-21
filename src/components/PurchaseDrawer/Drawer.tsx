@@ -58,6 +58,7 @@ export default function Drawer({
   const validEmail = useMemo(() => /^\S+@\S+\.\S+$/.test(email), [email]);
   const validPhone = useMemo(() => /^\+?\d{10,14}$/.test(phone), [phone]);
   const digitalValid = format === "paper" ? true : (validEmail && validPhone);
+  const selected = useMemo(() => book.formats.find(f => f.type === format), [book, format]);
 
   if (!open) return null;
 
@@ -91,7 +92,10 @@ export default function Drawer({
     <div className={styles.overlay} aria-modal="true" role="dialog" aria-label="Оформлення замовлення" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className={styles.sheet} ref={dialogRef}>
         <header className={styles.header}>
-          <h3>{book.title} — {isPaper ? "Паперова" : "Електронна"}</h3>
+          <h3>
+            {book.title} — {isPaper ? "Паперова" : "Електронна"}
+            {selected?.price != null ? ` • ${selected.price} грн` : ""}
+          </h3>
           <button onClick={onClose} aria-label="Закрити" className={styles.close}>×</button>
         </header>
 
