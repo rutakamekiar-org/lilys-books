@@ -5,6 +5,7 @@ import type { Book, BookFormat } from "@/lib/types";
 import Drawer from "./PurchaseDrawer/Drawer";
 import styles from "./BookDetail.module.css";
 import GoodreadsRating from "./GoodreadsRating";
+import grStyles from "./GoodreadsRating.module.css";
 import { addBasePath } from "@/lib/paths";
 
 export default function BookDetail({ book }: { book: Book }) {
@@ -17,6 +18,19 @@ export default function BookDetail({ book }: { book: Book }) {
       <div className={styles.grid}>
         <div className={styles.cover}>
           <Image src={addBasePath(book.coverUrl)} alt={book.title} width={320} height={480} />
+          {book.links?.goodreads && (
+            <a
+              className={`${grStyles.btn} ${grStyles.btnGoodreads}`}
+              href={book.links.goodreads}
+              target="_blank"
+              rel="noopener"
+              aria-label="Перейти на сторінку книги на Goodreads"
+              style={{ marginTop: 12, display: "flex", width: "100%", justifyContent: "center" }}
+            >
+              <i className="fa-brands fa-goodreads" aria-hidden="true"></i>
+              <span>Відгуки на Goodreads</span>
+            </a>
+          )}
         </div>
         <div className={styles.content}>
           <h1 className={styles.titleRow}>
@@ -38,6 +52,7 @@ export default function BookDetail({ book }: { book: Book }) {
               ratingCount={book.rating.count}
               reviewCount={book.rating.reviews}
               url={book.links?.goodreads}
+              compact
             />
           )}
 
