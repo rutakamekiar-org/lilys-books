@@ -1,6 +1,9 @@
 import type { MetadataRoute } from "next";
 import { addBasePath } from "@/lib/paths";
 
+// Ensure static generation for static HTML export
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Lily’s Books",
@@ -16,13 +19,13 @@ export default function manifest(): MetadataRoute.Manifest {
         src: addBasePath("/icons/web-app-manifest-192x192.png"),
         sizes: "192x192",
         type: "image/png",
-        purpose: "any maskable",
+        purpose: "maskable",
       },
       {
         src: addBasePath("/icons/web-app-manifest-512x512.png"),
         sizes: "512x512",
         type: "image/png",
-        purpose: "any maskable",
+        purpose: "maskable",
       },
     ],
   };
