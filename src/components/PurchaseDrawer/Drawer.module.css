@@ -14,6 +14,8 @@
   border-radius: 14px;
   box-shadow: 0 18px 40px rgba(0,0,0,.16);
   border: 1px solid var(--border);
+  position: relative; /* for top progress bar positioning */
+  z-index: 100; /* raise sheet above any surrounding elements */
 }
 .header {
   display: flex;
@@ -114,6 +116,32 @@
   display: block;
 }
 
+
+@keyframes progressSlide {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+.topProgress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  overflow: hidden;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  z-index: 1000; /* ensure it renders above header and any inner elements */
+  pointer-events: none; /* do not block clicks */
+  background: rgba(240, 155, 48, 0.25); /* subtle track for contrast */
+}
+.topProgressInner {
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff8a00, #ffd86b);
+  animation: progressSlide 0.9s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(255, 180, 50, 0.7), 0 0 4px rgba(255, 180, 50, 0.8) inset; /* glow */
+}
 
 @media (max-width: 480px){
   .content{ padding: 12px; }

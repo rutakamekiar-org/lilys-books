@@ -2,28 +2,43 @@ import type { CheckoutResponse } from "./types";
 
 const API_URL = "https://spicy-avrit-kukharets-021c9f66.koyeb.app";
 
+interface ApiErrorDetails {
+  title?: string;
+  errors?: Record<string, string[]>;
+  [key: string]: unknown;
+}
+
+interface ApiError extends Error {
+  details?: ApiErrorDetails;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
 async function handleApi<T = CheckoutResponse>(res: Response): Promise<T> {
-  let data: any = null;
+  let data: unknown = null;
   try {
     data = await res.json();
   } catch {
     // ignore JSON parse errors
   }
   if (!res.ok) {
-    const title = data?.title || `Request failed with ${res.status}`;
-    const err = new Error(title) as Error & { details?: any };
-    err.details = data;
+    const title = (isRecord(data) && typeof data.title === "string")
+      ? data.title
+      : `Request failed with ${res.status}`;
+    const err: ApiError = new Error(title);
+    err.details = isRecord(data) ? (data as ApiErrorDetails) : undefined;
     throw err;
   }
   return data as T;
 }
 
 export async function createPaperCheckout(_bookId: string, _quantity: number = 1): Promise<CheckoutResponse> {
-  void _bookId; void _quantity; // current API doesn't use these params
+  void _bookId; void _quantity; // the current API doesn't use these params
   const res = await fetch(`${API_URL}/api/checkout`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    // no body as per legacy script
   });
   return handleApi<CheckoutResponse>(res);
 }

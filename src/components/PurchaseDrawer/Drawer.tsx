@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
-import { createPaperCheckout, createDigitalInvoice } from "@/lib/api";
+import {createDigitalInvoice, createPaperCheckout} from "@/lib/api";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
@@ -94,16 +94,26 @@ export default function Drawer({
       }
       const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() });
       window.location.href = res.redirectUrl;
-    } catch (err: any) {
+    } catch (err: unknown) {
       setLoading(false);
-      const details = err?.details;
-      if (details?.errors) {
-        const e = details.errors as Record<string, string[]>;
-        if (e.CustomerEmail?.[0]) alert("Будь ласка, введіть дійсну адресу електронної пошти.");
-        else if (e.CustomerPhone?.[0]) alert("Будь ласка, введіть дійсний номер телефону.");
-        else alert(e[Object.keys(e)[0]]?.[0] || err.message || "Виникла помилка.");
+      type ErrorDetails = { errors?: Record<string, string[]> };
+      const message = err instanceof Error ? err.message : undefined;
+      const details: ErrorDetails | undefined =
+        typeof err === "object" && err !== null && "details" in err
+          ? (err as { details?: ErrorDetails }).details
+          : undefined;
+      const errs = details?.errors;
+      if (errs) {
+        if (errs.CustomerEmail?.[0]) {
+          alert("Будь ласка, введіть дійсну адресу електронної пошти.");
+        } else if (errs.CustomerPhone?.[0]) {
+          alert("Будь ласка, введіть дійсний номер телефону.");
+        } else {
+          const firstKey = Object.keys(errs)[0];
+          alert((firstKey ? errs[firstKey]?.[0] : undefined) || message || "Виникла помилка.");
+        }
       } else {
-        alert(err?.message || "Сервер зараз недоступний. Спробуйте пізніше.");
+        alert(message || "Сервер зараз недоступний. Спробуйте пізніше.");
       }
     }
   };
@@ -112,7 +122,12 @@ export default function Drawer({
 
   return (
     <div className={styles.overlay} aria-modal="true" role="dialog" aria-label="Оформлення замовлення" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className={styles.sheet} ref={dialogRef}>
+      <div className={styles.sheet} ref={dialogRef} aria-busy={loading || undefined}>
+        {loading && (
+          <div className={styles.topProgress} aria-hidden="true">
+            <div className={styles.topProgressInner} />
+          </div>
+        )}
         <header className={styles.header}>
           <h3>
             {book.title} — {isPaper ? "Паперова" : "Електронна"}
