@@ -7,7 +7,7 @@ export interface BookFormatInfo {
   price: number;
   currency: "UAH";
   available: boolean;
-  productId?: string; // needed for digital
+  productId: string;
 }
 
 export interface Book {

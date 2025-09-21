@@ -11,8 +11,8 @@ const mockBooks: Book[] = [
     coverUrl: "/images/book.jpg", // put any placeholder into public/images
     rating: { value: 4.6, count: 51, reviews: 39 },
     formats: [
-      { type: "paper", price: 350, currency: "UAH", available: true },
-      { type: "digital", price: 200, currency: "UAH", available: true, productId: "mock-product-id" },
+      { type: "paper", price: 350, currency: "UAH", available: true, productId: "test" },
+      { type: "digital", price: 200, currency: "UAH", available: true, productId: "c1f3c4a6-f4b1-4351-9b83-5b4b4be48896" },
     ],
     links: { goodreads: "https://www.goodreads.com/book/show/231547139" },
     ageRating: "16+",
@@ -24,7 +24,7 @@ const mockBooks: Book[] = [
     author: "Лілія Кухарець",
     coverUrl: "/images/book2.jpg",
     formats: [
-      { type: "paper", price: 380, currency: "UAH", available: false },
+      { type: "paper", price: 380, currency: "UAH", available: false, productId: "mock-product-2-paper" },
       { type: "digital", price: 220, currency: "UAH", available: true, productId: "mock-product-2" },
     ],
     ageRating: "18+",

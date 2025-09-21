@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
-import { createPaperCheckoutMock as createPaperCheckout, createDigitalInvoiceMock as createDigitalInvoice } from "@/lib/api.mock";
+import { createPaperCheckout, createDigitalInvoice } from "@/lib/api";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
@@ -58,7 +58,7 @@ export default function Drawer({
   const validEmail = useMemo(() => /^\S+@\S+\.\S+$/.test(email), [email]);
   const validPhone = useMemo(() => /^\+?\d{10,14}$/.test(phone), [phone]);
   const digitalValid = format === "paper" ? true : (validEmail && validPhone);
-  const selected = useMemo(() => book.formats.find(f => f.type === format), [book, format]);
+  const selected = useMemo(() => book.formats.find(f => f.type === format)!, [book, format]);
 
   if (!open) return null;
 
@@ -79,10 +79,19 @@ export default function Drawer({
         setLoading(false);
         return;
       }
-      const res = await createDigitalInvoice({ productId: "mock", customerEmail: email.trim(), customerPhone: phone.trim() });
+      const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() });
       window.location.href = res.redirectUrl;
-    } catch {
+    } catch (err: any) {
       setLoading(false);
+      const details = err?.details;
+      if (details?.errors) {
+        const e = details.errors as Record<string, string[]>;
+        if (e.CustomerEmail?.[0]) alert("Будь ласка, введіть дійсну адресу електронної пошти.");
+        else if (e.CustomerPhone?.[0]) alert("Будь ласка, введіть дійсний номер телефону.");
+        else alert(e[Object.keys(e)[0]]?.[0] || err.message || "Виникла помилка.");
+      } else {
+        alert(err?.message || "Сервер зараз недоступний. Спробуйте пізніше.");
+      }
     }
   };
 
