@@ -31,8 +31,8 @@ export default async function HomePage() {
     <section className={styles.hero}>
       <div className={styles.heroInner}>
         <div className={styles.copy}>
-          <h1>Вітаю! Я — Лілія Кухарець</h1>
-          <p>Авторка романів. Тут ви можете дізнатися більше та придбати мої книги.</p>
+          <h1>«Звичайна»</h1>
+          <p>постапокаліптичний ромком</p>
 
           {featured && (
             <>
