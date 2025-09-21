@@ -134,7 +134,7 @@ export default function Drawer({
         {isPaper ? (
           <div className={styles.checkoutFooter}>
             <button className={styles.imageBtn} onClick={onPurchase} aria-label="Monobank Checkout" disabled={loading}>
-              <Image src={addBasePath("/images/monocheckout_button_black_normal.svg")} alt="" width={200} height={60} />
+              <Image src={addBasePath("/images/monocheckout_button_black_normal.svg")} alt="" width={398} height={56} />
             </button>
           </div>
         ) : (
