@@ -1,5 +1,6 @@
 "use client";
 import styles from "./GoodreadsRating.module.css";
+import type { CSSProperties } from "react";
 
 type Props = {
   value: number;           // e.g., 4.55
@@ -9,6 +10,9 @@ type Props = {
   compact?: boolean;       // optional compact layout
 };
 
+// Extend CSSProperties to allow our CSS variable without using `any`.
+type StarStyle = CSSProperties & { ["--rating"]?: number };
+
 export default function GoodreadsRating({
   value,
   ratingCount,
@@ -17,7 +21,7 @@ export default function GoodreadsRating({
   compact,
 }: Props) {
   const aria = `Середня оцінка ${value} з 5 на Goodreads, ${ratingCount} оцінок, ${reviewCount} рецензій`;
-  const starStyle = { ["--rating" as any]: value } as React.CSSProperties;
+  const starStyle: StarStyle = { ["--rating"]: value };
 
   return (
     <div className={styles.row}>

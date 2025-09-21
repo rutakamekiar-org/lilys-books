@@ -3,7 +3,6 @@ import { Book, CheckoutResponse } from "./types";
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE!;
 if (!API_BASE) {
   // Helps during local dev if env is missing
-  // eslint-disable-next-line no-console
   console.warn("NEXT_PUBLIC_API_BASE is not set. Set it in .env.local");
 }
 
@@ -23,9 +22,15 @@ async function apiPost<T>(path: string, body: unknown): Promise<T> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body ?? {}),
   });
-  const data = (await res.json().catch(() => null)) as any;
+  let data: unknown = null;
+  try {
+    data = await res.json();
+  } catch {
+    data = null;
+  }
   if (!res.ok) {
-    const message = data?.title || data?.message || `POST ${path} failed`;
+    const maybeObj = (data && typeof data === "object") ? (data as { title?: string; message?: string }) : null;
+    const message = maybeObj?.title || maybeObj?.message || `POST ${path} failed`;
     throw new Error(message);
   }
   return data as T;

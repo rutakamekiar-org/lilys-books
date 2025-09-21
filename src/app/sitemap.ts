@@ -1,5 +1,7 @@
 import { getBooksMock as getBooks } from "@/lib/api.mock";
 
+export const dynamic = "force-static";
+
 export default async function sitemap() {
   const base = process.env.NEXT_PUBLIC_SITE_BASE ?? "http://localhost:3000";
   const books = await getBooks().catch(() => []);

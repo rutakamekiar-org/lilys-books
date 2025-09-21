@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { getBookBySlugMock as getBookBySlug, getBooksMock as getBooks } from "@/lib/api.mock";
 import BookDetail from "@/components/BookDetail";
+import type { Book } from "@/lib/types";
 
- type Props = { params: { slug: string } };
+ type Props = { params: Promise<{ slug: string }> };
 
 function stripTags(html: string): string {
   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
@@ -12,12 +13,13 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const books = await getBooks().catch(() => [] as any[]);
-  return books.map((b: any) => ({ slug: b.slug }));
+  const books = await getBooks().catch(() => [] as Book[]);
+  return books.map((b: Book) => ({ slug: b.slug }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const book = await getBookBySlug(params.slug).catch(() => null);
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { slug } = await props.params;
+  const book = await getBookBySlug(slug).catch(() => null);
   if (!book) return { title: "Книга не знайдена" };
 
   return {
@@ -28,8 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BookPage({ params }: Props) {
-  const book = await getBookBySlug(params.slug);
+export default async function BookPage(props: Props) {
+  const { slug } = await props.params;
+  const book = await getBookBySlug(slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -38,7 +41,7 @@ export default async function BookPage({ params }: Props) {
     author: { "@type": "Person", name: book.author },
     image: book.coverUrl,
     description: stripTags(book.descriptionHtml?.toString() ?? ''),
-    workExample: book.formats.map((f: any) => ({
+    workExample: book.formats.map((f: Book["formats"][number]) => ({
       "@type": "Book",
       bookFormat: f.type === "paper" ? "https://schema.org/PrintBook" : "https://schema.org/EBook",
       offers: {
