@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { getBooksMock } from "@/lib/api.mock";
 import GoodreadsRating from "@/components/GoodreadsRating";
+import {addBasePath} from "@/lib/paths";
 
 export const metadata: Metadata = {
   title: "Лілія Кухарець — офіційний сайт",
@@ -85,7 +86,7 @@ export default async function HomePage() {
               <Image src={featured.coverUrl} alt={featured.title} width={360} height={540} />
             </>
           ) : (
-            <Image src="/images/book.jpg" alt="Обкладинка книги" width={360} height={540} />
+            <Image src={addBasePath("/images/book.jpg")} alt="Обкладинка книги" width={360} height={540} />
           )}
         </div>
       </div>
