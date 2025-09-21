@@ -27,7 +27,6 @@ export default async function HomePage() {
     const available = featured.formats.filter(f => f.available);
     const minPrice = available.length ? Math.min(...available.map(f => f.price)) : null;
 
-
     return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>

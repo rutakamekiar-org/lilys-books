@@ -3,6 +3,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Contacts from "@/components/Contacts";
 import { addBasePath } from "@/lib/paths";
+import ClarityInit from "@/components/ClarityInit";
 
 export const metadata: Metadata = {
   title: "Lily’s Books",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ></script>
       </head>
       <body>
+        <ClarityInit />
         <header>
           <NavBar />
         </header>
