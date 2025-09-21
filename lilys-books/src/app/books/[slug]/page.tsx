@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { getBookBySlugMock as getBookBySlug } from "@/lib/api.mock";
+import { getBookBySlugMock as getBookBySlug, getBooksMock as getBooks } from "@/lib/api.mock";
 import BookDetail from "@/components/BookDetail";
 
-type Props = { params: { slug: string } };
+ type Props = { params: { slug: string } };
 
 function stripTags(html: string): string {
   return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const books = await getBooks().catch(() => [] as any[]);
+  return books.map((b: any) => ({ slug: b.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -19,8 +27,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: { canonical: `/books/${book.slug}` },
   };
 }
-
-export const revalidate = 120;
 
 export default async function BookPage({ params }: Props) {
   const book = await getBookBySlug(params.slug);

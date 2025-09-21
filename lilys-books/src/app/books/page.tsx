@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Перегляньте всі доступні книги та оберіть паперовий або електронний формат.",
 };
 
-export const revalidate = 300;
+export const dynamic = "force-static";
 
 export default async function BooksPage() {
   const books = await getBooks().catch(() => []);
