@@ -46,6 +46,7 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   background: #fff;
+  color: var(--text);
 }
 .cta {
   padding: 12px 16px;
