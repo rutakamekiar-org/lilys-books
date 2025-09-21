@@ -129,9 +129,11 @@ export default function Drawer({
           </div>
         )}
         <header className={styles.header}>
-          <h3>
-            {book.title} — {isPaper ? "Паперова" : "Електронна"}
-            {selected?.price != null ? ` • ${selected.price} грн` : ""}
+          <h3 className={styles.headerTitle}>
+            <span className={styles.titleMain}>{book.title} — {isPaper ? "Паперова" : "Електронна"}</span>
+            {selected?.price != null && (
+              <span className={styles.price}>{`${selected.price} грн`}</span>
+            )}
           </h3>
           <button onClick={onClose} aria-label="Закрити" className={styles.close}>×</button>
         </header>
