@@ -97,4 +97,6 @@
   .stars { --star-size: 18px; }
   .value { font-size: 1rem; }
   .meta { font-size: 0.9rem; }
+  .row { grid-auto-flow: row; grid-auto-columns: 1fr; }
+  .btn { width: 100%; justify-content: center; }
 }

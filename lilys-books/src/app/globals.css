@@ -88,4 +88,6 @@ button{
 @media (max-width: 640px){
   main{ padding: 16px 12px 28px; }
   header nav{ padding: 12px; gap:14px; }
+  .socialLinks{ gap: 12px; }
+  .socialLinks a{ padding: 10px 14px; }
 }

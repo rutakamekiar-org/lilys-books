@@ -5,12 +5,18 @@
   display: flex;
   gap: 20px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .link {
-  padding: 6px 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 10px;
   border-radius: 8px;
   text-decoration: none;
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 .active {
   background: var(--accent-weak);
@@ -18,5 +24,6 @@
   text-decoration: none;
 }
 @media (max-width: 640px){
-  .nav { gap: 12px; padding: 12px; }
+  .nav { gap: 12px; padding: 12px; justify-content: center; }
+  .link { min-height: 40px; padding: 8px 12px; }
 }

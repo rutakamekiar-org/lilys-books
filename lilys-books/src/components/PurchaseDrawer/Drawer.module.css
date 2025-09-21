@@ -28,6 +28,12 @@
   border: 0;
   font-size: 22px;
   cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+}
+.close:focus-visible{
+  outline: 3px solid rgba(240,155,48,0.35);
+  outline-offset: 2px;
 }
 .content {
   padding: 16px;
@@ -105,4 +111,9 @@
 .digitalCta img,
 .checkoutFooter img{
   display: block;
+}
+
+
+@media (max-width: 480px){
+  .content{ padding: 12px; }
 }
