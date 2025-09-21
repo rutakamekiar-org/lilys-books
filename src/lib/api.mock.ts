@@ -17,18 +17,18 @@ const mockBooks: Book[] = [
     links: { goodreads: "https://www.goodreads.com/book/show/231547139" },
     ageRating: "16+",
   },
-  {
-    id: "book-ordinary-2",
-    slug: "zvychajna-2",
-    title: "Звичайна 2",
-    author: "Лілія Кухарець",
-    coverUrl: "/images/book2.jpg",
-    formats: [
-      { type: "paper", price: 380, currency: "UAH", available: false, productId: "mock-product-2-paper" },
-      { type: "digital", price: 220, currency: "UAH", available: true, productId: "mock-product-2" },
-    ],
-    ageRating: "18+",
-  },
+  // {
+  //   id: "book-ordinary-2",
+  //   slug: "zvychajna-2",
+  //   title: "Звичайна 2",
+  //   author: "Лілія Кухарець",
+  //   coverUrl: "/images/book2.jpg",
+  //   formats: [
+  //     { type: "paper", price: 380, currency: "UAH", available: false, productId: "mock-product-2-paper" },
+  //     { type: "digital", price: 220, currency: "UAH", available: true, productId: "mock-product-2" },
+  //   ],
+  //   ageRating: "18+",
+  // },
 ];
 
 function withContent(book: Book): Book {
