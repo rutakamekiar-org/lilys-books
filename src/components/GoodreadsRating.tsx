@@ -25,13 +25,30 @@ export default function GoodreadsRating({
 
   return (
     <div className={styles.row}>
-      <div className={styles.rating} aria-label={aria}>
-        <span className={styles.stars} style={starStyle} aria-hidden="true" />
-        <span className={styles.value} aria-hidden="true">{value.toFixed(2)}</span>
-        <span className={styles.meta} aria-hidden="true">
-          {ratingCount}&nbsp;оцінок · {reviewCount}&nbsp;рецензій
-        </span>
-      </div>
+      {url ? (
+        <a
+          className={styles.rating}
+          href={url}
+          target="_blank"
+          rel="noopener"
+          aria-label={aria + '. Натисніть, щоб відкрити сторінку на Goodreads у новій вкладці.'}
+          title="Відкрити на Goodreads"
+        >
+          <span className={styles.stars} style={starStyle} aria-hidden="true" />
+          <span className={styles.value} aria-hidden="true">{value.toFixed(2)}</span>
+          <span className={styles.meta} aria-hidden="true">
+            {ratingCount}{'\u00A0'}оцінок · {reviewCount}{'\u00A0'}рецензій
+          </span>
+        </a>
+      ) : (
+        <div className={styles.rating} aria-label={aria}>
+          <span className={styles.stars} style={starStyle} aria-hidden="true" />
+          <span className={styles.value} aria-hidden="true">{value.toFixed(2)}</span>
+          <span className={styles.meta} aria-hidden="true">
+            {ratingCount}{'\u00A0'}оцінок · {reviewCount}{'\u00A0'}рецензій
+          </span>
+        </div>
+      )}
       {url && !compact && (
         <a
           className={`${styles.btn} ${styles.btnGoodreads}`}
