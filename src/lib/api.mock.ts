@@ -8,7 +8,7 @@ const mockBooks: Book[] = [
     slug: "zvychajna",
     title: "Звичайна",
     author: "Лілія Кухарець",
-    coverUrl: "/images/book.jpg",
+    coverUrl: "/images/book.webp",
     rating: { value: 4.54, count: 52, reviews: 40 },
     formats: [
       { type: "paper", price: 350, currency: "UAH", available: true, productId: "test" },
