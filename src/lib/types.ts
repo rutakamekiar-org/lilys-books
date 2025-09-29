@@ -16,7 +16,6 @@ export interface Book {
   title: string;
   author: string;
   coverUrl: string; // absolute or /images/...
-  rating?: { value: number; count: number; reviews: number };
   formats: BookFormatInfo[];
   links?: { goodreads?: string; amazon?: string };
   excerptHtml?: TrustedHTML;

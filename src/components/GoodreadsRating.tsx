@@ -1,27 +1,47 @@
 "use client";
 import styles from "./GoodreadsRating.module.css";
-import type { CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
+import { getGoodreadsRating, type GoodreadsRatingData } from "@/lib/api";
 
-type Props = {
-  value: number;           // e.g., 4.55
-  ratingCount: number;     // e.g., 51
-  reviewCount: number;     // e.g., 39
-  url?: string;            // Goodreads page URL
-  compact?: boolean;       // optional compact layout
+// Component now fetches Goodreads data itself
+// Props: bookId to fetch; component builds Goodreads URL from externalId; compact to hide the extra button
+ type Props = {
+  bookId: string;
+  compact?: boolean;
 };
 
 // Extend CSSProperties to allow our CSS variable without using `any`.
-type StarStyle = CSSProperties & { ["--rating"]?: number };
+ type StarStyle = CSSProperties & { ["--rating"]?: number };
 
-export default function GoodreadsRating({
-  value,
-  ratingCount,
-  reviewCount,
-  url,
-  compact,
-}: Props) {
-  const aria = `Середня оцінка ${value} з 5 на Goodreads, ${ratingCount} оцінок, ${reviewCount} рецензій`;
-  const starStyle: StarStyle = { ["--rating"]: value };
+export default function GoodreadsRating({ bookId, compact }: Props) {
+  const [data, setData] = useState<GoodreadsRatingData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setError(null);
+    setData(null);
+    if (!bookId) return;
+
+    getGoodreadsRating(bookId)
+      .then((d) => {
+        if (!cancelled) setData(d);
+      })
+      .catch(() => {
+        if (!cancelled) setError("load_failed");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [bookId]);
+
+  // If failed or no data, render nothing as per requirements
+  if (!data || error) return null;
+
+  const aria = `Середня оцінка ${data.value} з 5 на Goodreads, ${data.count} оцінок, ${data.reviews} рецензій`;
+  const starStyle: StarStyle = { ["--rating"]: data.value };
+  const url = data.externalId ? `https://www.goodreads.com/book/show/${data.externalId}` : undefined;
 
   return (
     <div className={styles.row}>
@@ -35,17 +55,17 @@ export default function GoodreadsRating({
           title="Відкрити на Goodreads"
         >
           <span className={styles.stars} style={starStyle} aria-hidden="true" />
-          <span className={styles.value} aria-hidden="true">{value.toFixed(2)}</span>
+          <span className={styles.value} aria-hidden="true">{data.value.toFixed(2)}</span>
           <span className={styles.meta} aria-hidden="true">
-            {ratingCount}{'\u00A0'}оцінок · {reviewCount}{'\u00A0'}рецензій
+            {data.count}{'\u00A0'}оцінок · {data.reviews}{'\u00A0'}рецензій
           </span>
         </a>
       ) : (
         <div className={styles.rating} aria-label={aria}>
           <span className={styles.stars} style={starStyle} aria-hidden="true" />
-          <span className={styles.value} aria-hidden="true">{value.toFixed(2)}</span>
+          <span className={styles.value} aria-hidden="true">{data.value.toFixed(2)}</span>
           <span className={styles.meta} aria-hidden="true">
-            {ratingCount}{'\u00A0'}оцінок · {reviewCount}{'\u00A0'}рецензій
+            {data.count}{'\u00A0'}оцінок · {data.reviews}{'\u00A0'}рецензій
           </span>
         </div>
       )}

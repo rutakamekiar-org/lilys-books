@@ -59,3 +59,65 @@ export async function createDigitalInvoice(params: {
   });
   return handleApi<CheckoutResponse>(res);
 }
+
+// Goodreads ratings
+export interface GoodreadsRatingData {
+  value: number;
+  count: number;
+  reviews: number;
+  externalId?: string;
+}
+
+interface ExternalRatingDto {
+  id: string;
+  bookId: string;
+  source: string; // "Goodreads"
+  externalId: string;
+  averageRating: number;
+  ratingsCount: number;
+  reviewsCount: number;
+  snapshotAtUtc: string;
+}
+
+// In-memory cache and in-flight de-duplication to avoid double fetches (e.g., React StrictMode)
+const GR_TTL_MS = 5 * 60 * 1000; // 5 minutes
+const grCache = new Map<string, { ts: number; data: GoodreadsRatingData }>();
+const grInFlight = new Map<string, Promise<GoodreadsRatingData>>();
+
+export async function getGoodreadsRating(bookId: string): Promise<GoodreadsRatingData> {
+  if (!bookId) throw new Error("bookId is required");
+
+  // Serve from cache if fresh
+  const cached = grCache.get(bookId);
+  const now = Date.now();
+  if (cached && now - cached.ts < GR_TTL_MS) {
+    return cached.data;
+  }
+
+  // Return existing in-flight request if present
+  const inflight = grInFlight.get(bookId);
+  if (inflight) return inflight;
+
+  const promise = (async () => {
+    const res = await fetch(`${API_URL}/api/ratings/${bookId}`, { cache: "no-store" });
+    const data = await handleApi<ExternalRatingDto>(res);
+    if (data?.source !== "Goodreads" || typeof data.averageRating !== "number") {
+      throw new Error("Invalid rating source");
+    }
+    const normalized: GoodreadsRatingData = {
+      value: data.averageRating,
+      count: data.ratingsCount ?? 0,
+      reviews: data.reviewsCount ?? 0,
+      externalId: data.externalId,
+    };
+    grCache.set(bookId, { ts: Date.now(), data: normalized });
+    return normalized;
+  })();
+
+  grInFlight.set(bookId, promise);
+  try {
+    return await promise;
+  } finally {
+    grInFlight.delete(bookId);
+  }
+}

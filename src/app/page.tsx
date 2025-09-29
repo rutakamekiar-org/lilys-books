@@ -37,14 +37,9 @@ export default async function HomePage() {
           {featured && (
             <>
               {/* Goodreads rating for featured */}
-              {featured.rating && (
-                <GoodreadsRating
-                  value={featured.rating.value}
-                  ratingCount={featured.rating.count}
-                  reviewCount={featured.rating.reviews}
-                  url={featured.links?.goodreads}
-                />
-              )}
+              <GoodreadsRating
+                bookId={featured.id}
+              />
 
               {featured.descriptionHtml && (
                 <div
