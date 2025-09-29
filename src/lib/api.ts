@@ -80,7 +80,7 @@ interface ExternalRatingDto {
 }
 
 // In-memory cache and in-flight de-duplication to avoid double fetches (e.g., React StrictMode)
-const GR_TTL_MS = 5 * 60 * 1000; // 5 minutes
+const GR_TTL_MS = 60 * 60 * 1000; // 1 hour
 const grCache = new Map<string, { ts: number; data: GoodreadsRatingData }>();
 const grInFlight = new Map<string, Promise<GoodreadsRatingData>>();
 
@@ -99,7 +99,8 @@ export async function getGoodreadsRating(bookId: string): Promise<GoodreadsRatin
   if (inflight) return inflight;
 
   const promise = (async () => {
-    const res = await fetch(`${API_URL}/api/ratings/${bookId}`, { cache: "no-store" });
+    // Allow browser HTTP cache to store and reuse response up to server policy; our in-memory TTL is 1 hour
+    const res = await fetch(`${API_URL}/api/ratings/${bookId}`, { cache: "force-cache" });
     const data = await handleApi<ExternalRatingDto>(res);
     if (data?.source !== "Goodreads" || typeof data.averageRating !== "number") {
       throw new Error("Invalid rating source");
