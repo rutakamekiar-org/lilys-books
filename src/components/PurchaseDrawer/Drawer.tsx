@@ -5,6 +5,7 @@ import {createDigitalInvoice, createPaperCheckout} from "@/lib/api";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
+import {safeRedirect} from "@/lib/safeRedirect";
 
 export default function Drawer({
   open, onClose, book, format,
@@ -83,7 +84,10 @@ export default function Drawer({
       if (format === "paper") {
         const res = await createPaperCheckout(book.id, 1);
         onClose()
-        window.location.href = res.redirectUrl;
+        await safeRedirect(res.redirectUrl, (u) => {
+            alert("Не вдалося перейти до Monobank. Спробуйте мобільний інтернет або відкрийте посилання у браузері.");
+            window.open(u, "_blank");
+        });
         return;
       }
       const newErrors: { email?: string; phone?: string } = {};
@@ -96,8 +100,11 @@ export default function Drawer({
         return;
       }
       const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() });
-      onClose()
-      window.location.href = res.redirectUrl;
+      onClose();
+      await safeRedirect(res.redirectUrl, (u) => {
+          alert("Не вдалося перейти до Monobank. Спробуйте мобільний інтернет або відкрийте посилання у браузері.");
+          window.open(u, "_blank");
+      });
     } catch (err: unknown) {
       setLoading(false);
       type ErrorDetails = { errors?: Record<string, string[]> };
