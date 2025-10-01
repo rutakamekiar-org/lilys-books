@@ -24,17 +24,6 @@ export default function Drawer({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  // Reset loading state when user returns to the page
-  useEffect(() => {
-    function handleVisibilityChange() {
-      if (document.visibilityState === 'visible' && loading) {
-        setLoading(false);
-      }
-    }
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [loading]);
-
   useEffect(() => {
     if (open) {
       lastActiveEl.current = document.activeElement as HTMLElement;
@@ -93,6 +82,7 @@ export default function Drawer({
       setLoading(true);
       if (format === "paper") {
         const res = await createPaperCheckout(book.id, 1);
+        onClose()
         window.location.href = res.redirectUrl;
         return;
       }
@@ -106,6 +96,7 @@ export default function Drawer({
         return;
       }
       const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() });
+      onClose()
       window.location.href = res.redirectUrl;
     } catch (err: unknown) {
       setLoading(false);
