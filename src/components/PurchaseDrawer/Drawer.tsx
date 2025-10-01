@@ -24,12 +24,25 @@ export default function Drawer({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  // Reset loading state when user returns to the page
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'visible' && loading) {
+        setLoading(false);
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [loading]);
+
   useEffect(() => {
     if (open) {
       lastActiveEl.current = document.activeElement as HTMLElement;
       setErrors({});
       setTouched({ email: false, phone: false });
       setLoading(false);
+      setEmail("");
+      setPhone("");
       if (format === "digital") {
         setTimeout(() => firstFieldRef.current?.focus(), 0);
       }
