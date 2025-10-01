@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import NavBar from "@/components/NavBar";
 import Contacts from "@/components/Contacts";
 import { addBasePath } from "@/lib/paths";
@@ -26,11 +27,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="uk">
       <head>
-        <script
-          src="https://kit.fontawesome.com/dcb994b94b.js"
-          crossOrigin="anonymous"
-          defer
-        ></script>
       </head>
       <body>
         <ClarityInit />

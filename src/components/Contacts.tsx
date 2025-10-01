@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 export default function Contacts() {
@@ -12,7 +14,7 @@ export default function Contacts() {
             rel="noopener"
             aria-label="Instagram"
           >
-            <i className="fa fa-instagram" aria-hidden="true"></i>
+            <i className="fa-brands fa-instagram" aria-hidden="true"></i>
           </a>
         </li>
         <li>
@@ -22,7 +24,7 @@ export default function Contacts() {
             rel="noopener"
             aria-label="Threads"
           >
-            <i className="fa fa-brands fa-threads" aria-hidden="true"></i>
+            <i className="fa-brands fa-threads" aria-hidden="true"></i>
           </a>
         </li>
         <li>
