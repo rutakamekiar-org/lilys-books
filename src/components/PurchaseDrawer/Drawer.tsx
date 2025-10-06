@@ -5,7 +5,6 @@ import {createDigitalInvoice, createPaperCheckout} from "@/lib/api";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
-import {safeRedirect} from "@/lib/safeRedirect";
 
 export default function Drawer({
   open, onClose, book, format,
