@@ -84,10 +84,7 @@ export default function Drawer({
       if (format === "paper") {
         const res = await createPaperCheckout(book.id, 1);
         onClose()
-        await safeRedirect(res.redirectUrl, (u) => {
-            alert("Не вдалося перейти до Monobank. Спробуйте мобільний інтернет або відкрийте посилання у браузері.");
-            window.open(u, "_blank");
-        });
+        window.location.href = res.redirectUrl;
         return;
       }
       const newErrors: { email?: string; phone?: string } = {};
@@ -100,11 +97,8 @@ export default function Drawer({
         return;
       }
       const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() });
-      onClose();
-      await safeRedirect(res.redirectUrl, (u) => {
-          alert("Не вдалося перейти до Monobank. Спробуйте мобільний інтернет або відкрийте посилання у браузері.");
-          window.open(u, "_blank");
-      });
+      onClose()
+      window.location.href = res.redirectUrl;
     } catch (err: unknown) {
       setLoading(false);
       type ErrorDetails = { errors?: Record<string, string[]> };
