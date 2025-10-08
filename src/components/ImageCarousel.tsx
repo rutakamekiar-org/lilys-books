@@ -79,6 +79,7 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
               alt={alt || ""}
               fill
               sizes={sizes}
+              loading="lazy"
               draggable={false}
               style={{ objectFit: fitForIndex(i), objectPosition: "center", userSelect: "none" }}
             />
