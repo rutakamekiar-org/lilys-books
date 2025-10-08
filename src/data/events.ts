@@ -1,6 +1,6 @@
 // Minimal, one-author events data source
 // Add new events by appending a new object to the array below.
-// Only keep what matters: title, date/time, optional location, blurb, image and an external URL.
+// Images are always loaded automatically from /public/images/events/<id>/ and ordered by filename.
 
 export type SimpleEvent = {
   id: string;              // unique id, e.g. "night-garden-2025-11-02"
@@ -8,30 +8,27 @@ export type SimpleEvent = {
   date: string;            // ISO date/time: "2025-11-02T18:30:00-07:00"
   location?: string;       // free-form: "Elliott Bay Book Company, Seattle"
   blurb?: string;          // short description (1–2 sentences)
-  image?: string;          // optional image path under /public
   url?: string;            // external link (YouTube, Event page, Tickets, etc.)
   published?: boolean;     // set false to hide without deleting
 };
 
 export const events: SimpleEvent[] = [
   {
-    id: "night-garden-seattle-2025-11-02",
-    title: "Презентація книги",
-    date: "2025-11-02T18:30:00-07:00",
-    location: "Elliott Bay Book Company, Seattle, USA",
-    blurb: "Читання уривків, коротка розмова та сесія запитань і відповідей.",
-    image: "/images/book.jpg",
-    url: "https://example.com/events/night-garden-seattle",
+    id: "the-ordirnary-presentation-krakow-2025-10-04",
+    title: "Презентація «Звичайної» у Кракові",
+    date: "2025-10-04T13:00:00Z",
+    location: "Кавʼярня-книнарня NIĆ",
+    blurb: "Презентація «Звичайної» у Кракові",
+    url: "https://facebook.com/events/s/%D0%B7%D1%83%D1%81%D1%82%D1%80%D1%96%D1%87-%D0%B7-%D0%BF%D0%B8%D1%81%D1%8C%D0%BC%D0%B5%D0%BD%D0%BD%D0%B8%D1%86%D0%B5%D1%8E-%D0%BB%D1%96%D0%BB%D1%96%D1%94%D1%8E-/768467152631458/",
     published: true,
   },
-  {
-    id: "author-interview-youtube-2025-03-14",
-    title: "Інтерв’ю в прямому ефірі",
-    date: "2025-03-14T16:00:00Z",
-    location: "YouTube",
-    blurb: "Розмова про письменницький процес та останні новини.",
-    image: "/images/book.jpg",
-    url: "https://youtube.com/watch?v=XXXXXXXXXXX",
-    published: true,
-  },
+    {
+        id: "the-ordirnary-presentation-vienna-2025-10-12",
+        title: "Презентація «Звичайної» у Відні",
+        date: "2025-10-12T13:00:00Z",
+        location: "Українська бібліотека парафії Св. Варвари у Відні, Postgasse 8 1010 Wien",
+        blurb: "Презентація «Звичайної» у Відні",
+        url: "https://www.facebook.com/share/p/14HbedV1MCK/?mibextid=wwXIfr",
+        published: true,
+    }
 ];

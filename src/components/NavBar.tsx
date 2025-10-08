@@ -11,7 +11,7 @@ export default function NavBar() {
   return (
     <nav className={styles.nav}>
       <Link href={withCacheBust("/")} className={cls("/")} aria-current={pathname === "/" ? "page" : undefined}>Головна</Link>
-      {/*<Link href={withCacheBust("/events")} className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>*/}
+      <Link href={withCacheBust("/events")} className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>
       <Link href={withCacheBust("/about")} className={cls("/about")} aria-current={pathname === "/about" ? "page" : undefined}>Про мене</Link>
     </nav>
   );

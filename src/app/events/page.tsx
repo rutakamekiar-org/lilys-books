@@ -1,10 +1,29 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { events as all, type SimpleEvent } from "@/data/events";
+import ImageCarousel from "@/components/ImageCarousel";
+import fs from "fs";
+import path from "path";
+import {addBasePath} from "@/lib/paths";
 
 function isUpcoming(e: SimpleEvent) { return new Date(e.date) >= new Date(); }
 function sortByDateAsc(a: SimpleEvent, b: SimpleEvent) {
   return new Date(a.date).getTime() - new Date(b.date).getTime();
+}
+
+function getEventImages(e: SimpleEvent): string[] {
+  try {
+    const dir = path.join(process.cwd(), "public", "images", "events", e.id);
+    if (fs.existsSync(dir)) {
+      const files = fs.readdirSync(dir)
+        .filter(f => /\.(png|jpe?g|webp|gif|avif)$/i.test(f))
+        .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+      if (files.length > 0) {
+        return files.map(f => addBasePath(`/images/events/${e.id}/${f}`));
+      }
+    }
+  } catch {}
+  return [];
 }
 
 export const metadata = {
@@ -78,11 +97,12 @@ function formatDateParts(dateIso: string){
 
 function FeaturedHero({ event }: { event: SimpleEvent }){
   const { date, time } = formatDateParts(event.date);
+  const images = getEventImages(event);
   return (
     <article className={styles.hero}>
       <div className={styles.heroImageWrap}>
-        {event.image && (
-          <Image src={event.image} alt={event.title} fill sizes="(max-width: 800px) 100vw, 1280px" style={{ objectFit: "cover" }} />
+        {images.length > 0 && (
+          <ImageCarousel images={images} alt={event.title} sizes="(max-width: 800px) 100vw, 1280px" navInside ariaLabel={`Зображення події: ${event.title}`} />
         )}
         <div className={styles.heroOverlay} />
         <div className={styles.heroDateBadge}>{date} · {time}</div>
@@ -112,12 +132,13 @@ function FeaturedHero({ event }: { event: SimpleEvent }){
 
 function TimelineItem({ event }: { event: SimpleEvent }){
   const { date, time } = formatDateParts(event.date);
+  const images = getEventImages(event);
   return (
     <li className={styles.timelineItem}>
       <span className={styles.node} aria-hidden />
       <div className={styles.thumb}>
-        {event.image && (
-          <Image src={event.image} alt="" fill sizes="120px" style={{ objectFit: "cover" }} />
+        {images.length > 0 && (
+          <ImageCarousel images={images} alt="" sizes="120px" ariaLabel={`Зображення: ${event.title}`} />
         )}
       </div>
       <div className={styles.itemBody}>
