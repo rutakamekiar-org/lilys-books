@@ -1,10 +1,10 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 import { events as all, type SimpleEvent } from "@/data/events";
 import ImageCarousel from "@/components/ImageCarousel";
 import fs from "fs";
 import path from "path";
 import {addBasePath} from "@/lib/paths";
+import LocalDateTime from "@/components/LocalDateTime";
 
 function isUpcoming(e: SimpleEvent) { return new Date(e.date) >= new Date(); }
 function sortByDateAsc(a: SimpleEvent, b: SimpleEvent) {
@@ -87,16 +87,7 @@ export default function EventsPage() {
   );
 }
 
-function formatDateParts(dateIso: string){
-  const d = new Date(dateIso);
-  return {
-    date: d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }),
-    time: d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })
-  };
-}
-
 function FeaturedHero({ event }: { event: SimpleEvent }){
-  const { date, time } = formatDateParts(event.date);
   const images = getEventImages(event);
   return (
     <article className={styles.hero}>
@@ -105,14 +96,18 @@ function FeaturedHero({ event }: { event: SimpleEvent }){
           <ImageCarousel images={images} alt={event.title} sizes="(max-width: 800px) 100vw, 1280px" navInside ariaLabel={`Зображення події: ${event.title}`} />
         )}
         <div className={styles.heroOverlay} />
-        <div className={styles.heroDateBadge}>{date} · {time}</div>
+        <div className={styles.heroDateBadge}>
+            <LocalDateTime iso={event.date} />
+        </div>
         <div className={styles.heroContent}>
           <h3 className={styles.heroTitle}>{event.title}</h3>
         </div>
       </div>
       <div className={styles.heroBelow}>
         <p className={styles.heroBelowMeta}>
-          <span className={styles.heroBelowDate}>{date} · {time}</span>
+          <span className={styles.heroBelowDate}>
+              <LocalDateTime iso={event.date} />
+          </span>
           {event.location ? ` · ${event.location}` : ""}
         </p>
         {event.blurb && (
@@ -131,7 +126,6 @@ function FeaturedHero({ event }: { event: SimpleEvent }){
 }
 
 function TimelineItem({ event }: { event: SimpleEvent }){
-  const { date, time } = formatDateParts(event.date);
   const images = getEventImages(event);
   return (
     <li className={styles.timelineItem}>
@@ -143,7 +137,7 @@ function TimelineItem({ event }: { event: SimpleEvent }){
       </div>
       <div className={styles.itemBody}>
         <h3 className={styles.itemTitle}>{event.title}</h3>
-        <p className={styles.itemMeta}>{date} · {time}{event.location ? ` · ${event.location}` : ""}</p>
+        <p className={styles.itemMeta}> <LocalDateTime iso={event.date} />{event.location ? ` · ${event.location}` : ""}</p>
         {event.blurb && (<p className={styles.itemBlurb}>{event.blurb}</p>)}
         <div className={styles.itemActions}>
           {event.url && (
