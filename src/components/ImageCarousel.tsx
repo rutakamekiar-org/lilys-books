@@ -55,15 +55,19 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
     return () => { cancelled = true; };
   }, [images]);
 
-  function scrollBy(delta: number){
+  function scrollToDelta(delta: number){
     const rail = railRef.current;
     if (!rail) return;
-    const amount = rail.clientWidth * 0.9 * delta;
-    rail.scrollBy({ left: amount, behavior: "smooth" });
+    const { clientWidth, scrollLeft } = rail;
+    if (clientWidth === 0) return;
+    const currentIndex = Math.round(scrollLeft / clientWidth);
+    const maxIndex = Math.max(0, images.length - 1);
+    const nextIndex = Math.min(maxIndex, Math.max(0, currentIndex + delta));
+    rail.scrollTo({ left: nextIndex * clientWidth, behavior: "smooth" });
   }
 
-  function goPrev(){ scrollBy(-1); }
-  function goNext(){ scrollBy(1); }
+  function goPrev(){ scrollToDelta(-1); }
+  function goNext(){ scrollToDelta(1); }
 
   const fitForIndex = useMemo(() => (index: number) => {
     return fits[index] || "contain"; // default to contain to avoid cropping verticals before measure
