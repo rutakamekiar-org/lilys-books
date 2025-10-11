@@ -30,5 +30,14 @@ export const events: SimpleEvent[] = [
         blurb: "Презентація «Звичайної» у Відні",
         url: "https://www.facebook.com/share/p/14HbedV1MCK/?mibextid=wwXIfr",
         published: true,
+    },
+    {
+        id: "author-interview-youtube-2025-10-12",
+        title: "Подкаст на каналі «Студія Калідор»",
+        date: "2025-10-12T16:00:00Z",
+        location: "YouTube",
+        blurb: "Подкаст на каналі «Студія Калідор»",
+        url: "https://youtu.be/ii-Bk7RfVsQ?si=LrdfTJBr6ZXHMcQo",
+        published: true,
     }
 ];
