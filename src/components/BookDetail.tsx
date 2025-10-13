@@ -72,7 +72,7 @@ export default function BookDetail({ book }: { book: Book }) {
         </div>
       </div>
 
-      <Drawer open={open} onClose={() => setOpen(false)} book={book} format={format} />
+      <Drawer open={open} onCloseAction={() => setOpen(false)} book={book} format={format} />
     </section>
   );
 }

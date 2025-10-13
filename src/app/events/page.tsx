@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import {addBasePath} from "@/lib/paths";
 import LocalDateTime from "@/components/LocalDateTime";
+import {Metadata} from "next";
 
 function isUpcoming(e: SimpleEvent) { return new Date(e.date) >= new Date(); }
 function sortByDateAsc(a: SimpleEvent, b: SimpleEvent) {
@@ -26,7 +27,7 @@ function getEventImages(e: SimpleEvent): string[] {
   return [];
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Події",
   description: "Найближчі та минулі події: презентації, інтерв'ю, зустрічі.",
 };
