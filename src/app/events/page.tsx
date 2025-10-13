@@ -57,11 +57,11 @@ export default function EventsPage() {
       {upcomingRest.length > 0 && (
         <section className={styles.section} aria-labelledby="upcoming-list">
           <h2 id="upcoming-list" className={styles.sectionTitle}>Далі</h2>
-          <ul className={styles.timeline}>
+          {/*<ul className={styles.timeline}>*/}
             {upcomingRest.map(e => (
-              <TimelineItem key={e.id} event={e} />
+              <FeaturedHero key={e.id} event={e} />
             ))}
-          </ul>
+          {/*</ul>*/}
         </section>
       )}
 
@@ -74,13 +74,11 @@ export default function EventsPage() {
             {pastFeatured && (
               <FeaturedHero event={pastFeatured} />
             )}
-            {pastRest.length > 0 && (
-              <ul className={styles.timeline}>
+              {/*<ul className={styles.timeline}>*/}
                 {pastRest.map(e => (
-                  <TimelineItem key={e.id} event={e} />
+                  <FeaturedHero key={e.id} event={e} />
                 ))}
-              </ul>
-            )}
+              {/*</ul>*/}
           </>
         )}
       </section>
