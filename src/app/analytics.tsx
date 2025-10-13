@@ -13,7 +13,7 @@ export default function Analytics() {
         const url = pathname + searchParams.toString()
 
         // Send a pageview to Google Analytics
-        // @ts-expect-error
+        // @ts-expect-error qwerewr
         window.gtag?.("config",
             GA_MEASUREMENT_ID, {
             page_path: url,
