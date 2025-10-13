@@ -5,10 +5,6 @@ import NavBar from "@/components/NavBar";
 import Contacts from "@/components/Contacts";
 import { addBasePath } from "@/lib/paths";
 import ClarityInit from "@/components/ClarityInit";
-import Script from "next/script";
-import Analytics from "@/app/analytics";
-
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""
 
 export const metadata: Metadata = {
   title: "Lily’s Books",
@@ -31,31 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="uk">
       <head>
-          {/* GA Script Loader */}
-          <Script
-              strategy="afterInteractive"
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          />
-          <Script
-              id="google-analytics"
-              strategy="afterInteractive"
-          >
-              {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}', {
-              page_path: window.location.pathname,
-            });
-          `}
-          </Script>
       </head>
       <body>
         <ClarityInit />
         <header>
           <NavBar />
         </header>
-        <main> <Analytics />{children}</main>
+        <main>{children}</main>
         <footer>
           <Contacts />
           © {new Date().getFullYear()} Лілія Кухарець. Усі права захищені.

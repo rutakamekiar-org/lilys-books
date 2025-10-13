@@ -5,7 +5,6 @@ import fs from "fs";
 import path from "path";
 import {addBasePath} from "@/lib/paths";
 import LocalDateTime from "@/components/LocalDateTime";
-import {Metadata} from "next";
 
 function isUpcoming(e: SimpleEvent) { return new Date(e.date) >= new Date(); }
 function sortByDateAsc(a: SimpleEvent, b: SimpleEvent) {
@@ -27,7 +26,7 @@ function getEventImages(e: SimpleEvent): string[] {
   return [];
 }
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Події",
   description: "Найближчі та минулі події: презентації, інтерв'ю, зустрічі.",
 };
@@ -57,11 +56,11 @@ export default function EventsPage() {
       {upcomingRest.length > 0 && (
         <section className={styles.section} aria-labelledby="upcoming-list">
           <h2 id="upcoming-list" className={styles.sectionTitle}>Далі</h2>
-          {/*<ul className={styles.timeline}>*/}
+          <ul className={styles.timeline}>
             {upcomingRest.map(e => (
-              <FeaturedHero key={e.id} event={e} />
+              <TimelineItem key={e.id} event={e} />
             ))}
-          {/*</ul>*/}
+          </ul>
         </section>
       )}
 
@@ -74,11 +73,13 @@ export default function EventsPage() {
             {pastFeatured && (
               <FeaturedHero event={pastFeatured} />
             )}
-              {/*<ul className={styles.timeline}>*/}
+            {pastRest.length > 0 && (
+              <ul className={styles.timeline}>
                 {pastRest.map(e => (
-                  <FeaturedHero key={e.id} event={e} />
+                  <TimelineItem key={e.id} event={e} />
                 ))}
-              {/*</ul>*/}
+              </ul>
+            )}
           </>
         )}
       </section>
@@ -121,5 +122,31 @@ function FeaturedHero({ event }: { event: SimpleEvent }){
         )}
       </div>
     </article>
+  );
+}
+
+function TimelineItem({ event }: { event: SimpleEvent }){
+  const images = getEventImages(event);
+  return (
+    <li className={styles.timelineItem}>
+      <span className={styles.node} aria-hidden />
+      <div className={styles.thumb}>
+        {images.length > 0 && (
+          <ImageCarousel images={images} alt="" sizes="120px" ariaLabel={`Зображення: ${event.title}`} />
+        )}
+      </div>
+      <div className={styles.itemBody}>
+        <h3 className={styles.itemTitle}>{event.title}</h3>
+        <p className={styles.itemMeta}> <LocalDateTime iso={event.date} />{event.location ? ` · ${event.location}` : ""}</p>
+        {event.blurb && (<p className={styles.itemBlurb}>{event.blurb}</p>)}
+        <div className={styles.itemActions}>
+          {event.url && (
+            <a className={styles.btn} href={event.url} target="_blank" rel="noopener noreferrer" aria-label="Відкрити посилання на подію">
+              Посилання <span aria-hidden>↗</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </li>
   );
 }
