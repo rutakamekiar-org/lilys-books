@@ -7,8 +7,8 @@ import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
 
 export default function Drawer({
-  open, onClose, book, format,
-}: { open: boolean; onClose: () => void; book: Book; format: BookFormat; }) {
+  open, onCloseAction, book, format,
+}: { open: boolean; onCloseAction: () => void; book: Book; format: BookFormat; }) {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -19,10 +19,10 @@ export default function Drawer({
   const lastActiveEl = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    function onKey(e: KeyboardEvent) { if (e.key === "Escape" && open) onClose(); }
+    function onKey(e: KeyboardEvent) { if (e.key === "Escape" && open) onCloseAction(); }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open, onCloseAction]);
 
   useEffect(() => {
     if (open) {
@@ -82,7 +82,7 @@ export default function Drawer({
       setLoading(true);
       if (format === "paper") {
         const res = await createPaperCheckout(book.id, 1);
-        onClose()
+        onCloseAction()
         window.location.href = res.redirectUrl;
         return;
       }
@@ -96,7 +96,7 @@ export default function Drawer({
         return;
       }
       const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() });
-      onClose()
+      onCloseAction()
       window.location.href = res.redirectUrl;
     } catch (err: unknown) {
       setLoading(false);
@@ -125,7 +125,7 @@ export default function Drawer({
   const isPaper = format === "paper";
 
   return (
-    <div className={styles.overlay} aria-modal="true" role="dialog" aria-label="Оформлення замовлення" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+    <div className={styles.overlay} aria-modal="true" role="dialog" aria-label="Оформлення замовлення" onClick={(e) => { if (e.target === e.currentTarget) onCloseAction(); }}>
       <div className={styles.sheet} ref={dialogRef} aria-busy={loading || undefined}>
         {loading && (
           <div className={styles.topProgress} aria-hidden="true">
@@ -139,7 +139,7 @@ export default function Drawer({
               <span className={styles.price}>{`${selected.price} грн`}</span>
             )}
           </h3>
-          <button onClick={onClose} aria-label="Закрити" className={styles.close}>×</button>
+          <button onClick={onCloseAction} aria-label="Закрити" className={styles.close}>×</button>
         </header>
 
         {/* Content */}

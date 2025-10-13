@@ -39,7 +39,7 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
   useEffect(() => {
     if (!images || images.length === 0) { setFits([]); return; }
     let cancelled = false;
-    const loaders = images.map((src, idx) => new Promise<"cover" | "contain">((resolve) => {
+    const loaders = images.map((src) => new Promise<"cover" | "contain">((resolve) => {
       const img = new window.Image();
       img.onload = () => {
         const isLandscape = (img.naturalWidth || 0) >= (img.naturalHeight || 0);
