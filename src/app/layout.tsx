@@ -7,9 +7,10 @@ import { addBasePath } from "@/lib/paths";
 import ClarityInit from "@/components/ClarityInit";
 import Script from "next/script";
 import Analytics from "@/app/analytics";
-import {Suspense} from "react";
+import { Suspense } from "react";
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""
+const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
+const isGaEnabled = Boolean(GA_MEASUREMENT_ID);
 
 export const metadata: Metadata = {
   title: "Lily’s Books",
@@ -32,15 +33,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="uk">
       <head>
-          {/* GA Script Loader */}
-          <Script
+        {/* GA Script Loader */}
+        {isGaEnabled && (
+          <>
+            <Script
               strategy="afterInteractive"
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          />
-          <Script
-              id="google-analytics"
-              strategy="afterInteractive"
-          >
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
               {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -49,7 +49,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               page_path: window.location.pathname,
             });
           `}
-          </Script>
+            </Script>
+          </>
+        )}
       </head>
       <body>
         <ClarityInit />
