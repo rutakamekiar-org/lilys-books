@@ -39,5 +39,14 @@ export const events: SimpleEvent[] = [
         blurb: "Подкаст на каналі «Студія Калідор»",
         url: "https://youtu.be/ii-Bk7RfVsQ?si=LrdfTJBr6ZXHMcQo",
         published: true,
-    }
+    },
+    {
+    id: "presentation-brno-2025-10-27",
+    title: "Презентація «Звичайної» в Брно",
+    date: "2025-10-27T16:00:00Z",
+    location: "Український центр, Moravské nám. 15, Brno",
+    blurb: "Презентація «Звичайної» в Брно",
+    url: "",
+    published: true,
+  }
 ];

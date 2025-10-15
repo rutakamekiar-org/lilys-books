@@ -21,8 +21,9 @@
   border:1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
+  margin-bottom: 10px;
 }
-.heroImageWrap{ position:relative; padding-top: 40%; background:#f5f4f2; }
+.heroImageWrap{ position:relative; padding-top: 60%; background:#f5f4f2; }
 @media (max-width: 800px){ .heroImageWrap{ padding-top: 56%; } }
 .heroOverlay{
   position:absolute; inset:0;
