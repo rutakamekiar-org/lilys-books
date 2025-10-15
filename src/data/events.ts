@@ -43,7 +43,7 @@ export const events: SimpleEvent[] = [
     {
     id: "presentation-brno-2025-10-27",
     title: "Презентація «Звичайної» в Брно",
-    date: "2025-10-27T16:00:00Z",
+    date: "2025-10-27T17:00:00Z",
     location: "Український центр, Moravské nám. 15, Brno",
     blurb: "Презентація «Звичайної» в Брно",
     url: "",
