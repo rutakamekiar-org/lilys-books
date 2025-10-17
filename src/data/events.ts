@@ -46,7 +46,7 @@ export const events: SimpleEvent[] = [
     date: "2025-10-27T17:00:00Z",
     location: "Український центр, Moravské nám. 15, Brno",
     blurb: "Презентація «Звичайної» в Брно",
-    url: "",
+    url: "https://www.facebook.com/share/1A71QbeSnw/?mibextid=wwXIfr",
     published: true,
   }
 ];
