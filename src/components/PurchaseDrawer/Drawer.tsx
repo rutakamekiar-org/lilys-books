@@ -14,7 +14,7 @@ export default function Drawer({
   const [phone, setPhone] = useState("");
   const [errors, setErrors] = useState<{ email?: string; phone?: string }>({});
   const [touched, setTouched] = useState<{ email: boolean; phone: boolean }>({ email: false, phone: false });
-  const [quantity, setQuantity] = useState<number>(1);
+  const [quantity, setQuantity] = useState<number | ''>(1);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
@@ -64,7 +64,7 @@ export default function Drawer({
   const validEmail = useMemo(() => /^\S+@\S+\.\S+$/.test(email), [email]);
   const validPhone = useMemo(() => /^\+?\d{10,14}$/.test(phone), [phone]);
   const digitalValid = format === "paper" ? true : (validEmail && validPhone);
-  const quantityValid = useMemo(() => Number.isFinite(quantity) && quantity >= 1, [quantity]);
+  const quantityValid = useMemo(() => quantity && Number.isFinite(quantity) && quantity >= 1, [quantity]);
 
   // Live validation feedback for digital inputs once fields are touched
   useEffect(() => {
@@ -197,14 +197,20 @@ export default function Drawer({
                   value={quantity}
                   onChange={(e) => {
                     const v = Math.floor(Number(e.target.value));
-                    if (Number.isFinite(v) && v >= 1) setQuantity(v);
-                    else setQuantity(1);
+                    if (Number.isFinite(v) && v >= 1)
+                        setQuantity(Number(e.target.value));
+                    else setQuantity('');
                   }}
                   onBlur={() => {
-                    setQuantity((q) => (Number.isFinite(q) && q >= 1 ? Math.floor(Number(q)) : 1));
+                    setQuantity((q) => q && (Number.isFinite(q) && q >= 1 ? Math.floor(Number(q)) : 1));
                   }}
                   aria-label="Кількість примірників"
+                  aria-invalid={!quantityValid}
+                  aria-describedby={!quantityValid ? "err-qty" : undefined}
                 />
+                {!quantityValid && (
+                  <small id="err-qty" className={styles.error}>Вкажіть коректну кількість (мінімум 1).</small>
+                )}
               </label>
               <small className={styles.note}>Вкажіть кількість паперових примірників.</small>
               <small className={styles.note}>Натисніть кнопку нижче, щоб перейти до оплати.</small>
