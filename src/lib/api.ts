@@ -34,9 +34,9 @@ async function handleApi<T = CheckoutResponse>(res: Response): Promise<T> {
   return data as T;
 }
 
-export async function createPaperCheckout(_bookId: string, _quantity: number = 1): Promise<CheckoutResponse> {
-  void _bookId; void _quantity; // the current API doesn't use these params
-  const res = await fetch(`${API_URL}/api/checkout`, {
+export async function createPaperCheckout(bookId: string, _quantity: number = 1): Promise<CheckoutResponse> {
+  const qty = Math.max(1, Math.floor(Number(_quantity) || 1));
+  const res = await fetch(`${API_URL}/api/checkout?id=${bookId}&count=${encodeURIComponent(qty)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
   });
