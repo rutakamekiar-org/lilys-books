@@ -5,6 +5,7 @@ import {createDigitalInvoice, createPaperCheckout} from "@/lib/api";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
+import notify from "@/lib/toast";
 
 export default function Drawer({
   open, onCloseAction, book, format,
@@ -123,15 +124,15 @@ export default function Drawer({
       const errs = details?.errors;
       if (errs) {
         if (errs.CustomerEmail?.[0]) {
-          alert("Будь ласка, введіть дійсну адресу електронної пошти.");
+          notify.error("Будь ласка, введіть дійсну адресу електронної пошти.");
         } else if (errs.CustomerPhone?.[0]) {
-          alert("Будь ласка, введіть дійсний номер телефону.");
+          notify.error("Будь ласка, введіть дійсний номер телефону.");
         } else {
           const firstKey = Object.keys(errs)[0];
-          alert((firstKey ? errs[firstKey]?.[0] : undefined) || message || "Виникла помилка.");
+          notify.error((firstKey ? errs[firstKey]?.[0] : undefined) || message || "Виникла помилка.");
         }
       } else {
-        alert(message || "Сервер зараз недоступний. Спробуйте пізніше.");
+        notify.error(message || "Сервер зараз недоступний. Спробуйте пізніше.");
       }
     }
   };

@@ -8,6 +8,7 @@ import ClarityInit from "@/components/ClarityInit";
 import Script from "next/script";
 import Analytics from "@/app/analytics";
 import { Suspense } from "react";
+import ToastProvider from "@/components/ToastProvider";
 
 const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
 const isGaEnabled = Boolean(GA_MEASUREMENT_ID);
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ClarityInit />
+        <ToastProvider />
         <header>
           <NavBar />
         </header>
