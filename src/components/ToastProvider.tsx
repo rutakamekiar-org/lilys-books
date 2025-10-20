@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function ToastProvider() {
   return (
     <ToastContainer
-      position={window.innerWidth < 768 ? "top-center" : "bottom-right"}
+      position={"top-center"}
       autoClose={4000}
       hideProgressBar={false}
       newestOnTop={true}
