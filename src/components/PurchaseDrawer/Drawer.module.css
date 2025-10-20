@@ -50,6 +50,8 @@
   border-radius: 10px;
   background: #fff;
   color: var(--text);
+  /* Prevent iOS Safari from zooming when focusing inputs */
+  font-size: 16px;
 }
 .cta {
   padding: 12px 16px;

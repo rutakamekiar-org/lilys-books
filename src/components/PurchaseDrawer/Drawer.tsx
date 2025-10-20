@@ -162,6 +162,7 @@ export default function Drawer({
                 <input
                   ref={firstFieldRef}
                   type="email"
+                  inputMode="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => setTouched((t) => ({ ...t, email: true }))}
@@ -174,6 +175,7 @@ export default function Drawer({
               <label>Телефон
                 <input
                   type="tel"
+                  inputMode="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
