@@ -14,6 +14,17 @@ const mockBooks: Book[] = [
       { type: "digital", price: 200, currency: "UAH", available: true, productId: "c1f3c4a6-f4b1-4351-9b83-5b4b4be48896" },
     ],
     ageRating: "16+",
+      physical: {
+          seriesName: 'Звичайна',
+          publisher: 'Антивидавництво',
+          pages: 330,
+          coverType: 'тверда',
+          publicationYear: 2025,
+          size: '210x135 мм',
+          weight: undefined,
+          paperType: 'кремовий',
+          isbn: '9786175602324'
+      }
   },
   // {
   //   id: "book-ordinary-2",

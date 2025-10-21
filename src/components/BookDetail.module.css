@@ -23,9 +23,25 @@
 .buy:disabled { background: #e0e0e0; color: #9a9a9a; cursor: not-allowed; }
 .hint { color: var(--muted); }
 
+.specs { margin-top: 16px; }
+.specs h2 { font-size: 16px; margin: 0 0 10px;}
+.specsGrid { display: grid; grid-template-columns: 1fr 2fr; align-items: baseline; }
+.specsTerm { color: var(--muted); }
+.specsDef { color: var(--text); overflow-wrap: anywhere; word-break: break-word; }
+
+.specsGrid { overflow: hidden; }
+.specsGrid dt,
+.specsGrid dd { padding: 6px 0; }
+.specsGrid dt { padding-right: 12px; }
+.specsGrid dd { padding-left: 12px; position: relative; }
+
 .excerpt { margin-top: 18px; padding: 14px; border-left: 4px solid var(--accent); background: #fffdf8; border-radius: 8px; }
 
 @media (max-width: 960px){
   .grid { grid-template-columns: 1fr; }
   .buy { width: 100%; }
+  .specsGrid { grid-template-columns: minmax(120px, 42%) 1fr;}
 }
+
+/* Zebra striping for better readability: apply light background starting from the 2nd row */
+.specsGrid dd:nth-of-type(2n)::before { content: ""; position: absolute; left: -9999px; right: 0; top: 0; bottom: -1px; background: var(--accent-weak, rgba(0,0,0,0.020)); background: color-mix(in srgb, var(--accent) 3%, transparent); }

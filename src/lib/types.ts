@@ -10,6 +10,18 @@ export interface BookFormatInfo {
   productId: string;
 }
 
+export interface BookPhysical {
+  seriesName?: string; // назва серії
+  publisher?: string; // видавництво
+  pages?: number; // кількість сторінок
+  coverType?: "мʼяка" | "тверда" | string; // тип палітурки
+  publicationYear?: number; // рік видання
+  size?: string; // розмір, напр. 145×215 мм
+  weight?: string | number; // вага, напр. 350 г
+  paperType?: string; // тип паперу
+  isbn?: string; // ISBN
+}
+
 export interface Book {
   id: string;
   slug: string;
@@ -21,6 +33,7 @@ export interface Book {
   excerptHtml?: TrustedHTML;
   descriptionHtml?: TrustedHTML; // optional rich HTML description from static content
   ageRating?: AgeRating; // optional age rating label like "16+"
+  physical?: BookPhysical; // optional physical characteristics
 }
 
 export interface CheckoutResponse {

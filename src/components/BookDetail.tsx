@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import type { Book, BookFormat } from "@/lib/types";
 import Drawer from "./PurchaseDrawer/Drawer";
 import styles from "./BookDetail.module.css";
@@ -65,6 +65,32 @@ export default function BookDetail({ book }: { book: Book }) {
               <small className={styles.hint}>Вікове обмеження: {book.ageRating}</small>
             )}
           </div>
+
+          {book.physical && (
+            <section className={styles.specs} aria-labelledby="specs-title">
+              <h2 id="specs-title">Характеристики</h2>
+              <dl className={styles.specsGrid}>
+                {[
+                  { label: "Серія", value: book.physical.seriesName },
+                  { label: "Видавництво", value: book.physical.publisher },
+                  { label: "Кількість сторінок", value: book.physical.pages?.toString() },
+                  { label: "Тип палітурки", value: book.physical.coverType },
+                  { label: "Рік видання", value: book.physical.publicationYear?.toString() },
+                  { label: "Розмір", value: book.physical.size },
+                  { label: "Вага", value: typeof book.physical.weight === 'number' ? `${book.physical.weight} г` : book.physical.weight },
+                  { label: "Тип паперу", value: book.physical.paperType },
+                  { label: "ISBN", value: book.physical.isbn },
+                ]
+                  .filter(i => !!i.value)
+                  .map((i, idx) => (
+                    <Fragment key={i.label || idx}>
+                      <dt className={styles.specsTerm}>{i.label}</dt>
+                      <dd className={styles.specsDef}>{i.value as string}</dd>
+                    </Fragment>
+                  ))}
+              </dl>
+            </section>
+          )}
 
           {book.excerptHtml && (
             <article className={styles.excerpt} dangerouslySetInnerHTML={{ __html: book.excerptHtml }} />
