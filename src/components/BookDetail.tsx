@@ -7,20 +7,29 @@ import styles from "./BookDetail.module.css";
 import GoodreadsRating from "./GoodreadsRating";
 import GoodreadsButton from "./GoodreadsButton";
 import { addBasePath } from "@/lib/paths";
+import ExcerptDialog from "./ExcerptDialog";
+import excerptStyles from "./ExcerptDialog.module.css";
 
 export default function BookDetail({ book }: { book: Book }) {
   const [open, setOpen] = useState(false);
+  const [excerptOpen, setExcerptOpen] = useState(false);
   const [format, setFormat] = useState<BookFormat>("paper");
   const selected = book.formats.find(f => f.type === format);
 
   return (
     <section className={styles.wrap}>
       <div className={styles.grid}>
-        <div className={styles.cover}>
-          <Image src={addBasePath(book.coverUrl)} alt={book.title} width={320} height={480} />
-          <GoodreadsButton bookId={book.id} />
-        </div>
-        <div className={styles.content}>
+          <div className={styles.cover}>
+              <Image src={addBasePath(book.coverUrl)} alt={book.title} width={320} height={480}/>
+              <GoodreadsButton bookId={book.id}/>
+              {book.excerptHtml && (
+                  <a type="button" className={excerptStyles.excerptBtn} onClick={() => setExcerptOpen(true)}>
+                      <i className="fa-solid fa-book-open"></i>
+                      <span>Читати уривок</span>
+                  </a>
+              )}
+          </div>
+          <div className={styles.content}>
           <h1 className={styles.titleRow}>
             {book.title}
             {book.ageRating && (
@@ -92,13 +101,13 @@ export default function BookDetail({ book }: { book: Book }) {
             </section>
           )}
 
-          {book.excerptHtml && (
-            <article className={styles.excerpt} dangerouslySetInnerHTML={{ __html: book.excerptHtml }} />
-          )}
         </div>
       </div>
 
       <Drawer open={open} onCloseAction={() => setOpen(false)} book={book} format={format} />
+      {book.excerptHtml && (
+        <ExcerptDialog open={excerptOpen} onClose={() => setExcerptOpen(false)} title={book.title} html={book.excerptHtml} />
+      )}
     </section>
   );
 }
