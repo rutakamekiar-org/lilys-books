@@ -55,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body>
+        <p style={{display: 'none'}}>test</p>
         <ClarityInit />
         <ToastProvider />
         <header>
