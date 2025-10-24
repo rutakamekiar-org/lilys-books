@@ -28,6 +28,10 @@ export default function BookDetail({ book }: { book: Book }) {
                       <span>Читати уривок</span>
                   </a>
               )}
+                  <a className={excerptStyles.excerptBtn} target="_blank" href="https://youtu.be/UznBnjro79c?si=xheJajt__wbom5Hw">
+                      <i className="fa-brands fa-youtube"></i>
+                      <span>Слухати уривок</span>
+                  </a>
           </div>
           <div className={styles.content}>
           <h1 className={styles.titleRow}>

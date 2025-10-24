@@ -6,6 +6,7 @@
 .close{ background:none; border:0; font-size:22px; cursor:pointer; padding:8px; border-radius:8px; }
 .body{ padding: 12px 32px; overflow: auto; }
 .body :global(p){ margin: 0 0 1em; text-indent: 2em; }
+.body :global(h2){ text-align: center; }
 
 /* Button under cover */
 .excerptBtn{ width: 100%;
