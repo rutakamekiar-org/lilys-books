@@ -48,5 +48,14 @@ export const events: SimpleEvent[] = [
     blurb: "Презентація «Звичайної» в Брно",
     url: "https://www.facebook.com/share/1A71QbeSnw/?mibextid=wwXIfr",
     published: true,
+  },
+  {
+    id: "book-presentation-2025-11-30",
+    title: "Презентація книги «Звичайна» в Зандамі",
+    date: "2025-11-30T16:00:00Z",
+    location: "Oekraïense Club, Rozengracht 6-8, 1506 SC Zaandam",
+    blurb: "Презентація книги «Звичайна» в Зандамі",
+    url: "https://www.instagram.com/p/DQQ7UWkDZEy/?igsh=YnBxajRqZ2I2b29i",
+    published: true,
   }
 ];
