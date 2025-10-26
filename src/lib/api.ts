@@ -1,19 +1,50 @@
 import type { CheckoutResponse } from "./types";
+import notify from "@/lib/toast";
 
 const API_URL = "https://spicy-avrit-kukharets-021c9f66.koyeb.app";
 
-interface ApiErrorDetails {
+export interface ApiErrorDetails {
   title?: string;
   errors?: Record<string, string[]>;
   [key: string]: unknown;
 }
 
-interface ApiError extends Error {
+export interface ApiError extends Error {
   details?: ApiErrorDetails;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
+}
+
+export function notifyApiError(err: unknown) {
+  type ErrorDetails = { errors?: Record<string, string[]> };
+  const message = err instanceof Error ? err.message : undefined;
+  const details: ErrorDetails | undefined =
+    typeof err === "object" && err !== null && "details" in err
+      ? (err as { details?: ErrorDetails }).details
+      : undefined;
+  const errs = details?.errors;
+  if (errs) {
+    if (errs.CustomerEmail?.[0]) {
+      notify.error("Будь ласка, введіть дійсну адресу електронної пошти.");
+      return;
+    }
+    if (errs.CustomerPhone?.[0]) {
+      notify.error("Будь ласка, введіть дійсний номер телефону.");
+      return;
+    }
+    const firstKey = Object.keys(errs)[0];
+    notify.error((firstKey ? errs[firstKey]?.[0] : undefined) || message || "Виникла помилка.");
+  } else {
+    if (err instanceof TypeError && typeof navigator !== "undefined" && !navigator.onLine) {
+      notify.error("Відсутнє інтернет-з’єднання.");
+    } else if (err instanceof TypeError) {
+      notify.error("Не вдалося встановити безпечне з’єднання із сервером. Спробуйте змінити мережу або скористайтеся VPN.");
+    } else {
+      notify.error("Сталася помилка. Спробуйте пізніше.");
+    }
+  }
 }
 
 async function handleApi<T = CheckoutResponse>(res: Response): Promise<T> {
@@ -39,7 +70,10 @@ export async function createPaperCheckout(bookId: string, _quantity: number = 1)
   const res = await fetch(`${API_URL}/api/checkout?id=${bookId}&count=${encodeURIComponent(qty)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-  });
+  }).catch((err) => {
+      notifyApiError(err);
+      throw err;
+  })
   return handleApi<CheckoutResponse>(res);
 }
 
@@ -56,7 +90,10 @@ export async function createDigitalInvoice(params: {
       customerEmail: params.customerEmail,
       customerPhone: params.customerPhone,
     }),
-  });
+  }).catch((err) => {
+      notifyApiError(err);
+      throw err;
+  })
   return handleApi<CheckoutResponse>(res);
 }
 

@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
-import {createDigitalInvoice, createPaperCheckout} from "@/lib/api";
+import {createDigitalInvoice, createPaperCheckout, notifyApiError} from "@/lib/api";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
-import notify from "@/lib/toast";
 
 export default function Drawer({
   open, onCloseAction, book, format,
@@ -96,8 +95,8 @@ export default function Drawer({
       setLoading(true);
       if (format === "paper") {
         const qty = Math.max(1, Math.floor(Number(quantity) || 1));
-        const res = await createPaperCheckout(book.id, qty);
-        onCloseAction()
+        const res = await createPaperCheckout(book.id, qty)
+        onCloseAction();
         window.location.href = res.redirectUrl;
         return;
       }
@@ -107,33 +106,13 @@ export default function Drawer({
       if (newErrors.email || newErrors.phone) {
         setTouched({ email: true, phone: true });
         setErrors(newErrors);
-        setLoading(false);
         return;
       }
-      const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() });
-      onCloseAction()
+      const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() })
+      onCloseAction();
       window.location.href = res.redirectUrl;
-    } catch (err: unknown) {
+    } finally {
       setLoading(false);
-      type ErrorDetails = { errors?: Record<string, string[]> };
-      const message = err instanceof Error ? err.message : undefined;
-      const details: ErrorDetails | undefined =
-        typeof err === "object" && err !== null && "details" in err
-          ? (err as { details?: ErrorDetails }).details
-          : undefined;
-      const errs = details?.errors;
-      if (errs) {
-        if (errs.CustomerEmail?.[0]) {
-          notify.error("Будь ласка, введіть дійсну адресу електронної пошти.");
-        } else if (errs.CustomerPhone?.[0]) {
-          notify.error("Будь ласка, введіть дійсний номер телефону.");
-        } else {
-          const firstKey = Object.keys(errs)[0];
-          notify.error((firstKey ? errs[firstKey]?.[0] : undefined) || message || "Виникла помилка.");
-        }
-      } else {
-        notify.error("Не вдалося встановити безпечне з’єднання із сервером. Спробуйте змінити мережу або скористайтеся VPN.");
-      }
     }
   };
 
