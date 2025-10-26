@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "./GoodreadsRating.module.css";
+import styles from "./GoodreadsButton.module.css";
 import { getGoodreadsRating, type GoodreadsRatingData } from "@/lib/api";
 
 // A lightweight component that only renders the Goodreads button

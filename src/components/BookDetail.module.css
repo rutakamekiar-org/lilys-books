@@ -45,3 +45,15 @@
 
 /* Zebra striping for better readability: apply light background starting from the 2nd row */
 .specsGrid dd:nth-of-type(2n)::before { content: ""; position: absolute; left: -9999px; right: 0; top: 0; bottom: -1px; background: var(--accent-weak, rgba(0,0,0,0.020)); background: color-mix(in srgb, var(--accent) 3%, transparent); }
+
+/* Button under cover for excerpt/audio actions */
+.excerptBtn{ width: 100%;
+    justify-content: center;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top: 10px;
+    padding:10px 12px;
+    border-radius: 10px; border:1px solid var(--border); background: var(--surface); color: var(--text); cursor:pointer; }
+.excerptBtn:focus-visible{ outline: 3px solid rgba(240,155,48,0.35); outline-offset: 2px; }
+.excerptBtn :global(span){ font-weight: 600; }

@@ -8,7 +8,6 @@ import GoodreadsRating from "./GoodreadsRating";
 import GoodreadsButton from "./GoodreadsButton";
 import { addBasePath } from "@/lib/paths";
 import ExcerptDialog from "./ExcerptDialog";
-import excerptStyles from "./ExcerptDialog.module.css";
 
 export default function BookDetail({ book }: { book: Book }) {
   const [open, setOpen] = useState(false);
@@ -23,12 +22,12 @@ export default function BookDetail({ book }: { book: Book }) {
               <Image src={addBasePath(book.coverUrl)} alt={book.title} width={320} height={480}/>
               <GoodreadsButton bookId={book.id}/>
               {book.excerptHtml && (
-                  <a type="button" className={excerptStyles.excerptBtn} onClick={() => setExcerptOpen(true)}>
+                  <a type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
                       <i className="fa-solid fa-book-open"></i>
                       <span>Читати уривок</span>
                   </a>
               )}
-                  <a className={excerptStyles.excerptBtn} target="_blank" href="https://youtu.be/UznBnjro79c?si=xheJajt__wbom5Hw">
+                  <a className={styles.excerptBtn} target="_blank" href="https://youtu.be/UznBnjro79c?si=xheJajt__wbom5Hw">
                       <i className="fa-brands fa-youtube"></i>
                       <span>Слухати уривок</span>
                   </a>

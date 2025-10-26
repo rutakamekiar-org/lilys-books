@@ -1,6 +1,5 @@
 import type { Book } from "./types";
 import zvychajna from "@/content/books/zvychajna";
-import zvychajna2 from "@/content/books/zvychajna-2";
 
 const mockBooks: Book[] = [
   {
@@ -44,8 +43,6 @@ function withContent(book: Book): Book {
   switch (book.slug) {
     case "zvychajna":
       return { ...book, ...zvychajna };
-    case "zvychajna-2":
-      return { ...book, ...zvychajna2 };
     default:
       return book;
   }

@@ -8,20 +8,6 @@
 .body :global(p){ margin: 0 0 1em; text-indent: 2em; }
 .body :global(h2){ text-align: center; }
 
-/* Button under cover */
-.excerptBtn{ width: 100%;
-    justify-content: center;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    margin-top: 10px;
-    padding:10px 12px;
-    border-radius: 10px; border:1px solid var(--border); background: var(--surface); color: var(--text); cursor:pointer; }
-.excerptBtn:focus-visible{ outline: 3px solid rgba(240,155,48,0.35); outline-offset: 2px; }
-
-.excerptBtn :global(span){
-    font-weight: 600;
-}
 @media (max-width: 520px){
   .panel{ width: calc(100% - 12px); max-height: calc(100% - 12px); }
   .body{ padding: 12px 16px; overflow: auto; }
