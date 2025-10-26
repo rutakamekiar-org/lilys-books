@@ -132,7 +132,7 @@ export default function Drawer({
           notify.error((firstKey ? errs[firstKey]?.[0] : undefined) || message || "Виникла помилка.");
         }
       } else {
-        notify.error(message || "Сервер зараз недоступний. Спробуйте пізніше.");
+        notify.error("Не вдалося встановити безпечне з’єднання із сервером. Спробуйте змінити мережу або скористайтеся VPN.");
       }
     }
   };
