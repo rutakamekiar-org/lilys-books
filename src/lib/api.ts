@@ -1,7 +1,7 @@
 import type { CheckoutResponse } from "./types";
 import notify from "@/lib/toast";
 
-const API_URL = "https://spicy-avrit-kukharets-021c9f66.koyeb.app";
+const API_URL = "https://api.zvychajna.pp.ua";
 
 export interface ApiErrorDetails {
   title?: string;
