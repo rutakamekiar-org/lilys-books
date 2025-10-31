@@ -52,7 +52,7 @@ export const events: SimpleEvent[] = [
   {
     id: "2025-11-30-book-presentation",
     title: "Презентація книги «Звичайна» в Зандамі",
-    date: "2025-11-30T16:00:00Z",
+    date: "2025-11-30T12:00:00Z",
     location: "Oekraïense Club, Rozengracht 6-8, 1506 SC Zaandam",
     blurb: "Презентація книги «Звичайна» в Зандамі",
     url: "https://www.instagram.com/p/DQQ7UWkDZEy/?igsh=YnBxajRqZ2I2b29i",
@@ -61,7 +61,7 @@ export const events: SimpleEvent[] = [
   {
     id: "2025-11-29-book-presentation",
     title: "Презентація книги «Звичайна» в Ейндховені",
-    date: "2025-11-29T13:00:00Z",
+    date: "2025-11-29T9:00:00Z",
     location: "St. Claralaan 38, 5654 AV Eindhoven, Nederland",
     blurb: "Презентація книги «Звичайна» в Ейндховені",
     url: "https://www.facebook.com/share/1AAJgs2RJ5/?mibextid=wwXIfr",
