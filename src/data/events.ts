@@ -61,7 +61,7 @@ export const events: SimpleEvent[] = [
   {
     id: "2025-11-29-book-presentation",
     title: "Презентація книги «Звичайна» в Ейндховені",
-    date: "2025-11-29T9:00:00Z",
+    date: "2025-11-29T09:00:00Z",
     location: "St. Claralaan 38, 5654 AV Eindhoven, Nederland",
     blurb: "Презентація книги «Звичайна» в Ейндховені",
     url: "https://www.facebook.com/share/1AAJgs2RJ5/?mibextid=wwXIfr",
