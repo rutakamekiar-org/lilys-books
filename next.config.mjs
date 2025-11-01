@@ -10,6 +10,7 @@ const repo = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? '';
 
 // Detect if a custom domain is configured. If a CNAME file exists at the repo root
 // or an explicit env var is set, we should NOT prepend basePath.
+
 const repoRoot = process.cwd();
 const hasCNAME = fs.existsSync(path.join(repoRoot, 'CNAME'));
 const hasCustomDomainEnv = Boolean(process.env.PAGES_CUSTOM_DOMAIN || process.env.NEXT_PUBLIC_SITE_BASE);
