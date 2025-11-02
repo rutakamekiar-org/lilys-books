@@ -1,94 +1,10 @@
 import type { CheckoutResponse } from "./types";
-import notify from "@/lib/toast";
 import {GoodreadsRatingData} from "@/models/GoodreadsRatingData";
 import {ExternalRatingDto} from "@/models/ExternalRatingDto";
+import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
+import {Product} from "@/models/Product";
 
 const API_URL = "https://api.zvychajna.pp.ua";
-
-export interface ApiErrorDetails {
-  title?: string;
-  errors?: Record<string, string[]>;
-  [key: string]: unknown;
-}
-
-export interface ApiError extends Error {
-  details?: ApiErrorDetails;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
-
-export function notifyApiError(err: unknown) {
-  type ErrorDetails = { errors?: Record<string, string[]> };
-  const message = err instanceof Error ? err.message : undefined;
-  const details: ErrorDetails | undefined =
-    typeof err === "object" && err !== null && "details" in err
-      ? (err as { details?: ErrorDetails }).details
-      : undefined;
-  const errs = details?.errors;
-  if (errs) {
-    if (errs.CustomerEmail?.[0]) {
-      notify.error("Будь ласка, введіть дійсну адресу електронної пошти.");
-      return;
-    }
-    if (errs.CustomerPhone?.[0]) {
-      notify.error("Будь ласка, введіть дійсний номер телефону.");
-      return;
-    }
-    const firstKey = Object.keys(errs)[0];
-    notify.error((firstKey ? errs[firstKey]?.[0] : undefined) || message || "Виникла помилка.");
-  } else {
-    if (err instanceof TypeError && typeof navigator !== "undefined" && !navigator.onLine) {
-      notify.error("Відсутнє інтернет-з’єднання.");
-    } else if (err instanceof TypeError) {
-      notify.error("Не вдалося встановити безпечне з’єднання із сервером. Спробуйте змінити мережу або скористайтеся VPN.");
-    } else {
-      notify.error("Сталася помилка. Спробуйте пізніше.");
-    }
-  }
-}
-
-async function handleApi<T = CheckoutResponse>(res: Response): Promise<T> {
-  let data: unknown = null;
-  try {
-    data = await res.json();
-  } catch {
-    // ignore JSON parse errors
-  }
-  if (!res.ok) {
-    const title = (isRecord(data) && typeof data.title === "string")
-      ? data.title
-      : `Request failed with ${res.status}`;
-    const err: ApiError = new Error(title);
-    err.details = isRecord(data) ? (data as ApiErrorDetails) : undefined;
-    throw err;
-  }
-  return data as T;
-}
-
-function memoizeAsync<T>(
-    fn: (key: string) => Promise<T>,
-    ttlMs: number
-): (key: string) => Promise<T> {
-    const cache = new Map<string, { ts: number; val: T }>();
-    const inflight = new Map<string, Promise<T>>();
-    return async (key: string) => {
-        const now = Date.now();
-        const hit = cache.get(key);
-        if (hit && now - hit.ts < ttlMs) return hit.val;
-        if (inflight.has(key)) return inflight.get(key)!;
-        const p = fn(key)
-            .then((v) => {
-                cache.set(key, { ts: Date.now(), val: v });
-                return v;
-            })
-            .finally(() => inflight.delete(key));
-        inflight.set(key, p);
-        return p;
-    };
-}
-
 
 export async function createPaperCheckout(bookId: string, _quantity: number = 1): Promise<CheckoutResponse> {
   const qty = Math.max(1, Math.floor(Number(_quantity) || 1));
@@ -135,4 +51,13 @@ async function fetchGoodreadsRating(bookId: string): Promise<GoodreadsRatingData
         externalId: dto.externalId,
     };
 }
-export const getGoodreadsRating = memoizeAsync(fetchGoodreadsRating, 60 * 60 * 1000);
+export const getGoodreadsRating = memoizeAsync<string, GoodreadsRatingData>(fetchGoodreadsRating, 60 * 60 * 1000, (id) => id);
+
+async function fetchProducts(): Promise<Product[]> {
+    const res = await fetch(`${API_URL}/api/products`, { cache: "force-cache" });
+    const products = await handleApi<Product[]>(res);
+    return products
+}
+
+export const getProducts = memoizeAsync(fetchProducts, 60 * 60 * 1000, () => 'products');
+
