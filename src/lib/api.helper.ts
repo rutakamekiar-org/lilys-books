@@ -85,7 +85,11 @@ export function memoizeAsync<TParams, TResult>(
         const inflightHit = inflight.get(key);
         if (inflightHit) return inflightHit;
 
-        const exec = (fn as any)(params) as Promise<TResult>;
+        const exec: Promise<TResult> =
+            fn.length === 0
+                ? (fn as () => Promise<TResult>)()
+                : (fn as (p: TParams) => Promise<TResult>)(params as TParams);
+        
         const p = exec
             .then((val) => {
                 cache.set(key, { ts: Date.now(), val });

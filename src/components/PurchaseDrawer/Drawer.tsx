@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
-import {createDigitalInvoice, createPaperCheckout, notifyApiError} from "@/lib/api";
+import {createDigitalInvoice, createPaperCheckout } from "@/lib/api";
 import type { Book, BookFormat } from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
