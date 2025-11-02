@@ -60,20 +60,3 @@ export async function getBookBySlugMock(slug: string): Promise<Book> {
   if (!book) throw new Error("Not found");
   return withContent(book);
 }
-
-// Payment mocks return a fake redirect so you can test the flow
-export async function createPaperCheckoutMock(_bookId: string, _quantity?: number) {
-  void _bookId; void _quantity;
-  await new Promise((r) => setTimeout(r, 300));
-  return { redirectUrl: "https://example.com/mock-monocheckout" };
-}
-
-export async function createDigitalInvoiceMock(_params: {
-  productId: string;
-  customerEmail: string;
-  customerPhone: string;
-}) {
-  void _params;
-  await new Promise((r) => setTimeout(r, 300));
-  return { redirectUrl: "https://example.com/mock-monopay" };
-}

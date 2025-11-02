@@ -1,7 +1,8 @@
 "use client";
 import styles from "./GoodreadsRating.module.css";
 import { useEffect, useState, type CSSProperties } from "react";
-import { getGoodreadsRating, type GoodreadsRatingData } from "@/lib/api";
+import { getGoodreadsRating} from "@/lib/api";
+import {GoodreadsRatingData} from "@/models/GoodreadsRatingData";
 
 // Component now fetches Goodreads data itself
 // Props: bookId to fetch; component builds Goodreads URL from externalId; compact to hide the extra button

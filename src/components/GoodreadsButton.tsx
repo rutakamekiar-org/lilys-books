@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./GoodreadsButton.module.css";
-import { getGoodreadsRating, type GoodreadsRatingData } from "@/lib/api";
+import { getGoodreadsRating } from "@/lib/api";
+import {GoodreadsRatingData} from "@/models/GoodreadsRatingData";
 
 // A lightweight component that only renders the Goodreads button
 // Appears under the cover image in BookDetail. It fetches the same data

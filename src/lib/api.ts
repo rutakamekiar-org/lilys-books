@@ -1,5 +1,7 @@
 import type { CheckoutResponse } from "./types";
 import notify from "@/lib/toast";
+import {GoodreadsRatingData} from "@/models/GoodreadsRatingData";
+import {ExternalRatingDto} from "@/models/ExternalRatingDto";
 
 const API_URL = "https://api.zvychajna.pp.ua";
 
@@ -65,6 +67,29 @@ async function handleApi<T = CheckoutResponse>(res: Response): Promise<T> {
   return data as T;
 }
 
+function memoizeAsync<T>(
+    fn: (key: string) => Promise<T>,
+    ttlMs: number
+): (key: string) => Promise<T> {
+    const cache = new Map<string, { ts: number; val: T }>();
+    const inflight = new Map<string, Promise<T>>();
+    return async (key: string) => {
+        const now = Date.now();
+        const hit = cache.get(key);
+        if (hit && now - hit.ts < ttlMs) return hit.val;
+        if (inflight.has(key)) return inflight.get(key)!;
+        const p = fn(key)
+            .then((v) => {
+                cache.set(key, { ts: Date.now(), val: v });
+                return v;
+            })
+            .finally(() => inflight.delete(key));
+        inflight.set(key, p);
+        return p;
+    };
+}
+
+
 export async function createPaperCheckout(bookId: string, _quantity: number = 1): Promise<CheckoutResponse> {
   const qty = Math.max(1, Math.floor(Number(_quantity) || 1));
   const res = await fetch(`${API_URL}/api/checkout?id=${bookId}&count=${encodeURIComponent(qty)}`, {
@@ -97,65 +122,17 @@ export async function createDigitalInvoice(params: {
   return handleApi<CheckoutResponse>(res);
 }
 
-// Goodreads ratings
-export interface GoodreadsRatingData {
-  value: number;
-  count: number;
-  reviews: number;
-  externalId?: string;
-}
-
-interface ExternalRatingDto {
-  id: string;
-  bookId: string;
-  source: string; // "Goodreads"
-  externalId: string;
-  averageRating: number;
-  ratingsCount: number;
-  reviewsCount: number;
-  snapshotAtUtc: string;
-}
-
-// In-memory cache and in-flight de-duplication to avoid double fetches (e.g., React StrictMode)
-const GR_TTL_MS = 60 * 60 * 1000; // 1 hour
-const grCache = new Map<string, { ts: number; data: GoodreadsRatingData }>();
-const grInFlight = new Map<string, Promise<GoodreadsRatingData>>();
-
-export async function getGoodreadsRating(bookId: string): Promise<GoodreadsRatingData> {
-  if (!bookId) throw new Error("bookId is required");
-  bookId = '528c4b8b-ea9b-4231-9d37-def2c6b10be1'
-  // Serve from cache if fresh
-  const cached = grCache.get(bookId);
-  const now = Date.now();
-  if (cached && now - cached.ts < GR_TTL_MS) {
-    return cached.data;
-  }
-
-  // Return existing in-flight request if present
-  const inflight = grInFlight.get(bookId);
-  if (inflight) return inflight;
-
-  const promise = (async () => {
-    // Allow browser HTTP cache to store and reuse response up to server policy; our in-memory TTL is 1 hour
+async function fetchGoodreadsRating(bookId: string): Promise<GoodreadsRatingData> {
+    if (!bookId) throw new Error("bookId required");
+    bookId = '528c4b8b-ea9b-4231-9d37-def2c6b10be1'
     const res = await fetch(`${API_URL}/api/ratings/${bookId}`, { cache: "force-cache" });
-    const data = await handleApi<ExternalRatingDto>(res);
-    if (data?.source !== "Goodreads" || typeof data.averageRating !== "number") {
-      throw new Error("Invalid rating source");
-    }
-    const normalized: GoodreadsRatingData = {
-      value: data.averageRating,
-      count: data.ratingsCount ?? 0,
-      reviews: data.reviewsCount ?? 0,
-      externalId: data.externalId,
+    const dto = await handleApi<ExternalRatingDto>(res);
+    if (dto.source !== "Goodreads") throw new Error("Invalid source");
+    return {
+        value: dto.averageRating,
+        count: dto.ratingsCount ?? 0,
+        reviews: dto.reviewsCount ?? 0,
+        externalId: dto.externalId,
     };
-    grCache.set(bookId, { ts: Date.now(), data: normalized });
-    return normalized;
-  })();
-
-  grInFlight.set(bookId, promise);
-  try {
-    return await promise;
-  } finally {
-    grInFlight.delete(bookId);
-  }
 }
+export const getGoodreadsRating = memoizeAsync(fetchGoodreadsRating, 60 * 60 * 1000);
