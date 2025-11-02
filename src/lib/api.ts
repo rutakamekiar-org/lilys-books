@@ -123,7 +123,7 @@ const grInFlight = new Map<string, Promise<GoodreadsRatingData>>();
 
 export async function getGoodreadsRating(bookId: string): Promise<GoodreadsRatingData> {
   if (!bookId) throw new Error("bookId is required");
-
+  bookId = '528c4b8b-ea9b-4231-9d37-def2c6b10be1'
   // Serve from cache if fresh
   const cached = grCache.get(bookId);
   const now = Date.now();
