@@ -1,4 +1,5 @@
-import { getBooksMock as getBooks } from "@/lib/api.mock";
+import { getProducts } from "@/lib/api";
+import type { Product } from "@/models/Product";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -19,13 +20,13 @@ function resolveBaseUrl(): string {
 
 export default async function sitemap() {
   const base = resolveBaseUrl();
-  const books = await getBooks().catch(() => []);
+  const products: Product[] = await getProducts().catch(() => []);
   const now = new Date();
 
   return [
     { url: `${base}/`, lastModified: now },
     { url: `${base}/books`, lastModified: now },
-    ...books.map((b) => ({ url: `${base}/books/${b.slug}`, lastModified: now })),
+    ...products.map((p) => ({ url: `${base}/books/${p.slug}`, lastModified: now })),
     { url: `${base}/about`, lastModified: now },
   ];
 }

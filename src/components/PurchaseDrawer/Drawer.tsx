@@ -2,13 +2,14 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import {createDigitalInvoice, createPaperCheckout } from "@/lib/api";
-import type { Book, BookFormat } from "@/lib/types";
+import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
+import {Product} from "@/models/Product";
 
 export default function Drawer({
-  open, onCloseAction, book, format,
-}: { open: boolean; onCloseAction: () => void; book: Book; format: BookFormat; }) {
+  open, onCloseAction, product, format,
+}: { open: boolean; onCloseAction: () => void; product: Product; format: BookFormat; }) {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -75,7 +76,7 @@ export default function Drawer({
     setErrors(next);
   }, [email, phone, validEmail, validPhone, touched, format]);
 
-  const selected = useMemo(() => book.formats.find(f => f.type === format)!, [book, format]);
+  const selected = useMemo(() => product.items.find(f => getFormat(f) === format)!, [product, format]);
 
   const isPaper = format === "paper";
   const displayPrice = useMemo(() => {
@@ -95,7 +96,7 @@ export default function Drawer({
       setLoading(true);
       if (format === "paper") {
         const qty = Math.max(1, Math.floor(Number(quantity) || 1));
-        const res = await createPaperCheckout(book.id, qty)
+        const res = await createPaperCheckout(selected.id, qty)
         onCloseAction();
         window.location.href = res.redirectUrl;
         return;
@@ -108,7 +109,7 @@ export default function Drawer({
         setErrors(newErrors);
         return;
       }
-      const res = await createDigitalInvoice({ productId: selected.productId, customerEmail: email.trim(), customerPhone: phone.trim() })
+      const res = await createDigitalInvoice({ productId: selected.id, customerEmail: email.trim(), customerPhone: phone.trim() })
       onCloseAction();
       window.location.href = res.redirectUrl;
     } finally {
@@ -126,7 +127,7 @@ export default function Drawer({
         )}
         <header className={styles.header}>
           <h3 className={styles.headerTitle}>
-            <span className={styles.titleMain}>{book.title} — {isPaper ? "Паперова" : "Електронна"}</span>
+            <span className={styles.titleMain}>{product.name} — {isPaper ? "Паперова" : "Електронна"}</span>
             {selected?.price != null && (
               <span className={styles.price}>{`${displayPrice} грн`}</span>
             )}

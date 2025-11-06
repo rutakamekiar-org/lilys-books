@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { getBooksMock as getBooks } from "@/lib/api.mock";
+import { getProducts } from "@/lib/api";
 import BookCard from "@/components/BookCard";
 import styles from "./books.module.css";
+import type { Product } from "@/models/Product";
 
 export const metadata: Metadata = {
   title: "Книги — каталог",
@@ -11,16 +12,16 @@ export const metadata: Metadata = {
 export const dynamic = "force-static";
 
 export default async function BooksPage() {
-  const books = await getBooks().catch(() => []);
+  const products: Product[] = await getProducts().catch(() => []);
   return (
     <section>
       <h1>Книги</h1>
-      {(!books || books.length === 0) ? (
+      {(!products || products.length === 0) ? (
         <p className={styles.empty}>Поки що немає книг для відображення.</p>
       ) : (
         <div className={styles.grid}>
-          {books.map((b) => (
-            <BookCard key={b.id} book={b} />
+          {products.map((b) => (
+            <BookCard key={b.id} product={b} />
           ))}
         </div>
       )}

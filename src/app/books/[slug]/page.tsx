@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { getBookBySlugMock as getBookBySlug, getBooksMock as getBooks } from "@/lib/api.mock";
+import { getProducts } from "@/lib/api";
 import BookDetail from "@/components/BookDetail";
-import type { Book } from "@/lib/types";
+import type { Product } from "@/models/Product";
 import { addBasePath } from "@/lib/paths";
 
  type Props = { params: Promise<{ slug: string }> };
@@ -14,43 +14,45 @@ export const dynamic = "force-static";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const books = await getBooks().catch(() => [] as Book[]);
-  return books.map((b: Book) => ({ slug: b.slug }));
+  const products: Product[] = await getProducts().catch(() => [] as Product[]);
+  return products.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { slug } = await props.params;
-  const book = await getBookBySlug(slug).catch(() => null);
-  if (!book) return { title: "Книга не знайдена" };
+  const products: Product[] = await getProducts().catch(() => [] as Product[]);
+  const product = products.find(x => x.slug === slug);
+  if (!product) return { title: "Книга не знайдена" };
 
-  const coverUrl = addBasePath(book.coverUrl);
   return {
-    title: `${book.title} — ${book.author}`,
-    description: book.descriptionHtml?.toString(),
-    openGraph: { title: book.title, description: book.descriptionHtml?.toString(), images: [{ url: coverUrl }] },
-    alternates: { canonical: addBasePath(`/books/${book.slug}`) },
+    title: `${product.name} — ${product.author}`,
+    description: product.descriptionHtml?.toString(),
+    openGraph: { title: product.name, description: product.descriptionHtml?.toString(), images: [{ url: product.imageUrl }] },
+    alternates: { canonical: addBasePath(`/books/${product.slug}`) },
   };
 }
 
 export default async function BookPage(props: Props) {
   const { slug } = await props.params;
-  const book = await getBookBySlug(slug);
+  const products: Product[] = await getProducts().catch(() => [] as Product[]);
+  const product = products.find(x => x.slug === slug);
+  if (!product) throw new Error("Not found");
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Book",
-    name: book.title,
-    author: { "@type": "Person", name: book.author },
-    image: addBasePath(book.coverUrl),
-    description: stripTags(book.descriptionHtml?.toString() ?? ''),
-    workExample: book.formats.map((f: Book["formats"][number]) => ({
+    name: product.name,
+    author: { "@type": "Person", name: product.author },
+    image: addBasePath(product.imageUrl),
+    description: stripTags(product.descriptionHtml?.toString() ?? ''),
+    workExample: product.items.map((f) => ({
       "@type": "Book",
-      bookFormat: f.type === "paper" ? "https://schema.org/PrintBook" : "https://schema.org/EBook",
+      bookFormat: f.type === 1 ? "https://schema.org/PrintBook" : "https://schema.org/EBook",
       offers: {
         "@type": "Offer",
         price: String(f.price),
         priceCurrency: f.currency,
-        availability: f.available ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        availability: f.isAvailable ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       },
     })),
   };
@@ -58,7 +60,7 @@ export default async function BookPage(props: Props) {
   return (
     <>
       <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <BookDetail book={book} />
+      <BookDetail product={product} />
     </>
   );
 }

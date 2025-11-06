@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
-import { getBooksMock } from "@/lib/api.mock";
+import { getProducts } from "@/lib/api";
 import GoodreadsRating from "@/components/GoodreadsRating";
 import {addBasePath, withCacheBust} from "@/lib/paths";
+import type { Product } from "@/models/Product";
 
 export const metadata: Metadata = {
   title: "Лілія Кухарець — офіційний сайт",
@@ -20,12 +21,11 @@ function formatUAH(amount: number) {
 }
 
 export default async function HomePage() {
-  const books = await getBooksMock().catch(() => []);
-  const featured = books[0] || null;
+  const products: Product[] = await getProducts().catch(() => []);
+  const product = products[0] || null;
+  const featured = product
 
-  // Compute minimal price among available formats, fallback to any format
-    const available = featured.formats.filter(f => f.available);
-    const minPrice = available.length ? Math.min(...available.map(f => f.price)) : null;
+  const minPrice = Math.min(...product?.items.map(x => x.price))
 
     return (
     <section className={styles.hero}>
@@ -38,7 +38,7 @@ export default async function HomePage() {
             <>
               {/* Goodreads rating for featured */}
               <GoodreadsRating
-                bookId={featured.id}
+                product={product as Product}
               />
 
               {featured.descriptionHtml && (
@@ -71,7 +71,7 @@ export default async function HomePage() {
                   {featured.ageRating}
                 </span>
               )}
-              <Image src={addBasePath(featured.coverUrl)} alt={featured.title} width={360} height={540} />
+              <Image src={addBasePath(featured.imageUrl)} alt={featured.name} width={360} height={540} />
             </>
           )}
         </div>

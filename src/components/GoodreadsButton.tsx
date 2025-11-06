@@ -1,34 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./GoodreadsButton.module.css";
-import { getGoodreadsRating } from "@/lib/api";
-import {GoodreadsRatingData} from "@/models/GoodreadsRatingData";
+import {ExternalBookRating, getExternalBookRatingType, Product} from "@/models/Product";
 
 // A lightweight component that only renders the Goodreads button
-// Appears under the cover image in BookDetail. It fetches the same data
-// as GoodreadsRating but only shows the button when a Goodreads URL is available.
-export default function GoodreadsButton({ bookId }: { bookId: string }) {
-  const [data, setData] = useState<GoodreadsRatingData | null>(null);
+// Appears under the cover image in BookDetail. Uses only embedded data from Product.
+export default function GoodreadsButton({ product }: { product: Product }) {
+  const [data, setData] = useState<ExternalBookRating | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
     setError(null);
     setData(null);
-    if (!bookId) return;
+    if (!product) return;
 
-    getGoodreadsRating(bookId)
-      .then((d) => {
-        if (!cancelled) setData(d);
-      })
-      .catch(() => {
-        if (!cancelled) setError("load_failed");
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [bookId]);
+    const rating = product.externalBookRatings.find(x => getExternalBookRatingType(x) === "goodreads");
+    if (rating) {
+      setData(rating);
+    } else {
+      setError("no_embedded_rating");
+    }
+  }, [product]);
 
   if (error || !data?.externalId) return null;
 
