@@ -12,14 +12,14 @@
 .age6p  { background: #2b8a3e; }
 .age0p  { background: #555; }
 
-.segmented { display: grid; grid-auto-flow: row; gap: 10px; margin: 18px 0; }
+.segmented { display: grid; grid-auto-flow: row; gap: 10px; margin-top: 18px; }
 .opt { position: relative; display: block; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer; user-select: none; background: var(--surface); }
 .opt input { position: absolute; inset: 0; opacity: 0; }
 .active { border-color: var(--accent); background: var(--accent-weak); }
 .disabled { opacity: .55; cursor: not-allowed; }
 
 .buybar { display: grid; gap: 6px; padding: 6px 0; }
-.buy { display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; }
+.buy { display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; margin-top: 18px;}
 .buy:disabled { background: #e0e0e0; color: #9a9a9a; cursor: not-allowed; }
 .hint { color: var(--muted); }
 

@@ -1,7 +1,8 @@
 import type { CheckoutResponse } from "./types";
 import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
-import {Product} from "@/models/Product";
+import {ExternalLink, Product} from "@/models/Product";
 import zvychajna from "@/content/books/zvychajna";
+import pid_shepit_snihu from "@/content/books/pid_shepit_snihu";
 
 const API_URL = "https://api.zvychajna.pp.ua";
 
@@ -40,18 +41,37 @@ export async function createDigitalInvoice(params: {
 async function fetchProducts(): Promise<Product[]> {
     const res = await fetch(`${API_URL}/api/products`, { cache: "force-cache" });
     const products = await handleApi<Product[]>(res);
+    function getExcerpt(slug: string) {
+        switch (slug){
+            case "zvychajna": return zvychajna.excerptHtml;
+            case "pid_shepit_snihu": return pid_shepit_snihu.excerptHtml;
+        }
+        return '';
+    }
+    function getDescription(slug: string) {
+        switch (slug){
+            case "zvychajna": return zvychajna.descriptionHtml;
+            case "pid_shepit_snihu": return pid_shepit_snihu.descriptionHtml;
+        }
+        return '';
+    }
+    function getExternalLink(slug: string):ExternalLink[] {
+        switch (slug){
+            case "zvychajna": return [ { link:'https://www.youtube.com/watch?v=UznBnjro79c', type: "youtube"}];
+            case "pid_shepit_snihu": return [ { link:'https://bohdan-books.com/catalog/book/318531', type: "publisher"}];
+        }
+        return [];
+    }
+
     return products.map(product => {
         return {
             ...product,
-            slug: 'zvychajna',
-            ageRating: "16+",
-            author: 'Лілія Кухарець',
-            excerptHtml: zvychajna.excerptHtml,
-            descriptionHtml: zvychajna.descriptionHtml,
-            externalLinks: [ { link:'https://www.youtube.com/watch?v=UznBnjro79c', type: "youtube"}]
+            excerptHtml: getExcerpt(product.slug),
+            descriptionHtml: getDescription(product.slug),
+            externalLinks: getExternalLink(product.slug)
         }
     })
 }
 
-export const getProducts = memoizeAsync(fetchProducts, 60 * 60 * 1000, () => 'products');
+export const getProducts = memoizeAsync(fetchProducts, 60 * 1000, () => 'products');
 

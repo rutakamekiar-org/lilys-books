@@ -3,6 +3,7 @@ import { getProducts } from "@/lib/api";
 import BookDetail from "@/components/BookDetail";
 import type { Product } from "@/models/Product";
 import { addBasePath } from "@/lib/paths";
+import {getPrice} from "@/lib/product-item.helper";
 
  type Props = { params: Promise<{ slug: string }> };
 
@@ -50,9 +51,9 @@ export default async function BookPage(props: Props) {
       bookFormat: f.type === 1 ? "https://schema.org/PrintBook" : "https://schema.org/EBook",
       offers: {
         "@type": "Offer",
-        price: String(f.price),
+        price: String(getPrice(f)),
         priceCurrency: f.currency,
-        availability: f.isAvailable ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+        availability: f.isAvailable || f.canPreorder ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       },
     })),
   };

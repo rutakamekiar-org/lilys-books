@@ -4,10 +4,11 @@ import Link from "next/link";
 import styles from "./BookCard.module.css";
 import {addBasePath, withCacheBust} from "@/lib/paths";
 import {Product} from "@/models/Product";
+import {getMinPrice} from "@/lib/product-item.helper";
 
 export default function BookCard({ product }: { product: Product }) {
-  const available = product.items.filter(f => f.isAvailable);
-  const minPrice = available.length ? Math.min(...available.map(f => f.price)) : null;
+  const available = product.items.filter(f => f.isAvailable || f.canPreorder);
+  const minPrice = available.length ? getMinPrice(available) : null;
 
   return (
     <Link href={withCacheBust(`/books/${product.slug}`)} className={styles.card}>

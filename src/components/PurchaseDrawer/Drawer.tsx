@@ -6,6 +6,7 @@ import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
 import {Product} from "@/models/Product";
+import {getPrice} from "@/lib/product-item.helper";
 
 export default function Drawer({
   open, onCloseAction, product, format,
@@ -80,13 +81,13 @@ export default function Drawer({
 
   const isPaper = format === "paper";
   const displayPrice = useMemo(() => {
-    const base = selected?.price ?? 0;
+    const base = getPrice(selected) ?? 0;
     if (isPaper) {
       const qty = Math.max(1, Math.floor(Number(quantity) || 1));
       return base * qty;
     }
     return base;
-  }, [selected?.price, isPaper, quantity]);
+  }, [selected, isPaper, quantity]);
 
   if (!open) return null;
 
@@ -128,9 +129,7 @@ export default function Drawer({
         <header className={styles.header}>
           <h3 className={styles.headerTitle}>
             <span className={styles.titleMain}>{product.name} — {isPaper ? "Паперова" : "Електронна"}</span>
-            {selected?.price != null && (
-              <span className={styles.price}>{`${displayPrice} грн`}</span>
-            )}
+            <span className={styles.price}>{`${displayPrice} грн`}</span>
           </h3>
           <button onClick={onCloseAction} aria-label="Закрити" className={styles.close}>×</button>
         </header>

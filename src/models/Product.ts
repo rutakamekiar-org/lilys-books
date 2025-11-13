@@ -4,8 +4,11 @@ export interface ProductItem {
     id: string;
     type: number; // 1 = paper, 2 = digital
     isAvailable: boolean;
+    canPreorder: boolean;
     price: number;
+    discountPrice?: number;
     currency: string;
+    note?: string;
 }
 
 export interface PhysicalDetails {
@@ -34,13 +37,14 @@ export interface ExternalBookRating {
 }
 
 export interface ExternalLink {
-    type: 'youtube' | 'amazon';
+    type: 'youtube' | 'amazon' | 'publisher';
     link: string;
 }
 
 export interface Product {
     id: string;
     name: string;
+    genre?: string;
     imageUrl: string;
     items: ProductItem[];
     externalBookRatings: ExternalBookRating[];
@@ -49,7 +53,7 @@ export interface Product {
     descriptionHtml?: string;
     excerptHtml?: string;
 
-    slug?: string; // optional backend-provided slug for routing
+    slug: string;
     author?: string; // author name for display
     ageRating?: AgeRating;
 }

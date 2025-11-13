@@ -6,6 +6,7 @@ import { getProducts } from "@/lib/api";
 import GoodreadsRating from "@/components/GoodreadsRating";
 import {addBasePath, withCacheBust} from "@/lib/paths";
 import type { Product } from "@/models/Product";
+import {getMinPrice} from "@/lib/product-item.helper";
 
 export const metadata: Metadata = {
   title: "Лілія Кухарець — офіційний сайт",
@@ -24,15 +25,14 @@ export default async function HomePage() {
   const products: Product[] = await getProducts().catch(() => []);
   const product = products[0] || null;
   const featured = product
-
-  const minPrice = Math.min(...product?.items.map(x => x.price))
-
+  if (!featured) return null;
+  const minPrice = getMinPrice(featured.items)
     return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>
         <div className={styles.copy}>
-          <h1>«Звичайна»</h1>
-          <p>постапокаліптичний ромком</p>
+          <h1>«{featured.name}»</h1>
+            {featured.genre && <p>{featured.genre}</p>}
 
           {featured && (
             <>
