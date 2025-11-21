@@ -2,6 +2,7 @@ import {AgeRating} from "@/lib/types";
 
 export interface ProductItem {
     id: string;
+    name: string;
     type: number; // 1 = paper, 2 = digital
     isAvailable: boolean;
     canPreorder: boolean;
