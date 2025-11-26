@@ -20,6 +20,7 @@ export default function BookDetail({ product }: { product: Product }) {
   const selected = product.items.find(f => getFormat(f) === format);
   const youtubeLink = product?.externalLinks?.find(x => x.type === 'youtube')
   const publisherLink = product?.externalLinks?.find(x => x.type === 'publisher')
+  const rigaLink = product?.externalLinks?.find(x => x.type === 'riga')
     let buyText;
 
     if (selected?.isAvailable) {
@@ -51,6 +52,12 @@ export default function BookDetail({ product }: { product: Product }) {
                       <a className={styles.excerptBtn} target="_blank" rel="noopener" href={publisherLink.link}>
                           <i className="fa-solid fa-book"></i>
                           <span>На сайт видавництва</span>
+                      </a>
+                  )}
+                  {rigaLink && (
+                      <a className={styles.excerptBtn} target="_blank" rel="noopener" href={rigaLink.link}>
+                          <i className="fa-solid fa-book"></i>
+                          <span>Книгарня в Європі</span>
                       </a>
                   )}
               </div>

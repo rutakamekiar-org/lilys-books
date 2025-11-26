@@ -38,7 +38,7 @@ export interface ExternalBookRating {
 }
 
 export interface ExternalLink {
-    type: 'youtube' | 'amazon' | 'publisher';
+    type: 'youtube' | 'amazon' | 'publisher' | 'riga';
     link: string;
 }
 
