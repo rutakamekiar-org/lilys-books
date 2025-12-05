@@ -3,12 +3,15 @@ import type { Metadata } from "next";
 import {useEffect, useState} from "react";
 import type {Product} from "@/models/Product";
 import {getProducts} from "@/lib/api";
+import jsQR from "jsqr";
 
 // const API_URL = "https://localhost:7213";
 const API_URL = "https://api.zvychajna.pp.ua";
 
 export default function TestPage() {
     const [svg, setSvg] = useState<string>("");
+    const [decoded, setDecoded] = useState("");
+
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedItemId, setSelectedItemId] = useState<string>("");
     const [price, setPrice] = useState<string>("");
@@ -32,6 +35,29 @@ export default function TestPage() {
         });
         const svgText = await res.text();
         setSvg(svgText);
+        const value = await decodeSvg(svgText);
+        setDecoded(value ?? "");
+    };
+    const decodeSvg = async (svgText: string) => {
+        const blob = new Blob([svgText], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(blob);
+
+        const img = new Image();
+        img.src = url;
+        await new Promise(r => img.onload = r);
+
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0);
+
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const qr = jsQR(imageData.data, imageData.width, imageData.height);
+
+        URL.revokeObjectURL(url);
+        return qr?.data || null;
     };
 
     const priceNumber = Number(price);
@@ -101,7 +127,10 @@ export default function TestPage() {
                         Fetch QR
                     </button>
                     <button
-                        onClick={() => setSvg("")}
+                        onClick={() => {
+                            setSvg("");
+                            setDecoded("");
+                        }}
                         disabled={!canFetch}
                         style={{
                             padding: "8px 16px",
@@ -119,6 +148,7 @@ export default function TestPage() {
             </div>
 
             <div className="qrWrap">
+                <div>{decoded}</div>
                 <div
                     dangerouslySetInnerHTML={{ __html: svg }}
                 />
@@ -128,7 +158,7 @@ export default function TestPage() {
               .testPage { padding: 40px; }
               .formWrap { max-width: 520px; }
               .btnRow { display: flex; gap: 12px; }
-              .qrWrap { margin-top: 20px; display: flex; justify-content: center; }
+              .qrWrap { margin-top: 20px; display: flex; justify-content: center; flex-direction: column }
               /* Make injected SVG responsive on all screens */
               .qrWrap :global(svg) {
                 width: 100% !important;
