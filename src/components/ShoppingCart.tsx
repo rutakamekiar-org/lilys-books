@@ -1,10 +1,9 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./ShoppingCart.module.css";
 import { addBasePath } from "@/lib/paths";
 import { Product } from "@/models/Product";
-import { getFormat } from "@/lib/types";
 import { getPrice } from "@/lib/product-item.helper";
 
 export interface CartItem {
@@ -34,7 +33,7 @@ export default function ShoppingCart({
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
 
-  // Close on Escape key
+  // Close on the Escape key
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape" && open) onClose();

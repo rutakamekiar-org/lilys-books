@@ -1,5 +1,4 @@
 "use client";
-import type { Metadata } from "next";
 import {useEffect, useState} from "react";
 import type {Product} from "@/models/Product";
 import {getProducts} from "@/lib/api";

@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useRef } from "react";
 import type React from "react";
 import styles from "./ExcerptDialog.module.css";

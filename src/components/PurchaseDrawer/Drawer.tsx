@@ -8,7 +8,6 @@ import { addBasePath } from "@/lib/paths";
 import {Product} from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
 import { useCart } from "@/components/CartProvider";
-import { toast } from "react-toastify";
 import notify from "@/lib/toast";
 
 export default function Drawer({

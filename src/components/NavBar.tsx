@@ -7,7 +7,6 @@ import { withCacheBust } from "@/lib/paths";
 import { useCart } from "@/components/CartProvider";
 import ShoppingCart from "@/components/ShoppingCart";
 import CheckoutForm, { CheckoutFormData } from "@/components/CheckoutForm";
-import { toast } from "react-toastify";
 import notify from "@/lib/toast";
 
 export default function NavBar() {
