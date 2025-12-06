@@ -149,6 +149,46 @@
 .headerTitle{ margin: 0; }
 .price::before{ content: " \2022  "; /* bullet with spaces */ }
 
+.actionButtons {
+  padding: 12px 16px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.addToCartBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 2px solid var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.addToCartBtn:hover {
+  background: var(--accent-weak);
+}
+
+.addToCartBtn:disabled {
+  border-color: #e0e0e0;
+  color: #9a9a9a;
+  cursor: not-allowed;
+}
+
+.addToCartBtn:disabled:hover {
+  background: var(--surface);
+}
+
+.addToCartBtn:focus-visible {
+  outline: 3px solid rgba(240, 155, 48, 0.35);
+  outline-offset: 2px;
+}
+
 @media (max-width: 480px){
   .content{ padding: 12px; }
   .header{ justify-content: center; }
@@ -156,4 +196,6 @@
   .price{ display: block; margin-top: 4px; }
   .price::before{ content: ""; }
   .close{ position: absolute; right: 8px; top: 8px; }
+  .actionButtons { padding: 12px 12px 0; }
+  .addToCartBtn { width: 100%; justify-content: center; }
 }

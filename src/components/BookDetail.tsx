@@ -2,22 +2,45 @@
 import Image from "next/image";
 import { useState, Fragment } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
-import Drawer from "./PurchaseDrawer/Drawer";
 import styles from "./BookDetail.module.css";
 import GoodreadsRating from "./GoodreadsRating";
 import GoodreadsButton from "./GoodreadsButton";
 import { addBasePath } from "@/lib/paths";
 import ExcerptDialog from "./ExcerptDialog";
+import { useCart } from "./CartProvider";
+import notify from "@/lib/toast";
 
 import type { Product } from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
 import PriceText from "@/components/PriceText";
 
 export default function BookDetail({ product }: { product: Product }) {
-  const [open, setOpen] = useState(false);
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [format, setFormat] = useState<BookFormat>("paper");
+  const { addItem, isInCart, openCart } = useCart();
   const selected = product.items.find(f => getFormat(f) === format);
+  const itemInCart = selected ? isInCart(selected.id) : false;
+
+  const handleBuyNow = () => {
+    if (!selected) return;
+    const wasAdded = addItem(product, selected.id, format, 1);
+    if (wasAdded) {
+        notify.success(`"${product.name}" додано до кошика`);
+    } else {
+        notify.info(`"${product.name}" вже в кошику`);
+    }
+    openCart();
+  };
+
+  const handleAddToCart = () => {
+    if (!selected) return;
+    const wasAdded = addItem(product, selected.id, format, 1);
+    if (wasAdded) {
+        notify.success(`"${product.name}" додано до кошика`);
+    } else {
+        notify.info(`"${product.name}" вже в кошику`);
+    }
+  };
   const youtubeLink = product?.externalLinks?.find(x => x.type === 'youtube')
   const publisherLink = product?.externalLinks?.find(x => x.type === 'publisher')
   const rigaLink = product?.externalLinks?.find(x => x.type === 'riga')
@@ -105,11 +128,22 @@ export default function BookDetail({ product }: { product: Product }) {
                   }
 
                   <div className={styles.buybar}>
-                      <button className={styles.buy} disabled={!selected?.isAvailable && !selected?.canPreorder}
-                              onClick={() => setOpen(true)}>
-                          {buyText}
-                      </button>
-                      <small className={styles.hint}>Натисніть, щоб оформити замовлення</small>
+                      <div className={styles.buyButtons}>
+                        <button className={styles.buy} disabled={!selected?.isAvailable && !selected?.canPreorder}
+                                onClick={handleBuyNow}>
+                            {buyText}
+                        </button>
+                        <button
+                          className={`${styles.addToCart} ${itemInCart ? styles.inCart : ""}`}
+                          disabled={!selected?.isAvailable && !selected?.canPreorder}
+                          onClick={handleAddToCart}
+                          title={itemInCart ? "Вже в кошику" : "Додати до кошика"}>
+                            <i className={itemInCart ? "fas fa-check" : "fas fa-cart-plus"}></i>
+                        </button>
+                      </div>
+                      <small className={styles.hint}>
+                        {itemInCart ? "Товар вже в кошику" : "Купити зараз або додати до кошика"}
+                      </small>
                       {selected?.note && (
                           <small className={styles.hint}>{selected.note}</small>
                       )}
@@ -151,7 +185,6 @@ export default function BookDetail({ product }: { product: Product }) {
               </div>
           </div>
 
-          <Drawer open={open} onCloseAction={() => setOpen(false)} product={product} format={format}/>
           {product.excerptHtml && (
               <ExcerptDialog open={excerptOpen} onClose={() => setExcerptOpen(false)} title={product.name}
                              html={product.excerptHtml}/>

@@ -19,8 +19,38 @@
 .disabled { opacity: .55; cursor: not-allowed; }
 
 .buybar { display: grid; gap: 6px; padding: 6px 0; }
-.buy { display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; margin-top: 18px;}
+.buyButtons { display: flex; gap: 10px; margin-top: 18px; }
+.buy { flex: 1; display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; }
 .buy:disabled { background: #e0e0e0; color: #9a9a9a; cursor: not-allowed; }
+.addToCart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 20px;
+  border-radius: 12px;
+  border: 2px solid var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.addToCart:hover { background: var(--accent-weak); }
+.addToCart.inCart {
+  border-color: #2b8a3e;
+  color: #2b8a3e;
+  background: rgba(43, 138, 62, 0.08);
+}
+.addToCart.inCart:hover {
+  background: rgba(43, 138, 62, 0.15);
+}
+.addToCart:disabled {
+  border-color: #e0e0e0;
+  color: #9a9a9a;
+  cursor: not-allowed;
+}
+.addToCart:disabled:hover { background: var(--surface); }
 .hint { color: var(--muted); }
 
 .specs { margin-top: 16px; }
@@ -39,7 +69,9 @@
 
 @media (max-width: 960px){
   .grid { grid-template-columns: 1fr; }
+  .buyButtons { flex-direction: column; }
   .buy { width: 100%; }
+  .addToCart { width: 100%; }
   .specsGrid { grid-template-columns: minmax(120px, 42%) 1fr;}
 }
 

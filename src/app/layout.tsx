@@ -9,6 +9,7 @@ import Script from "next/script";
 import Analytics from "@/app/analytics";
 import { Suspense } from "react";
 import ToastProvider from "@/components/ToastProvider";
+import { CartProvider } from "@/components/CartProvider";
 
 const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
 const isGaEnabled = Boolean(GA_MEASUREMENT_ID);
@@ -57,19 +58,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ClarityInit />
         <ToastProvider />
-        <header>
-          <NavBar />
-        </header>
-        <main>
-            <Suspense fallback={null}>
-                <Analytics />
-            </Suspense>
-            {children}
-        </main>
-        <footer>
-          <Contacts />
-          © {new Date().getFullYear()} Лілія Кухарець. Усі права захищені.
-        </footer>
+        <CartProvider>
+          <header>
+            <NavBar />
+          </header>
+          <main>
+              <Suspense fallback={null}>
+                  <Analytics />
+              </Suspense>
+              {children}
+          </main>
+          <footer>
+            <Contacts />
+            © {new Date().getFullYear()} Лілія Кухарець. Усі права захищені.
+          </footer>
+        </CartProvider>
       </body>
     </html>
   );

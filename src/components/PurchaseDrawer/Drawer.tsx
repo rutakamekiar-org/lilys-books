@@ -7,10 +7,14 @@ import styles from "./Drawer.module.css";
 import { addBasePath } from "@/lib/paths";
 import {Product} from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
+import { useCart } from "@/components/CartProvider";
+import { toast } from "react-toastify";
+import notify from "@/lib/toast";
 
 export default function Drawer({
   open, onCloseAction, product, format,
 }: { open: boolean; onCloseAction: () => void; product: Product; format: BookFormat; }) {
+  const { addItem, openCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -90,6 +94,18 @@ export default function Drawer({
   }, [selected, isPaper, quantity]);
 
   if (!open) return null;
+
+  const handleAddToCart = () => {
+    const qty = isPaper ? Math.max(1, Math.floor(Number(quantity) || 1)) : 1;
+    const wasAdded = addItem(product, selected.id, format, qty);
+    if (wasAdded) {
+        notify.success(`"${product.name}" додано до кошика`);
+    } else {
+        notify.info(`"${product.name}" вже в кошику`);
+    }
+    onCloseAction();
+    openCart();
+  };
 
   const onPurchase = async () => {
     try {
@@ -201,6 +217,17 @@ export default function Drawer({
         </div>
 
         {/* Footer buttons matching original design */}
+        <div className={styles.actionButtons}>
+          <button
+            className={styles.addToCartBtn}
+            onClick={handleAddToCart}
+            disabled={loading || (isPaper ? !quantityValid : !digitalValid)}
+          >
+            <i className="fas fa-cart-plus"></i>
+            <span>Додати до кошика</span>
+          </button>
+        </div>
+
         {isPaper ? (
           <div className={styles.digitalCta}>
             <button className={styles.imageBtn} onClick={onPurchase} aria-label="Monobank Checkout" disabled={loading || !quantityValid}>

@@ -1,19 +1,92 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import styles from "./NavBar.module.css";
 import { withCacheBust } from "@/lib/paths";
+import { useCart } from "@/components/CartProvider";
+import ShoppingCart from "@/components/ShoppingCart";
+import CheckoutForm, { CheckoutFormData } from "@/components/CheckoutForm";
+import { toast } from "react-toastify";
+import notify from "@/lib/toast";
 
 export default function NavBar() {
   const pathname = usePathname() || "/";
+  const cart = useCart();
+  const { items, itemCount, updateQuantity, removeItem, clearCart } = cart;
+  const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
+  // Register openCart callback in context
+  useEffect(() => {
+    cart.registerOpenCallback(() => setCartOpen(true));
+  }, [cart]);
+
   const cls = (href: string) =>
     `${styles.link} ${pathname === href ? styles.active : ""}`;
+
+  const handleCheckout = () => {
+    setCartOpen(false);
+    setCheckoutOpen(true);
+  };
+
+  const handleCheckoutSubmit = async (data: CheckoutFormData) => {
+    try {
+      // Simulate API request
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      // Log order data (in production, this would be sent to backend)
+      console.log("Order submitted:", {
+        customer: data,
+        items: items.map(item => ({
+          productId: item.itemId,
+          productName: item.product.name,
+          format: item.format,
+          quantity: item.quantity,
+        })),
+        timestamp: new Date().toISOString(),
+      });
+
+      notify.success("Замовлення оформлено!");
+
+      setCheckoutOpen(false);
+      clearCart();
+    } catch (error) {
+      console.error("Order submission failed:", error);
+      notify.error("Помилка при оформленні замовлення. Спробуйте ще раз.");
+    }
+  };
+
   return (
-    <nav className={styles.nav}>
-      <Link href={withCacheBust("/")} className={cls("/")} aria-current={pathname === "/" ? "page" : undefined}>Головна</Link>
-      <Link href={withCacheBust("/books")} className={cls("/books")} aria-current={pathname === "/books" ? "page" : undefined}>Книги</Link>
-      <Link href={withCacheBust("/events")} className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>
-      <Link href={withCacheBust("/about")} className={cls("/about")} aria-current={pathname === "/about" ? "page" : undefined}>Про мене</Link>
-    </nav>
+    <>
+      <nav className={styles.nav}>
+        <Link href={withCacheBust("/")} className={cls("/")} aria-current={pathname === "/" ? "page" : undefined}>Головна</Link>
+        <Link href={withCacheBust("/books")} className={cls("/books")} aria-current={pathname === "/books" ? "page" : undefined}>Книги</Link>
+        <Link href={withCacheBust("/events")} className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>
+        <Link href={withCacheBust("/about")} className={cls("/about")} aria-current={pathname === "/about" ? "page" : undefined}>Про мене</Link>
+        <button
+          onClick={() => setCartOpen(true)}
+          className={styles.cartBtn}
+          aria-label={`Кошик, ${itemCount} товарів`}
+        >
+          <i className="fas fa-shopping-cart"></i>
+          {itemCount > 0 && <span className={styles.cartBadge}>{itemCount}</span>}
+        </button>
+      </nav>
+      <ShoppingCart
+        open={cartOpen}
+        onClose={() => setCartOpen(false)}
+        items={items}
+        onUpdateQuantity={updateQuantity}
+        onRemoveItem={removeItem}
+        onCheckout={handleCheckout}
+      />
+      <CheckoutForm
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        items={items}
+        onSubmit={handleCheckoutSubmit}
+      />
+    </>
   );
 }
