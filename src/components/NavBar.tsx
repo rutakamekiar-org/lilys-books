@@ -8,6 +8,7 @@ import { useCart } from "@/components/CartProvider";
 import ShoppingCart from "@/components/ShoppingCart";
 import CheckoutForm, { CheckoutFormData } from "@/components/CheckoutForm";
 import notify from "@/lib/toast";
+import {createInvoice, createPaperCheckout} from "@/lib/api";
 
 export default function NavBar() {
   const pathname = usePathname() || "/";
@@ -32,24 +33,10 @@ export default function NavBar() {
   const handleCheckoutSubmit = async (data: CheckoutFormData) => {
     try {
       // Simulate API request
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      // Log order data (in production, this would be sent to backend)
-      console.log("Order submitted:", {
-        customer: data,
-        items: items.map(item => ({
-          productId: item.itemId,
-          productName: item.product.name,
-          format: item.format,
-          quantity: item.quantity,
-        })),
-        timestamp: new Date().toISOString(),
-      });
-
-      notify.success("Замовлення оформлено!");
-
-      setCheckoutOpen(false);
-      clearCart();
+        const res = await createInvoice(data, items)
+        setCheckoutOpen(false);
+        clearCart();
+        window.location.href = res.redirectUrl;
     } catch (error) {
       console.error("Order submission failed:", error);
       notify.error("Помилка при оформленні замовлення. Спробуйте ще раз.");

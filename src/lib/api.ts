@@ -3,6 +3,8 @@ import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
 import {ExternalLink, Product} from "@/models/Product";
 import zvychajna from "@/content/books/zvychajna";
 import pid_shepit_snihu from "@/content/books/pid_shepit_snihu";
+import {CheckoutFormData} from "@/components/CheckoutForm";
+import {CartItem} from "@/components/CartProvider";
 
 const API_URL = "https://api.zvychajna.pp.ua";
 
@@ -16,6 +18,24 @@ export async function createPaperCheckout(productItemId: string, _quantity: numb
       throw err;
   })
   return handleApi<CheckoutResponse>(res);
+}
+
+export async function createInvoice(data: CheckoutFormData, items: CartItem[]): Promise<CheckoutResponse> {
+    const res = await fetch(`${API_URL}/api/invoice`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            customer: data,
+            items: items.map(item => ({
+                productId: item.itemId,
+                quantity: item.quantity,
+            })),
+        }),
+    }).catch((err) => {
+        notifyApiError(err);
+        throw err;
+    })
+    return handleApi<CheckoutResponse>(res);
 }
 
 export async function createDigitalInvoice(params: {

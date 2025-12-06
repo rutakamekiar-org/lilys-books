@@ -10,6 +10,7 @@ interface NovaPoshtaWidgetProps {
 export interface NovaPoshtaDepartment {
   id: string;
   shortName: string;
+  address: string;
   addressParts?: {
     city?: string;
     street?: string;
@@ -43,6 +44,7 @@ export default function NovaPoshtaWidget({ onSelect, value }: NovaPoshtaWidgetPr
         const department: NovaPoshtaDepartment = {
           id: event.data.id,
           shortName: event.data.shortName || '',
+          address: event.data.address || '',
           addressParts: event.data.addressParts,
         };
         setSelectedDepartment(department);
