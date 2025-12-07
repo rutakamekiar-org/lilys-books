@@ -59,7 +59,7 @@ export async function createDigitalInvoice(params: {
 }
 
 async function fetchProducts(): Promise<Product[]> {
-    const res = await fetch(`${API_URL}/api/products`, { cache: "force-cache" });
+    const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });
     const products = await handleApi<Product[]>(res);
     function getExcerpt(slug: string) {
         switch (slug){
@@ -93,5 +93,5 @@ async function fetchProducts(): Promise<Product[]> {
     })
 }
 
-export const getProducts = memoizeAsync(fetchProducts, 1000, () => 'products');
+export const getProducts = fetchProducts;
 
