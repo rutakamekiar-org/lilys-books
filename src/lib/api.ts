@@ -93,5 +93,5 @@ async function fetchProducts(): Promise<Product[]> {
     })
 }
 
-export const getProducts = memoizeAsync(fetchProducts, 60 * 1000, () => 'products');
+export const getProducts = memoizeAsync(fetchProducts, 1000, () => 'products');
 
