@@ -10,6 +10,7 @@ import Analytics from "@/app/analytics";
 import { Suspense } from "react";
 import ToastProvider from "@/components/ToastProvider";
 import { CartProvider } from "@/components/CartProvider";
+import Snow from "@/components/Snow";
 
 const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
 const isGaEnabled = Boolean(GA_MEASUREMENT_ID);
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body>
+        <Snow/>
         <ClarityInit />
         <ToastProvider />
         <CartProvider>
