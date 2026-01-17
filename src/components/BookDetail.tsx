@@ -108,15 +108,16 @@ export default function BookDetail({ product }: { product: Product }) {
                       <div role="radiogroup" aria-label="Формат" className={styles.segmented}>
                           {product.items.map(f => {
                               const itemFormat = getFormat(f);
+                              const isDisabled = !f.isAvailable && !f.canPreorder;
                               return (
                                   <label key={f.type}
-                                         className={`${styles.opt} ${format === itemFormat ? styles.active : ""} ${!f.isAvailable ? styles.disabled : ""}`}>
+                                         className={`${styles.opt} ${format === itemFormat ? styles.active : ""} ${isDisabled ? styles.disabled : ""}`}>
                                       <input
                                           type="radio"
                                           name="format"
                                           value={f.type}
                                           checked={format === itemFormat}
-                                          disabled={!f.isAvailable}
+                                          disabled={isDisabled}
                                           onChange={() => setFormat(itemFormat)}
                                       />
                                       <span>{itemFormat === "paper" ? "Паперова" : "Електронна"} • {getPrice(f)} грн</span>
