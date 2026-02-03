@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import styles from "./NavBar.module.css";
 import { withCacheBust } from "@/lib/paths";
-import { useCart } from "@/components/CartProvider";
-import ShoppingCart from "@/components/ShoppingCart";
-import CheckoutForm, { CheckoutFormData } from "@/components/CheckoutForm";
+import { useCart } from "@/components/molecules/CartProvider";
+import ShoppingCart from "@/components/organisms/ShoppingCart";
+import CheckoutForm, { CheckoutFormData } from "@/components/organisms/CheckoutForm";
 import notify from "@/lib/toast";
 import {createInvoice, createPaperCheckout} from "@/lib/api";
 

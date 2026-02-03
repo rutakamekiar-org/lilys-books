@@ -2,8 +2,8 @@
 
 import styles from "./page.module.css";
 import type { SimpleEvent } from "@/data/events";
-import ImageCarousel from "@/components/ImageCarousel";
-import LocalDateTime from "@/components/LocalDateTime";
+import ImageCarousel from "@/components/organisms/ImageCarousel";
+import LocalDateTime from "@/components/atoms/LocalDateTime";
 
 function isUpcoming(e: SimpleEvent) { return new Date(e.date) >= new Date(); }
 function sortByDateAsc(a: SimpleEvent, b: SimpleEvent) {

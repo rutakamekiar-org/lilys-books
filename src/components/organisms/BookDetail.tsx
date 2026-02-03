@@ -3,16 +3,16 @@ import Image from "next/image";
 import { useState, Fragment } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./BookDetail.module.css";
-import GoodreadsRating from "./GoodreadsRating";
-import GoodreadsButton from "./GoodreadsButton";
+import GoodreadsRating from "@/components/molecules/GoodreadsRating";
+import GoodreadsButton from "@/components/molecules/GoodreadsButton";
 import { addBasePath } from "@/lib/paths";
-import ExcerptDialog from "./ExcerptDialog";
-import { useCart } from "./CartProvider";
+import ExcerptDialog from "@/components/molecules/ExcerptDialog";
+import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 
 import type { Product } from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
-import PriceText from "@/components/PriceText";
+import PriceText from "@/components/atoms/PriceText";
 
 export default function BookDetail({ product }: { product: Product }) {
   const [excerptOpen, setExcerptOpen] = useState(false);

@@ -5,8 +5,8 @@ import inaksha from "@/content/books/inaksha";
 import inakshaArt from "@/content/books/inaksha-art";
 import zvychajna from "@/content/books/zvychajna";
 import pid_shepit_snihu from "@/content/books/pid_shepit_snihu";
-import {CheckoutFormData} from "@/components/CheckoutForm";
-import {CartItem} from "@/components/CartProvider";
+import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
+import {CartItem} from "@/components/molecules/CartProvider";
 
 const API_URL = "https://api.zvychajna.pp.ua";
 

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getProducts } from "@/lib/api";
-import BookDetail from "@/components/BookDetail";
+import BookDetail from "@/components/organisms/BookDetail";
 import type { Product } from "@/models/Product";
 import { addBasePath } from "@/lib/paths";
 import {getPrice} from "@/lib/product-item.helper";

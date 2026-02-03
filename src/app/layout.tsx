@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import NavBar from "@/components/NavBar";
-import Contacts from "@/components/Contacts";
+import NavBar from "@/components/organisms/NavBar";
+import Contacts from "@/components/organisms/Contacts";
 import { addBasePath } from "@/lib/paths";
-import ClarityInit from "@/components/ClarityInit";
+import ClarityInit from "@/components/atoms/ClarityInit";
 import Script from "next/script";
 import Analytics from "@/app/analytics";
 import { Suspense } from "react";
-import ToastProvider from "@/components/ToastProvider";
-import { CartProvider } from "@/components/CartProvider";
-import Snow from "@/components/Snow";
+import ToastProvider from "@/components/atoms/ToastProvider";
+import { CartProvider } from "@/components/molecules/CartProvider";
+import Snow from "@/components/atoms/Snow";
 
 const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
 const isGaEnabled = Boolean(GA_MEASUREMENT_ID);

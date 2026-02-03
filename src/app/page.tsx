@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { getProducts } from "@/lib/api";
-import GoodreadsRating from "@/components/GoodreadsRating";
+import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import {addBasePath, withCacheBust} from "@/lib/paths";
 import type { Product } from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";

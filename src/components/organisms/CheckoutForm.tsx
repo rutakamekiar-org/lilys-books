@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./CheckoutForm.module.css";
-import { CartItem } from "./CartProvider";
-import NovaPoshtaWidget, { NovaPoshtaDepartment } from "./NovaPoshtaWidget";
+import { CartItem } from "@/components/molecules/CartProvider";
+import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
 
 interface CheckoutFormProps {
   open: boolean;

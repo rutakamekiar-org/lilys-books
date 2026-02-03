@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getProducts } from "@/lib/api";
-import BookCard from "@/components/BookCard";
+import BookCard from "@/components/molecules/BookCard";
 import styles from "./books.module.css";
 import type { Product } from "@/models/Product";
 
