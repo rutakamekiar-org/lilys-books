@@ -25,7 +25,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const product = products.find(x => x.slug === slug);
   if (!product) return { title: "Книга не знайдена" };
 
-  const meta = getLocalMetadata(slug);
+  const meta = await getLocalMetadata(slug);
 
   return {
     title: `${product.name} — ${product.author}`,
@@ -45,7 +45,7 @@ export default async function BookPage(props: Props) {
   const product = products.find(x => x.slug === slug);
   if (!product) throw new Error("Not found");
 
-  const meta = getLocalMetadata(slug);
+  const meta = await getLocalMetadata(slug);
   const fullProduct = { ...product, ...meta };
 
   const jsonLd = {

@@ -10,9 +10,17 @@ import { useProducts } from "@/components/molecules/ProductsProvider";
 
 export default function Hero({ initialProduct }: { initialProduct?: Product }) {
   const { products } = useProducts();
-  const product = initialProduct
-    ? (products.find(p => p.id === initialProduct.id) || initialProduct)
+  
+  // Find the live version of the product to get real-time prices
+  const liveProduct = initialProduct 
+    ? products.find(p => p.id === initialProduct.id) 
     : products[0];
+
+  // Merge live data (prices) with static metadata (description)
+  // If we have initialProduct, it's our source for metadata.
+  const product = initialProduct 
+    ? { ...initialProduct, ...liveProduct, descriptionHtml: initialProduct.descriptionHtml || liveProduct?.descriptionHtml }
+    : liveProduct;
 
   if (!product) return null;
   const minPrice = getMinPrice(product.items);

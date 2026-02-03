@@ -20,8 +20,15 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const liveProduct = products.find(p => p.id === staticProduct.id);
   
   // Merge live data (prices, availability) with static rich content (excerpts)
+  // We explicitly preserve rich content from staticProduct
   const product = liveProduct 
-    ? { ...staticProduct, ...liveProduct, excerptHtml: staticProduct.excerptHtml || liveProduct.excerptHtml }
+    ? { 
+        ...staticProduct, 
+        ...liveProduct, 
+        descriptionHtml: staticProduct.descriptionHtml || liveProduct.descriptionHtml,
+        externalLinks: (staticProduct.externalLinks && staticProduct.externalLinks.length > 0) ? staticProduct.externalLinks : liveProduct.externalLinks,
+        hasExcerpt: staticProduct.hasExcerpt || liveProduct.hasExcerpt 
+      }
     : staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [format, setFormat] = useState<BookFormat>("paper");
@@ -66,7 +73,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
               <div className={styles.cover}>
                   <Image src={addBasePath(product.imageUrl)} alt={product.name} width={320} height={480}/>
                   {product && <GoodreadsButton product={product}/>}
-                  {product.excerptHtml && (
+                  {product.hasExcerpt && (
                       <a type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
                           <i className="fa-solid fa-book-open"></i>
                           <span>Читати уривок</span>
@@ -193,9 +200,9 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
               </div>
           </div>
 
-          {product.excerptHtml && (
+          {product.hasExcerpt && (
               <ExcerptDialog open={excerptOpen} onClose={() => setExcerptOpen(false)} title={product.name}
-                             html={product.excerptHtml}/>
+                             slug={product.slug}/>
           )}
       </section>
   );

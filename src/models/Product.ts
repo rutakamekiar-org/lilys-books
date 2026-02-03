@@ -42,6 +42,13 @@ export interface ExternalLink {
     link: string;
 }
 
+export interface StaticMetadata {
+    descriptionHtml?: string;
+    excerptHtml?: string;
+    externalLinks?: ExternalLink[];
+    hasExcerpt?: boolean;
+}
+
 export interface Product {
     id: string;
     name: string;
@@ -53,6 +60,7 @@ export interface Product {
     physicalDetails: PhysicalDetails;
     descriptionHtml?: string;
     excerptHtml?: string;
+    hasExcerpt?: boolean;
 
     slug: string;
     author?: string; // author name for display

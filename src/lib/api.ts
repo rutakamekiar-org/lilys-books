@@ -1,7 +1,6 @@
 import type { CheckoutResponse } from "./types";
 import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
-import {ExternalLink, Product} from "@/models/Product";
-import { PRODUCT_METADATA } from "@/content/registry";
+import {Product, StaticMetadata} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";
 
@@ -59,22 +58,18 @@ export async function createDigitalInvoice(params: {
 
 async function fetchProducts(): Promise<Product[]> {
     const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });
-    const products = await handleApi<Product[]>(res);
-
-    return products.map(product => {
-        const meta = PRODUCT_METADATA[product.slug] || {};
-        return {
-            ...product,
-            // Exclude heavy excerpt from the main list for better performance
-            excerptHtml: '',
-            descriptionHtml: meta.descriptionHtml || '',
-            externalLinks: meta.externalLinks || []
-        }
-    })
+    return handleApi<Product[]>(res);
 }
 
-export function getLocalMetadata(slug: string) {
-    return PRODUCT_METADATA[slug] || {};
+export async function getLocalMetadata(slug: string): Promise<StaticMetadata> {
+    try {
+        // Use relative path for better compatibility with dynamic imports in some environments
+        const meta = await import(`../content/books/${slug}`);
+        return meta.default;
+    } catch (e) {
+        console.warn(`No local metadata found for slug: ${slug}`, e);
+        return {};
+    }
 }
 
 export const getProducts = fetchProducts;
