@@ -13,8 +13,11 @@ import notify from "@/lib/toast";
 import type { Product } from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
 import PriceText from "@/components/atoms/PriceText";
+import { useProducts } from "@/components/molecules/ProductsProvider";
 
-export default function BookDetail({ product }: { product: Product }) {
+export default function BookDetail({ product: staticProduct }: { product: Product }) {
+  const { products } = useProducts();
+  const product = products.find(p => p.id === staticProduct.id) || staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [format, setFormat] = useState<BookFormat>("paper");
   const { addItem, isInCart, openCart } = useCart();

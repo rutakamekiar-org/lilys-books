@@ -10,6 +10,8 @@ import Analytics from "@/app/analytics";
 import { Suspense } from "react";
 import ToastProvider from "@/components/atoms/ToastProvider";
 import { CartProvider } from "@/components/molecules/CartProvider";
+import { ProductsProvider } from "@/components/molecules/ProductsProvider";
+import { getProducts } from "@/lib/api";
 import Snow from "@/components/atoms/Snow";
 
 const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
@@ -32,7 +34,9 @@ export const metadata: Metadata = {
   manifest: addBasePath("/icons/site.webmanifest"),
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const initialProducts = await getProducts().catch(() => []);
+
   return (
     <html lang="uk">
       <head>
@@ -60,21 +64,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Snow/>
         <ClarityInit />
         <ToastProvider />
-        <CartProvider>
-          <header>
-            <NavBar />
-          </header>
-          <main>
-              <Suspense fallback={null}>
-                  <Analytics />
-              </Suspense>
-              {children}
-          </main>
-          <footer>
-            <Contacts />
-            © {new Date().getFullYear()} Лілія Кухарець. Усі права захищені.
-          </footer>
-        </CartProvider>
+        <ProductsProvider initialProducts={initialProducts}>
+          <CartProvider>
+            <header>
+              <NavBar />
+            </header>
+            <main>
+                <Suspense fallback={null}>
+                    <Analytics />
+                </Suspense>
+                {children}
+            </main>
+            <footer>
+              <Contacts />
+              © {new Date().getFullYear()} Лілія Кухарець. Усі права захищені.
+            </footer>
+          </CartProvider>
+        </ProductsProvider>
       </body>
     </html>
   );

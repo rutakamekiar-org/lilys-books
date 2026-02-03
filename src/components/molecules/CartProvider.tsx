@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect, ReactNode, useRef } from "react";
 import { Product } from "@/models/Product";
+import { useProducts } from "./ProductsProvider";
 
 export interface CartItem {
   product: Product;
@@ -24,8 +25,26 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const { products } = useProducts();
   const [items, setItems] = useState<CartItem[]>([]);
   const cartOpenCallbackRef = useRef<(() => void) | null>(null);
+
+  // Sync items with latest product data from ProductsProvider
+  useEffect(() => {
+    if (products.length === 0) return;
+    setItems((prev) => {
+      let changed = false;
+      const next = prev.map((item) => {
+        const latest = products.find((p) => p.id === item.product.id);
+        if (latest && JSON.stringify(latest) !== JSON.stringify(item.product)) {
+          changed = true;
+          return { ...item, product: latest };
+        }
+        return item;
+      });
+      return changed ? next : prev;
+    });
+  }, [products]);
 
   // Load cart from localStorage on mount
   useEffect(() => {

@@ -5,8 +5,11 @@ import styles from "./BookCard.module.css";
 import {addBasePath, withCacheBust} from "@/lib/paths";
 import {Product} from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";
+import { useProducts } from "@/components/molecules/ProductsProvider";
 
-export default function BookCard({ product }: { product: Product }) {
+export default function BookCard({ product: staticProduct }: { product: Product }) {
+  const { products } = useProducts();
+  const product = products.find(p => p.id === staticProduct.id) || staticProduct;
   const available = product.items.filter(f => f.isAvailable || f.canPreorder);
   const minPrice = available.length ? getMinPrice(available) : null;
 
