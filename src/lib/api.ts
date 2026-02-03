@@ -1,6 +1,8 @@
 import type { CheckoutResponse } from "./types";
 import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
 import {ExternalLink, Product} from "@/models/Product";
+import inaksha from "@/content/books/inaksha";
+import inakshaArt from "@/content/books/inaksha-art";
 import zvychajna from "@/content/books/zvychajna";
 import pid_shepit_snihu from "@/content/books/pid_shepit_snihu";
 import {CheckoutFormData} from "@/components/CheckoutForm";
@@ -64,6 +66,7 @@ async function fetchProducts(): Promise<Product[]> {
     function getExcerpt(slug: string) {
         switch (slug){
             case "zvychajna": return zvychajna.excerptHtml;
+            case "inaksha": return inaksha.excerptHtml;
             case "pid_shepit_snihu": return pid_shepit_snihu.excerptHtml;
         }
         return '';
@@ -71,6 +74,8 @@ async function fetchProducts(): Promise<Product[]> {
     function getDescription(slug: string) {
         switch (slug){
             case "zvychajna": return zvychajna.descriptionHtml;
+            case "inaksha": return inaksha.descriptionHtml;
+            case "inaksha-art": return inakshaArt.descriptionHtml;
             case "pid_shepit_snihu": return pid_shepit_snihu.descriptionHtml;
         }
         return '';

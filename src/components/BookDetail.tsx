@@ -20,7 +20,6 @@ export default function BookDetail({ product }: { product: Product }) {
   const { addItem, isInCart, openCart } = useCart();
   const selected = product.items.find(f => getFormat(f) === format);
   const itemInCart = selected ? isInCart(selected.id) : false;
-
   const handleBuyNow = () => {
     if (!selected) return;
     const wasAdded = addItem(product, selected.id, format, 1);
