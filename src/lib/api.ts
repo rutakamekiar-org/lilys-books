@@ -1,10 +1,7 @@
 import type { CheckoutResponse } from "./types";
 import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
 import {ExternalLink, Product} from "@/models/Product";
-import inaksha from "@/content/books/inaksha";
-import inakshaArt from "@/content/books/inaksha-art";
-import zvychajna from "@/content/books/zvychajna";
-import pid_shepit_snihu from "@/content/books/pid_shepit_snihu";
+import { PRODUCT_METADATA } from "@/content/registry";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";
 
@@ -63,39 +60,21 @@ export async function createDigitalInvoice(params: {
 async function fetchProducts(): Promise<Product[]> {
     const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });
     const products = await handleApi<Product[]>(res);
-    function getExcerpt(slug: string) {
-        switch (slug){
-            case "zvychajna": return zvychajna.excerptHtml;
-            case "inaksha": return inaksha.excerptHtml;
-            case "pid_shepit_snihu": return pid_shepit_snihu.excerptHtml;
-        }
-        return '';
-    }
-    function getDescription(slug: string) {
-        switch (slug){
-            case "zvychajna": return zvychajna.descriptionHtml;
-            case "inaksha": return inaksha.descriptionHtml;
-            case "inaksha-art": return inakshaArt.descriptionHtml;
-            case "pid_shepit_snihu": return pid_shepit_snihu.descriptionHtml;
-        }
-        return '';
-    }
-    function getExternalLink(slug: string):ExternalLink[] {
-        switch (slug){
-            case "zvychajna": return [ { link:'https://www.youtube.com/watch?v=UznBnjro79c', type: "youtube"}, { link:'https://ua-books.eu/products/%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0-%D0%B7%D0%B2%D0%B8%D1%87%D0%B0%D0%B9%D0%BD%D0%B0-%D0%BB%D1%96%D0%BB%D1%96%D1%8F-%D0%BA%D1%83%D1%85%D0%B0%D1%80%D0%B5%D1%86%D1%8C', type: "riga"}];
-            case "pid_shepit_snihu": return [ { link:'https://bohdan-books.com/catalog/book/318531', type: "publisher"}];
-        }
-        return [];
-    }
 
     return products.map(product => {
+        const meta = PRODUCT_METADATA[product.slug] || {};
         return {
             ...product,
-            excerptHtml: getExcerpt(product.slug),
-            descriptionHtml: getDescription(product.slug),
-            externalLinks: getExternalLink(product.slug)
+            // Exclude heavy excerpt from the main list for better performance
+            excerptHtml: '',
+            descriptionHtml: meta.descriptionHtml || '',
+            externalLinks: meta.externalLinks || []
         }
     })
+}
+
+export function getLocalMetadata(slug: string) {
+    return PRODUCT_METADATA[slug] || {};
 }
 
 export const getProducts = fetchProducts;

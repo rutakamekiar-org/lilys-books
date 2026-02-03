@@ -17,7 +17,12 @@ import { useProducts } from "@/components/molecules/ProductsProvider";
 
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
   const { products } = useProducts();
-  const product = products.find(p => p.id === staticProduct.id) || staticProduct;
+  const liveProduct = products.find(p => p.id === staticProduct.id);
+  
+  // Merge live data (prices, availability) with static rich content (excerpts)
+  const product = liveProduct 
+    ? { ...staticProduct, ...liveProduct, excerptHtml: staticProduct.excerptHtml || liveProduct.excerptHtml }
+    : staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [format, setFormat] = useState<BookFormat>("paper");
   const { addItem, isInCart, openCart } = useCart();
