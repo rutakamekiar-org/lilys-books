@@ -15,7 +15,7 @@ export default async function BooksPage() {
   const products: Product[] = await getProducts().catch(() => []);
   return (
     <section>
-      <h1>Книги</h1>
+      <h1>Книги та мерч</h1>
       {(!products || products.length === 0) ? (
         <p className={styles.empty}>Поки що немає книг для відображення.</p>
       ) : (
