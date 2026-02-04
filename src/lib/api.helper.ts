@@ -38,11 +38,15 @@ export function notifyApiError(err: unknown) {
 }
 
 export async function handleApi<T = CheckoutResponse>(res: Response): Promise<T> {
-  let data: unknown = null;
+  let data: any = null;
   try {
     data = await res.json();
-  } catch {
-    // ignore JSON parse errors
+  } catch (e) {
+    if (res.ok) {
+        // If the response is OK but not JSON, it might be an empty response or invalid format
+        // Return null and let the caller handle it, or throw if we expect JSON
+        console.warn("Failed to parse JSON response despite 200 OK", e);
+    }
   }
   if (!res.ok) {
     const title = (isRecord(data) && typeof data.title === "string")

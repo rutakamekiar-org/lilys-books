@@ -57,8 +57,14 @@ export async function createDigitalInvoice(params: {
 }
 
 async function fetchProducts(): Promise<Product[]> {
-    const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });
-    return handleApi<Product[]>(res);
+    try {
+        const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });
+        const data = await handleApi<Product[]>(res);
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        console.error("fetchProducts failed:", error);
+        return [];
+    }
 }
 
 export async function getLocalMetadata(slug: string): Promise<StaticMetadata> {

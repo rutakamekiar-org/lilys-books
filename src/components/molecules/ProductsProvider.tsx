@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from "react";
 import { Product } from "@/models/Product";
 import { getProducts } from "@/lib/api";
 
@@ -16,17 +16,17 @@ export function ProductsProvider({
   initialProducts = [] 
 }: { 
   children: ReactNode; 
-  initialProducts?: Product[];
+  initialProducts?: Product[]; 
 }) {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState<Product[]>(initialProducts || []);
   const [isLoading, setIsLoading] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
 
-  const refresh = async () => {
+  const refresh = useCallback(async () => {
     setIsLoading(true);
     try {
       const latestProducts = await getProducts();
-      if (latestProducts && latestProducts.length > 0) {
+      if (Array.isArray(latestProducts) && latestProducts.length > 0) {
         setProducts(latestProducts);
       }
     } catch (error) {
@@ -35,7 +35,7 @@ export function ProductsProvider({
       setIsLoading(false);
       setHasFetched(true);
     }
-  };
+  }, []);
 
   // Fetch once per visit (on mount)
   useEffect(() => {
