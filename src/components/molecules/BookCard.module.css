@@ -1,5 +1,6 @@
 .card {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   text-decoration: none;
   color: inherit;
@@ -24,11 +25,12 @@
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
   overflow: hidden;
+  aspect-ratio: 2 / 3;
 }
 .thumb :global(img) {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   background: #f4f1ec;
 }
@@ -53,6 +55,11 @@
 .age0p  { background: #555; }
 
 /* Text area keeps normal padding via the card */
+.meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 .meta h3 {
   margin: 0;
   font-size: 1rem;
@@ -62,9 +69,10 @@
   hyphens: auto;
 }
 .price {
-  margin: 2px 0 0;
+  margin: 8px 0 0;
   color: var(--muted);
   font-weight: 700;
+  margin-top: auto;
 }
 
 
