@@ -1,6 +1,19 @@
 .wrap { display: block; }
 .grid { display: grid; gap: 28px; grid-template-columns: 340px 1fr; align-items: start; }
 .cover :global(img){ display:block; width:100%; height:auto; border-radius: 14px; box-shadow: 0 12px 28px rgba(0,0,0,.08); background:#f4f1ec; }
+.carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0,0,0,.08);
+    background: #f4f1ec;
+}
+.carousel :global(img) {
+    box-shadow: none;
+    border-radius: 0;
+}
 .content {}
 .desc { color: var(--text); overflow-wrap: anywhere; word-break: break-word; }
 

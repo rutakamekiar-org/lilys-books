@@ -10,6 +10,9 @@ const content = {
                     До кожного передзамовлення стікери в подарунок!
 `,
   hasExcerpt: true,
+  imageUrls: [
+    "/images/inaksha.webp",
+  ],
   externalLinks: [],
 };
 

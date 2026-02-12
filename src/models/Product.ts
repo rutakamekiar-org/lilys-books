@@ -45,6 +45,7 @@ export interface ExternalLink {
 export interface StaticMetadata {
     descriptionHtml?: string;
     excerptHtml?: string;
+    imageUrls?: string[];
     externalLinks?: ExternalLink[];
     hasExcerpt?: boolean;
 }
@@ -54,6 +55,7 @@ export interface Product {
     name: string;
     genre?: string;
     imageUrl: string;
+    imageUrls?: string[];
     items: ProductItem[];
     externalBookRatings: ExternalBookRating[];
     externalLinks: ExternalLink[];

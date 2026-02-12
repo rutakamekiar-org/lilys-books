@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState, Fragment } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./BookDetail.module.css";
+import ImageCarousel from "@/components/organisms/ImageCarousel";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import GoodreadsButton from "@/components/molecules/GoodreadsButton";
 import { addBasePath } from "@/lib/paths";
@@ -26,6 +27,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
         ...staticProduct, 
         ...liveProduct, 
         descriptionHtml: staticProduct.descriptionHtml || liveProduct.descriptionHtml,
+        imageUrls: staticProduct.imageUrls || liveProduct.imageUrls,
         externalLinks: (staticProduct.externalLinks && staticProduct.externalLinks.length > 0) ? staticProduct.externalLinks : liveProduct.externalLinks,
         hasExcerpt: staticProduct.hasExcerpt || liveProduct.hasExcerpt 
       }
@@ -71,7 +73,17 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
       <section className={styles.wrap}>
           <div className={styles.grid}>
               <div className={styles.cover}>
-                  <Image src={addBasePath(product.imageUrl)} alt={product.name} width={320} height={480}/>
+                  {product.imageUrls && product.imageUrls.length > 0 ? (
+                      <ImageCarousel
+                          images={product.imageUrls.map(url => addBasePath(url))}
+                          alt={product.name}
+                          sizes="(max-width: 960px) 100vw, 320px"
+                          className={styles.carousel}
+                          navInside={true}
+                      />
+                  ) : (
+                      <Image src={addBasePath(product.imageUrl)} alt={product.name} width={320} height={480}/>
+                  )}
                   {product && <GoodreadsButton product={product}/>}
                   {product.hasExcerpt && (
                       <a type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>

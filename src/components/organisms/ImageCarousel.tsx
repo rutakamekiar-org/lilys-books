@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./ImageCarousel.module.css";
 
 export type ImageCarouselProps = {
@@ -17,35 +17,47 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
   const railRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
-  // Track per-image object-fit based on actual aspect ratio
-  const [fits, setFits] = useState<("cover" | "contain")[]>([]);
+  const [containerIsLandscape, setContainerIsLandscape] = useState(true);
+  // Track per-image orientation (true = landscape, false = portrait)
+  const [fits, setFits] = useState<boolean[]>([]);
+
+  const onScroll = useCallback(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const { scrollLeft, scrollWidth, clientWidth, clientHeight } = rail;
+    setCanPrev(scrollLeft > 2);
+    setCanNext(scrollLeft < scrollWidth - clientWidth - 2);
+    if (clientWidth > 0 && clientHeight > 0) {
+      setContainerIsLandscape(clientWidth > clientHeight);
+    }
+  }, []);
 
   useEffect(() => {
     const rail = railRef.current;
     if (!rail) return;
-    const onScroll = () => {
-      const { scrollLeft, scrollWidth, clientWidth } = rail;
-      setCanPrev(scrollLeft > 2);
-      setCanNext(scrollLeft < scrollWidth - clientWidth - 2);
-    };
     onScroll();
     rail.addEventListener("scroll", onScroll, { passive: true });
     const ro = new ResizeObserver(onScroll);
     ro.observe(rail);
     return () => { rail.removeEventListener("scroll", onScroll); ro.disconnect(); };
-  }, []);
+  }, [onScroll]);
+
+  // Update nav state when images change (as scrollWidth might change)
+  useEffect(() => {
+    onScroll();
+  }, [images, onScroll]);
 
   // When images change, detect their natural dimensions to decide fit mode
   useEffect(() => {
     if (!images || images.length === 0) { setFits([]); return; }
     let cancelled = false;
-    const loaders = images.map((src) => new Promise<"cover" | "contain">((resolve) => {
+    const loaders = images.map((src) => new Promise<boolean>((resolve) => {
       const img = new window.Image();
       img.onload = () => {
-        const isLandscape = (img.naturalWidth || 0) >= (img.naturalHeight || 0);
-        resolve(isLandscape ? "cover" : "contain");
+        const isLandscape = (img.naturalWidth || 0) > (img.naturalHeight || 0);
+        resolve(isLandscape);
       };
-      img.onerror = () => resolve("contain");
+      img.onerror = () => resolve(true);
       img.src = src;
     }));
     Promise.all(loaders).then((results) => {
@@ -70,14 +82,17 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
   function goNext(){ scrollToDelta(1); }
 
   const fitForIndex = useMemo(() => (index: number) => {
-    return fits[index] || "contain"; // default to contain to avoid cropping verticals before measure
-  }, [fits]);
+    const imgIsLandscape = fits[index];
+    if (imgIsLandscape === undefined) return "cover";
+    // Same orientation -> cover, opposite -> contain
+    return (containerIsLandscape === imgIsLandscape) ? "cover" : "contain";
+  }, [fits, containerIsLandscape]);
 
   return (
-    <div className={className} aria-label={ariaLabel}>
+    <div className={`${styles.carousel} ${className || ""}`} aria-label={ariaLabel}>
       <div className={styles.carouselRail} ref={railRef} role="group">
         {images.map((src, i) => (
-          <div key={src + i} className={`${styles.carouselSlide} ${fitForIndex(i) === "contain" ? styles.portrait : ""} ${slideClassName || ""}`}>
+          <div key={src + i} className={`${styles.carouselSlide} ${slideClassName || ""}`}>
             <Image
               src={src}
               alt={alt || ""}

@@ -65,7 +65,7 @@ function FeaturedHero({ event }: { event: EventWithImages }){
     <article className={styles.hero}>
       <div className={styles.heroImageWrap}>
         {images.length > 0 && (
-          <ImageCarousel images={images} alt={event.title} sizes="(max-width: 800px) 100vw, 1280px" navInside ariaLabel={`Зображення події: ${event.title}`} />
+          <ImageCarousel images={images} alt={event.title} sizes="(max-width: 800px) 100vw, 1280px" navInside ariaLabel={`Зображення події: ${event.title}`} className={styles.heroCarousel} />
         )}
         <div className={styles.heroOverlay} />
         <div className={styles.heroDateBadge}>
