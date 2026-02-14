@@ -15,6 +15,7 @@ import type { Product } from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
 import PriceText from "@/components/atoms/PriceText";
 import { useProducts } from "@/components/molecules/ProductsProvider";
+import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
   const { products } = useProducts();
@@ -33,8 +34,23 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
       }
     : staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
+  const [suggestionOpen, setSuggestionOpen] = useState(false);
   const [format, setFormat] = useState<BookFormat>("paper");
   const { addItem, isInCart, openCart } = useCart();
+
+  const suggestedProduct = products.find(p => p.slug === 'inaksha-art');
+
+  const checkSuggestion = (addedProduct: Product, addedFormat: BookFormat) => {
+      if (addedProduct.slug === 'inaksha' && addedFormat === 'paper' && suggestedProduct) {
+          const artItemId = suggestedProduct.items[0]?.id;
+          if (artItemId && !isInCart(artItemId)) {
+              setSuggestionOpen(true);
+              return true;
+          }
+      }
+      return false;
+  };
+
   const selected = product.items.find(f => getFormat(f) === format);
   const itemInCart = selected ? isInCart(selected.id) : false;
   const handleBuyNow = () => {
@@ -45,7 +61,10 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     } else {
         notify.info(`"${product.name}" вже в кошику`);
     }
-    openCart();
+
+    if (!checkSuggestion(product, format)) {
+        openCart();
+    }
   };
 
   const handleAddToCart = () => {
@@ -56,6 +75,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     } else {
         notify.info(`"${product.name}" вже в кошику`);
     }
+    checkSuggestion(product, format);
   };
   const youtubeLink = product?.externalLinks?.find(x => x.type === 'youtube')
   const publisherLink = product?.externalLinks?.find(x => x.type === 'publisher')
@@ -215,6 +235,13 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
           {product.hasExcerpt && (
               <ExcerptDialog open={excerptOpen} onClose={() => setExcerptOpen(false)} title={product.name}
                              slug={product.slug}/>
+          )}
+          {suggestedProduct && (
+              <SuggestionDialog
+                  open={suggestionOpen}
+                  onClose={() => setSuggestionOpen(false)}
+                  suggestedProduct={suggestedProduct}
+              />
           )}
       </section>
   );
