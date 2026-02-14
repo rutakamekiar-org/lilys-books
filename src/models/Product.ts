@@ -67,4 +67,5 @@ export interface Product {
     slug: string;
     author?: string; // author name for display
     ageRating?: AgeRating;
+    isHero?: boolean;
 }

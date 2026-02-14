@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const products = await getProducts().catch(() => []);
-  const featured = products[0];
+  let featured = products.find(p => p.isHero) ?? products[0];
 
   if (featured) {
     const meta = await getLocalMetadata(featured.slug);
