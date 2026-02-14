@@ -77,11 +77,8 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     }
     checkSuggestion(product, format);
   };
-  const youtubeLink = product?.externalLinks?.find(x => x.type === 'youtube')
-  const publisherLink = product?.externalLinks?.find(x => x.type === 'publisher')
-  const rigaLink = product?.externalLinks?.find(x => x.type === 'riga')
-    let buyText;
-
+  const externalLinks = product?.externalLinks || []
+  let buyText
     if (selected?.isAvailable) {
         buyText = <PriceText label={'Купити — '} productItem={selected}/>
     } else if (selected?.canPreorder) {
@@ -111,24 +108,12 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           <span>Читати уривок</span>
                       </a>
                   )}
-                  {youtubeLink && (
-                      <a className={styles.excerptBtn} target="_blank" rel="noopener" href={youtubeLink.link}>
-                          <i className="fa-brands fa-youtube"></i>
-                          <span>Слухати уривок</span>
+                  {externalLinks.map((link, idx) => (
+                      <a key={idx} className={styles.excerptBtn} target="_blank" rel="noopener" href={link.url}>
+                          <i className={link.icon}></i>
+                          <span>{link.label}</span>
                       </a>
-                  )}
-                  {publisherLink && (
-                      <a className={styles.excerptBtn} target="_blank" rel="noopener" href={publisherLink.link}>
-                          <i className="fa-solid fa-book"></i>
-                          <span>На сайт видавництва</span>
-                      </a>
-                  )}
-                  {rigaLink && (
-                      <a className={styles.excerptBtn} target="_blank" rel="noopener" href={rigaLink.link}>
-                          <i className="fa-solid fa-book"></i>
-                          <span>Книгарня в Європі</span>
-                      </a>
-                  )}
+                  ))}
               </div>
               <div className={styles.content}>
                   <h1 className={styles.titleRow}>

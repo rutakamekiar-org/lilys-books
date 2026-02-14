@@ -10,7 +10,6 @@ const content = {
     "/images/products/inaksha-art/inaksha-art5.webp",
     "/images/products/inaksha-art/inaksha-art.webp",
   ],
-  externalLinks: [],
 };
 
 export default content;

@@ -38,15 +38,15 @@ export interface ExternalBookRating {
 }
 
 export interface ExternalLink {
-    type: 'youtube' | 'amazon' | 'publisher' | 'riga';
-    link: string;
+    label: string;
+    icon: string;
+    url: string;
 }
 
 export interface StaticMetadata {
     descriptionHtml?: string;
     excerptHtml?: string;
     imageUrls?: string[];
-    externalLinks?: ExternalLink[];
     hasExcerpt?: boolean;
 }
 
