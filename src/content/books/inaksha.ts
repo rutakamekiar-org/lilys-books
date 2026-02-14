@@ -11,7 +11,8 @@ const content = {
 `,
   hasExcerpt: true,
   imageUrls: [
-    "/images/inaksha.webp",
+    "/images/products/inaksha/inaksha.webp",
+    "/images/products/inaksha/inaksha_stickers.webp",
   ],
   externalLinks: [],
 };

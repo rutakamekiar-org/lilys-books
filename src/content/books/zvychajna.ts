@@ -11,7 +11,7 @@ const content = {
           Романтика, пригоди, таємниці - у першій частині дилогії «Звичайна».`,
   hasExcerpt: true,
   imageUrls: [
-    "/images/book.webp",
+    "/images/products/zvychajna/book.webp",
   ],
   externalLinks: [
     { type: "youtube", link: "https://www.youtube.com/watch?v=UznBnjro79c" },
