@@ -41,7 +41,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const suggestedProduct = products.find(p => p.slug === 'inaksha-art');
 
   const checkSuggestion = (addedProduct: Product, addedFormat: BookFormat) => {
-      if (addedProduct.slug === 'inaksha' && addedFormat === 'paper' && suggestedProduct) {
+      if ((addedProduct.slug === 'zvychajna-and-inaksha' || addedProduct.slug === 'inaksha') && addedFormat === 'paper' && suggestedProduct) {
           const artItemId = suggestedProduct.items[0]?.id;
           if (artItemId && !isInCart(artItemId)) {
               setSuggestionOpen(true);
