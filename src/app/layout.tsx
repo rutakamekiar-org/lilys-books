@@ -78,6 +78,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <footer>
               <Contacts />
               © {new Date().getFullYear()} Лілія Кухарець. Усі права захищені.
+              <br/>
+              lillykukharets0325@gmail.com
             </footer>
           </CartProvider>
         </ProductsProvider>
