@@ -1,10 +1,12 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./ShoppingCart.module.css";
 import { addBasePath } from "@/lib/paths";
 import { Product } from "@/models/Product";
 import { getPrice } from "@/lib/product-item.helper";
+import { useCart } from "@/components/molecules/CartProvider";
+import notify from "@/lib/toast";
 
 export interface CartItem {
   product: Product;
@@ -30,6 +32,9 @@ export default function ShoppingCart({
   onRemoveItem,
   onCheckout,
 }: ShoppingCartProps) {
+  const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode } = useCart();
+  const [promoInput, setPromoInput] = useState("");
+  const [isApplying, setIsApplying] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
 
@@ -84,13 +89,30 @@ export default function ShoppingCart({
     return () => document.removeEventListener("keydown", onTab);
   }, [open]);
 
+  const handleApplyPromo = async () => {
+    if (!promoInput.trim()) return;
+    setIsApplying(true);
+    try {
+      await applyPromocode(promoInput.trim());
+      setPromoInput("");
+      notify.success("Промокод застосовано!");
+    } catch (e: any) {
+      console.error("Promo apply failed:", e);
+      notify.error("Невірний або недійсний промокод");
+    } finally {
+      setIsApplying(false);
+    }
+  };
+
   if (!open) return null;
 
-  const total = items.reduce((sum, item) => {
+  const subtotal = items.reduce((sum, item) => {
     const productItem = item.product.items.find((i) => i.id === item.itemId);
     const price = productItem ? getPrice(productItem) ?? 0 : 0;
     return sum + price * item.quantity;
   }, 0);
+
+  const total = Math.max(0, subtotal - discountAmount);
 
   const isEmpty = items.length === 0;
 
@@ -130,8 +152,14 @@ export default function ShoppingCart({
                 const price = productItem ? getPrice(productItem) ?? 0 : 0;
                 const itemTotal = price * item.quantity;
 
+                const isApplicable = !appliedPromocode?.applicableProductItemIds || 
+                  appliedPromocode.applicableProductItemIds.length === 0 || 
+                  appliedPromocode.applicableProductItemIds.includes(item.itemId);
+
+                const itemDiscount = getItemDiscount(item.itemId);
+
                 return (
-                  <div key={item.itemId} className={styles.item}>
+                  <div key={item.itemId} className={`${styles.item} ${isApplicable && appliedPromocode ? styles.itemPromo : ''}`}>
                     <div className={styles.itemThumb}>
                       <Image
                         src={addBasePath(item.product.imageUrl)}
@@ -146,6 +174,12 @@ export default function ShoppingCart({
                         {item.format === "paper" ? "Паперова" : "Електронна"}
                       </p>
                       <p className={styles.itemPrice}>{price} грн за шт.</p>
+                      {isApplicable && appliedPromocode && (
+                        <div className={styles.promoBadge}>
+                          <i className="fas fa-tag"></i> Акція
+                          {itemDiscount > 0 && ` (-${itemDiscount} грн)`}
+                        </div>
+                      )}
                       {item.format === "paper" && (
                         <div className={styles.quantityRow}>
                           <span className={styles.quantityLabel}>Кількість:</span>
@@ -179,7 +213,12 @@ export default function ShoppingCart({
                       )}
                     </div>
                     <div className={styles.itemActions}>
-                      <p className={styles.itemTotal}>{itemTotal} грн</p>
+                      <div className={styles.itemTotalContainer}>
+                        {itemDiscount > 0 && (
+                          <span className={styles.oldPrice}>{itemTotal} грн</span>
+                        )}
+                        <p className={styles.itemTotal}>{Math.round(itemTotal - itemDiscount)} грн</p>
+                      </div>
                       <button
                         onClick={() => onRemoveItem(item.itemId)}
                         aria-label="Видалити з кошика"
@@ -196,15 +235,60 @@ export default function ShoppingCart({
         </div>
 
         {!isEmpty && (
-          <footer className={styles.footer}>
-            <div className={styles.total}>
-              <span className={styles.totalLabel}>Всього:</span>
-              <span className={styles.totalValue}>{total} грн</span>
+          <>
+            <div className={styles.promocode}>
+              {appliedPromocode ? (
+                <div className={styles.appliedPromo}>
+                  <span>
+                    <i className="fas fa-tag" style={{ marginRight: '8px' }}></i>
+                    {appliedPromocode.code?.toUpperCase()}
+                  </span>
+                  <button onClick={removePromocode} className={styles.removePromo} aria-label="Видалити промокод">
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <div className={styles.promoForm}>
+                  <input
+                    type="text"
+                    value={promoInput}
+                    onChange={(e) => setPromoInput(e.target.value)}
+                    placeholder="Введіть промокод"
+                    className={styles.promoInput}
+                    onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
+                  />
+                  <button
+                    onClick={handleApplyPromo}
+                    disabled={isApplying || !promoInput.trim()}
+                    className={styles.promoApplyBtn}
+                  >
+                    {isApplying ? <i className="fas fa-spinner fa-spin"></i> : 'Застосувати'}
+                  </button>
+                </div>
+              )}
             </div>
-            <button onClick={onCheckout} className={styles.checkoutBtn}>
-              Оформити замовлення
-            </button>
-          </footer>
+            <footer className={styles.footer}>
+              {discountAmount > 0 && (
+                <>
+                  <div className={styles.summaryRow}>
+                    <span>Сума:</span>
+                    <span>{subtotal} грн</span>
+                  </div>
+                  <div className={styles.summaryRow}>
+                    <span>Знижка:</span>
+                    <span className={styles.discountValue}>-{discountAmount} грн</span>
+                  </div>
+                </>
+              )}
+              <div className={styles.total}>
+                <span className={styles.totalLabel}>Всього:</span>
+                <span className={styles.totalValue}>{total} грн</span>
+              </div>
+              <button onClick={onCheckout} className={styles.checkoutBtn}>
+                Оформити замовлення
+              </button>
+            </footer>
+          </>
         )}
       </div>
     </div>

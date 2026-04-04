@@ -8,7 +8,7 @@ import { useCart } from "@/components/molecules/CartProvider";
 import ShoppingCart from "@/components/organisms/ShoppingCart";
 import CheckoutForm, { CheckoutFormData } from "@/components/organisms/CheckoutForm";
 import notify from "@/lib/toast";
-import {createInvoice, createPaperCheckout} from "@/lib/api";
+import {createInvoice} from "@/lib/api";
 
 export default function NavBar() {
   const pathname = usePathname() || "/";
@@ -33,7 +33,7 @@ export default function NavBar() {
   const handleCheckoutSubmit = async (data: CheckoutFormData) => {
     try {
       // Simulate API request
-        const res = await createInvoice(data, items)
+        const res = await createInvoice(data, items, cart.appliedPromocode?.code || undefined)
         setCheckoutOpen(false);
         clearCart();
         window.location.href = res.redirectUrl;

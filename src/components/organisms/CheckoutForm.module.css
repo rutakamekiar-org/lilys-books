@@ -216,3 +216,98 @@
     font-size: 0.95rem;
   }
 }
+
+.summary {
+  margin-top: 10px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summaryTitle {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.summaryItemInfo {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+
+.summaryItemName {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.summaryItemQty {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.summaryItemPrice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.summaryItemOldPrice {
+  font-size: 0.75rem;
+  text-decoration: line-through;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.summaryDivider {
+  height: 1px;
+  border-top: 1px solid var(--border);
+  margin: 4px 0 12px 0;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.discountValue {
+  color: #166534;
+  font-weight: 600;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+}

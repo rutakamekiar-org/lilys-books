@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./CheckoutForm.module.css";
-import { CartItem } from "@/components/molecules/CartProvider";
+import { CartItem, useCart } from "@/components/molecules/CartProvider";
 import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
+import { getPrice } from "@/lib/product-item.helper";
 
 interface CheckoutFormProps {
   open: boolean;
@@ -28,6 +29,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { appliedPromocode, discountAmount, getItemDiscount } = useCart();
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
@@ -120,7 +122,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
       lastName: true,
       email: true,
       phone: true,
-      address: true,
+      department: true,
     });
 
     if (validate()) {
@@ -140,6 +142,14 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   };
 
   if (!open) return null;
+
+  const subtotal = items.reduce((sum, item) => {
+    const productItem = item.product.items.find((i) => i.id === item.itemId);
+    const price = productItem ? getPrice(productItem) ?? 0 : 0;
+    return sum + price * item.quantity;
+  }, 0);
+
+  const total = Math.max(0, subtotal - discountAmount);
 
   return (
     <div
@@ -250,11 +260,53 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
               </>
             )}
 
+            <small className={styles.note}>
               {hasPhysical
-                  ? "Доставка здійснюється Новою Поштою."
-                  : "Електронна версія буде надіслана на вказаний email"}
-              <small className={styles.note}>
+                ? "Доставка здійснюється Новою Поштою."
+                : "Електронна версія буде надіслана на вказаний email"}
             </small>
+
+            <div className={styles.summary}>
+              <h3 className={styles.summaryTitle}>Ваше замовлення</h3>
+              <div className={styles.itemList}>
+                {items.map((item) => {
+                  const productItem = item.product.items.find((i) => i.id === item.itemId);
+                  const price = productItem ? getPrice(productItem) ?? 0 : 0;
+                  const itemDiscount = getItemDiscount(item.itemId);
+                  const itemTotal = price * item.quantity;
+                  
+                  return (
+                    <div key={item.itemId} className={styles.summaryItem}>
+                      <div className={styles.summaryItemInfo}>
+                        <span className={styles.summaryItemName}>{productItem?.name || item.product.name}</span>
+                        <span className={styles.summaryItemQty}>x{item.quantity}</span>
+                      </div>
+                      <div className={styles.summaryItemPrice}>
+                        {itemDiscount > 0 && (
+                          <span className={styles.summaryItemOldPrice}>{itemTotal} грн</span>
+                        )}
+                        <span>{Math.round(itemTotal - itemDiscount)} грн</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className={styles.summaryDivider} />
+              <div className={styles.summaryRow}>
+                <span>Сума:</span>
+                <span>{subtotal} грн</span>
+              </div>
+              {discountAmount > 0 && (
+                <div className={styles.summaryRow}>
+                  <span>Знижка {appliedPromocode?.code && `(${appliedPromocode.code.toUpperCase()})`}:</span>
+                  <span className={styles.discountValue}>-{discountAmount} грн</span>
+                </div>
+              )}
+              <div className={styles.totalRow}>
+                <span>Всього до сплати:</span>
+                <span>{total} грн</span>
+              </div>
+            </div>
           </div>
 
           <footer className={styles.footer}>

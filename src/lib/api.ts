@@ -3,22 +3,26 @@ import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
 import {Product, StaticMetadata} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";
+import {PromoCodeResponse} from "@/models/PromoCode";
 
+// let API_URL = "https://localhost:7213";
 const API_URL = "https://api.zvychajna.pp.ua";
 
-export async function createPaperCheckout(productItemId: string, _quantity: number = 1): Promise<CheckoutResponse> {
-  const qty = Math.max(1, Math.floor(Number(_quantity) || 1));
-  const res = await fetch(`${API_URL}/api/checkout?id=${productItemId}&count=${encodeURIComponent(qty)}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-  }).catch((err) => {
-      notifyApiError(err);
-      throw err;
-  })
-  return handleApi<CheckoutResponse>(res);
-}
+export async function validatePromocode(code: string, productItemIds: string[]): Promise<PromoCodeResponse> {
+    const params = new URLSearchParams();
+    params.append("code", code);
+    productItemIds.forEach(id => params.append("productItemIds", id));
 
-export async function createInvoice(data: CheckoutFormData, items: CartItem[]): Promise<CheckoutResponse> {
+    const res = await fetch(`${API_URL}/api/PromoCode/validate?${params.toString()}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    }).catch((err) => {
+        notifyApiError(err);
+        throw err;
+    });
+    return handleApi<PromoCodeResponse>(res);
+}
+export async function createInvoice(data: CheckoutFormData, items: CartItem[], promoCode?: string): Promise<CheckoutResponse> {
     const res = await fetch(`${API_URL}/api/invoice`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -28,6 +32,7 @@ export async function createInvoice(data: CheckoutFormData, items: CartItem[]): 
                 productId: item.itemId,
                 quantity: item.quantity,
             })),
+            promoCode,
         }),
     }).catch((err) => {
         notifyApiError(err);
@@ -35,27 +40,6 @@ export async function createInvoice(data: CheckoutFormData, items: CartItem[]): 
     })
     return handleApi<CheckoutResponse>(res);
 }
-
-export async function createDigitalInvoice(params: {
-  productId: string;
-  customerEmail: string;
-  customerPhone: string;
-}): Promise<CheckoutResponse> {
-  const res = await fetch(`${API_URL}/api/invoice`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      productId: params.productId,
-      customerEmail: params.customerEmail,
-      customerPhone: params.customerPhone,
-    }),
-  }).catch((err) => {
-      notifyApiError(err);
-      throw err;
-  })
-  return handleApi<CheckoutResponse>(res);
-}
-
 async function fetchProducts(): Promise<Product[]> {
     try {
         const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });

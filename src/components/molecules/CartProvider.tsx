@@ -1,7 +1,10 @@
 "use client";
-import { createContext, useContext, useState, useEffect, ReactNode, useRef } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useRef, useMemo } from "react";
 import { Product } from "@/models/Product";
 import { useProducts } from "./ProductsProvider";
+import { PromoCodeResponse } from "@/models/PromoCode";
+import { calculateCartDiscount, calculateItemDiscount } from "@/lib/promocode.helper";
+import { validatePromocode } from "@/lib/api";
 
 export interface CartItem {
   product: Product;
@@ -20,6 +23,11 @@ interface CartContextType {
   isInCart: (itemId: string) => boolean;
   openCart: () => void;
   registerOpenCallback: (callback: () => void) => void;
+  appliedPromocode: PromoCodeResponse | null;
+  discountAmount: number;
+  getItemDiscount: (itemId: string) => number;
+  applyPromocode: (code: string) => Promise<void>;
+  removePromocode: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -27,7 +35,19 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const { products } = useProducts();
   const [items, setItems] = useState<CartItem[]>([]);
+  const [appliedPromocode, setAppliedPromocode] = useState<PromoCodeResponse | null>(null);
   const cartOpenCallbackRef = useRef<(() => void) | null>(null);
+
+  const discountAmount = useMemo(() =>
+    calculateCartDiscount(items, appliedPromocode),
+    [items, appliedPromocode]
+  );
+
+  const getItemDiscount = (itemId: string): number => {
+    const item = items.find(i => i.itemId === itemId);
+    if (!item) return 0;
+    return calculateItemDiscount(item, appliedPromocode);
+  };
 
   // Sync items with latest product data from ProductsProvider
   useEffect(() => {
@@ -46,7 +66,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   }, [products]);
 
-  // Load cart from localStorage on mount
+  // Load cart and promocode from localStorage on mount
   useEffect(() => {
     const stored = localStorage.getItem("cart");
     if (stored) {
@@ -56,12 +76,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
         console.error("Failed to parse cart from localStorage", e);
       }
     }
+    const storedPromo = localStorage.getItem("appliedPromocode");
+    if (storedPromo) {
+      try {
+        setAppliedPromocode(JSON.parse(storedPromo));
+      } catch (e) {
+        console.error("Failed to parse appliedPromocode from localStorage", e);
+      }
+    }
   }, []);
 
-  // Save cart to localStorage whenever it changes
+  // Save cart and promocode to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(items));
-  }, [items]);
+    if (appliedPromocode) {
+      localStorage.setItem("appliedPromocode", JSON.stringify(appliedPromocode));
+    } else {
+      localStorage.removeItem("appliedPromocode");
+    }
+  }, [items, appliedPromocode]);
 
   const addItem = (product: Product, itemId: string, format: "paper" | "digital", quantity: number = 1): boolean => {
     let wasAdded = false;
@@ -103,6 +136,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => {
     setItems([]);
+    setAppliedPromocode(null);
+  };
+
+  const applyPromocode = async (code: string) => {
+    const productItemIds = items.map(item => item.itemId);
+    const promo = await validatePromocode(code, productItemIds);
+    setAppliedPromocode(promo);
+  };
+
+  const removePromocode = () => {
+    setAppliedPromocode(null);
   };
 
   const isInCart = (itemId: string): boolean => {
@@ -124,7 +168,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, itemCount, isInCart, openCart, registerOpenCallback }}
+      value={{ items, addItem, removeItem, updateQuantity, clearCart, itemCount, isInCart, openCart, registerOpenCallback, appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode }}
     >
       {children}
     </CartContext.Provider>
