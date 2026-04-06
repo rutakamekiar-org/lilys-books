@@ -152,14 +152,10 @@ export default function ShoppingCart({
                 const price = productItem ? getPrice(productItem) ?? 0 : 0;
                 const itemTotal = price * item.quantity;
 
-                const isApplicable = !appliedPromocode?.applicableProductItemIds || 
-                  appliedPromocode.applicableProductItemIds.length === 0 || 
-                  appliedPromocode.applicableProductItemIds.includes(item.itemId);
-
                 const itemDiscount = getItemDiscount(item.itemId);
 
                 return (
-                  <div key={item.itemId} className={`${styles.item} ${isApplicable && appliedPromocode ? styles.itemPromo : ''}`}>
+                  <div key={item.itemId} className={`${styles.item} ${itemDiscount > 0 ? styles.itemPromo : ''}`}>
                     <div className={styles.itemThumb}>
                       <Image
                         src={addBasePath(item.product.imageUrl)}
@@ -174,10 +170,9 @@ export default function ShoppingCart({
                         {item.format === "paper" ? "Паперова" : "Електронна"}
                       </p>
                       <p className={styles.itemPrice}>{price} грн за шт.</p>
-                      {isApplicable && appliedPromocode && (
+                      {itemDiscount > 0 && (
                         <div className={styles.promoBadge}>
-                          <i className="fas fa-tag"></i> Акція
-                          {itemDiscount > 0 && ` (-${itemDiscount} грн)`}
+                          <i className="fas fa-tag"></i> Акція (-{itemDiscount} грн)
                         </div>
                       )}
                       {item.format === "paper" && (

@@ -8,4 +8,5 @@ export interface PromoCodeResponse {
     type: PromoCodeType;
     value: number;
     applicableProductItemIds: string[] | null;
+    remainingUsages?: number | null;
 }

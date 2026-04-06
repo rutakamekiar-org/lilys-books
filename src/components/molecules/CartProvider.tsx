@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect, ReactNode, useRef, useM
 import { Product } from "@/models/Product";
 import { useProducts } from "./ProductsProvider";
 import { PromoCodeResponse } from "@/models/PromoCode";
-import { calculateCartDiscount, calculateItemDiscount } from "@/lib/promocode.helper";
+import { calculateCartDiscount, calculateItemDiscount, getDiscountedUnitsPerItem } from "@/lib/promocode.helper";
 import { validatePromocode } from "@/lib/api";
 
 export interface CartItem {
@@ -43,10 +43,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [items, appliedPromocode]
   );
 
+  const discountedUnitsPerItem = useMemo(() =>
+    getDiscountedUnitsPerItem(items, appliedPromocode),
+    [items, appliedPromocode]
+  );
+
   const getItemDiscount = (itemId: string): number => {
     const item = items.find(i => i.itemId === itemId);
     if (!item) return 0;
-    return calculateItemDiscount(item, appliedPromocode);
+    return calculateItemDiscount(item, appliedPromocode, discountedUnitsPerItem.get(itemId));
   };
 
   // Sync items with latest product data from ProductsProvider
