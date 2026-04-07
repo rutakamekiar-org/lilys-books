@@ -5,7 +5,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  z-index: 50;
+  z-index: 500;
   overflow-y: auto;
 }
 
