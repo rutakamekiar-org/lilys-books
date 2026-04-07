@@ -82,7 +82,9 @@ button{
 }
 
 @media (max-width: 640px){
-  main{ padding: 16px 12px 28px; }
+  main{
+    padding: 80px 12px 28px;
+  }
   .socialLinks{ gap: 12px; }
   .socialLinks a{ padding: 10px 14px; }
 }
