@@ -12,7 +12,7 @@ import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 
 import type { Product } from "@/models/Product";
-import {getPrice} from "@/lib/product-item.helper";
+import {getPrice, getProductItemDisplayLabel} from "@/lib/product-item.helper";
 import PriceText from "@/components/atoms/PriceText";
 import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
@@ -56,27 +56,28 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const itemInCart = selected ? isInCart(selected.id) : false;
   const handleBuyNow = () => {
     if (!selected) return;
-    const wasAdded = addItem(product, selected.id, format, 1);
-    if (wasAdded) {
+    if (!isInCart(selected.id)) {
+      const wasAdded = addItem(product, selected.id, format, 1);
+      if (wasAdded) {
         notify.success(`"${product.name}" додано до кошика`);
-    } else {
-        notify.info(`"${product.name}" вже в кошику`);
+      }
     }
-
     if (!checkSuggestion(product, format)) {
-        openCart();
+      openCart();
     }
   };
 
   const handleAddToCart = () => {
     if (!selected) return;
-    const wasAdded = addItem(product, selected.id, format, 1);
-    if (wasAdded) {
-        notify.success(`"${product.name}" додано до кошика`);
+    if (isInCart(selected.id)) {
+      openCart();
     } else {
-        notify.info(`"${product.name}" вже в кошику`);
+      const wasAdded = addItem(product, selected.id, format, 1);
+      if (wasAdded) {
+        notify.success(`"${product.name}" додано до кошика`);
+      }
+      checkSuggestion(product, format);
     }
-    checkSuggestion(product, format);
   };
   const externalLinks = product?.externalLinks || []
   const descriptionId = `book-description-${product.slug}`;
@@ -160,7 +161,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                                                   disabled={isDisabled}
                                                   onChange={() => setFormat(itemFormat)}
                                               />
-                                              <span>{itemFormat === "paper" ? "Паперова" : "Електронна"} • {getPrice(f)} грн</span>
+                                          <span>{getProductItemDisplayLabel(product, f)} • {getPrice(f)} грн</span>
                                           </label>
                                       );
                                   })}

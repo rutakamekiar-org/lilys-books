@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./ShoppingCart.module.css";
 import { addBasePath } from "@/lib/paths";
 import { Product } from "@/models/Product";
-import { getPrice } from "@/lib/product-item.helper";
+import { getPrice, getProductItemDisplayLabel } from "@/lib/product-item.helper";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 
@@ -167,7 +167,9 @@ export default function ShoppingCart({
                     <div className={styles.itemDetails}>
                       <h3 className={styles.itemTitle}>{item.product.name}</h3>
                       <p className={styles.itemFormat}>
-                        {item.format === "paper" ? "Паперова" : "Електронна"}
+                        {productItem
+                          ? getProductItemDisplayLabel(item.product, productItem)
+                          : item.format === "paper" ? "Паперова" : "Електронна"}
                       </p>
                       <p className={styles.itemPrice}>{price} грн за шт.</p>
                       {itemDiscount > 0 && (

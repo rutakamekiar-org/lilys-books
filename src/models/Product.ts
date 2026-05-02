@@ -54,6 +54,7 @@ export interface StaticMetadata {
 export interface Product {
     id: string;
     name: string;
+    type?: number; // 1 = book, 2 = merch/art, 3 = bundle
     genre?: string;
     imageUrl: string;
     imageUrls?: string[];
