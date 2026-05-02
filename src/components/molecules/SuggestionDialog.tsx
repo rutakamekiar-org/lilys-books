@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./SuggestionDialog.module.css";
-import { addBasePath, withCacheBust } from "@/lib/paths";
+import { addBasePath } from "@/lib/paths";
 import { Product } from "@/models/Product";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
@@ -40,7 +40,7 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct }: Su
   const item = suggestedProduct.items[0];
   if (!item) return null;
   const price = item.discountPrice || item.price;
-  const productUrl = withCacheBust(`/books/${suggestedProduct.slug}`);
+  const productUrl = `/books/${suggestedProduct.slug}`;
 
   return (
     <div className={styles.overlay} role="dialog" aria-modal="true" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>

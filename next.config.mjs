@@ -22,7 +22,6 @@ const config = {
   basePath: useBasePath ? `/${repo}` : '',
   images: { unoptimized: true },
   env: {
-    NEXT_PUBLIC_BUILD_ID: process.env.GITHUB_SHA?.slice(0, 7) || String(Date.now()),
     NEXT_PUBLIC_BASE_PATH: useBasePath ? `/${repo}` : '',
   },
 };

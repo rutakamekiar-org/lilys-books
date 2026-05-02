@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "@/app/page.module.css";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
-import {addBasePath, withCacheBust} from "@/lib/paths";
+import {addBasePath} from "@/lib/paths";
 import type { Product } from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";
 import { useProducts } from "@/components/molecules/ProductsProvider";
@@ -48,7 +48,7 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
             )}
 
             <div className={styles.actions}>
-              <Link href={withCacheBust(`/books/${product.slug}`)} className={styles.cta}>
+              <Link href={`/books/${product.slug}`} className={styles.cta}>
                 Детальніше
               </Link>
             </div>

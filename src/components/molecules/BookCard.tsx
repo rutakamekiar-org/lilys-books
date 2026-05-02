@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./BookCard.module.css";
-import {addBasePath, withCacheBust} from "@/lib/paths";
+import {addBasePath} from "@/lib/paths";
 import {Product} from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";
 import { useProducts } from "@/components/molecules/ProductsProvider";
@@ -14,7 +14,7 @@ export default function BookCard({ product: staticProduct }: { product: Product 
   const minPrice = available.length ? getMinPrice(available) : null;
 
   return (
-    <Link href={withCacheBust(`/books/${product.slug}`)} className={styles.card}>
+    <Link href={`/books/${product.slug}`} className={styles.card}>
       <div className={styles.thumb}>
         {product.ageRating && (
           <span

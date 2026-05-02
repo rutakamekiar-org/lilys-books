@@ -3,7 +3,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import styles from "./NavBar.module.css";
-import { withCacheBust } from "@/lib/paths";
 import { useCart } from "@/components/molecules/CartProvider";
 import ShoppingCart from "@/components/organisms/ShoppingCart";
 import CheckoutForm, { CheckoutFormData } from "@/components/organisms/CheckoutForm";
@@ -46,10 +45,10 @@ export default function NavBar() {
   return (
     <>
       <nav className={styles.nav}>
-        <Link href={withCacheBust("/")} className={cls("/")} aria-current={pathname === "/" ? "page" : undefined}>Головна</Link>
-        <Link href={withCacheBust("/books")} className={cls("/books")} aria-current={pathname === "/books" ? "page" : undefined}>Магазин</Link>
-        <Link href={withCacheBust("/events")} className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>
-        <Link href={withCacheBust("/about")} className={cls("/about")} aria-current={pathname === "/about" ? "page" : undefined}>Про мене</Link>
+        <Link href="/" className={cls("/")} aria-current={pathname === "/" ? "page" : undefined}>Головна</Link>
+        <Link href="/books" className={cls("/books")} aria-current={pathname === "/books" ? "page" : undefined}>Магазин</Link>
+        <Link href="/events" className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>
+        <Link href="/about" className={cls("/about")} aria-current={pathname === "/about" ? "page" : undefined}>Про мене</Link>
         <button
           onClick={() => setCartOpen(true)}
           className={styles.cartBtn}
