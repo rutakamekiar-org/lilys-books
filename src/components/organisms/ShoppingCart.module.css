@@ -422,8 +422,7 @@
 }
 
 .promocode {
-  padding: 16px;
-  border-top: 1px solid var(--border);
+  padding: 0 0 4px;
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -244,38 +244,38 @@ export default function ShoppingCart({
 
         {!isEmpty && (
           <>
-            <div className={styles.promocode}>
-              {appliedPromocode ? (
-                <div className={styles.appliedPromo}>
-                  <span>
-                    <i className="fas fa-tag" style={{ marginRight: '8px' }}></i>
-                    {appliedPromocode.code?.toUpperCase()}
-                  </span>
-                  <button onClick={removePromocode} className={styles.removePromo} aria-label="Видалити промокод">
-                    ×
-                  </button>
-                </div>
-              ) : (
-                <div className={styles.promoForm}>
-                  <input
-                    type="text"
-                    value={promoInput}
-                    onChange={(e) => setPromoInput(e.target.value)}
-                    placeholder="Введіть промокод"
-                    className={styles.promoInput}
-                    onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
-                  />
-                  <button
-                    onClick={handleApplyPromo}
-                    disabled={isApplying || !promoInput.trim()}
-                    className={styles.promoApplyBtn}
-                  >
-                    {isApplying ? <i className="fas fa-spinner fa-spin"></i> : 'Застосувати'}
-                  </button>
-                </div>
-              )}
-            </div>
             <footer className={styles.footer}>
+              <div className={styles.promocode}>
+                {appliedPromocode ? (
+                  <div className={styles.appliedPromo}>
+                    <span>
+                      <i className="fas fa-tag" style={{ marginRight: '8px' }}></i>
+                      {appliedPromocode.code?.toUpperCase()}
+                    </span>
+                    <button onClick={removePromocode} className={styles.removePromo} aria-label="Видалити промокод">
+                      ×
+                    </button>
+                  </div>
+                ) : (
+                  <div className={styles.promoForm}>
+                    <input
+                      type="text"
+                      value={promoInput}
+                      onChange={(e) => setPromoInput(e.target.value)}
+                      placeholder="Введіть промокод"
+                      className={styles.promoInput}
+                      onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
+                    />
+                    <button
+                      onClick={handleApplyPromo}
+                      disabled={isApplying || !promoInput.trim()}
+                      className={styles.promoApplyBtn}
+                    >
+                      {isApplying ? <i className="fas fa-spinner fa-spin"></i> : 'Застосувати'}
+                    </button>
+                  </div>
+                )}
+              </div>
               {discountAmount > 0 && (
                 <>
                   <div className={styles.summaryRow}>
