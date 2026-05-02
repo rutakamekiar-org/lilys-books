@@ -3,17 +3,19 @@
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: flex-end;
   z-index: 500;
-  overflow-y: auto;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .cart {
   background: var(--surface);
   width: 440px;
   max-width: 100%;
-  min-height: 100vh;
+  height: 100%;
+  min-height: 100%;
   border-left: 1px solid var(--border);
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.16);
   display: flex;
