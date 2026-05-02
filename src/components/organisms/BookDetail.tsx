@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect, useRef } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./BookDetail.module.css";
 import ImageCarousel from "@/components/organisms/ImageCarousel";
@@ -36,6 +36,8 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
+    const [isDescriptionOverflowing, setIsDescriptionOverflowing] = useState(false);
+    const descriptionRef = useRef<HTMLDivElement | null>(null);
   const [format, setFormat] = useState<BookFormat>("paper");
   const { addItem, isInCart, openCart } = useCart();
 
@@ -82,6 +84,40 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const externalLinks = product?.externalLinks || []
   const descriptionId = `book-description-${product.slug}`;
   const descriptionTitleId = `${descriptionId}-title`;
+
+    useEffect(() => {
+        const node = descriptionRef.current;
+        if (!node) {
+            setIsDescriptionOverflowing(false);
+            return;
+        }
+
+        const measureOverflow = () => {
+            const computed = window.getComputedStyle(node);
+            const lineHeight = Number.parseFloat(computed.lineHeight);
+            const collapsedLines = Number.parseFloat(computed.getPropertyValue("--desc-collapsed-lines")) || 6;
+
+            if (!Number.isFinite(lineHeight) || lineHeight <= 0) {
+                setIsDescriptionOverflowing(false);
+                return;
+            }
+
+            const collapsedHeight = lineHeight * collapsedLines;
+            setIsDescriptionOverflowing(node.scrollHeight > collapsedHeight + 2);
+        };
+
+        measureOverflow();
+
+        const observer = new ResizeObserver(() => {
+            measureOverflow();
+        });
+        observer.observe(node);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [product.descriptionHtml]);
+
   const renderCoverActions = (className: string, keyPrefix: string) => (
       <div className={className}>
           {product && <GoodreadsButton product={product}/>}
@@ -205,18 +241,21 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               <h2 id={descriptionTitleId}>Опис</h2>
                               <div
                                   id={descriptionId}
-                                  className={`${styles.desc} ${descriptionExpanded ? styles.descExpanded : styles.descCollapsed}`}
+                                  ref={descriptionRef}
+                                  className={`${styles.desc} ${descriptionExpanded || !isDescriptionOverflowing ? styles.descExpanded : styles.descCollapsed}`}
                                   dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
                               />
-                              <button
-                                  type="button"
-                                  className={styles.descriptionToggle}
-                                  aria-expanded={descriptionExpanded}
-                                  aria-controls={descriptionId}
-                                  onClick={() => setDescriptionExpanded(expanded => !expanded)}
-                              >
-                                  {descriptionExpanded ? "Згорнути опис" : "Показати весь опис"}
-                              </button>
+                              {isDescriptionOverflowing && (
+                                  <button
+                                      type="button"
+                                      className={styles.descriptionToggle}
+                                      aria-expanded={descriptionExpanded}
+                                      aria-controls={descriptionId}
+                                      onClick={() => setDescriptionExpanded(expanded => !expanded)}
+                                  >
+                                      {descriptionExpanded ? "Згорнути ↑" : "Читати далі ↓"}
+                                  </button>
+                              )}
                           </section>
                       )}
 
