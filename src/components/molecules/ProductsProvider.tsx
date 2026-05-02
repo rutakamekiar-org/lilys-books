@@ -20,7 +20,6 @@ export function ProductsProvider({
 }) {
   const [products, setProducts] = useState<Product[]>(initialProducts || []);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasFetched, setHasFetched] = useState(false);
 
   const refresh = useCallback(async () => {
     setIsLoading(true);
@@ -33,14 +32,13 @@ export function ProductsProvider({
       console.error("Failed to fetch products:", error);
     } finally {
       setIsLoading(false);
-      setHasFetched(true);
     }
   }, []);
 
   // Fetch once per visit (on mount)
   useEffect(() => {
     refresh();
-  }, []);
+  }, [refresh]);
 
   return (
     <ProductsContext.Provider value={{ products, isLoading, refresh }}>

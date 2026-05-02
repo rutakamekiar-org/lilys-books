@@ -96,7 +96,7 @@ export default function ShoppingCart({
       await applyPromocode(promoInput.trim());
       setPromoInput("");
       notify.success("Промокод застосовано!");
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error("Promo apply failed:", e);
       notify.error("Невірний або недійсний промокод");
     } finally {

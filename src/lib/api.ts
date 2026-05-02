@@ -1,5 +1,5 @@
 import type { CheckoutResponse } from "./types";
-import {notifyApiError, handleApi, memoizeAsync} from "@/lib/api.helper";
+import {notifyApiError, handleApi} from "@/lib/api.helper";
 import {Product, StaticMetadata} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";

@@ -5,15 +5,29 @@ import EventsClient from "./EventsClient";
 import fs from "fs";
 import path from "path";
 import { addBasePath } from "@/lib/paths";
+import { absoluteUrl } from "@/lib/site.server";
+
+const EVENTS_TITLE = "Події Лілії Кухарець";
+const EVENTS_DESCRIPTION = "Презентації, інтерв'ю та зустрічі з Лілією Кухарець.";
+const EVENTS_SOCIAL_IMAGE = absoluteUrl("/images/photo_2025-09-21_20-57-11.jpg");
 
 export const metadata: Metadata = {
   title: "Події",
   description: "Найближчі та минулі події: презентації, інтерв'ю, зустрічі.",
   alternates: { canonical: "/events" },
   openGraph: {
-    title: "Події Лілії Кухарець",
-    description: "Презентації, інтерв'ю та зустрічі з Лілією Кухарець.",
+    type: "website",
+    locale: "uk_UA",
+    title: EVENTS_TITLE,
+    description: EVENTS_DESCRIPTION,
     url: "/events",
+    images: [{ url: EVENTS_SOCIAL_IMAGE, alt: EVENTS_TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: EVENTS_TITLE,
+    description: EVENTS_DESCRIPTION,
+    images: [EVENTS_SOCIAL_IMAGE],
   },
 };
 

@@ -38,7 +38,7 @@ export function notifyApiError(err: unknown) {
 }
 
 export async function handleApi<T = CheckoutResponse>(res: Response): Promise<T> {
-  let data: any = null;
+  let data: unknown = null;
   try {
     data = await res.json();
   } catch (e) {

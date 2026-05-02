@@ -3,7 +3,7 @@ import { getProductsForStatic, getLocalMetadata } from "@/lib/api";
 import BookDetail from "@/components/organisms/BookDetail";
 import type { Product } from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
-import { buildMetaDescription, SITE_AUTHOR, stripHtml } from "@/lib/site";
+import { buildMetaDescription, SITE_AUTHOR, SITE_NAME, stripHtml } from "@/lib/site";
 import { absoluteUrl } from "@/lib/site.server";
 import { notFound } from "next/navigation";
 
@@ -39,7 +39,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const fullProduct = { ...product, ...meta };
   const description = buildMetaDescription(getProductDescription(fullProduct));
   const image = absoluteUrl(fullProduct.imageUrl);
-  const canonicalUrl = absoluteUrl(`/books/${fullProduct.slug}`);
+  const canonicalPath = `/books/${fullProduct.slug}`;
   const openGraphBookFields = {
     ...(hasText(fullProduct.author) ? { authors: [fullProduct.author] } : {}),
     ...(hasText(fullProduct.physicalDetails?.isbn) ? { isbn: fullProduct.physicalDetails.isbn } : {}),
@@ -50,9 +50,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     description,
     openGraph: { 
       type: "book",
+      locale: "uk_UA",
+      siteName: SITE_NAME,
       title: `${fullProduct.name} — ${fullProduct.author ?? SITE_AUTHOR}`,
       description,
-      url: canonicalUrl,
+      url: canonicalPath,
       images: [{ url: image, alt: fullProduct.name }],
       ...openGraphBookFields,
     },
@@ -62,7 +64,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       description,
       images: [image],
     },
-    alternates: { canonical: canonicalUrl },
+    alternates: { canonical: canonicalPath },
   };
 }
 

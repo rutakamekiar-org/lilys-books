@@ -2,15 +2,29 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./page.module.css";
 import { addBasePath } from "@/lib/paths";
+import { SITE_AUTHOR } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site.server";
+
+const ABOUT_DESCRIPTION = "Коротка біографія, творчий шлях, посилання на соцмережі та контакти.";
+const ABOUT_SOCIAL_IMAGE = absoluteUrl("/images/photo_2025-09-21_20-57-11.jpg");
 
 export const metadata: Metadata = {
   title: "Про мене — Лілія Кухарець",
-  description: "Коротка біографія, творчий шлях, посилання на соцмережі та контакти.",
+  description: ABOUT_DESCRIPTION,
   alternates: { canonical: "/about" },
   openGraph: {
+    type: "profile",
+    locale: "uk_UA",
     title: "Про Лілію Кухарець",
-    description: "Біографія, творчий шлях, соцмережі та контакти Лілії Кухарець.",
+    description: ABOUT_DESCRIPTION,
     url: "/about",
+    images: [{ url: ABOUT_SOCIAL_IMAGE, alt: SITE_AUTHOR }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Про Лілію Кухарець",
+    description: ABOUT_DESCRIPTION,
+    images: [ABOUT_SOCIAL_IMAGE],
   },
 };
 
