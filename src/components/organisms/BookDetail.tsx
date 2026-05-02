@@ -35,6 +35,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     : staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
   const [format, setFormat] = useState<BookFormat>("paper");
   const { addItem, isInCart, openCart } = useCart();
 
@@ -78,6 +79,25 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     checkSuggestion(product, format);
   };
   const externalLinks = product?.externalLinks || []
+  const descriptionId = `book-description-${product.slug}`;
+  const descriptionTitleId = `${descriptionId}-title`;
+  const renderCoverActions = (className: string, keyPrefix: string) => (
+      <div className={className}>
+          {product && <GoodreadsButton product={product}/>}
+          {product.hasExcerpt && (
+              <button type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
+                  <i className="fa-solid fa-book-open" aria-hidden="true"></i>
+                  <span>Читати уривок</span>
+              </button>
+          )}
+          {externalLinks.map((link, idx) => (
+              <a key={`${keyPrefix}-${idx}`} className={styles.excerptBtn} target="_blank" rel="noopener" href={link.url}>
+                  <i className={link.icon} aria-hidden="true"></i>
+                  <span>{link.label}</span>
+              </a>
+          ))}
+      </div>
+  );
   let buyText
     if (selected?.isAvailable) {
         buyText = <PriceText label={'Купити — '} productItem={selected}/>
@@ -89,131 +109,148 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     return (
       <section className={styles.wrap}>
           <div className={styles.grid}>
-              <div className={styles.cover}>
-                  {product.imageUrls && product.imageUrls.length > 0 ? (
-                      <ImageCarousel
-                          images={product.imageUrls.map(url => addBasePath(url))}
-                          alt={product.name}
-                          sizes="(max-width: 960px) 100vw, 320px"
-                          className={styles.carousel}
-                          navInside={true}
-                      />
-                  ) : (
-                      <Image src={addBasePath(product.imageUrl)} alt={product.name} width={320} height={480}/>
-                  )}
-                  {product && <GoodreadsButton product={product}/>}
-                  {product.hasExcerpt && (
-                      <a type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
-                          <i className="fa-solid fa-book-open"></i>
-                          <span>Читати уривок</span>
-                      </a>
-                  )}
-                  {externalLinks.map((link, idx) => (
-                      <a key={idx} className={styles.excerptBtn} target="_blank" rel="noopener" href={link.url}>
-                          <i className={link.icon}></i>
-                          <span>{link.label}</span>
-                      </a>
-                  ))}
-              </div>
-              <div className={styles.content}>
+              <div className={styles.summary}>
                   <h1 className={styles.titleRow}>
-                      {product.name}
+                      <span className={styles.titleText}>{product.name}</span>
+                  </h1>
+
+                  {product && <GoodreadsRating product={product} compact/>}
+              </div>
+              <div className={styles.cover}>
+                  <div className={styles.coverMedia}>
                       {product.ageRating && (
                           <span
                               className={`${styles.ageBadge} ${styles["age" + product.ageRating.replace("+", "p")]}`}
                               aria-label={`Вікове обмеження: ${product.ageRating}`}
                               title={`Вікове обмеження: ${product.ageRating}`}
                           >
-                {product.ageRating}
-              </span>
+                              {product.ageRating}
+                          </span>
                       )}
-                  </h1>
-
-                  {product && <GoodreadsRating product={product} compact/>}
-
-                  {product.descriptionHtml && (
-                      <div className={styles.desc} dangerouslySetInnerHTML={{__html: product.descriptionHtml}}/>
-                  )}
-
-                  {product.items.length > 1 && (
-                      <div role="radiogroup" aria-label="Формат" className={styles.segmented}>
-                          {product.items.map(f => {
-                              const itemFormat = getFormat(f);
-                              const isDisabled = !f.isAvailable && !f.canPreorder;
-                              return (
-                                  <label key={f.type}
-                                         className={`${styles.opt} ${format === itemFormat ? styles.active : ""} ${isDisabled ? styles.disabled : ""}`}>
-                                      <input
-                                          type="radio"
-                                          name="format"
-                                          value={f.type}
-                                          checked={format === itemFormat}
-                                          disabled={isDisabled}
-                                          onChange={() => setFormat(itemFormat)}
-                                      />
-                                      <span>{itemFormat === "paper" ? "Паперова" : "Електронна"} • {getPrice(f)} грн</span>
-                                  </label>
-                              );
-                          })}
-                      </div>
-                  )
-                  }
-
-                  <div className={styles.buybar}>
-                      <div className={styles.buyButtons}>
-                        <button className={styles.buy} disabled={!selected?.isAvailable && !selected?.canPreorder}
-                                onClick={handleBuyNow}>
-                            {buyText}
-                        </button>
-                        <button
-                          className={`${styles.addToCart} ${itemInCart ? styles.inCart : ""}`}
-                          disabled={!selected?.isAvailable && !selected?.canPreorder}
-                          onClick={handleAddToCart}
-                          title={itemInCart ? "Вже в кошику" : "Додати до кошика"}>
-                            <i className={itemInCart ? "fas fa-check" : "fas fa-cart-plus"}></i>
-                        </button>
-                      </div>
-                      <small className={styles.hint}>
-                        {itemInCart ? "Товар вже в кошику" : "Купити зараз або додати до кошика"}
-                      </small>
-                      {selected?.note && (
-                          <small className={styles.hint}>{selected.note}</small>
+                      {product.imageUrls && product.imageUrls.length > 0 ? (
+                          <ImageCarousel
+                              images={product.imageUrls.map(url => addBasePath(url))}
+                              alt={product.name}
+                              sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
+                              className={styles.carousel}
+                              navInside={true}
+                          />
+                      ) : (
+                          <Image src={addBasePath(product.imageUrl)} alt={product.name} width={320} height={480}/>
                       )}
-                      {product.ageRating && (
-                          <small className={styles.hint}>Вікове обмеження: {product.ageRating}</small>
-                      )}
-
                   </div>
+                  {renderCoverActions(`${styles.coverActions} ${styles.desktopCoverActions}`, "desktop")}
+              </div>
+              <div className={styles.content}>
+                  <div className={styles.detailBody}>
+                      <div className={styles.purchasePanel}>
+                          {product.items.length > 1 && (
+                              <div role="radiogroup" aria-label="Формат" className={styles.segmented}>
+                                  {product.items.map(f => {
+                                      const itemFormat = getFormat(f);
+                                      const isDisabled = !f.isAvailable && !f.canPreorder;
+                                      return (
+                                          <label key={f.type}
+                                                 className={`${styles.opt} ${format === itemFormat ? styles.active : ""} ${isDisabled ? styles.disabled : ""}`}>
+                                              <input
+                                                  type="radio"
+                                                  name="format"
+                                                  value={f.type}
+                                                  checked={format === itemFormat}
+                                                  disabled={isDisabled}
+                                                  onChange={() => setFormat(itemFormat)}
+                                              />
+                                              <span>{itemFormat === "paper" ? "Паперова" : "Електронна"} • {getPrice(f)} грн</span>
+                                          </label>
+                                      );
+                                  })}
+                              </div>
+                          )
+                          }
 
-                  {product.physicalDetails && (
-                      <section className={styles.specs} aria-labelledby="specs-title">
-                          <h2 id="specs-title">Характеристики</h2>
-                          <dl className={styles.specsGrid}>
-                              {[
-                                  {label: "Автор(и)", value: product.author},
-                                  {label: "Серія", value: product.physicalDetails.seriesName},
-                                  {label: "Видавництво", value: product.physicalDetails.publisher},
-                                  {label: "Кількість сторінок", value: product.physicalDetails.pages?.toString()},
-                                  {label: "Тип палітурки", value: product.physicalDetails.coverType},
-                                  {label: "Рік видання", value: product.physicalDetails.publicationYear?.toString()},
-                                  {label: "Розмір", value: product.physicalDetails.size},
-                                  {
-                                      label: "Вага",
-                                      value: product.physicalDetails.weight ? `${product.physicalDetails.weight} г` : null
-                                  },
-                                  {label: "Тип паперу", value: product.physicalDetails.paperType},
-                                  {label: "ISBN", value: product.physicalDetails.isbn},
-                              ]
-                                  .filter(i => !!i.value)
-                                  .map((i, idx) => (
-                                      <Fragment key={i.label || idx}>
-                                          <dt className={styles.specsTerm}>{i.label}</dt>
-                                          <dd className={styles.specsDef}>{i.value as string}</dd>
-                                      </Fragment>
-                                  ))}
-                          </dl>
-                      </section>
-                  )}
+                          <div className={styles.buybar}>
+                              <div className={styles.buyButtons}>
+                                <button className={styles.buy} disabled={!selected?.isAvailable && !selected?.canPreorder}
+                                        onClick={handleBuyNow}>
+                                    {buyText}
+                                </button>
+                                <button
+                                  className={`${styles.addToCart} ${itemInCart ? styles.inCart : ""}`}
+                                  disabled={!selected?.isAvailable && !selected?.canPreorder}
+                                  onClick={handleAddToCart}
+                                  aria-label={itemInCart ? "Вже в кошику" : "Додати в кошик"}
+                                  title={itemInCart ? "Вже в кошику" : "Додати в кошик"}>
+                                    <i className={itemInCart ? "fas fa-check" : "fas fa-cart-plus"} aria-hidden="true"></i>
+                                    <span className={styles.addToCartText}>
+                                        {itemInCart ? "У кошику" : "Додати в кошик"}
+                                    </span>
+                                </button>
+                              </div>
+                              <small className={styles.hint}>
+                                {itemInCart ? "Товар вже в кошику" : "Купити зараз або додати до кошика"}
+                              </small>
+                              {selected?.note && (
+                                  <small className={styles.hint}>{selected.note}</small>
+                              )}
+                              {product.ageRating && (
+                                  <small className={styles.hint}>Вікове обмеження: {product.ageRating}</small>
+                              )}
+
+                          </div>
+                      </div>
+
+                      {product.descriptionHtml && (
+                          <section className={styles.descriptionPanel} aria-labelledby={descriptionTitleId}>
+                              <h2 id={descriptionTitleId}>Опис</h2>
+                              <div
+                                  id={descriptionId}
+                                  className={`${styles.desc} ${descriptionExpanded ? styles.descExpanded : styles.descCollapsed}`}
+                                  dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
+                              />
+                              <button
+                                  type="button"
+                                  className={styles.descriptionToggle}
+                                  aria-expanded={descriptionExpanded}
+                                  aria-controls={descriptionId}
+                                  onClick={() => setDescriptionExpanded(expanded => !expanded)}
+                              >
+                                  {descriptionExpanded ? "Згорнути опис" : "Показати весь опис"}
+                              </button>
+                          </section>
+                      )}
+
+                      {renderCoverActions(`${styles.coverActions} ${styles.mobileCoverActions}`, "mobile")}
+
+                      {product.physicalDetails && (
+                          <section className={styles.specs} aria-labelledby="specs-title">
+                              <h2 id="specs-title">Характеристики</h2>
+                              <dl className={styles.specsGrid}>
+                                  {[
+                                      {label: "Автор(и)", value: product.author},
+                                      {label: "Серія", value: product.physicalDetails.seriesName},
+                                      {label: "Видавництво", value: product.physicalDetails.publisher},
+                                      {label: "Кількість сторінок", value: product.physicalDetails.pages?.toString()},
+                                      {label: "Тип палітурки", value: product.physicalDetails.coverType},
+                                      {label: "Рік видання", value: product.physicalDetails.publicationYear?.toString()},
+                                      {label: "Розмір", value: product.physicalDetails.size},
+                                      {
+                                          label: "Вага",
+                                          value: product.physicalDetails.weight ? `${product.physicalDetails.weight} г` : null
+                                      },
+                                      {label: "Тип паперу", value: product.physicalDetails.paperType},
+                                      {label: "ISBN", value: product.physicalDetails.isbn},
+                                  ]
+                                      .filter(i => !!i.value)
+                                      .map((i, idx) => (
+                                          <Fragment key={i.label || idx}>
+                                              <dt className={styles.specsTerm}>{i.label}</dt>
+                                              <dd className={styles.specsDef}>{i.value as string}</dd>
+                                          </Fragment>
+                                      ))}
+                              </dl>
+                          </section>
+                      )}
+                  </div>
               </div>
           </div>
 
