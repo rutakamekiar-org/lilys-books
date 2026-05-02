@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import styles from "./ShoppingCart.module.css";
 import { addBasePath } from "@/lib/paths";
@@ -35,8 +36,34 @@ export default function ShoppingCart({
   const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode } = useCart();
   const [promoInput, setPromoInput] = useState("");
   const [isApplying, setIsApplying] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const updateViewportHeight = () => {
+      const nextHeight = window.visualViewport?.height ?? window.innerHeight;
+      setViewportHeight(Math.round(nextHeight));
+    };
+
+    updateViewportHeight();
+    window.visualViewport?.addEventListener("resize", updateViewportHeight);
+    window.visualViewport?.addEventListener("scroll", updateViewportHeight);
+    window.addEventListener("resize", updateViewportHeight);
+
+    return () => {
+      window.visualViewport?.removeEventListener("resize", updateViewportHeight);
+      window.visualViewport?.removeEventListener("scroll", updateViewportHeight);
+      window.removeEventListener("resize", updateViewportHeight);
+    };
+  }, [open]);
 
   // Close on the Escape key
   useEffect(() => {
@@ -115,7 +142,7 @@ export default function ShoppingCart({
     }
   };
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
   const subtotal = items.reduce((sum, item) => {
     const productItem = item.product.items.find((i) => i.id === item.itemId);
@@ -126,10 +153,14 @@ export default function ShoppingCart({
   const total = Math.max(0, subtotal - discountAmount);
 
   const isEmpty = items.length === 0;
+  const overlayStyle = viewportHeight
+    ? ({ ["--cart-viewport-height"]: `${viewportHeight}px` } as { [key: string]: string })
+    : undefined;
 
-  return (
+  return createPortal(
     <div
       className={styles.overlay}
+      style={overlayStyle}
       aria-modal="true"
       role="dialog"
       aria-label="Кошик"
@@ -299,6 +330,7 @@ export default function ShoppingCart({
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

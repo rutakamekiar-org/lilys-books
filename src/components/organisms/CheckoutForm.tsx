@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import styles from "./CheckoutForm.module.css";
 import { CartItem, useCart } from "@/components/molecules/CartProvider";
 import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
@@ -29,10 +30,36 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const { appliedPromocode, discountAmount, getItemDiscount } = useCart();
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastActiveEl = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const updateViewportHeight = () => {
+      const nextHeight = window.visualViewport?.height ?? window.innerHeight;
+      setViewportHeight(Math.round(nextHeight));
+    };
+
+    updateViewportHeight();
+    window.visualViewport?.addEventListener("resize", updateViewportHeight);
+    window.visualViewport?.addEventListener("scroll", updateViewportHeight);
+    window.addEventListener("resize", updateViewportHeight);
+
+    return () => {
+      window.visualViewport?.removeEventListener("resize", updateViewportHeight);
+      window.visualViewport?.removeEventListener("scroll", updateViewportHeight);
+      window.removeEventListener("resize", updateViewportHeight);
+    };
+  }, [open]);
 
   const hasPhysical = items.some((item) => item.format === "paper");
 
@@ -141,7 +168,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
     }
   };
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
   const subtotal = items.reduce((sum, item) => {
     const productItem = item.product.items.find((i) => i.id === item.itemId);
@@ -150,10 +177,14 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   }, 0);
 
   const total = Math.max(0, subtotal - discountAmount);
+  const overlayStyle = viewportHeight
+    ? ({ ["--checkout-viewport-height"]: `${viewportHeight}px` } as { [key: string]: string })
+    : undefined;
 
-  return (
+  return createPortal(
     <div
       className={styles.overlay}
+      style={overlayStyle}
       aria-modal="true"
       role="dialog"
       aria-label="Оформлення замовлення"
@@ -277,10 +308,8 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                   
                   return (
                     <div key={item.itemId} className={styles.summaryItem}>
-                      <div className={styles.summaryItemInfo}>
-                        <span className={styles.summaryItemName}>{productItem?.name || item.product.name}</span>
-                        <span className={styles.summaryItemQty}>x{item.quantity}</span>
-                      </div>
+                      <span className={styles.summaryItemName}>{productItem?.name || item.product.name}</span>
+                      <span className={styles.summaryItemQty}>x{item.quantity}</span>
                       <div className={styles.summaryItemPrice}>
                         {itemDiscount > 0 && (
                           <span className={styles.summaryItemOldPrice}>{itemTotal} грн</span>
@@ -316,6 +345,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
           </footer>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

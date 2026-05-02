@@ -1,6 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
+  min-height: var(--checkout-viewport-height, 100dvh);
   background: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
@@ -17,7 +18,7 @@
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
   border: 1px solid var(--border);
   position: relative;
-  max-height: 90vh;
+  max-height: min(90vh, calc(var(--checkout-viewport-height, 100dvh) - 40px));
   display: flex;
   flex-direction: column;
 }
@@ -243,27 +244,23 @@
 }
 
 .summaryItem {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: flex-start;
   gap: 12px;
   font-size: 0.9rem;
 }
 
-.summaryItemInfo {
-  display: flex;
-  gap: 6px;
-  flex: 1;
-}
-
 .summaryItemName {
   font-weight: 500;
   color: var(--text);
+  min-width: 0;
 }
 
 .summaryItemQty {
   color: var(--muted);
   white-space: nowrap;
+  align-self: flex-start;
 }
 
 .summaryItemPrice {
