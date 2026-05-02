@@ -47,13 +47,24 @@ export default function ShoppingCart({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  // Restore focus on close
+  // Restore focus on close and lock body scroll
   useEffect(() => {
     if (open) {
       lastActiveEl.current = document.activeElement as HTMLElement;
+      // Lock body scroll when cart is open
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
     } else {
       lastActiveEl.current?.focus?.();
+      // Unlock body scroll when cart closes
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.paddingRight = "";
     }
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.documentElement.style.paddingRight = "";
+    };
   }, [open]);
 
   // Focus trap
