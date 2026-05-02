@@ -15,6 +15,8 @@ import { getProductsForStatic } from "@/lib/api";
 import Snow from "@/components/atoms/Snow";
 import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME } from "@/lib/site";
 import { absoluteUrl, resolveSiteBaseUrl } from "@/lib/site.server";
+import Link from "next/link";
+import { withCacheBust } from "@/lib/paths";
 
 const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
 const isGaEnabled = Boolean(GA_MEASUREMENT_ID);
@@ -133,6 +135,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               © {new Date().getFullYear()} Лілія Кухарець. Усі права захищені.
               <br/>
               lillykukharets0325@gmail.com
+              <br/>
+              <Link href={withCacheBust("/return-policy")}>Повернення та обмін</Link>
             </footer>
           </CartProvider>
         </ProductsProvider>
