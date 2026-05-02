@@ -9,6 +9,12 @@ import { addBasePath } from "@/lib/paths";
 export const metadata: Metadata = {
   title: "Події",
   description: "Найближчі та минулі події: презентації, інтерв'ю, зустрічі.",
+  alternates: { canonical: "/events" },
+  openGraph: {
+    title: "Події Лілії Кухарець",
+    description: "Презентації, інтерв'ю та зустрічі з Лілією Кухарець.",
+    url: "/events",
+  },
 };
 
 function getEventImagesFromFs(eventId: string): string[] {

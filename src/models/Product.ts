@@ -44,6 +44,7 @@ export interface ExternalLink {
 }
 
 export interface StaticMetadata {
+    seoDescription?: string;
     descriptionHtml?: string;
     excerptHtml?: string;
     imageUrls?: string[];
@@ -60,6 +61,7 @@ export interface Product {
     externalBookRatings: ExternalBookRating[];
     externalLinks: ExternalLink[];
     physicalDetails: PhysicalDetails;
+    seoDescription?: string;
     descriptionHtml?: string;
     excerptHtml?: string;
     hasExcerpt?: boolean;

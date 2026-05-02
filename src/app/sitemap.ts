@@ -1,32 +1,24 @@
-import { getProducts } from "@/lib/api";
+import { getProductsForStatic } from "@/lib/api";
 import type { Product } from "@/models/Product";
-import fs from "node:fs";
-import path from "node:path";
+import { absoluteUrl } from "@/lib/site.server";
+import type { MetadataRoute } from "next";
 
 export const dynamic = "force-static";
 
-function resolveBaseUrl(): string {
-  const envBase = process.env.NEXT_PUBLIC_SITE_BASE;
-  if (envBase) return envBase.replace(/\/$/, "");
-  try {
-    const cnamePath = path.join(process.cwd(), "CNAME");
-    if (fs.existsSync(cnamePath)) {
-      const domain = fs.readFileSync(cnamePath, "utf8").trim();
-      if (domain) return `https://${domain}`;
-    }
-  } catch {}
-  return "http://localhost:3000";
-}
-
-export default async function sitemap() {
-  const base = resolveBaseUrl();
-  const products: Product[] = await getProducts().catch(() => []);
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products: Product[] = await getProductsForStatic();
   const now = new Date();
 
   return [
-    { url: `${base}/`, lastModified: now },
-    { url: `${base}/books`, lastModified: now },
-    ...products.map((p) => ({ url: `${base}/books/${p.slug}`, lastModified: now })),
-    { url: `${base}/about`, lastModified: now },
+    { url: absoluteUrl("/"), lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: absoluteUrl("/books"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    ...products.map((p) => ({
+      url: absoluteUrl(`/books/${p.slug}`),
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    })),
+    { url: absoluteUrl("/events"), lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: absoluteUrl("/about"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
   ];
 }

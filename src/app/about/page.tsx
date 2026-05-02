@@ -6,6 +6,12 @@ import { addBasePath } from "@/lib/paths";
 export const metadata: Metadata = {
   title: "Про мене — Лілія Кухарець",
   description: "Коротка біографія, творчий шлях, посилання на соцмережі та контакти.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "Про Лілію Кухарець",
+    description: "Біографія, творчий шлях, соцмережі та контакти Лілії Кухарець.",
+    url: "/about",
+  },
 };
 
 export default function AboutPage() {

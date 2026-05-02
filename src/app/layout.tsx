@@ -11,15 +11,51 @@ import { Suspense } from "react";
 import ToastProvider from "@/components/atoms/ToastProvider";
 import { CartProvider } from "@/components/molecules/CartProvider";
 import { ProductsProvider } from "@/components/molecules/ProductsProvider";
-import { getProducts } from "@/lib/api";
+import { getProductsForStatic } from "@/lib/api";
 import Snow from "@/components/atoms/Snow";
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME } from "@/lib/site";
+import { absoluteUrl, resolveSiteBaseUrl } from "@/lib/site.server";
 
 const GA_MEASUREMENT_ID = 'G-G99TKQS1G1'
 const isGaEnabled = Boolean(GA_MEASUREMENT_ID);
 
 export const metadata: Metadata = {
-  title: "Lily’s Books",
-  description: "Official author site and store",
+  metadataBase: new URL(resolveSiteBaseUrl()),
+  title: {
+    default: `${SITE_AUTHOR} — офіційний сайт`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_AUTHOR, url: resolveSiteBaseUrl() }],
+  creator: SITE_AUTHOR,
+  publisher: SITE_AUTHOR,
+  keywords: SITE_KEYWORDS,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "uk_UA",
+    url: "/",
+    siteName: SITE_NAME,
+    title: `${SITE_AUTHOR} — офіційний сайт`,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: absoluteUrl("/images/photo_2025-09-21_20-57-11.jpg"),
+        width: 720,
+        height: 1080,
+        alt: SITE_AUTHOR,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_AUTHOR} — офіційний сайт`,
+    description: SITE_DESCRIPTION,
+    images: [absoluteUrl("/images/photo_2025-09-21_20-57-11.jpg")],
+  },
   icons: {
     icon: [
       { url: addBasePath("/icons/favicon.svg"), type: "image/svg+xml" },
@@ -35,7 +71,19 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const initialProducts = await getProducts().catch(() => []);
+  const initialProducts = await getProductsForStatic();
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: resolveSiteBaseUrl(),
+    inLanguage: "uk-UA",
+    publisher: {
+      "@type": "Person",
+      name: SITE_AUTHOR,
+      url: resolveSiteBaseUrl(),
+    },
+  };
 
   return (
     <html lang="uk">
@@ -61,6 +109,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         )}
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <Snow/>
         <ClarityInit />
         <ToastProvider />
