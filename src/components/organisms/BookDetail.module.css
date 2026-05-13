@@ -194,7 +194,7 @@
   .buy { width: 100%; }
   .addToCart { width: 100%; }
   .addToCartText { display: inline; font-size: 1rem; }
-  .buybar .hint { display: none; }
+  .buybar { display: none; }
   .descriptionPanel { margin-top: 14px; }
   .specsGrid { grid-template-columns: minmax(120px, 42%) 1fr;}
 }
