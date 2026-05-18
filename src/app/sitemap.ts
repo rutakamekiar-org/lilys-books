@@ -6,7 +6,7 @@ import type { MetadataRoute } from "next";
 export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const products: Product[] = await getProductsForStatic();
+  const products: Product[] = await getProductsForStatic({ required: true });
   const now = new Date();
 
   return [
