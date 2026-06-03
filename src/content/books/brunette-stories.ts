@@ -10,7 +10,7 @@ const content = {
 `,
   hasExcerpt: true,
   imageUrls: [
-      "/images/products/brunette-stories/brunette-stories1.png",
+      "/images/products/brunette-stories/brunette-stories.png",
       "/images/products/brunette-stories/brunette-stories2.png"
   ],
 };
