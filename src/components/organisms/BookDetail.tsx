@@ -29,7 +29,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
         ...liveProduct, 
         descriptionHtml: staticProduct.descriptionHtml || liveProduct.descriptionHtml,
         imageUrls: staticProduct.imageUrls || liveProduct.imageUrls,
-        externalLinks: (staticProduct.externalLinks && staticProduct.externalLinks.length > 0) ? staticProduct.externalLinks : liveProduct.externalLinks,
+        externalLinks: liveProduct.externalLinks ?? staticProduct.externalLinks,
         hasExcerpt: staticProduct.hasExcerpt || liveProduct.hasExcerpt 
       }
     : staticProduct;
