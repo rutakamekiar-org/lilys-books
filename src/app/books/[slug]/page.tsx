@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getProductsForStatic, getLocalMetadata } from "@/lib/api";
+import { getProductBySlug, getLocalMetadata } from "@/lib/api";
 import BookDetail from "@/components/organisms/BookDetail";
 import type { Product } from "@/models/Product";
 import {getPrice} from "@/lib/product-item.helper";
@@ -9,13 +9,7 @@ import { notFound } from "next/navigation";
 
  type Props = { params: Promise<{ slug: string }> };
 
-export const dynamic = "force-static";
-export const dynamicParams = false;
-
-export async function generateStaticParams() {
-  const products: Product[] = await getProductsForStatic({ required: true });
-  return products.map((p) => ({ slug: p.slug }));
-}
+export const revalidate = 60;
 
 function getProductDescription(product: Product): string {
   return stripHtml(product.seoDescription ?? product.descriptionHtml) || `${product.name} — книга ${product.author ?? SITE_AUTHOR}.`;
@@ -29,14 +23,18 @@ function hasNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { slug } = await props.params;
-  const products: Product[] = await getProductsForStatic();
-  const product = products.find(x => x.slug === slug);
-  if (!product) notFound();
+async function getFullProduct(slug: string): Promise<Product | null> {
+  const product = await getProductBySlug(slug);
+  if (!product) return null;
 
   const meta = await getLocalMetadata(slug);
-  const fullProduct = { ...product, ...meta };
+  return { ...product, ...meta };
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const { slug } = await props.params;
+  const fullProduct = await getFullProduct(slug);
+  if (!fullProduct) notFound();
   const description = buildMetaDescription(getProductDescription(fullProduct));
   const image = absoluteUrl(fullProduct.imageUrl);
   const canonicalPath = `/books/${fullProduct.slug}`;
@@ -70,12 +68,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function BookPage(props: Props) {
   const { slug } = await props.params;
-  const products: Product[] = await getProductsForStatic();
-  const product = products.find(x => x.slug === slug);
-  if (!product) notFound();
-
-  const meta = await getLocalMetadata(slug);
-  const fullProduct = { ...product, ...meta };
+  const fullProduct = await getFullProduct(slug);
+  if (!fullProduct) notFound();
   const canonicalUrl = absoluteUrl(`/books/${fullProduct.slug}`);
   const description = getProductDescription(fullProduct);
   const workExample = fullProduct.items

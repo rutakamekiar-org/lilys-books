@@ -53,6 +53,18 @@ async function fetchProducts(options: { throwOnError?: boolean } = {}): Promise<
     }
 }
 
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+    const res = await fetch(`${API_URL}/api/products/${encodeURIComponent(slug)}`, {
+        next: { revalidate: 60 },
+    });
+
+    if (res.status === 404) {
+        return null;
+    }
+
+    return handleApi<Product>(res);
+}
+
 export async function getProductsForStatic(options: { required?: boolean } = {}): Promise<Product[]> {
     // Book route generation must be strict: deploying without product paths would remove
     // crawlable book pages. Non-critical SEO consumers can degrade gracefully and keep
@@ -70,6 +82,9 @@ export async function getLocalMetadata(slug: string): Promise<StaticMetadata> {
         const meta = await import(`../content/books/${slug}`);
         return meta.default;
     } catch (e) {
+        if (typeof e === "object" && e !== null && "code" in e && e.code === "MODULE_NOT_FOUND") {
+            return {};
+        }
         console.warn(`No local metadata found for slug: ${slug}`, e);
         return {};
     }
