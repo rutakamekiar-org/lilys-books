@@ -17,19 +17,20 @@ import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
-  const { products } = useProducts();
-  const liveProduct = products.find(p => p.id === staticProduct.id);
+  const { products, refreshProduct } = useProducts();
+  const [freshProduct, setFreshProduct] = useState<Product | null>(null);
   
   // Merge live data (prices, availability) with static rich content (excerpts)
   // We explicitly preserve rich content from staticProduct
-  const product = liveProduct 
+  const currentFreshProduct = freshProduct?.slug === staticProduct.slug ? freshProduct : null;
+  const product = currentFreshProduct
     ? { 
         ...staticProduct, 
-        ...liveProduct, 
-        descriptionHtml: staticProduct.descriptionHtml || liveProduct.descriptionHtml,
-        imageUrls: staticProduct.imageUrls || liveProduct.imageUrls,
-        externalLinks: liveProduct.externalLinks ?? staticProduct.externalLinks,
-        hasExcerpt: staticProduct.hasExcerpt || liveProduct.hasExcerpt 
+        ...currentFreshProduct,
+        descriptionHtml: staticProduct.descriptionHtml || currentFreshProduct.descriptionHtml,
+        imageUrls: staticProduct.imageUrls || currentFreshProduct.imageUrls,
+        externalLinks: currentFreshProduct.externalLinks ?? staticProduct.externalLinks,
+        hasExcerpt: staticProduct.hasExcerpt || currentFreshProduct.hasExcerpt
       }
     : staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
@@ -41,6 +42,32 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const { addItem, isInCart, openCart } = useCart();
 
   const suggestedProduct = products.find(p => p.slug === 'inaksha-art');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadFreshProduct = async () => {
+      const latestProduct = await refreshProduct(staticProduct.slug);
+      if (!cancelled && latestProduct) {
+        setFreshProduct(latestProduct);
+      }
+    };
+
+    setFreshProduct(null);
+    void loadFreshProduct();
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") {
+        void loadFreshProduct();
+      }
+    };
+
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
+  }, [refreshProduct, staticProduct.slug]);
 
   const checkSuggestion = (addedProduct: Product, addedFormat: BookFormat) => {
       if ((addedProduct.slug === 'zvychajna-and-inaksha' || addedProduct.slug === 'inaksha') && addedFormat === 'paper' && suggestedProduct) {

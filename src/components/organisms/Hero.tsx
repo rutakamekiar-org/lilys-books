@@ -47,7 +47,7 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
             )}
 
             <div className={styles.actions}>
-              <Link href={`/books/${product.slug}`} className={styles.cta}>
+              <Link href={`/books/${product.slug}`} prefetch={false} className={styles.cta}>
                 Детальніше
               </Link>
             </div>

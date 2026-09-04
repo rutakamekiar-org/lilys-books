@@ -39,9 +39,12 @@ export async function createInvoice(data: CheckoutFormData, items: CartItem[], p
     })
     return handleApi<CheckoutResponse>(res);
 }
-async function fetchProducts(options: { throwOnError?: boolean } = {}): Promise<Product[]> {
+async function fetchProducts(options: { throwOnError?: boolean; fresh?: boolean } = {}): Promise<Product[]> {
     try {
-        const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });
+        const res = await fetch(
+            `${API_URL}/api/products`,
+            options.fresh ? { cache: "no-store" } : { next: { revalidate: 60 } },
+        );
         const data = await handleApi<Product[]>(res);
         return Array.isArray(data) ? data : [];
     } catch (error) {
@@ -56,6 +59,18 @@ async function fetchProducts(options: { throwOnError?: boolean } = {}): Promise<
 export async function getProductBySlug(slug: string): Promise<Product | null> {
     const res = await fetch(`${API_URL}/api/products/${encodeURIComponent(slug)}`, {
         next: { revalidate: 60 },
+    });
+
+    if (res.status === 404) {
+        return null;
+    }
+
+    return handleApi<Product>(res);
+}
+
+export async function getProductBySlugLive(slug: string): Promise<Product | null> {
+    const res = await fetch(`${API_URL}/api/products/${encodeURIComponent(slug)}`, {
+        cache: "no-store",
     });
 
     if (res.status === 404) {
@@ -91,4 +106,5 @@ export async function getLocalMetadata(slug: string): Promise<StaticMetadata> {
 }
 
 export const getProducts = fetchProducts;
+export const getProductsLive = () => fetchProducts({ fresh: true });
 
