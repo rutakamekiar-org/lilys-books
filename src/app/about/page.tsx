@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./page.module.css";
-import { addBasePath } from "@/lib/paths";
 import { SITE_AUTHOR } from "@/lib/site";
 import { absoluteUrl } from "@/lib/site.server";
 
@@ -44,7 +43,7 @@ export default function AboutPage() {
         <div className={styles.photo}>
           <Image
             className={styles.img}
-            src={addBasePath("/images/photo_2025-09-21_20-57-11.jpg")}
+            src="/images/photo_2025-09-21_20-57-11.jpg"
             alt={"Лілія Кухарець"}
             width={360}
             height={540}

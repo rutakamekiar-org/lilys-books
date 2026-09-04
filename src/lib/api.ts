@@ -5,8 +5,7 @@ import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";
 import {PromoCodeResponse} from "@/models/PromoCode";
 
-// let API_URL = "https://localhost:7213";
-const API_URL = "https://api.zvychajna.pp.ua";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.zvychajna.pp.ua").replace(/\/$/, "");
 
 export async function validatePromocode(code: string, productItemIds: string[]): Promise<PromoCodeResponse> {
     const params = new URLSearchParams();

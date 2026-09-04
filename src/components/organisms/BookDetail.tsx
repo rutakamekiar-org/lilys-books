@@ -6,7 +6,6 @@ import styles from "./BookDetail.module.css";
 import ImageCarousel from "@/components/organisms/ImageCarousel";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import GoodreadsButton from "@/components/molecules/GoodreadsButton";
-import { addBasePath } from "@/lib/paths";
 import ExcerptDialog from "@/components/molecules/ExcerptDialog";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
@@ -166,14 +165,14 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                       )}
                       {product.imageUrls && product.imageUrls.length > 0 ? (
                           <ImageCarousel
-                              images={product.imageUrls.map(url => addBasePath(url))}
+                              images={product.imageUrls}
                               alt={product.name}
                               sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
                               className={styles.carousel}
                               navInside={true}
                           />
                       ) : (
-                          <Image src={addBasePath(product.imageUrl)} alt={product.name} width={320} height={480}/>
+                          <Image src={product.imageUrl} alt={product.name} width={320} height={480}/>
                       )}
                   </div>
                   {renderCoverActions(`${styles.coverActions} ${styles.desktopCoverActions}`, "desktop")}

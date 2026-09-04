@@ -2,7 +2,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./BookCard.module.css";
-import {addBasePath} from "@/lib/paths";
 import {Product} from "@/models/Product";
 import {getPrice, getProductItemDisplayLabel} from "@/lib/product-item.helper";
 import { useProducts } from "@/components/molecules/ProductsProvider";
@@ -42,7 +41,7 @@ export default function BookCard({ product: staticProduct }: { product: Product 
               {product.ageRating}
             </span>
           )}
-          <Image src={addBasePath(product.imageUrl)} alt={product.name} width={240} height={360} />
+          <Image src={product.imageUrl} alt={product.name} width={240} height={360} />
         </div>
         <div className={styles.meta}>
           <h3>{product.name}</h3>

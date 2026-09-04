@@ -3,7 +3,6 @@ import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import NavBar from "@/components/organisms/NavBar";
 import Contacts from "@/components/organisms/Contacts";
-import { addBasePath } from "@/lib/paths";
 import ClarityInit from "@/components/atoms/ClarityInit";
 import Script from "next/script";
 import Analytics from "@/app/analytics";
@@ -59,16 +58,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: addBasePath("/icons/favicon.svg"), type: "image/svg+xml" },
-      { url: addBasePath("/icons/favicon-96x96.png"), sizes: "96x96", type: "image/png" },
-      { url: addBasePath("/icons/favicon.ico") },
+      { url: "/icons/favicon.svg", type: "image/svg+xml" },
+      { url: "/icons/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icons/favicon.ico" },
     ],
     apple: [
-      { url: addBasePath("/icons/apple-touch-icon.png"), sizes: "180x180" },
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180" },
     ],
-    shortcut: [addBasePath("/icons/favicon.ico")],
+    shortcut: ["/icons/favicon.ico"],
   },
-  manifest: addBasePath("/icons/site.webmanifest"),
+  manifest: "/icons/site.webmanifest",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

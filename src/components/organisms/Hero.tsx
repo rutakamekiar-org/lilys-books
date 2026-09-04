@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "@/app/page.module.css";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
-import {addBasePath} from "@/lib/paths";
 import type { Product } from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";
 import { useProducts } from "@/components/molecules/ProductsProvider";
@@ -65,7 +64,7 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
               {product.ageRating}
             </span>
           )}
-          <Image src={addBasePath(product.imageUrl)} alt={product.name} width={360} height={540} />
+          <Image src={product.imageUrl} alt={product.name} width={360} height={540} />
         </div>
       </div>
     </section>

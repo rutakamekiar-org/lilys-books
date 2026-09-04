@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import EventsClient from "./EventsClient";
 import fs from "fs";
 import path from "path";
-import { addBasePath } from "@/lib/paths";
 import { absoluteUrl } from "@/lib/site.server";
 
 const EVENTS_TITLE = "Події Лілії Кухарець";
@@ -39,7 +38,7 @@ function getEventImagesFromFs(eventId: string): string[] {
       .readdirSync(dir)
       .filter(f => /(png|jpe?g|webp|gif|avif)$/i.test(f))
       .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
-    return files.map(f => addBasePath(`/images/events/${eventId}/${f}`));
+    return files.map(f => `/images/events/${eventId}/${f}`);
   } catch {
     return [];
   }

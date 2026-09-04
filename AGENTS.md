@@ -2,37 +2,33 @@
 
 ## Project Snapshot
 
-Next.js App Router storefront, statically exported for GitHub Pages. Main behavior is split between server-side static data loading and client-side providers.
+Next.js App Router storefront deployed as a server-capable Next.js application. Main behavior is split between server-side data loading and client-side providers.
 
 ## Fast Start
 
 - Dev: `npm run dev`
 - Lint: `npm run lint`
-- Build static site: `npm run build` (outputs to `out/`)
-- Local preview: `npm run start`
+- Type check: `npm run typecheck`
+- Build runtime application: `npm run build` (outputs to `.next/`)
+- Local production preview: `npm run start` (after `npm run build`)
 
 ## Architecture Anchors
 
 - Routing/pages: `src/app/`
 - UI layers: `src/components/atoms`, `src/components/molecules`, `src/components/organisms`
 - API boundary: `src/lib/api.ts`
-- Static + runtime path helpers: `src/lib/paths.ts`
 - Product metadata content: `src/content/books/`
 - Event definitions: `src/data/events.ts`
 
 ## Critical Conventions
 
 - Config source of truth: `next.config.mjs`
-  - `next.config.ts` is an intentional stub to satisfy tooling.
-  - Static export is configured via `output: 'export'`.
-
-- Base path and cache busting must follow `src/lib/paths.ts`:
-  - Use `addBasePath()` for static assets.
-  - Use `withCacheBust()` for internal navigation links.
-  - Do not hardcode root asset paths like `/images/...`.
+  - Do not restore `output: 'export'`, a GitHub Pages base path, or global `images.unoptimized`.
+  - Keep internal navigation and public assets root-relative (for example, `/books` and `/images/...`).
+  - Use `next/image` for storefront images so the deployment provider can optimize them.
 
 - Product data flow:
-  - Server/build time: `getProductsForStatic()` (used in `src/app/layout.tsx` and book pages).
+  - Server/build time: `getProductsForStatic()` (used in `src/app/layout.tsx` and book pages until the dynamic product-route migration is complete).
   - Client reactivity: `ProductsProvider` + `useProducts()`.
   - Do not fetch product API directly from UI components.
 
@@ -51,13 +47,15 @@ Next.js App Router storefront, statically exported for GitHub Pages. Main behavi
 
 ## Deployment Notes
 
-- GitHub Pages workflow: `.github/workflows/pages.yml`
-- Base path is enabled on CI project pages and disabled when a custom domain (`CNAME`) is present.
+- CI workflow: `.github/workflows/ci.yml`
+- Netlify is the selected runtime host; production traffic moves only after the migration acceptance checks pass.
+- Configure `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_BASE` per environment.
+- The root `CNAME` file records the current GitHub Pages production domain until the final cutover task removes it.
 
 ## Working Guidance For Agents
 
 - Prefer existing provider/hooks patterns over introducing new fetch/state layers.
 - Preserve separation between static content in `src/content/books` and live pricing/availability from API.
-- When editing links/assets, verify both regular deploy and GitHub Pages subpath behavior.
-- `README.md` is currently generic starter text; rely on this file plus source references above for project-specific behavior.
+- When editing links/assets, verify local runtime behavior and the provider preview.
+- Keep README configuration and deployment guidance aligned with this file.
 

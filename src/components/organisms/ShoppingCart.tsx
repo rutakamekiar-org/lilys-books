@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import styles from "./ShoppingCart.module.css";
-import { addBasePath } from "@/lib/paths";
 import { Product } from "@/models/Product";
 import { getPrice, getProductItemDisplayLabel } from "@/lib/product-item.helper";
 import { useCart } from "@/components/molecules/CartProvider";
@@ -200,7 +199,7 @@ export default function ShoppingCart({
                   <div key={item.itemId} className={`${styles.item} ${itemDiscount > 0 ? styles.itemPromo : ''}`}>
                     <div className={styles.itemThumb}>
                       <Image
-                        src={addBasePath(item.product.imageUrl)}
+                        src={item.product.imageUrl}
                         alt={item.product.name}
                         width={60}
                         height={90}

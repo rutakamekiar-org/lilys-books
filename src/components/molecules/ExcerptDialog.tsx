@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import styles from "./ExcerptDialog.module.css";
-import { addBasePath } from "@/lib/paths";
 
 export default function ExcerptDialog({
   open,
@@ -19,7 +18,7 @@ export default function ExcerptDialog({
     async function loadExcerpt() {
       setLoading(true);
       try {
-        const res = await fetch(addBasePath(`/content/excerpts/${slug}.html`));
+        const res = await fetch(`/content/excerpts/${slug}.html`);
         if (res.ok) {
           const text = await res.text();
           setHtml(text);
