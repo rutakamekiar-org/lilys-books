@@ -16,6 +16,9 @@ Copy `.env.example` to `.env.local` when local values differ from the defaults:
 
 - `NEXT_PUBLIC_API_URL` selects the BookPreorder API for local, preview, or production builds.
 - `NEXT_PUBLIC_SITE_BASE` sets the absolute site URL used by metadata and structured data.
+- `REVALIDATION_SECRET` protects the server-only `/api/revalidate` endpoint and must not use the `NEXT_PUBLIC_` prefix.
+
+The BookPreorder backend must use the same `REVALIDATION_SECRET` value and set `FRONTEND_REVALIDATION_URL` to the deployed endpoint, for example `https://your-site.netlify.app/api/revalidate`.
 
 Production deployments use the Next.js runtime. Run `npm run build` followed by `npm run start` to verify the production server locally.
 
