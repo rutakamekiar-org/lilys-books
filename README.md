@@ -19,4 +19,6 @@ Copy `.env.example` to `.env.local` when local values differ from the defaults:
 
 Production deployments use the Next.js runtime. Run `npm run build` followed by `npm run start` to verify the production server locally.
 
+Product pages are resolved from the BookPreorder API by slug and cached for up to 60 seconds. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
