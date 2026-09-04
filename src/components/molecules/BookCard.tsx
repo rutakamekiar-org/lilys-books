@@ -30,7 +30,7 @@ export default function BookCard({ product: staticProduct }: { product: Product 
 
   return (
     <article className={styles.card}>
-      <Link href={`/books/${product.slug}`} className={styles.productLink}>
+      <Link href={`/books/${product.slug}`} prefetch={false} className={styles.productLink}>
         <div className={styles.thumb}>
           {product.ageRating && (
             <span

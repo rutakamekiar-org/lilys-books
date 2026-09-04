@@ -51,16 +51,16 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct }: Su
         <div className={styles.body}>
           <p className={styles.message}>До Вашої книги ідеально підійдуть ці ілюстрації:</p>
           <div className={styles.product}>
-            <Link href={productUrl} className={styles.image} onClick={onClose}>
+            <Link href={productUrl} prefetch={false} className={styles.image} onClick={onClose}>
                 <Image src={suggestedProduct.imageUrl} alt={suggestedProduct.name} width={120} height={180} />
             </Link>
             <div className={styles.info}>
-                <Link href={productUrl} className={styles.productTitle} onClick={onClose}>
+                <Link href={productUrl} prefetch={false} className={styles.productTitle} onClick={onClose}>
                     <h4>{suggestedProduct.name}</h4>
                 </Link>
                 <p className={styles.price}>{price} грн</p>
                 <button className={styles.addButton} onClick={handleAddSuggested}>Додати до кошика</button>
-                <Link href={productUrl} className={styles.detailsLink} onClick={onClose}>
+                <Link href={productUrl} prefetch={false} className={styles.detailsLink} onClick={onClose}>
                     Детальніше
                 </Link>
             </div>
