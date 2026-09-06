@@ -36,6 +36,7 @@
   color: var(--text);
   overflow-wrap: anywhere;
   word-break: break-word;
+  white-space: pre-line;
   position: relative;
   line-height: 1.6;
 }

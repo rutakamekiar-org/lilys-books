@@ -15,10 +15,8 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
     ? products.find(p => p.id === initialProduct.id) 
     : products[0];
 
-  // Merge live data (prices) with static metadata (description)
-  // If we have initialProduct, it's our source for metadata.
   const product = initialProduct 
-    ? { ...initialProduct, ...liveProduct, descriptionHtml: initialProduct.descriptionHtml || liveProduct?.descriptionHtml }
+    ? liveProduct ?? initialProduct
     : liveProduct;
 
   if (!product) return null;
@@ -35,11 +33,8 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
             {/* Goodreads rating for featured */}
             <GoodreadsRating product={product} />
 
-            {product.descriptionHtml && (
-              <div
-                className={styles.featuredDescription}
-                dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
-              />
+            {product.description && (
+              <div className={styles.featuredDescription}>{product.description}</div>
             )}
 
             {minPrice !== null && (

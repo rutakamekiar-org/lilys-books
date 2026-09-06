@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/organisms/Hero";
-import { getProductsForStatic, getLocalMetadata } from "@/lib/api";
+import { getProductsForStatic } from "@/lib/api";
 import { SITE_AUTHOR, SITE_DESCRIPTION } from "@/lib/site";
 import { absoluteUrl } from "@/lib/site.server";
 
@@ -29,11 +29,6 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const products = await getProductsForStatic();
   const featured = products.find(p => p.isHero) ?? products[0];
-
-  if (featured) {
-    const meta = await getLocalMetadata(featured.slug);
-    Object.assign(featured, meta);
-  }
 
   return <Hero initialProduct={featured} />;
 }
