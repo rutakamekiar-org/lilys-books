@@ -24,4 +24,6 @@ Production deployments use the Next.js runtime. Run `npm run build` followed by 
 
 Product pages are resolved from the BookPreorder API by slug and cached for up to 60 seconds. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
 
+Product identity, descriptions, SEO text, gallery order, specifications, prices, availability, external links, ratings, and excerpt availability come from the BookPreorder API. Responses are validated before rendering. If a gallery is empty, the frontend falls back to the primary `imageUrl`; optional copy is simply omitted. Excerpt HTML and image files are still frontend-hosted assets during this migration, but product-specific TypeScript content files are not used.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

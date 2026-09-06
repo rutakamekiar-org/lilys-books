@@ -1,6 +1,6 @@
 import type { CheckoutResponse } from "./types";
 import {notifyApiError, handleApi} from "@/lib/api.helper";
-import {Product, StaticMetadata} from "@/models/Product";
+import {parseProduct, parseProducts, Product} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";
 import {PromoCodeResponse} from "@/models/PromoCode";
@@ -45,8 +45,8 @@ async function fetchProducts(options: { throwOnError?: boolean; fresh?: boolean 
             `${API_URL}/api/products`,
             options.fresh ? { cache: "no-store" } : { next: { revalidate: 60 } },
         );
-        const data = await handleApi<Product[]>(res);
-        return Array.isArray(data) ? data : [];
+        const data = await handleApi<unknown>(res);
+        return parseProducts(data);
     } catch (error) {
         console.error("fetchProducts failed:", error);
         if (options.throwOnError) {
@@ -65,7 +65,7 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
         return null;
     }
 
-    return handleApi<Product>(res);
+    return parseProduct(await handleApi<unknown>(res));
 }
 
 export async function getProductBySlugLive(slug: string): Promise<Product | null> {
@@ -77,7 +77,7 @@ export async function getProductBySlugLive(slug: string): Promise<Product | null
         return null;
     }
 
-    return handleApi<Product>(res);
+    return parseProduct(await handleApi<unknown>(res));
 }
 
 export async function getProductsForStatic(options: { required?: boolean } = {}): Promise<Product[]> {
@@ -89,20 +89,6 @@ export async function getProductsForStatic(options: { required?: boolean } = {})
         throw new Error("No products returned while generating static SEO pages.");
     }
     return products;
-}
-
-export async function getLocalMetadata(slug: string): Promise<StaticMetadata> {
-    try {
-        // Use relative path for better compatibility with dynamic imports in some environments
-        const meta = await import(`../content/books/${slug}`);
-        return meta.default;
-    } catch (e) {
-        if (typeof e === "object" && e !== null && "code" in e && e.code === "MODULE_NOT_FOUND") {
-            return {};
-        }
-        console.warn(`No local metadata found for slug: ${slug}`, e);
-        return {};
-    }
 }
 
 export const getProducts = fetchProducts;

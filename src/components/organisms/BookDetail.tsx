@@ -20,19 +20,8 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const { products, refreshProduct } = useProducts();
   const [freshProduct, setFreshProduct] = useState<Product | null>(null);
   
-  // Merge live data (prices, availability) with static rich content (excerpts)
-  // We explicitly preserve rich content from staticProduct
   const currentFreshProduct = freshProduct?.slug === staticProduct.slug ? freshProduct : null;
-  const product = currentFreshProduct
-    ? { 
-        ...staticProduct, 
-        ...currentFreshProduct,
-        descriptionHtml: staticProduct.descriptionHtml || currentFreshProduct.descriptionHtml,
-        imageUrls: staticProduct.imageUrls || currentFreshProduct.imageUrls,
-        externalLinks: currentFreshProduct.externalLinks ?? staticProduct.externalLinks,
-        hasExcerpt: staticProduct.hasExcerpt || currentFreshProduct.hasExcerpt
-      }
-    : staticProduct;
+  const product = currentFreshProduct ?? staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
@@ -142,7 +131,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
         return () => {
             observer.disconnect();
         };
-    }, [product.descriptionHtml]);
+    }, [product.description]);
 
   const renderCoverActions = (className: string, keyPrefix: string) => (
       <div className={className}>
@@ -262,15 +251,16 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           </div>
                       </div>
 
-                      {product.descriptionHtml && (
+                      {product.description && (
                           <section className={styles.descriptionPanel} aria-labelledby={descriptionTitleId}>
                               <h2 id={descriptionTitleId}>Опис</h2>
                               <div
                                   id={descriptionId}
                                   ref={descriptionRef}
                                   className={`${styles.desc} ${descriptionExpanded || !isDescriptionOverflowing ? styles.descExpanded : styles.descCollapsed}`}
-                                  dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-                              />
+                              >
+                                  {product.description}
+                              </div>
                               {isDescriptionOverflowing && (
                                   <button
                                       type="button"
