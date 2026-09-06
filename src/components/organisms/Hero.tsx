@@ -59,7 +59,14 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
               {product.ageRating}
             </span>
           )}
-          <Image src={product.imageUrl} alt={product.name} width={360} height={540} />
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            width={360}
+            height={540}
+            sizes="(max-width: 980px) 90vw, 360px"
+            priority
+          />
         </div>
       </div>
     </section>

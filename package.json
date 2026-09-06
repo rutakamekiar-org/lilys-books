@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "images:metadata": "node tools/image-assets.mjs",
+    "images:optimize": "node tools/image-assets.mjs --optimize",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
@@ -27,6 +29,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.3",
+    "sharp": "^0.34.4",
     "typescript": "^5"
   }
 }

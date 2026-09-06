@@ -17,7 +17,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Routing/pages: `src/app/`
 - UI layers: `src/components/atoms`, `src/components/molecules`, `src/components/organisms`
 - API boundary: `src/lib/api.ts`
-- Product metadata content: `src/content/books/`
+- Generated image dimensions: `src/generated/image-metadata.json`
 - Event definitions: `src/data/events.ts`
 
 ## Critical Conventions
@@ -41,6 +41,11 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
   - Add/update event records in `src/data/events.ts`.
   - Event images are loaded from `public/images/events/<event-id>/` by `src/app/events/page.tsx`.
 
+- Image assets:
+  - Use `next/image` for storefront images and provide an accurate responsive `sizes` value.
+  - Run `npm run images:optimize` after adding large files under `public/images`; visually review optimized assets before committing them.
+  - Run `npm run images:metadata` when image files or dimensions change. Commit `src/generated/image-metadata.json` with the source assets.
+
 - API and error handling:
   - Keep HTTP integration in `src/lib/api.ts`.
   - Use `notifyApiError` from `src/lib/api.helper.ts` for user-facing API failures.
@@ -55,7 +60,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 ## Working Guidance For Agents
 
 - Prefer existing provider/hooks patterns over introducing new fetch/state layers.
-- Preserve separation between static content in `src/content/books` and live pricing/availability from API.
+- Keep product content in the backend API; do not restore product-specific TypeScript content files.
 - When editing links/assets, verify local runtime behavior and the provider preview.
 - Keep README configuration and deployment guidance aligned with this file.
 

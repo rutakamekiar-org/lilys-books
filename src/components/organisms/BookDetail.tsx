@@ -188,7 +188,13 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               navInside={true}
                           />
                       ) : (
-                          <Image src={product.imageUrl} alt={product.name} width={320} height={480}/>
+                          <Image
+                              src={product.imageUrl}
+                              alt={product.name}
+                              width={320}
+                              height={480}
+                              sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
+                          />
                       )}
                   </div>
                   {renderCoverActions(`${styles.coverActions} ${styles.desktopCoverActions}`, "desktop")}

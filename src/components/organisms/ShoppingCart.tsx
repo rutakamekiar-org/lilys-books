@@ -203,6 +203,7 @@ export default function ShoppingCart({
                         alt={item.product.name}
                         width={60}
                         height={90}
+                        sizes="60px"
                       />
                     </div>
                     <div className={styles.itemDetails}>

@@ -41,7 +41,13 @@ export default function BookCard({ product: staticProduct }: { product: Product 
               {product.ageRating}
             </span>
           )}
-          <Image src={product.imageUrl} alt={product.name} width={240} height={360} />
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            width={240}
+            height={360}
+            sizes="(max-width: 520px) 46vw, (max-width: 780px) 45vw, (max-width: 1100px) 30vw, 260px"
+          />
         </div>
         <div className={styles.meta}>
           <h3>{product.name}</h3>
