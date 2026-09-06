@@ -52,7 +52,7 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct }: Su
           <p className={styles.message}>До Вашої книги ідеально підійдуть ці ілюстрації:</p>
           <div className={styles.product}>
             <Link href={productUrl} prefetch={false} className={styles.image} onClick={onClose}>
-                <Image src={suggestedProduct.imageUrl} alt={suggestedProduct.name} width={120} height={180} />
+                <Image src={suggestedProduct.imageUrl} alt={suggestedProduct.name} width={120} height={180} sizes="120px" />
             </Link>
             <div className={styles.info}>
                 <Link href={productUrl} prefetch={false} className={styles.productTitle} onClick={onClose}>

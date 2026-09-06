@@ -26,4 +26,13 @@ Product pages are resolved from the BookPreorder API by slug and cached for up t
 
 Product identity, descriptions, SEO text, gallery order, specifications, prices, availability, external links, ratings, and excerpt availability come from the BookPreorder API. Responses are validated before rendering. If a gallery is empty, the frontend falls back to the primary `imageUrl`; optional copy is simply omitted. Excerpt HTML and image files are still frontend-hosted assets during this migration, but product-specific TypeScript content files are not used.
 
+## Image assets
+
+Store frontend-owned product and event images under `public/images`. The UI uses `next/image`, so Netlify serves device-sized optimized variants instead of sending source files directly.
+
+- `npm run images:metadata` refreshes the checked-in width and height map used by image galleries.
+- `npm run images:optimize` compresses source images larger than 500 KB, caps either dimension at 1920 px, and then refreshes that metadata.
+
+Run `images:optimize` after adding large gallery assets and review the resulting images before committing them. Carousel slides after the first are mounted only as they approach the visible carousel.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

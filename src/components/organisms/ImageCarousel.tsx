@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./ImageCarousel.module.css";
+import { getImageMetadata } from "@/lib/image-metadata";
 
 export type ImageCarouselProps = {
   images: string[];
@@ -11,15 +12,64 @@ export type ImageCarouselProps = {
   slideClassName?: string; // to inherit aspect via padding-top wrapping element
   navInside?: boolean; // place nav inside overlay (for hero)
   ariaLabel?: string;
+  priorityFirstImage?: boolean;
 };
 
-export default function ImageCarousel({ images, alt, sizes, className, slideClassName, navInside = true, ariaLabel }: ImageCarouselProps){
+type CarouselImageProps = {
+  src: string;
+  index: number;
+  alt: string;
+  sizes?: string;
+  slideClassName?: string;
+  railRef: React.RefObject<HTMLDivElement | null>;
+  objectFit: "cover" | "contain";
+  priority: boolean;
+};
+
+function CarouselImage({ src, index, alt, sizes, slideClassName, railRef, objectFit, priority }: CarouselImageProps) {
+  const slideRef = useRef<HTMLDivElement>(null);
+  const [shouldRender, setShouldRender] = useState(index === 0);
+
+  useEffect(() => {
+    if (shouldRender) return;
+    const slide = slideRef.current;
+    const rail = railRef.current;
+    if (!slide || !rail) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setShouldRender(true);
+        observer.disconnect();
+      }
+    }, { root: rail, rootMargin: "0px 50%", threshold: 0.01 });
+
+    observer.observe(slide);
+    return () => observer.disconnect();
+  }, [railRef, shouldRender]);
+
+  return (
+    <div ref={slideRef} className={`${styles.carouselSlide} ${slideClassName || ""}`}>
+      {shouldRender && (
+        <Image
+          src={src}
+          alt={index === 0 ? alt : ""}
+          fill
+          sizes={sizes}
+          priority={priority}
+          loading={priority ? "eager" : "lazy"}
+          draggable={false}
+          style={{ objectFit, objectPosition: "center", userSelect: "none" }}
+        />
+      )}
+    </div>
+  );
+}
+
+export default function ImageCarousel({ images, alt, sizes, className, slideClassName, navInside = true, ariaLabel, priorityFirstImage = false }: ImageCarouselProps){
   const railRef = useRef<HTMLDivElement>(null);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
   const [containerIsLandscape, setContainerIsLandscape] = useState(true);
-  // Track per-image orientation (true = landscape, false = portrait)
-  const [fits, setFits] = useState<boolean[]>([]);
 
   const onScroll = useCallback(() => {
     const rail = railRef.current;
@@ -47,26 +97,6 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
     onScroll();
   }, [images, onScroll]);
 
-  // When images change, detect their natural dimensions to decide fit mode
-  useEffect(() => {
-    if (!images || images.length === 0) { setFits([]); return; }
-    let cancelled = false;
-    const loaders = images.map((src) => new Promise<boolean>((resolve) => {
-      const img = new window.Image();
-      img.onload = () => {
-        const isLandscape = (img.naturalWidth || 0) > (img.naturalHeight || 0);
-        resolve(isLandscape);
-      };
-      img.onerror = () => resolve(true);
-      img.src = src;
-    }));
-    Promise.all(loaders).then((results) => {
-      if (cancelled) return;
-      setFits(results);
-    });
-    return () => { cancelled = true; };
-  }, [images]);
-
   function scrollToDelta(delta: number){
     const rail = railRef.current;
     if (!rail) return;
@@ -82,27 +112,28 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
   function goNext(){ scrollToDelta(1); }
 
   const fitForIndex = useMemo(() => (index: number) => {
-    const imgIsLandscape = fits[index];
-    if (imgIsLandscape === undefined) return "cover";
+    const image = getImageMetadata(images[index]);
+    if (!image) return "cover";
+    const imgIsLandscape = image.width > image.height;
     // Same orientation -> cover, opposite -> contain
     return (containerIsLandscape === imgIsLandscape) ? "cover" : "contain";
-  }, [fits, containerIsLandscape]);
+  }, [images, containerIsLandscape]);
 
   return (
     <div className={`${styles.carousel} ${className || ""}`} aria-label={ariaLabel}>
       <div className={styles.carouselRail} ref={railRef} role="group">
         {images.map((src, i) => (
-          <div key={src + i} className={`${styles.carouselSlide} ${slideClassName || ""}`}>
-            <Image
-              src={src}
-              alt={alt || ""}
-              fill
-              sizes={sizes}
-              loading="lazy"
-              draggable={false}
-              style={{ objectFit: fitForIndex(i), objectPosition: "center", userSelect: "none" }}
-            />
-          </div>
+          <CarouselImage
+            key={src + i}
+            src={src}
+            index={i}
+            alt={alt || ""}
+            sizes={sizes}
+            slideClassName={slideClassName}
+            railRef={railRef}
+            objectFit={fitForIndex(i)}
+            priority={priorityFirstImage && i === 0}
+          />
         ))}
       </div>
       {images.length > 1 && (
