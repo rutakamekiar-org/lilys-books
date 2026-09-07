@@ -9,6 +9,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Dev: `npm run dev`
 - Lint: `npm run lint`
 - Type check: `npm run typecheck`
+- Browser regression tests: `npm run test:e2e`
 - Build runtime application: `npm run build` (outputs to `.next/`)
 - Local production preview: `npm run start` (after `npm run build`)
 
@@ -49,6 +50,10 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - API and error handling:
   - Keep HTTP integration in `src/lib/api.ts`.
   - Use `notifyApiError` from `src/lib/api.helper.ts` for user-facing API failures.
+
+- Regression tests:
+  - Playwright specs live in `tests/e2e`; the local API double is `tests/support/mock-api.mjs`.
+  - Keep tests deterministic and production-independent. Never point the suite at the real API or submit a payment.
 
 ## Deployment Notes
 

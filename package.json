@@ -8,6 +8,8 @@
     "images:metadata": "node tools/image-assets.mjs",
     "images:optimize": "node tools/image-assets.mjs --optimize",
     "start": "next start",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
   },
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+
       - name: Lint
         run: npm run lint
 
@@ -35,3 +38,6 @@ jobs:
           NEXT_PUBLIC_API_URL: https://api.zvychajna.pp.ua
           NEXT_PUBLIC_SITE_BASE: https://zvychajna.pp.ua
         run: npm run build
+
+      - name: End-to-end regression tests
+        run: npm run test:e2e
