@@ -22,6 +22,10 @@ The BookPreorder backend must use the same `REVALIDATION_SECRET` value and set `
 
 Production deployments use the Next.js runtime. Run `npm run build` followed by `npm run start` to verify the production server locally.
 
+## Regression tests
+
+Run `npm run test:e2e` to start the storefront and its local mock API, then execute the dynamic-route, SEO, cache refresh, purchase-flow, and mobile-navigation tests. The suite never calls the production API or submits a payment. Use `npm run test:e2e:ui` for Playwright's interactive runner.
+
 Product pages are resolved from the BookPreorder API by slug and cached for up to 60 seconds. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
 
 Product identity, descriptions, SEO text, gallery order, specifications, prices, availability, external links, ratings, and excerpt availability come from the BookPreorder API. Responses are validated before rendering. If a gallery is empty, the frontend falls back to the primary `imageUrl`; optional copy is simply omitted. Excerpt HTML and image files are still frontend-hosted assets during this migration, but product-specific TypeScript content files are not used.
