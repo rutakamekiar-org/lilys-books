@@ -33,11 +33,11 @@ jobs:
       - name: Type check
         run: npm run typecheck
 
-      - name: Build
-        env:
-          NEXT_PUBLIC_API_URL: https://api.zvychajna.pp.ua
-          NEXT_PUBLIC_SITE_BASE: https://zvychajna.pp.ua
-        run: npm run build
+      - name: Validate deterministic product fixtures
+        run: npm run test:fixtures
+
+      - name: Build with deterministic API
+        run: npm run build:ci
 
       - name: End-to-end regression tests
         run: npm run test:e2e
