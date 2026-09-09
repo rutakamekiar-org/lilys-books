@@ -66,6 +66,11 @@ test("missing product returns 404", async ({ request }) => {
   expect(response.status()).toBe(404);
 });
 
+test("inactive product remains unavailable to the storefront", async ({ request }) => {
+  const response = await request.get("/books/inactive-book");
+  expect(response.status()).toBe(404);
+});
+
 test("product API failure remains a server error instead of becoming a false 404", async ({ request }) => {
   await request.post(`${mockApiUrl}/__control/failures`, { data: { slugs: ["broken-book"] } });
   const response = await request.get("/books/broken-book");

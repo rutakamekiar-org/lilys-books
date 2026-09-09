@@ -26,6 +26,8 @@ Production deployments use the Next.js runtime. Run `npm run build` followed by 
 
 Run `npm run test:e2e` to start the storefront and its local mock API, then execute the dynamic-route, SEO, cache refresh, purchase-flow, and mobile-navigation tests. The suite never calls the production API or submits a payment. Use `npm run test:e2e:ui` for Playwright's interactive runner.
 
+Pull-request verification is also production-independent. `npm run test:fixtures` checks every shared product state against the storefront's Zod API contract, and `npm run build:ci` starts the local mock API before creating an optimized build. Fixture drift fails with the mismatched field path. A production API outage or data change therefore cannot break the standard CI pipeline. Real production smoke checks must remain separate, explicit, and read-only.
+
 Product pages are resolved from the BookPreorder API by slug and cached for up to 60 seconds. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
 
 Product identity, descriptions, SEO text, gallery order, specifications, prices, availability, external links, ratings, and excerpt availability come from the BookPreorder API. Responses are validated before rendering. If a gallery is empty, the frontend falls back to the primary `imageUrl`; optional copy is simply omitted. Excerpt HTML and image files are still frontend-hosted assets during this migration, but product-specific TypeScript content files are not used.
