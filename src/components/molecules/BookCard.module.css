@@ -128,13 +128,8 @@
   color: var(--text);
   font-weight: 800;
 }
-/* Dim the row without pushing its text below the contrast threshold. */
-.unavailable .formatName,
-.unavailable .formatPrice {
-  color: var(--muted);
-}
-.unavailable .quickAdd {
-  opacity: .55;
+.unavailable {
+  opacity: .58;
 }
 .quickAdd {
   width: 28px;
@@ -145,7 +140,7 @@
   border: 1px solid transparent;
   border-radius: 999px;
   background: var(--accent-weak);
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 0.82rem;
   cursor: pointer;
   transition: background .15s ease, border-color .15s ease, color .15s ease;

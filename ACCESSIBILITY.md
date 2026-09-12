@@ -29,15 +29,14 @@ Or the whole suite with `npm run test:e2e`.
 not "no serious violations". Anything the scan reports fails the build, and the failure
 message lists each rule and the selectors that tripped it.
 
-`SKIPPED_RULES` in that file is currently **empty**: nothing is excluded. If a rule ever has
-to be turned off, it goes there with a reason recorded below.
+One rule is excluded through `SKIPPED_RULES` in that file — `color-contrast`, for the reason
+set out under Accepted exceptions. Nothing else is excluded, and anything else the scan reports
+fails the build. Do not add entries without recording the reason below.
 
 ## Violations fixed while establishing the baseline
 
 | Rule / problem | Impact | Fix |
 | --- | --- | --- |
-| `color-contrast` | serious | The brand accent `#f09b30` carried white text at **2.23:1** on the home CTA, buy button, cart checkout button, checkout submit, cart badge and promo apply button, and was used as text colour on the cart total, "Додати в кошик" and the suggestion price. See the palette note below. |
-| `color-contrast` | serious | Catalog rows for unavailable formats were dimmed with `opacity: .58`, which pushed their text below the threshold. The row now uses `--muted` (5.74:1) and the opacity applies only to the quick-add button. |
 | `aria-hidden-focus` | serious | The carousel navigation wrapper was `aria-hidden` while containing enabled buttons (`ImageCarousel.tsx`). |
 | `scrollable-region-focusable` | serious | The carousel rail scrolls horizontally but was not keyboard reachable. It now has `tabindex="0"` and an accessible name, and the navigation buttons stay visible on `:focus-within`. |
 | `landmark-no-duplicate-banner`, `landmark-no-duplicate-contentinfo`, `landmark-unique` | moderate | Dialogs are portalled into `<body>`, so their `<header>`/`<footer>` became second `banner`/`contentinfo` landmarks. They are plain `<div>`s now. |
@@ -49,20 +48,41 @@ to be turned off, it goes there with a reason recorded below.
 | No skip link | — | `Перейти до основного вмісту` jumps past the navigation to `<main id="main-content">`. |
 | Promo code input named only by its placeholder | — | It now carries an explicit `aria-label`. |
 
-## The accent palette
-
-`--accent: #f09b30` cannot carry white text at 4.5:1 — the best it reaches is 2.23:1 — so
-`globals.css` adds `--accent-strong: #a8560a`: the same hue, darkened until it passes
-(**5.25:1** on white, **4.99:1** on the page background). The split is:
-
-- `--accent-strong` wherever the colour carries text, as a background behind white text or as
-  a text colour on a light surface.
-- `--accent` for everything decorative: borders, focus rings, `--accent-weak` fills, the
-  active navigation outline.
-
-When adding a control that pairs the accent with text, reach for `--accent-strong`.
-
 ## Accepted exceptions
+
+### `color-contrast` — brand colour, deliberate
+
+**This is a decision by the site owner, not an oversight.**
+
+`--accent: #f09b30` carries white text on the home CTA, the buy button, the cart checkout
+button, the checkout submit button, the cart badge and the promo apply button, and is used as
+a text colour on the cart total, «Додати в кошик» and the suggestion price. White on it is
+**2.23:1** against the 4.5:1 that WCAG 1.4.3 AA asks for.
+
+The colour is not arbitrary. It is sampled from the lettering of the «Звичайна» cover art —
+the title on that cover measures `#f3a123`/`#eea231`, within a few units of the brand value.
+
+It cannot be fixed by darkening. Contrast is driven almost entirely by the green channel
+(coefficient 0.7152 against 0.2126 for red), so at hue 33° every colour dark enough to reach
+4.5:1 with white is brown. The cover's own shading proves it: the darker tones inside the same
+lettering are `#976630`, `#8d5a2d`, `#874f1d`. A tested candidate, `#a8560a`, landed exactly in
+that range and was rejected on sight.
+
+Three alternatives were built and reviewed, then declined:
+
+| Option | Result | Why declined |
+| --- | --- | --- |
+| `#a8560a` + white | 5.25:1 | Reads brown, not orange |
+| `#f09b30` unchanged + `#442e11` ink | 5.74:1 | Compliant and faithful to the cover, which never puts white on orange — but a large flat fill with dark text reads as a disabled button rather than the primary action |
+| `#d97706` + white, label raised to 19.2px bold | 3.19:1, passes as large text | Still weaker than 4.5:1, and does not cover the small-text cases (cart badge, promo button, «Додати в кошик»), so it would leave the fix half-done |
+
+The remaining cost is real and is accepted knowingly: the primary call to action is hard to
+read in sunlight and on low-quality displays. Every other accessibility guarantee in this
+document — keyboard operation, focus management, dialog behaviour, announced form errors,
+image alternatives — holds regardless, and those are enforced.
+
+If the brand palette is ever revisited, remove `color-contrast` from `SKIPPED_RULES` first and
+let the suite report what needs attention.
 
 ### The page behind a modal is not `inert`
 

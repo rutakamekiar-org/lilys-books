@@ -115,13 +115,13 @@
 
 .price {
   font-weight: 700;
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 1.2rem;
   margin: 0 0 16px;
 }
 
 .addButton {
-  background: var(--accent-strong);
+  background: var(--accent);
   color: white;
   border: none;
   padding: 10px 16px;
@@ -133,7 +133,7 @@
 }
 
 .addButton:hover {
-  background: #8a4607;
+  background: #d88a2a;
 }
 
 .detailsLink {

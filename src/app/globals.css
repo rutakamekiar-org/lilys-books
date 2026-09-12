@@ -5,8 +5,7 @@
   --text:#1f1f1f;
   --muted:#666;
   --border:#e9e6e1;
-  --accent:#f09b30;          /* brand orange: borders, focus rings, decorative fills */
-  --accent-strong:#a8560a;   /* same hue, darkened so it can carry text (5.25:1 on white) */
+  --accent:#f09b30;          /* brand orange */
   --accent-weak:#fff3e2;     /* light accent surface */
 }
 

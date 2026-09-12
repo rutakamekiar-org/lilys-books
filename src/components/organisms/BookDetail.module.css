@@ -102,7 +102,7 @@
 
 .buybar { display: grid; gap: 6px; padding: 6px 0; }
 .buyButtons { display: flex; gap: 10px; margin-top: 18px; }
-.buy { flex: 1; display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent-strong); color: #fff; font-weight: 800; cursor: pointer; }
+.buy { flex: 1; display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; }
 .buy:disabled { background: #e0e0e0; color: #9a9a9a; cursor: not-allowed; }
 .addToCart {
   display: inline-flex;
@@ -110,9 +110,9 @@
   justify-content: center;
   padding: 13px 20px;
   border-radius: 12px;
-  border: 2px solid var(--accent-strong);
+  border: 2px solid var(--accent);
   background: var(--surface);
-  color: var(--accent-strong);
+  color: var(--accent);
   font-size: 1.1rem;
   font-weight: 800;
   cursor: pointer;
