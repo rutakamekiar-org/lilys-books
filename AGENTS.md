@@ -6,7 +6,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 
 ## Fast Start
 
-- Dev: `npm run dev`
+- Dev: `npm run dev` (use `npm run dev:local` when `NEXT_PUBLIC_API_URL` points at a local backend over HTTPS, so Node trusts the OS certificate store)
 - Lint: `npm run lint`
 - Type check: `npm run typecheck`
 - Browser regression tests: `npm run test:e2e`

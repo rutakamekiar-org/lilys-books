@@ -22,6 +22,19 @@ The BookPreorder backend must use the same `REVALIDATION_SECRET` value and set `
 
 Production deployments use the Next.js runtime. Run `npm run build` followed by `npm run start` to verify the production server locally.
 
+### Running against a local backend over HTTPS
+
+Pointing `NEXT_PUBLIC_API_URL` at a locally running BookPreorder instance, for example `https://localhost:7213`, fails on the server with `TypeError: fetch failed` caused by `self-signed certificate`. The ASP.NET Core development certificate is trusted through the operating system store, which browsers read but Node.js does not. Client-side calls therefore succeed while every server-side call fails: `/books/{slug}` surfaces the error, and `getProductsForStatic()` logs `fetchProducts failed:` and quietly renders an empty catalog that the client then refills.
+
+Trust the certificate once, then start the dev server with `npm run dev:local`, which runs Node with `--use-system-ca`:
+
+```bash
+dotnet dev-certs https --trust
+npm run dev:local
+```
+
+Alternatively, point `NEXT_PUBLIC_API_URL` at the backend's plain HTTP endpoint and keep using `npm run dev`. Do not reach for `NODE_TLS_REJECT_UNAUTHORIZED=0`: it disables certificate validation for the whole process.
+
 ## Regression tests
 
 Run `npm run test:e2e` to start the storefront and its local mock API, then execute the dynamic-route, SEO, cache refresh, purchase-flow, accessibility, keyboard-navigation, and mobile-navigation tests. The suite never calls the production API or submits a payment. Use `npm run test:e2e:ui` for Playwright's interactive runner.

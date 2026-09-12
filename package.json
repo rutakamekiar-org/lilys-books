@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:local": "node tools/dev-local.mjs",
     "build": "next build",
     "build:ci": "node tests/support/build-with-mock-api.mjs",
     "images:metadata": "node tools/image-assets.mjs",
