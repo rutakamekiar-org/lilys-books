@@ -103,11 +103,11 @@
   color: inherit;
 }
 
-.productTitle:hover h4 {
+.productTitle:hover h3 {
   text-decoration: underline;
 }
 
-.info h4 {
+.info h3 {
   margin: 0 0 8px;
   font-size: 1.1rem;
   line-height: 1.3;
@@ -115,13 +115,13 @@
 
 .price {
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent-strong);
   font-size: 1.2rem;
   margin: 0 0 16px;
 }
 
 .addButton {
-  background: var(--accent);
+  background: var(--accent-strong);
   color: white;
   border: none;
   padding: 10px 16px;
@@ -133,7 +133,7 @@
 }
 
 .addButton:hover {
-  background: #d88a2a;
+  background: #8a4607;
 }
 
 .detailsLink {

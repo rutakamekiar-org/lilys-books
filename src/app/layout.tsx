@@ -119,10 +119,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ToastProvider />
         <ProductsProvider initialProducts={initialProducts}>
           <CartProvider>
+            <a className="skip-link" href="#main-content">Перейти до основного вмісту</a>
             <header>
               <NavBar />
             </header>
-            <main>
+            <main id="main-content" tabIndex={-1}>
                 <Suspense fallback={null}>
                     <Analytics />
                 </Suspense>

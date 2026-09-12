@@ -24,7 +24,9 @@ Production deployments use the Next.js runtime. Run `npm run build` followed by 
 
 ## Regression tests
 
-Run `npm run test:e2e` to start the storefront and its local mock API, then execute the dynamic-route, SEO, cache refresh, purchase-flow, and mobile-navigation tests. The suite never calls the production API or submits a payment. Use `npm run test:e2e:ui` for Playwright's interactive runner.
+Run `npm run test:e2e` to start the storefront and its local mock API, then execute the dynamic-route, SEO, cache refresh, purchase-flow, accessibility, keyboard-navigation, and mobile-navigation tests. The suite never calls the production API or submits a payment. Use `npm run test:e2e:ui` for Playwright's interactive runner.
+
+Accessibility coverage runs in the same step. `npm run test:e2e:a11y` scans home, catalog, product details, the excerpt dialog, cart, and checkout with axe-core, and walks the catalog-to-checkout journey using only the keyboard. The scan must report zero violations; see [ACCESSIBILITY.md](ACCESSIBILITY.md) for what is covered and which rules are deliberately not enforced.
 
 Pull-request verification is also production-independent. `npm run test:fixtures` checks every shared product state against the storefront's Zod API contract, and `npm run build:ci` starts the local mock API before creating an optimized build. Fixture drift fails with the mismatched field path. A production API outage or data change therefore cannot break the standard CI pipeline. Real production smoke checks must remain separate, explicit, and read-only.
 

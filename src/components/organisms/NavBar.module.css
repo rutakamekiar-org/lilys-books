@@ -25,6 +25,10 @@
   color: inherit;
   -webkit-tap-highlight-color: transparent;
 }
+.link:focus-visible {
+  outline: 3px solid rgba(240, 155, 48, 0.55);
+  outline-offset: 2px;
+}
 .active {
   background: var(--accent-weak);
   outline: 1px solid var(--accent);
@@ -58,7 +62,7 @@
   position: absolute;
   top: 2px;
   right: 2px;
-  background: var(--accent);
+  background: var(--accent-strong);
   color: #fff;
   font-size: 0.7rem;
   font-weight: 700;

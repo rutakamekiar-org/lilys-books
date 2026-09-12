@@ -55,6 +55,12 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
   - Playwright specs live in `tests/e2e`; the local API double is `tests/support/mock-api.mjs`.
   - Keep tests deterministic and production-independent. Never point the suite at the real API or submit a payment.
 
+- Accessibility:
+  - `tests/e2e/accessibility.spec.ts` runs axe-core over home, catalog, product details, the excerpt dialog, cart and checkout; `tests/e2e/keyboard-navigation.spec.ts` covers the keyboard journey and dialog focus behaviour. Both run inside `npm run test:e2e`.
+  - The scan must report zero violations. Only exclude a rule through `SKIPPED_RULES` in `tests/e2e/a11y.ts`, and record the reason in `ACCESSIBILITY.md`.
+  - Build new dialogs on `useDialogA11y` from `src/lib/dialog-a11y.ts` instead of re-implementing Escape, focus trapping and focus restoration.
+  - Add an axe scan whenever you add a storefront page or dialog.
+
 ## Deployment Notes
 
 - CI workflow: `.github/workflows/ci.yml`

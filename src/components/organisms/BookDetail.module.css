@@ -95,12 +95,14 @@
 .segmented { display: grid; grid-auto-flow: row; gap: 10px; margin-top: 18px; }
 .opt { position: relative; display: block; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer; user-select: none; background: var(--surface); }
 .opt input { position: absolute; inset: 0; opacity: 0; }
+/* The radio itself is invisible, so the label carries the focus indicator. */
+.opt:has(input:focus-visible) { outline: 3px solid rgba(240,155,48,0.55); outline-offset: 2px; }
 .active { border-color: var(--accent); background: var(--accent-weak); }
 .disabled { opacity: .55; cursor: not-allowed; }
 
 .buybar { display: grid; gap: 6px; padding: 6px 0; }
 .buyButtons { display: flex; gap: 10px; margin-top: 18px; }
-.buy { flex: 1; display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; }
+.buy { flex: 1; display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent-strong); color: #fff; font-weight: 800; cursor: pointer; }
 .buy:disabled { background: #e0e0e0; color: #9a9a9a; cursor: not-allowed; }
 .addToCart {
   display: inline-flex;
@@ -108,9 +110,9 @@
   justify-content: center;
   padding: 13px 20px;
   border-radius: 12px;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--accent-strong);
   background: var(--surface);
-  color: var(--accent);
+  color: var(--accent-strong);
   font-size: 1.1rem;
   font-weight: 800;
   cursor: pointer;

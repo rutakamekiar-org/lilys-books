@@ -1,11 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useId, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./SuggestionDialog.module.css";
 import { Product } from "@/models/Product";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
+import { useDialogA11y } from "@/lib/dialog-a11y";
 
 interface SuggestionDialogProps {
   open: boolean;
@@ -15,14 +16,10 @@ interface SuggestionDialogProps {
 
 export default function SuggestionDialog({ open, onClose, suggestedProduct }: SuggestionDialogProps) {
   const { addItem, openCart } = useCart();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const titleId = useId();
 
-  // close on ESC
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  useDialogA11y({ open, onClose, dialogRef: panelRef });
 
   if (!open) return null;
 
@@ -42,12 +39,12 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct }: Su
   const productUrl = `/books/${suggestedProduct.slug}`;
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className={styles.panel}>
-        <header className={styles.header}>
-          <h3 className={styles.title}>Разом цікавіше?</h3>
+    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby={titleId} onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div className={styles.panel} ref={panelRef}>
+        <div className={styles.header}>
+          <h2 id={titleId} className={styles.title}>Разом цікавіше?</h2>
           <button aria-label="Закрити" className={styles.close} onClick={onClose}>×</button>
-        </header>
+        </div>
         <div className={styles.body}>
           <p className={styles.message}>До Вашої книги ідеально підійдуть ці ілюстрації:</p>
           <div className={styles.product}>
@@ -56,7 +53,7 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct }: Su
             </Link>
             <div className={styles.info}>
                 <Link href={productUrl} prefetch={false} className={styles.productTitle} onClick={onClose}>
-                    <h4>{suggestedProduct.name}</h4>
+                    <h3>{suggestedProduct.name}</h3>
                 </Link>
                 <p className={styles.price}>{price} грн</p>
                 <button className={styles.addButton} onClick={handleAddSuggested}>Додати до кошика</button>
