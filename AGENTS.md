@@ -69,3 +69,10 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - When editing links/assets, verify local runtime behavior and the provider preview.
 - Keep README configuration and deployment guidance aligned with this file.
 
+## Git Workflow
+
+- When the user asks to implement, build, fix, or otherwise change code, create and switch to a dedicated feature branch before editing files.
+- Use the `codex/` prefix by default and include the issue identifier when one is available (for example, `codex/zvy-32-hold-invoice-reminders`).
+- Do not place a new implementation on an unrelated existing feature branch. If uncommitted work makes switching branches unsafe, stop and ask the user how to proceed.
+- Skip branch creation only when the user explicitly asks to work on the current branch.
+
