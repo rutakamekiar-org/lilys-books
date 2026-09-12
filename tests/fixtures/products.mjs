@@ -42,4 +42,21 @@ export const inactiveProduct = {
   items: [{ ...existingProduct.items[0], id: "51000000-0000-4000-8000-000000000001", name: "Паперова Inactive Book" }],
 };
 
-export const productFixtures = [existingProduct, unavailableProduct, inactiveProduct];
+// Slug matches public/content/excerpts/brunette-stories.html so the excerpt dialog renders
+// real content, and the extra images make the carousel render its navigation buttons.
+export const excerptProduct = {
+  ...existingProduct,
+  id: "70000000-0000-4000-8000-000000000001",
+  name: "Excerpt Book",
+  slug: "brunette-stories",
+  isHero: false,
+  hasExcerpt: true,
+  seoDescription: "A test product that exposes the excerpt dialog.",
+  imageUrls: [
+    "/images/products/inaksha-art/inaksha-art1.webp",
+    "/images/products/inaksha-art/inaksha-art2.webp",
+  ],
+  items: [{ ...existingProduct.items[0], id: "71000000-0000-4000-8000-000000000001", name: "Паперова Excerpt Book" }],
+};
+
+export const productFixtures = [existingProduct, unavailableProduct, inactiveProduct, excerptProduct];

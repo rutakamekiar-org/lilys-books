@@ -1,6 +1,8 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import styles from "./ExcerptDialog.module.css";
+import { useDialogA11y } from "@/lib/dialog-a11y";
 
 export default function ExcerptDialog({
   open,
@@ -11,6 +13,8 @@ export default function ExcerptDialog({
   const panelRef = useRef<HTMLDivElement>(null);
   const [html, setHtml] = useState<string>("");
   const [loading, setLoading] = useState(false);
+
+  useDialogA11y({ open, onClose, dialogRef: panelRef });
 
   useEffect(() => {
     if (!open || !slug) return;
@@ -36,14 +40,6 @@ export default function ExcerptDialog({
     loadExcerpt();
   }, [open, slug]);
 
-  // close on ESC
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
-
   // click outside to close
   function onOverlayClick(e: React.MouseEvent<HTMLDivElement>){
     if (e.target === e.currentTarget) onClose();
@@ -54,10 +50,11 @@ export default function ExcerptDialog({
   return (
     <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="excerpt-title" onMouseDown={onOverlayClick}>
       <div className={styles.panel} ref={panelRef}>
-        <header className={styles.header}>
-          <h3 id="excerpt-title" className={styles.title}>Читати уривок — {title}</h3>
+        {/* h2 keeps the heading order valid: excerpt bodies start their own sections at h2. */}
+        <div className={styles.header}>
+          <h2 id="excerpt-title" className={styles.title}>Читати уривок — {title}</h2>
           <button aria-label="Закрити" className={styles.close} onClick={onClose}>×</button>
-        </header>
+        </div>
         <div className={styles.body}>
           {loading ? <p>Завантаження...</p> : <div dangerouslySetInnerHTML={{ __html: html }} />}
         </div>

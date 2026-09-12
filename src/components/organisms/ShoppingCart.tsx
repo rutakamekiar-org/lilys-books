@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import styles from "./ShoppingCart.module.css";
@@ -7,6 +7,7 @@ import { Product } from "@/models/Product";
 import { getPrice, getProductItemDisplayLabel } from "@/lib/product-item.helper";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
+import { useDialogA11y } from "@/lib/dialog-a11y";
 
 export interface CartItem {
   product: Product;
@@ -38,7 +39,10 @@ export default function ShoppingCart({
   const [mounted, setMounted] = useState(false);
   const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const lastActiveEl = useRef<HTMLElement | null>(null);
+  const titleId = useId();
+
+  // The dialog only exists once mounted, so focus management waits for the portal.
+  useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: true });
 
   useEffect(() => {
     setMounted(true);
@@ -62,68 +66,6 @@ export default function ShoppingCart({
       window.visualViewport?.removeEventListener("scroll", updateViewportHeight);
       window.removeEventListener("resize", updateViewportHeight);
     };
-  }, [open]);
-
-  // Close on the Escape key
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape" && open) onClose();
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
-
-  // Restore focus on close and lock body scroll
-  useEffect(() => {
-    if (open) {
-      lastActiveEl.current = document.activeElement as HTMLElement;
-      // Lock body scroll when cart is open
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.documentElement.style.overflow = "hidden";
-      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
-    } else {
-      lastActiveEl.current?.focus?.();
-      // Unlock body scroll when cart closes
-      document.documentElement.style.overflow = "";
-      document.documentElement.style.paddingRight = "";
-    }
-    return () => {
-      document.documentElement.style.overflow = "";
-      document.documentElement.style.paddingRight = "";
-    };
-  }, [open]);
-
-  // Focus trap
-  useEffect(() => {
-    if (!open) return;
-    const root = dialogRef.current;
-    if (!root) return;
-    const selector = 'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';
-    const getFocusable = () =>
-      Array.from(root.querySelectorAll<HTMLElement>(selector)).filter(
-        (el) => !el.hasAttribute("disabled")
-      );
-    const onTab = (e: KeyboardEvent) => {
-      if (e.key !== "Tab") return;
-      const f = getFocusable();
-      if (!f.length) return;
-      const first = f[0],
-        last = f[f.length - 1],
-        cur = document.activeElement as HTMLElement | null;
-      if (e.shiftKey) {
-        if (cur === first || !root.contains(cur)) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (cur === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-    document.addEventListener("keydown", onTab);
-    return () => document.removeEventListener("keydown", onTab);
   }, [open]);
 
   const handleApplyPromo = async () => {
@@ -162,14 +104,14 @@ export default function ShoppingCart({
       style={overlayStyle}
       aria-modal="true"
       role="dialog"
-      aria-label="Кошик"
+      aria-labelledby={titleId}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div className={styles.cart} ref={dialogRef}>
-        <header className={styles.header}>
-          <h2 className={styles.title}>Кошик</h2>
+        <div className={styles.header}>
+          <h2 id={titleId} className={styles.title}>Кошик</h2>
           <button
             onClick={onClose}
             aria-label="Закрити"
@@ -177,7 +119,7 @@ export default function ShoppingCart({
           >
             ×
           </button>
-        </header>
+        </div>
 
         <div className={styles.content}>
           {isEmpty ? (
@@ -274,60 +216,59 @@ export default function ShoppingCart({
         </div>
 
         {!isEmpty && (
-          <>
-            <footer className={styles.footer}>
-              <div className={styles.promocode}>
-                {appliedPromocode ? (
-                  <div className={styles.appliedPromo}>
-                    <span>
-                      <i className="fas fa-tag" style={{ marginRight: '8px' }}></i>
-                      {appliedPromocode.code?.toUpperCase()}
-                    </span>
-                    <button onClick={removePromocode} className={styles.removePromo} aria-label="Видалити промокод">
-                      ×
-                    </button>
-                  </div>
-                ) : (
-                  <div className={styles.promoForm}>
-                    <input
-                      type="text"
-                      value={promoInput}
-                      onChange={(e) => setPromoInput(e.target.value)}
-                      placeholder="Введіть промокод"
-                      className={styles.promoInput}
-                      onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
-                    />
-                    <button
-                      onClick={handleApplyPromo}
-                      disabled={isApplying || !promoInput.trim()}
-                      className={styles.promoApplyBtn}
-                    >
-                      {isApplying ? <i className="fas fa-spinner fa-spin"></i> : 'Застосувати'}
-                    </button>
-                  </div>
-                )}
-              </div>
-              {discountAmount > 0 && (
-                <>
-                  <div className={styles.summaryRow}>
-                    <span>Сума:</span>
-                    <span>{subtotal} грн</span>
-                  </div>
-                  <div className={styles.summaryRow}>
-                    <span>Знижка:</span>
-                    <span className={styles.discountValue}>-{discountAmount} грн</span>
-                  </div>
-                </>
+          <div className={styles.footer}>
+            <div className={styles.promocode}>
+              {appliedPromocode ? (
+                <div className={styles.appliedPromo}>
+                  <span>
+                    <i className="fas fa-tag" style={{ marginRight: '8px' }}></i>
+                    {appliedPromocode.code?.toUpperCase()}
+                  </span>
+                  <button onClick={removePromocode} className={styles.removePromo} aria-label="Видалити промокод">
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <div className={styles.promoForm}>
+                  <input
+                    type="text"
+                    value={promoInput}
+                    onChange={(e) => setPromoInput(e.target.value)}
+                    placeholder="Введіть промокод"
+                    aria-label="Промокод"
+                    className={styles.promoInput}
+                    onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
+                  />
+                  <button
+                    onClick={handleApplyPromo}
+                    disabled={isApplying || !promoInput.trim()}
+                    className={styles.promoApplyBtn}
+                  >
+                    {isApplying ? <i className="fas fa-spinner fa-spin"></i> : 'Застосувати'}
+                  </button>
+                </div>
               )}
-              <div className={styles.total}>
-                <span className={styles.totalLabel}>Всього:</span>
-                <span className={styles.totalValue}>{total} грн</span>
-              </div>
-              <button onClick={onCheckout} className={styles.checkoutBtn}>
-                Оформити замовлення
-              </button>
-            </footer>
-          </>
+            </div>
+            {discountAmount > 0 && (
+              <>
+                <div className={styles.summaryRow}>
+                  <span>Сума:</span>
+                  <span>{subtotal} грн</span>
+                </div>
+                <div className={styles.summaryRow}>
+                  <span>Знижка:</span>
+                  <span className={styles.discountValue}>-{discountAmount} грн</span>
+                </div>
+              </>
+            )}
+            <div className={styles.total}>
+              <span className={styles.totalLabel}>Всього:</span>
+              <span className={styles.totalValue}>{total} грн</span>
+            </div>
+            <button onClick={onCheckout} className={styles.checkoutBtn}>
+              Оформити замовлення
+            </button>
+          </div>
         )}
       </div>
     </div>,

@@ -26,6 +26,9 @@
 .DS_Store
 *.pem
 
+# local development certificates exported by tools/dev-local.mjs
+/.certs/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

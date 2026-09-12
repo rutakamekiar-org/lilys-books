@@ -50,7 +50,7 @@ export default function BookCard({ product: staticProduct }: { product: Product 
           />
         </div>
         <div className={styles.meta}>
-          <h3>{product.name}</h3>
+          <h2>{product.name}</h2>
         </div>
       </Link>
       <div className={styles.formats} role="group" aria-label={`Формати книги ${product.name}`}>
