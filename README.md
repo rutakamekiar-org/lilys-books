@@ -24,16 +24,18 @@ Production deployments use the Next.js runtime. Run `npm run build` followed by 
 
 ### Running against a local backend over HTTPS
 
-Pointing `NEXT_PUBLIC_API_URL` at a locally running BookPreorder instance, for example `https://localhost:7213`, fails on the server with `TypeError: fetch failed` caused by `self-signed certificate`. The ASP.NET Core development certificate is trusted through the operating system store, which browsers read but Node.js does not. Client-side calls therefore succeed while every server-side call fails: `/books/{slug}` surfaces the error, and `getProductsForStatic()` logs `fetchProducts failed:` and quietly renders an empty catalog that the client then refills.
+Pointing `NEXT_PUBLIC_API_URL` at a locally running BookPreorder instance, for example `https://localhost:7213`, fails on the server with `TypeError: fetch failed` caused by `DEPTH_ZERO_SELF_SIGNED_CERT`. The ASP.NET Core development certificate is self-signed and trusted through the Windows per-user store, which browsers read but Node.js does not. Client-side calls therefore succeed while every server-side call fails: `/books/{slug}` surfaces the error, and `getProductsForStatic()` logs `fetchProducts failed:` and quietly renders an empty catalog that the client then refills.
 
-Trust the certificate once, then start the dev server with `npm run dev:local`, which runs Node with `--use-system-ca`:
+Use `npm run dev:local`. It exports the development certificate to `.certs/` (gitignored, refreshed daily) and starts the dev server with `NODE_EXTRA_CA_CERTS` pointing at it:
 
 ```bash
 dotnet dev-certs https --trust
 npm run dev:local
 ```
 
-Alternatively, point `NEXT_PUBLIC_API_URL` at the backend's plain HTTP endpoint and keep using `npm run dev`. Do not reach for `NODE_TLS_REJECT_UNAUTHORIZED=0`: it disables certificate validation for the whole process.
+Note that `--use-system-ca` on its own is not enough, because `dotnet dev-certs https --trust` installs the certificate into `Cert:\CurrentUser\Root` rather than the machine store. The script passes the flag anyway, for setups whose certificates live in the machine store.
+
+If `dotnet` is unavailable the script warns and starts anyway. The alternative is to point `NEXT_PUBLIC_API_URL` at the backend's plain HTTP endpoint and keep using `npm run dev`. Do not reach for `NODE_TLS_REJECT_UNAUTHORIZED=0`: it disables certificate validation for the whole process.
 
 ## Regression tests
 
