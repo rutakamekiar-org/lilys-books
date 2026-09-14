@@ -8,6 +8,7 @@ import { getPrice, getProductItemDisplayLabel } from "@/lib/product-item.helper"
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 import { useDialogA11y } from "@/lib/dialog-a11y";
+import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 
 export interface CartItem {
   product: Product;
@@ -85,13 +86,13 @@ export default function ShoppingCart({
 
   if (!open || !mounted) return null;
 
-  const subtotal = items.reduce((sum, item) => {
+  const subtotal = sumMoney(items.map((item) => {
     const productItem = item.product.items.find((i) => i.id === item.itemId);
     const price = productItem ? getPrice(productItem) ?? 0 : 0;
-    return sum + price * item.quantity;
-  }, 0);
+    return multiplyMoney(price, item.quantity);
+  }));
 
-  const total = Math.max(0, subtotal - discountAmount);
+  const total = subtractMoney(subtotal, discountAmount);
 
   const isEmpty = items.length === 0;
   const overlayStyle = viewportHeight
@@ -133,7 +134,7 @@ export default function ShoppingCart({
                   (i) => i.id === item.itemId
                 );
                 const price = productItem ? getPrice(productItem) ?? 0 : 0;
-                const itemTotal = price * item.quantity;
+                const itemTotal = multiplyMoney(price, item.quantity);
 
                 const itemDiscount = getItemDiscount(item.itemId);
 
@@ -155,10 +156,10 @@ export default function ShoppingCart({
                           ? getProductItemDisplayLabel(item.product, productItem)
                           : item.format === "paper" ? "Паперова" : "Електронна"}
                       </p>
-                      <p className={styles.itemPrice}>{price} грн за шт.</p>
+                      <p className={styles.itemPrice}>{formatMoney(price)} грн за шт.</p>
                       {itemDiscount > 0 && (
                         <div className={styles.promoBadge}>
-                          <i className="fas fa-tag"></i> Акція (-{itemDiscount} грн)
+                          <i className="fas fa-tag"></i> Акція (-{formatMoney(itemDiscount)} грн)
                         </div>
                       )}
                       {item.format === "paper" && (
@@ -196,9 +197,9 @@ export default function ShoppingCart({
                     <div className={styles.itemActions}>
                       <div className={styles.itemTotalContainer}>
                         {itemDiscount > 0 && (
-                          <span className={styles.oldPrice}>{itemTotal} грн</span>
+                          <span className={styles.oldPrice}>{formatMoney(itemTotal)} грн</span>
                         )}
-                        <p className={styles.itemTotal}>{Math.round(itemTotal - itemDiscount)} грн</p>
+                        <p className={styles.itemTotal}>{formatMoney(subtractMoney(itemTotal, itemDiscount))} грн</p>
                       </div>
                       <button
                         onClick={() => onRemoveItem(item.itemId)}
@@ -253,17 +254,17 @@ export default function ShoppingCart({
               <>
                 <div className={styles.summaryRow}>
                   <span>Сума:</span>
-                  <span>{subtotal} грн</span>
+                  <span>{formatMoney(subtotal)} грн</span>
                 </div>
                 <div className={styles.summaryRow}>
                   <span>Знижка:</span>
-                  <span className={styles.discountValue}>-{discountAmount} грн</span>
+                  <span className={styles.discountValue}>-{formatMoney(discountAmount)} грн</span>
                 </div>
               </>
             )}
             <div className={styles.total}>
               <span className={styles.totalLabel}>Всього:</span>
-              <span className={styles.totalValue}>{total} грн</span>
+              <span className={styles.totalValue}>{formatMoney(total)} грн</span>
             </div>
             <button onClick={onCheckout} className={styles.checkoutBtn}>
               Оформити замовлення
