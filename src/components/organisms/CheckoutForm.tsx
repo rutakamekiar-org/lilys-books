@@ -6,6 +6,7 @@ import { CartItem, useCart } from "@/components/molecules/CartProvider";
 import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
 import { getPrice } from "@/lib/product-item.helper";
 import { useDialogA11y } from "@/lib/dialog-a11y";
+import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 
 interface CheckoutFormProps {
   open: boolean;
@@ -129,13 +130,13 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
 
   if (!open || !mounted) return null;
 
-  const subtotal = items.reduce((sum, item) => {
+  const subtotal = sumMoney(items.map((item) => {
     const productItem = item.product.items.find((i) => i.id === item.itemId);
     const price = productItem ? getPrice(productItem) ?? 0 : 0;
-    return sum + price * item.quantity;
-  }, 0);
+    return multiplyMoney(price, item.quantity);
+  }));
 
-  const total = Math.max(0, subtotal - discountAmount);
+  const total = subtractMoney(subtotal, discountAmount);
   const overlayStyle = viewportHeight
     ? ({ ["--checkout-viewport-height"]: `${viewportHeight}px` } as { [key: string]: string })
     : undefined;
@@ -266,7 +267,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                   const productItem = item.product.items.find((i) => i.id === item.itemId);
                   const price = productItem ? getPrice(productItem) ?? 0 : 0;
                   const itemDiscount = getItemDiscount(item.itemId);
-                  const itemTotal = price * item.quantity;
+                  const itemTotal = multiplyMoney(price, item.quantity);
                   
                   return (
                     <div key={item.itemId} className={styles.summaryItem}>
@@ -274,9 +275,9 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                       <span className={styles.summaryItemQty}>x{item.quantity}</span>
                       <div className={styles.summaryItemPrice}>
                         {itemDiscount > 0 && (
-                          <span className={styles.summaryItemOldPrice}>{itemTotal} грн</span>
+                          <span className={styles.summaryItemOldPrice}>{formatMoney(itemTotal)} грн</span>
                         )}
-                        <span>{Math.round(itemTotal - itemDiscount)} грн</span>
+                        <span>{formatMoney(subtractMoney(itemTotal, itemDiscount))} грн</span>
                       </div>
                     </div>
                   );
@@ -285,17 +286,17 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
               <div className={styles.summaryDivider} />
               <div className={styles.summaryRow}>
                 <span>Сума:</span>
-                <span>{subtotal} грн</span>
+                <span>{formatMoney(subtotal)} грн</span>
               </div>
               {discountAmount > 0 && (
                 <div className={styles.summaryRow}>
                   <span>Знижка {appliedPromocode?.code && `(${appliedPromocode.code.toUpperCase()})`}:</span>
-                  <span className={styles.discountValue}>-{discountAmount} грн</span>
+                  <span className={styles.discountValue}>-{formatMoney(discountAmount)} грн</span>
                 </div>
               )}
               <div className={styles.totalRow}>
                 <span>Всього до сплати:</span>
-                <span>{total} грн</span>
+                <span>{formatMoney(total)} грн</span>
               </div>
             </div>
           </div>

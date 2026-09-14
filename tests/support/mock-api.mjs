@@ -70,6 +70,16 @@ const server = createServer(async (request, response) => {
     return sendJson(response, product ? 200 : 404, product ?? { error: "Not found." });
   }
 
+  if (request.method === "GET" && url.pathname === "/api/PromoCode/validate") {
+    const code = url.searchParams.get("code")?.toUpperCase();
+    const promos = {
+      "NEAR-TOTAL": { code: "NEAR-TOTAL", type: 0, value: 498.95, applicableProductItemIds: null, remainingUsages: null },
+      "EXACT-TOTAL": { code: "EXACT-TOTAL", type: 0, value: 499, applicableProductItemIds: null, remainingUsages: null },
+    };
+    const promo = code ? promos[code] : undefined;
+    return sendJson(response, promo ? 200 : 404, promo ?? { error: "Invalid promo code." });
+  }
+
   if (request.method === "POST" && url.pathname === "/api/invoice") {
     state.invoiceRequests += 1;
     return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment" });
