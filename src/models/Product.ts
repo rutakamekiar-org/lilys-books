@@ -92,7 +92,10 @@ export function parseProducts(value: unknown): Product[] {
     const result = ProductListSchema.safeParse(value);
     if (!result.success) {
         console.error("Invalid products API response:", result.error.issues);
-        throw new Error("The products API returned invalid data.");
+        const details = result.error.issues
+            .map(issue => `${issue.path.join(".") || "<root>"}: ${issue.message}`)
+            .join("; ");
+        throw new Error(`The products API returned invalid data: ${details}`);
     }
     return result.data;
 }

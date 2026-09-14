@@ -6,9 +6,10 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 
 ## Fast Start
 
-- Dev: `npm run dev`
+- Dev: `npm run dev` (use `npm run dev:local` when `NEXT_PUBLIC_API_URL` points at a local backend over HTTPS, so Node trusts the OS certificate store)
 - Lint: `npm run lint`
 - Type check: `npm run typecheck`
+- Browser regression tests: `npm run test:e2e`
 - Build runtime application: `npm run build` (outputs to `.next/`)
 - Local production preview: `npm run start` (after `npm run build`)
 
@@ -50,6 +51,17 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
   - Keep HTTP integration in `src/lib/api.ts`.
   - Use `notifyApiError` from `src/lib/api.helper.ts` for user-facing API failures.
 
+- Regression tests:
+  - Playwright specs live in `tests/e2e`; the local API double is `tests/support/mock-api.mjs`.
+  - Keep tests deterministic and production-independent. Never point the suite at the real API or submit a payment.
+
+- Accessibility:
+  - `tests/e2e/accessibility.spec.ts` runs axe-core over home, catalog, product details, the excerpt dialog, cart and checkout; `tests/e2e/keyboard-navigation.spec.ts` covers the keyboard journey and dialog focus behaviour. Both run inside `npm run test:e2e`.
+  - The scan must report zero violations apart from the rules listed in `SKIPPED_RULES` in `tests/e2e/a11y.ts`. `color-contrast` is skipped there as an accepted brand exception; do not add others without recording the reason in `ACCESSIBILITY.md`.
+  - Do not change `--accent` (`#f09b30`) to satisfy a contrast tool. It is sampled from the cover art of «Звичайна» and the exception is deliberate.
+  - Build new dialogs on `useDialogA11y` from `src/lib/dialog-a11y.ts` instead of re-implementing Escape, focus trapping and focus restoration.
+  - Add an axe scan whenever you add a storefront page or dialog.
+
 ## Deployment Notes
 
 - CI workflow: `.github/workflows/ci.yml`
@@ -63,4 +75,11 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Keep product content in the backend API; do not restore product-specific TypeScript content files.
 - When editing links/assets, verify local runtime behavior and the provider preview.
 - Keep README configuration and deployment guidance aligned with this file.
+
+## Git Workflow
+
+- When the user asks to implement, build, fix, or otherwise change code, create and switch to a dedicated feature branch before editing files.
+- Use the `codex/` prefix by default and include the issue identifier when one is available (for example, `codex/zvy-32-hold-invoice-reminders`).
+- Do not place a new implementation on an unrelated existing feature branch. If uncommitted work makes switching branches unsafe, stop and ask the user how to proceed.
+- Skip branch creation only when the user explicitly asks to work on the current branch.
 

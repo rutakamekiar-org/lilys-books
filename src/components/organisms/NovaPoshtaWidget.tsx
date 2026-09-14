@@ -1,10 +1,16 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import styles from "./NovaPoshtaWidget.module.css";
+import { useDialogA11y } from "@/lib/dialog-a11y";
 
 interface NovaPoshtaWidgetProps {
   onSelect: (data: NovaPoshtaDepartment) => void;
   value?: NovaPoshtaDepartment | null;
+  /** Id of the element naming this field, because a <label> cannot name a <button>. */
+  labelledBy?: string;
+  /** Id of the validation message. The picker is a button, and role=button does not
+   *  support aria-invalid, so the error is conveyed by description plus role=alert. */
+  describedBy?: string;
 }
 
 export interface NovaPoshtaDepartment {
@@ -18,10 +24,12 @@ export interface NovaPoshtaDepartment {
   };
 }
 
-export default function NovaPoshtaWidget({ onSelect, value }: NovaPoshtaWidgetProps) {
+export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describedBy }: NovaPoshtaWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState<NovaPoshtaDepartment | null>(value || null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const modalTitleId = useId();
 
   useEffect(() => {
     if (value) {
@@ -73,6 +81,8 @@ export default function NovaPoshtaWidget({ onSelect, value }: NovaPoshtaWidgetPr
     }
   };
 
+  useDialogA11y({ open: isOpen, onClose: closeWidget, dialogRef: modalRef });
+
   useEffect(() => {
     if (isOpen && iframeRef.current) {
       const iframe = iframeRef.current;
@@ -120,7 +130,13 @@ export default function NovaPoshtaWidget({ onSelect, value }: NovaPoshtaWidgetPr
 
   return (
     <>
-      <button type="button" className={styles.button} onClick={openWidget}>
+      <button
+        type="button"
+        className={styles.button}
+        onClick={openWidget}
+        aria-labelledby={labelledBy}
+        aria-describedby={describedBy}
+      >
         <div className={styles.logo}>
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11.9401 16.4237H16.0596V21.271H19.2101L15.39 25.0911C14.6227 25.8585 13.3791 25.8585 12.6118 25.0911L8.79166 21.271H11.9401V16.4237ZM21.2688 19.2102V8.78972L25.091 12.6098C25.8583 13.3772 25.8583 14.6207 25.091 15.3881L21.2688 19.2102ZM16.0596 6.73099V11.5763H11.9401V6.73099H8.78958L12.6097 2.90882C13.377 2.14148 14.6206 2.14148 15.3879 2.90882L19.2101 6.73099H16.0596ZM2.90868 12.6098L6.72877 8.78972V19.2102L2.90868 15.3901C2.14133 14.6228 2.14133 13.3772 2.90868 12.6098Z" fill="#DA291C"/>
@@ -138,14 +154,20 @@ export default function NovaPoshtaWidget({ onSelect, value }: NovaPoshtaWidgetPr
       </button>
 
       {isOpen && (
-        <div className={styles.overlay} onClick={(e) => {
-          if (e.target === e.currentTarget) closeWidget();
-        }}>
-          <div className={styles.modal}>
-            <header className={styles.header}>
-              <h2>Вибрати відділення</h2>
-              <button className={styles.closeBtn} onClick={closeWidget}>×</button>
-            </header>
+        <div
+          className={styles.overlay}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={modalTitleId}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) closeWidget();
+          }}
+        >
+          <div className={styles.modal} ref={modalRef}>
+            <div className={styles.header}>
+              <h2 id={modalTitleId}>Вибрати відділення</h2>
+              <button type="button" className={styles.closeBtn} onClick={closeWidget} aria-label="Закрити">×</button>
+            </div>
             <iframe
               ref={iframeRef}
               className={styles.iframe}

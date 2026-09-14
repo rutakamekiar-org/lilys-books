@@ -4,10 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:local": "node tools/dev-local.mjs",
     "build": "next build",
+    "build:ci": "node tests/support/build-with-mock-api.mjs",
     "images:metadata": "node tools/image-assets.mjs",
     "images:optimize": "node tools/image-assets.mjs --optimize",
     "start": "next start",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:a11y": "playwright test accessibility keyboard-navigation",
+    "test:fixtures": "tsx tests/contracts/product-fixtures.ts",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
   },
@@ -15,21 +21,23 @@
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@microsoft/clarity": "^1.0.0",
     "jsqr": "^1.4.0",
-    "next": "16.1.0-canary.19",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "react-snowfall": "^2.4.0",
     "react-toastify": "^11.0.5",
     "zod": "^4.5.4"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "^1.63.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.3",
-    "sharp": "^0.34.4",
+    "eslint-config-next": "16.3.4",
+    "sharp": "^0.35.4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

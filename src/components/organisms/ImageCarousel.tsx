@@ -120,8 +120,15 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
   }, [images, containerIsLandscape]);
 
   return (
-    <div className={`${styles.carousel} ${className || ""}`} aria-label={ariaLabel}>
-      <div className={styles.carouselRail} ref={railRef} role="group">
+    <div className={`${styles.carousel} ${className || ""}`}>
+      {/* The rail scrolls, so it has to be reachable and scrollable with the keyboard. */}
+      <div
+        className={styles.carouselRail}
+        ref={railRef}
+        role="group"
+        aria-label={ariaLabel ?? (alt ? `Зображення: ${alt}` : "Зображення")}
+        tabIndex={0}
+      >
         {images.map((src, i) => (
           <CarouselImage
             key={src + i}
@@ -137,7 +144,7 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
         ))}
       </div>
       {images.length > 1 && (
-        <div className={`${styles.carouselNav} ${navInside ? styles.inside : ""}`} aria-hidden>
+        <div className={`${styles.carouselNav} ${navInside ? styles.inside : ""}`}>
           <button className={styles.carouselBtn + " prev"} onClick={goPrev} disabled={!canPrev} aria-label="Попереднє фото">
             <i className="fa-solid fa-chevron-left" aria-hidden></i>
           </button>

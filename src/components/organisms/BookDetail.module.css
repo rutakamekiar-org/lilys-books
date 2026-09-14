@@ -95,6 +95,8 @@
 .segmented { display: grid; grid-auto-flow: row; gap: 10px; margin-top: 18px; }
 .opt { position: relative; display: block; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer; user-select: none; background: var(--surface); }
 .opt input { position: absolute; inset: 0; opacity: 0; }
+/* The radio itself is invisible, so the label carries the focus indicator. */
+.opt:has(input:focus-visible) { outline: 3px solid rgba(240,155,48,0.55); outline-offset: 2px; }
 .active { border-color: var(--accent); background: var(--accent-weak); }
 .disabled { opacity: .55; cursor: not-allowed; }
 

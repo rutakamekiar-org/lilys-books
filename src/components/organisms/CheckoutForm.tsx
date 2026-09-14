@@ -1,10 +1,12 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useId } from "react";
 import { createPortal } from "react-dom";
 import styles from "./CheckoutForm.module.css";
 import { CartItem, useCart } from "@/components/molecules/CartProvider";
 import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
 import { getPrice } from "@/lib/product-item.helper";
+import { useDialogA11y } from "@/lib/dialog-a11y";
+import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 
 interface CheckoutFormProps {
   open: boolean;
@@ -35,7 +37,11 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const { appliedPromocode, discountAmount, getItemDiscount } = useCart();
 
   const dialogRef = useRef<HTMLDivElement>(null);
-  const lastActiveEl = useRef<HTMLElement | null>(null);
+  const titleId = useId();
+  const departmentLabelId = useId();
+
+  // The dialog only exists once mounted, so focus management waits for the portal.
+  useDialogA11y({ open: open && mounted, onClose, dialogRef });
 
   useEffect(() => {
     setMounted(true);
@@ -63,62 +69,16 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
 
   const hasPhysical = items.some((item) => item.format === "paper");
 
-  // Close on Escape
-  useEffect(() => {
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape" && open) onClose();
-    }
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
-
-  // Reset form and restore focus
-  useEffect(() => {
-    if (open) {
-      lastActiveEl.current = document.activeElement as HTMLElement;
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPhone("");
-      setDepartment(undefined);
-      setErrors({});
-      setTouched({});
-    } else {
-      lastActiveEl.current?.focus?.();
-    }
-  }, [open]);
-
-  // Focus trap
+  // Start every checkout from a clean form.
   useEffect(() => {
     if (!open) return;
-    const root = dialogRef.current;
-    if (!root) return;
-    const selector = 'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])';
-    const getFocusable = () =>
-      Array.from(root.querySelectorAll<HTMLElement>(selector)).filter(
-        (el) => !el.hasAttribute("disabled")
-      );
-    const onTab = (e: KeyboardEvent) => {
-      if (e.key !== "Tab") return;
-      const f = getFocusable();
-      if (!f.length) return;
-      const first = f[0],
-        last = f[f.length - 1],
-        cur = document.activeElement as HTMLElement | null;
-      if (e.shiftKey) {
-        if (cur === first || !root.contains(cur)) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (cur === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-    document.addEventListener("keydown", onTab);
-    return () => document.removeEventListener("keydown", onTab);
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhone("");
+    setDepartment(undefined);
+    setErrors({});
+    setTouched({});
   }, [open]);
 
   // Validation
@@ -170,13 +130,13 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
 
   if (!open || !mounted) return null;
 
-  const subtotal = items.reduce((sum, item) => {
+  const subtotal = sumMoney(items.map((item) => {
     const productItem = item.product.items.find((i) => i.id === item.itemId);
     const price = productItem ? getPrice(productItem) ?? 0 : 0;
-    return sum + price * item.quantity;
-  }, 0);
+    return multiplyMoney(price, item.quantity);
+  }));
 
-  const total = Math.max(0, subtotal - discountAmount);
+  const total = subtractMoney(subtotal, discountAmount);
   const overlayStyle = viewportHeight
     ? ({ ["--checkout-viewport-height"]: `${viewportHeight}px` } as { [key: string]: string })
     : undefined;
@@ -187,18 +147,18 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
       style={overlayStyle}
       aria-modal="true"
       role="dialog"
-      aria-label="Оформлення замовлення"
+      aria-labelledby={titleId}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
       <div className={styles.sheet} ref={dialogRef}>
-        <header className={styles.header}>
-          <h2 className={styles.title}>Оформлення замовлення</h2>
+        <div className={styles.header}>
+          <h2 id={titleId} className={styles.title}>Оформлення замовлення</h2>
           <button onClick={onClose} aria-label="Закрити" className={styles.close}>
             ×
           </button>
-        </header>
+        </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.content}>
@@ -215,7 +175,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                 className={styles.input}
               />
               {touched.firstName && errors.firstName && (
-                <small id="err-firstName" className={styles.error}>{errors.firstName}</small>
+                <small id="err-firstName" role="alert" className={styles.error}>{errors.firstName}</small>
               )}
             </label>
 
@@ -232,7 +192,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                 className={styles.input}
               />
               {touched.lastName && errors.lastName && (
-                <small id="err-lastName" className={styles.error}>{errors.lastName}</small>
+                <small id="err-lastName" role="alert" className={styles.error}>{errors.lastName}</small>
               )}
             </label>
 
@@ -250,7 +210,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                 className={styles.input}
               />
               {touched.email && errors.email && (
-                <small id="err-email" className={styles.error}>{errors.email}</small>
+                <small id="err-email" role="alert" className={styles.error}>{errors.email}</small>
               )}
             </label>
 
@@ -271,23 +231,26 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                     className={styles.input}
                   />
                   {touched.phone && errors.phone && (
-                    <small id="err-phone" className={styles.error}>{errors.phone}</small>
+                    <small id="err-phone" role="alert" className={styles.error}>{errors.phone}</small>
                   )}
                 </label>
 
-                <label className={styles.field}>
-                  <span className={styles.label}>Відділення Нової Пошти *</span>
+                {/* A <label> cannot name a <button>, so this field is wired up with aria-labelledby. */}
+                <div className={styles.field}>
+                  <span id={departmentLabelId} className={styles.label}>Відділення Нової Пошти *</span>
                   <NovaPoshtaWidget
                     value={department}
                     onSelect={(dept) => {
                       setDepartment(dept);
                       setTouched((t) => ({ ...t, department: true }));
                     }}
+                    labelledBy={departmentLabelId}
+                    describedBy={touched.department && errors.department ? "err-department" : undefined}
                   />
                   {touched.department && errors.department && (
-                    <small id="err-department" className={styles.error}>{errors.department}</small>
+                    <small id="err-department" role="alert" className={styles.error}>{errors.department}</small>
                   )}
-                </label>
+                </div>
               </>
             )}
 
@@ -304,7 +267,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                   const productItem = item.product.items.find((i) => i.id === item.itemId);
                   const price = productItem ? getPrice(productItem) ?? 0 : 0;
                   const itemDiscount = getItemDiscount(item.itemId);
-                  const itemTotal = price * item.quantity;
+                  const itemTotal = multiplyMoney(price, item.quantity);
                   
                   return (
                     <div key={item.itemId} className={styles.summaryItem}>
@@ -312,9 +275,9 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                       <span className={styles.summaryItemQty}>x{item.quantity}</span>
                       <div className={styles.summaryItemPrice}>
                         {itemDiscount > 0 && (
-                          <span className={styles.summaryItemOldPrice}>{itemTotal} грн</span>
+                          <span className={styles.summaryItemOldPrice}>{formatMoney(itemTotal)} грн</span>
                         )}
-                        <span>{Math.round(itemTotal - itemDiscount)} грн</span>
+                        <span>{formatMoney(subtractMoney(itemTotal, itemDiscount))} грн</span>
                       </div>
                     </div>
                   );
@@ -323,26 +286,26 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
               <div className={styles.summaryDivider} />
               <div className={styles.summaryRow}>
                 <span>Сума:</span>
-                <span>{subtotal} грн</span>
+                <span>{formatMoney(subtotal)} грн</span>
               </div>
               {discountAmount > 0 && (
                 <div className={styles.summaryRow}>
                   <span>Знижка {appliedPromocode?.code && `(${appliedPromocode.code.toUpperCase()})`}:</span>
-                  <span className={styles.discountValue}>-{discountAmount} грн</span>
+                  <span className={styles.discountValue}>-{formatMoney(discountAmount)} грн</span>
                 </div>
               )}
               <div className={styles.totalRow}>
                 <span>Всього до сплати:</span>
-                <span>{total} грн</span>
+                <span>{formatMoney(total)} грн</span>
               </div>
             </div>
           </div>
 
-          <footer className={styles.footer}>
+          <div className={styles.footer}>
             <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
               {isSubmitting ? "Обробка замовлення..." : "Підтвердити замовлення"}
             </button>
-          </footer>
+          </div>
         </form>
       </div>
     </div>,
