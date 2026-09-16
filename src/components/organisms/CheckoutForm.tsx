@@ -8,6 +8,8 @@ import { getPrice } from "@/lib/product-item.helper";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 
+const MAX_ORDER_NOTE_LENGTH = 500;
+
 interface CheckoutFormProps {
   open: boolean;
   onClose: () => void;
@@ -21,6 +23,7 @@ export interface CheckoutFormData {
   email: string;
   phone?: string;
   department?: NovaPoshtaDepartment;
+  orderNote?: string;
 }
 
 export default function CheckoutForm({ open, onClose, items, onSubmit }: CheckoutFormProps) {
@@ -29,6 +32,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [department, setDepartment] = useState<NovaPoshtaDepartment | undefined>(undefined);
+  const [orderNote, setOrderNote] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,6 +43,8 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const departmentLabelId = useId();
+  const orderNoteId = useId();
+  const orderNoteDescriptionId = useId();
 
   // The dialog only exists once mounted, so focus management waits for the portal.
   useDialogA11y({ open: open && mounted, onClose, dialogRef });
@@ -77,6 +83,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
     setEmail("");
     setPhone("");
     setDepartment(undefined);
+    setOrderNote("");
     setErrors({});
     setTouched({});
   }, [open]);
@@ -121,6 +128,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
           email: email.trim(),
           phone: hasPhysical ? phone.trim() : undefined,
           department: hasPhysical ? department : undefined,
+          orderNote: orderNote.trim() || undefined,
         });
       } finally {
         setIsSubmitting(false);
@@ -259,6 +267,27 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                 ? "Доставка здійснюється Новою Поштою."
                 : "Електронна версія буде надіслана на вказаний email"}
             </small>
+
+            <div className={styles.field}>
+              <label htmlFor={orderNoteId} className={styles.label}>Коментар до замовлення (необов’язково)</label>
+              <textarea
+                id={orderNoteId}
+                value={orderNote}
+                onChange={(e) => setOrderNote(e.target.value)}
+                maxLength={MAX_ORDER_NOTE_LENGTH}
+                rows={4}
+                aria-describedby={orderNoteDescriptionId}
+                className={styles.textarea}
+              />
+              <span id={orderNoteDescriptionId} className={styles.fieldMeta}>
+                <small className={styles.helper}>
+                  Наприклад, побажання щодо доставки.
+                </small>
+                <small className={styles.counter} aria-live="polite">
+                  {orderNote.length}/{MAX_ORDER_NOTE_LENGTH}
+                </small>
+              </span>
+            </div>
 
             <div className={styles.summary}>
               <h3 className={styles.summaryTitle}>Ваше замовлення</h3>
