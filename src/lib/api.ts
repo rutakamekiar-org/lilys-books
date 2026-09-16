@@ -22,16 +22,18 @@ export async function validatePromocode(code: string, productItemIds: string[]):
     return handleApi<PromoCodeResponse>(res);
 }
 export async function createInvoice(data: CheckoutFormData, items: CartItem[], promoCode?: string): Promise<CheckoutResponse> {
+    const {orderNote, ...customer} = data;
     const res = await fetch(`${API_URL}/api/invoice`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            customer: data,
+            customer,
             items: items.map(item => ({
                 productId: item.itemId,
                 quantity: item.quantity,
             })),
             promoCode,
+            orderNote,
         }),
     }).catch((err) => {
         notifyApiError(err);

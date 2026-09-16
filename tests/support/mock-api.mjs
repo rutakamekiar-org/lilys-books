@@ -9,6 +9,7 @@ function initialState() {
     products: structuredClone(productFixtures),
     failingSlugs: new Set(),
     invoiceRequests: 0,
+    lastInvoiceRequest: null,
   };
 }
 
@@ -56,7 +57,12 @@ const server = createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && url.pathname === "/__control/state") {
-    return sendJson(response, 200, { products: state.products, failingSlugs: [...state.failingSlugs], invoiceRequests: state.invoiceRequests });
+    return sendJson(response, 200, {
+      products: state.products,
+      failingSlugs: [...state.failingSlugs],
+      invoiceRequests: state.invoiceRequests,
+      lastInvoiceRequest: state.lastInvoiceRequest,
+    });
   }
 
   if (request.method === "GET" && url.pathname === "/api/products") {
@@ -81,6 +87,7 @@ const server = createServer(async (request, response) => {
   }
 
   if (request.method === "POST" && url.pathname === "/api/invoice") {
+    state.lastInvoiceRequest = await readJson(request);
     state.invoiceRequests += 1;
     return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment" });
   }
