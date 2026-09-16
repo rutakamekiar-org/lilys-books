@@ -18,9 +18,27 @@ Copy `.env.example` to `.env.local` when local values differ from the defaults:
 - `NEXT_PUBLIC_SITE_BASE` sets the absolute site URL used by metadata and structured data.
 - `REVALIDATION_SECRET` protects the server-only `/api/revalidate` endpoint and must not use the `NEXT_PUBLIC_` prefix.
 
+In production, `NEXT_PUBLIC_API_URL` defaults to `https://api.zvychajna.pp.ua`
+and `NEXT_PUBLIC_SITE_BASE` defaults to `https://zvychajna.pp.ua`. Netlify only
+needs those variables when a deploy context should override the production
+defaults. `REVALIDATION_SECRET` has no fallback and remains required.
+
 The BookPreorder backend must use the same `REVALIDATION_SECRET` value and set `FRONTEND_REVALIDATION_URL` to the deployed endpoint, for example `https://your-site.netlify.app/api/revalidate`.
 
 Production deployments use the Next.js runtime. Run `npm run build` followed by `npm run start` to verify the production server locally.
+
+Netlify build settings, custom-domain verification, and the exact GitHub Pages
+rollback records are documented in
+[HOSTING_CUTOVER_RUNBOOK.md](HOSTING_CUTOVER_RUNBOOK.md). The remote acceptance
+suite is intentionally separate from normal CI because it reads the deployed
+storefront and production API:
+
+```powershell
+$env:CUTOVER_BASE_URL = 'https://astounding-douhua-45280d.netlify.app'
+npm run test:cutover
+```
+
+The suite stops at checkout validation and never submits an invoice or payment.
 
 ### Running against a local backend over HTTPS
 

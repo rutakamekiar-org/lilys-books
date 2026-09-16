@@ -11,6 +11,7 @@
     "images:optimize": "node tools/image-assets.mjs --optimize",
     "start": "next start",
     "test:e2e": "playwright test",
+    "test:cutover": "playwright test --config=playwright.cutover.config.ts",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:a11y": "playwright test accessibility keyboard-navigation",
     "test:fixtures": "tsx tests/contracts/product-fixtures.ts",

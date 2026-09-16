@@ -137,6 +137,7 @@ Add automated tests for dynamic routes, metadata, cache refresh, API failure beh
 
 ## HOST-8 / ZVY-12 — Deploy a preview and perform a reversible domain cutover
 
+- Status: In progress
 - Priority: High
 - Estimate: 3 points
 - Blocked by: HOST-2, HOST-3, HOST-6, HOST-7
@@ -153,3 +154,15 @@ Deploy the runtime version to a provider preview URL, validate it against the pr
 - Search-engine sitemap and robots URLs return correct production content.
 - A tested rollback procedure exists.
 - GitHub Pages is disabled only after the new deployment is verified.
+
+### Implementation record
+
+The operational sequence, recorded GitHub Pages DNS values, environment matrix,
+verification gates, and rollback steps live in
+[`HOSTING_CUTOVER_RUNBOOK.md`](HOSTING_CUTOVER_RUNBOOK.md). A dedicated
+Playwright configuration runs non-destructive checks against either the Netlify
+candidate or the custom production domain. The existing Netlify candidate
+passed checkout validation, SEO, mobile 320/390, 404/error-state, robots,
+sitemap, and production-API CORS checks on 2026-09-16. DNS and GitHub Pages stay
+unchanged until the reviewed deploy passes the same suite and Netlify has issued
+valid custom-domain TLS.
