@@ -5,11 +5,17 @@ This document records the migration decision, dependency order, acceptance crite
 - Decision status: accepted on 2026-09-04
 - Selected host: Netlify Free
 - Alternative: Cloudflare Workers Free
-- Current production host remains unchanged until the cutover task is approved and completed.
+- Current production host: Netlify, cut over on 2026-09-16 at 21:42 UTC.
 
 The Netlify Free commercial-use terms and current 300-credit monthly limit are accepted for the migration and initial low-traffic launch. Usage must be monitored because exhausting the allowance pauses the site until the next billing cycle or a plan upgrade.
 
-The application will first be completed and validated on a Netlify preview URL. Production traffic and `zvychajna.pp.ua` DNS remain on GitHub Pages until HOST-2, HOST-3, HOST-5, HOST-6, and HOST-7 are complete and HOST-8's checkout, SEO, mobile, and error-state checks pass. Before cutover, record the existing DNS values and retain the GitHub Pages deployment. Roll back application regressions by publishing the previous successful Netlify deploy; roll back a hosting or domain failure by restoring the recorded GitHub Pages DNS values. GitHub Pages is disabled only after the new production deployment is verified and stable.
+The application was completed and validated on the Netlify deployment URL
+before production traffic moved. `zvychajna.pp.ua` was cut over only after
+HOST-2, HOST-3, HOST-5, HOST-6, and HOST-7 were complete and HOST-8's checkout,
+SEO, mobile, and error-state checks passed. The recorded GitHub Pages DNS values
+remain the rollback target. Application regressions can be rolled back by
+publishing the previous successful Netlify deploy; hosting or domain failures
+can be rolled back by restoring the recorded GitHub Pages DNS values.
 
 ## HOST-1 / ZVY-5 — Select the dynamic hosting provider
 
@@ -161,8 +167,10 @@ The operational sequence, recorded GitHub Pages DNS values, environment matrix,
 verification gates, and rollback steps live in
 [`HOSTING_CUTOVER_RUNBOOK.md`](HOSTING_CUTOVER_RUNBOOK.md). A dedicated
 Playwright configuration runs non-destructive checks against either the Netlify
-candidate or the custom production domain. The existing Netlify candidate
-passed checkout validation, SEO, mobile 320/390, 404/error-state, robots,
-sitemap, and production-API CORS checks on 2026-09-16. DNS and GitHub Pages stay
-unchanged until the reviewed deploy passes the same suite and Netlify has issued
-valid custom-domain TLS.
+candidate or the custom production domain. The Netlify candidate and the final
+custom domain passed checkout validation without invoice creation, SEO, mobile
+320/390, 404/error-state, robots, sitemap, and production-API CORS checks on
+2026-09-16. External DNS now points the apex and `www` names to Netlify, valid
+custom-domain TLS is active, and the obsolete root `CNAME` file has been removed.
+GitHub Pages remains enabled only until the reviewed cleanup commit is pushed
+and the final production check is complete.

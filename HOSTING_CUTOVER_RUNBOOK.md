@@ -1,9 +1,11 @@
 # Netlify production cutover runbook
 
-This runbook is the operational checklist for ZVY-12. It keeps the GitHub Pages
-deployment available until the Netlify deployment passes the same checks on the
-custom domain. Do not delete the `CNAME` file or disable GitHub Pages before the
-post-cutover verification gate succeeds.
+This runbook is the operational checklist for ZVY-12. It kept the GitHub Pages
+deployment available until the Netlify deployment passed the same checks on the
+custom domain. The post-cutover verification gate passed on 2026-09-16 at
+21:52 UTC, after which the obsolete `CNAME` file was removed. GitHub Pages stays
+enabled until the reviewed cleanup commit is pushed and the final verification
+step is ready.
 
 ## Endpoints
 
@@ -12,7 +14,7 @@ post-cutover verification gate succeeds.
 | Netlify candidate | `https://astounding-douhua-45280d.netlify.app` |
 | Production storefront | `https://zvychajna.pp.ua` |
 | Production API | `https://api.zvychajna.pp.ua` |
-| Revalidation endpoint | `https://zvychajna.pp.ua/api/revalidate` |
+| Revalidation endpoint | `https://astounding-douhua-45280d.netlify.app/api/revalidate` |
 
 ## Environment behavior
 
@@ -29,7 +31,7 @@ Configure these in the production backend host:
 
 | Setting | Required value or rule |
 | --- | --- |
-| `FRONTEND_REVALIDATION_URL` | `https://zvychajna.pp.ua/api/revalidate` after cutover |
+| `FRONTEND_REVALIDATION_URL` | `https://astounding-douhua-45280d.netlify.app/api/revalidate`; this stable deployment origin remains independent of custom-domain DNS propagation |
 | `REVALIDATION_SECRET` | Exactly the same secret stored by Netlify |
 | `Cors:AllowedOrigins` | Includes both `https://zvychajna.pp.ua` and `https://astounding-douhua-45280d.netlify.app` during migration |
 
@@ -54,8 +56,10 @@ The production response reported `Server: GitHub.com`. Its certificate covered
 reported `Server: Netlify`, served a valid `*.netlify.app` certificate, and
 passed the remote acceptance suite against the production API.
 
-Before editing DNS, record the current GitHub Pages publishing source and the
-last successful Pages deployment URL in the evidence log below.
+GitHub Pages used the `GitHub Actions` publishing source and the
+`Deploy Next.js to GitHub Pages` workflow. Its custom domain was
+`zvychajna.pp.ua`, HTTPS enforcement was enabled, and the settings page reported
+the last deployment approximately three months before the cutover.
 
 ## 1. Build and deploy the Netlify candidate
 
@@ -143,12 +147,18 @@ certificate for both the apex and `www` names. Then verify:
 If any check fails, execute the rollback procedure. GitHub Pages must remain
 enabled throughout this gate.
 
+This gate passed on 2026-09-16 at 21:52 UTC. The apex returned `200` from
+Netlify with valid HTTPS and HSTS, `www` returned a permanent redirect to the
+apex, and the production-domain acceptance suite passed all seven applicable
+checks. Checkout validation made no invoice request.
+
 ## 5. Retire GitHub Pages
 
 Only after every post-cutover check passes:
 
 1. Remove the root `CNAME` file from the reviewed cutover branch.
-2. Merge and deploy that final repository state.
+2. Merge the final repository state. No additional Netlify deployment is
+   required because this cleanup does not change the runtime application.
 3. Disable GitHub Pages in repository settings.
 4. Confirm the custom domain still resolves to Netlify and rerun the remote
    acceptance suite.
@@ -194,8 +204,11 @@ rollback is complete only after the same HTTP, TLS, and checkout checks pass.
 | 2026-09-16 | Existing Netlify candidate | Remote suite: checkout validation, SEO, 404s, API CORS, mobile 320/390 | 7 passed |
 | 2026-09-16 | Netlify environment | `REVALIDATION_SECRET` available to builds, functions, and runtime in three deploy contexts; optional public overrides intentionally absent | Pass |
 | 2026-09-16 | Published Netlify runtime | `codex/main@fc583f6` at `astounding-douhua-45280d.netlify.app` | Pass |
-| Pending | GitHub Pages publishing source | Record before DNS change | Pending |
-| Pending | Netlify domain instructions | Record project-specific DNS targets | Pending |
-| Pending | Custom-domain DNS and TLS | Record resolver output, HTTP server, and certificate | Pending |
-| Pending | Custom-domain acceptance suite | Attach or link the final result | Pending |
+| 2026-09-16 | GitHub Pages publishing source | GitHub Actions via `Deploy Next.js to GitHub Pages`; custom domain `zvychajna.pp.ua`; HTTPS enforced; last deployment approximately three months earlier | Pass |
+| 2026-09-16 | Backend revalidation | Koyeb uses the stable Netlify endpoint; backend and Netlify `REVALIDATION_SECRET` values match | Pass |
+| 2026-09-16 | Netlify domain instructions | External DNS: apex A `75.2.60.5`; `www` CNAME `astounding-douhua-45280d.netlify.app` | Pass |
+| 2026-09-16 21:42 UTC | Custom-domain DNS | Authoritative UADNS and `1.1.1.1` returned apex `75.2.60.5`; `www` pointed to the Netlify site; TTL 3,600 seconds; UADNS nameservers unchanged | Pass |
+| 2026-09-16 21:49 UTC | External DNS mode | Accidental inactive Netlify DNS zone removed before certificate issuance; NIC.UA remained authoritative throughout | Pass |
+| 2026-09-16 21:52 UTC | Custom-domain TLS | Apex returned `200` from Netlify with valid HTTPS and HSTS; `www` returned `301` to the apex HTTPS URL | Pass |
+| 2026-09-16 21:53 UTC | Custom-domain acceptance suite | Checkout validation without invoice creation, SEO, robots/sitemap, branded 404s, API CORS, and mobile 320/390 | 7 passed |
 | Pending | GitHub Pages retirement | Record setting change and final verification | Pending |
