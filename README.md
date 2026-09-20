@@ -22,6 +22,10 @@ The BookPreorder backend must use the same `REVALIDATION_SECRET` value and set `
 
 Production deployments use the Next.js runtime. Run `npm run build` followed by `npm run start` to verify the production server locally.
 
+## SEO and URL normalization
+
+The storefront permanently redirects legacy page URLs containing the `v` query parameter to their clean equivalents while preserving unrelated query parameters. Canonical metadata and `robots.txt` are configured so crawlers can consolidate those variants. See [SEO.md](SEO.md) for the behavior, implementation boundaries, automated coverage, and post-deployment verification checklist.
+
 ### Running against a local backend over HTTPS
 
 Pointing `NEXT_PUBLIC_API_URL` at a locally running BookPreorder instance, for example `https://localhost:7213`, fails on the server with `TypeError: fetch failed` caused by `DEPTH_ZERO_SELF_SIGNED_CERT`. The ASP.NET Core development certificate is self-signed and trusted through the Windows per-user store, which browsers read but Node.js does not. Client-side calls therefore succeed while every server-side call fails: `/books/{slug}` surfaces the error, and `getProductsForStatic()` logs `fetchProducts failed:` and quietly renders an empty catalog that the client then refills.
