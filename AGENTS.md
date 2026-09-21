@@ -67,7 +67,8 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - CI workflow: `.github/workflows/ci.yml`
 - Netlify is the selected runtime host; production traffic moves only after the migration acceptance checks pass.
 - Configure `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_BASE` per environment.
-- The root `CNAME` file records the current GitHub Pages production domain until the final cutover task removes it.
+- Follow `HOSTING_CUTOVER_RUNBOOK.md` for preview verification, DNS changes, TLS checks, and rollback.
+- Keep the root `CNAME` file and GitHub Pages enabled until the custom domain passes the post-cutover verification gate; remove and disable them only as the final cutover step.
 
 ## Working Guidance For Agents
 
