@@ -27,6 +27,9 @@ The BookPreorder backend must use the same `REVALIDATION_SECRET` value and set `
 
 Production deployments use the Next.js runtime. Run `npm run build` followed by `npm run start` to verify the production server locally.
 
+## SEO and URL normalization
+
+The storefront permanently redirects legacy page URLs containing the `v` query parameter to their clean equivalents while preserving unrelated query parameters. Canonical metadata and `robots.txt` are configured so crawlers can consolidate those variants. See [SEO.md](SEO.md) for the behavior, implementation boundaries, automated coverage, and post-deployment verification checklist.
 Netlify build settings, custom-domain verification, and the exact GitHub Pages
 rollback records are documented in
 [HOSTING_CUTOVER_RUNBOOK.md](HOSTING_CUTOVER_RUNBOOK.md). The remote acceptance
