@@ -7,19 +7,23 @@ export const dynamic = "force-static";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products: Product[] = await getProductsForStatic({ required: true });
-  const now = new Date();
-
-  return [
-    { url: absoluteUrl("/"), lastModified: now, changeFrequency: "weekly", priority: 1 },
-    { url: absoluteUrl("/books"), lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    ...products.map((p) => ({
-      url: absoluteUrl(`/books/${p.slug}`),
-      lastModified: now,
+  const productEntries: MetadataRoute.Sitemap = products
+    .filter(product => product.isActive !== false)
+    .map(product => ({
+      url: absoluteUrl(`/books/${product.slug}`),
       changeFrequency: "weekly" as const,
       priority: 0.8,
-    })),
-    { url: absoluteUrl("/events"), lastModified: now, changeFrequency: "monthly", priority: 0.6 },
-    { url: absoluteUrl("/about"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: absoluteUrl("/return-policy"), lastModified: now, changeFrequency: "yearly", priority: 0.5 },
+    }))
+    .sort((left, right) => left.url < right.url ? -1 : left.url > right.url ? 1 : 0);
+
+  const entries: MetadataRoute.Sitemap = [
+    { url: absoluteUrl("/"), changeFrequency: "weekly", priority: 1 },
+    { url: absoluteUrl("/books"), changeFrequency: "weekly", priority: 0.9 },
+    ...productEntries,
+    { url: absoluteUrl("/events"), changeFrequency: "monthly", priority: 0.6 },
+    { url: absoluteUrl("/about"), changeFrequency: "monthly", priority: 0.7 },
+    { url: absoluteUrl("/return-policy"), changeFrequency: "yearly", priority: 0.5 },
   ];
+
+  return [...new Map(entries.map(entry => [entry.url, entry])).values()];
 }

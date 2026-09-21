@@ -1,6 +1,6 @@
-# SEO and legacy URL normalization
+# SEO, URL normalization, and sitemap discovery
 
-This document describes how the storefront keeps one indexable URL for each page, with particular attention to legacy URLs that contain the `v` query parameter.
+This document describes how the storefront keeps one indexable URL for each page, with particular attention to legacy URLs that contain the `v` query parameter and the sitemap submitted to search engines.
 
 ## Why legacy `v` URLs redirect
 
@@ -32,6 +32,18 @@ Canonical paths remain route-relative in each page's Next.js metadata. Next.js r
 
 Do not restore the former `/*?v=` or `/*?v%3D` robots disallow rules while the redirect is active. Blocking these URLs would prevent crawlers from consistently observing the redirect.
 
+## Sitemap generation
+
+`src/app/sitemap.ts` is the source of truth for `sitemap.xml`. It includes each indexable route exactly once:
+
+- the homepage and book collection;
+- every active product returned by the BookPreorder product API; and
+- `/events`, `/about`, and `/return-policy`.
+
+API routes, Next.js resources, inactive products, fragments, and query-string variants are not sitemap entries. Product entries are sorted for stable output and the final URL list is deduplicated defensively.
+
+The sitemap intentionally omits `lastmod`. The storefront product contract does not currently expose a reliable content modification time, and deployment time is not a content modification time. Add `lastmod` only when the relevant content source provides a trustworthy value for each entry.
+
 ## Automated verification
 
 `tests/e2e/legacy-v-redirects.spec.ts` covers:
@@ -44,10 +56,13 @@ Do not restore the former `/*?v=` or `/*?v%3D` robots disallow rules while the r
 - clean rendered canonical metadata; and
 - the absence of the legacy rules from `robots.txt`.
 
+`tests/e2e/sitemap.spec.ts` parses the generated XML and verifies the exact indexable route set, uniqueness, clean canonical URLs, direct page availability, exclusion of inactive products, and omission of unsupported `lastmod` values.
+
 Run the focused regression test with:
 
 ```bash
 npx playwright test tests/e2e/legacy-v-redirects.spec.ts
+npx playwright test tests/e2e/sitemap.spec.ts
 ```
 
 Run the complete local verification before review:
@@ -84,3 +99,18 @@ curl -IL "https://www.zvychajna.pp.ua/books?v=legacy"
 
 Finally, inspect `https://zvychajna.pp.ua/robots.txt` and the rendered `<link rel="canonical">` on the destination pages. The robots response must not disallow `v` variants, and every canonical URL must use the clean HTTPS apex URL without a query string.
 
+### Sitemap and Search Console
+
+Fetch the deployed sitemap as a normal client and as Googlebot. Both responses must be HTTP 200, use an XML content type, contain unique canonical HTTPS URLs, omit query strings, and omit `lastmod` until reliable dates are available.
+
+```bash
+curl -i "https://zvychajna.pp.ua/sitemap.xml"
+curl -i -A "Googlebot" "https://zvychajna.pp.ua/sitemap.xml"
+```
+
+After production verification:
+
+1. Resubmit `https://zvychajna.pp.ua/sitemap.xml` in Google Search Console.
+2. Wait until Search Console reports a successful read and a non-zero discovered-page count.
+3. Only then request indexing for `/events`, `/about`, and `/return-policy`.
+4. Record the deployment verification date, sitemap submission date, processing result, discovered-page count, and indexing-request dates on the Linear issue.
