@@ -59,7 +59,7 @@ test("the catalog to checkout journey can be completed with the keyboard alone",
 
   await page.goto("/");
 
-  const navigation = page.getByRole("navigation");
+  const navigation = page.getByRole("navigation", { name: "Основна навігація" });
   await tabTo(page, navigation.getByRole("link", { name: "Магазин" }));
   await expectVisibleFocus(page, "the catalog navigation link");
   await page.keyboard.press("Enter");
@@ -113,7 +113,7 @@ test("the catalog to checkout journey can be completed with the keyboard alone",
 test("the cart dialog traps focus, closes with Escape and restores focus to its opener", async ({ page }) => {
   await page.goto("/books/test-book");
 
-  const cartButton = page.getByRole("navigation").getByRole("button", { name: /Кошик/ });
+  const cartButton = page.getByRole("navigation", { name: "Основна навігація" }).getByRole("button", { name: /Кошик/ });
   await tabTo(page, cartButton);
   await expectVisibleFocus(page, "the cart button");
   await page.keyboard.press("Enter");

@@ -44,6 +44,12 @@ API routes, Next.js resources, inactive products, fragments, and query-string va
 
 The sitemap intentionally omits `lastmod`. The storefront product contract does not currently expose a reliable content modification time, and deployment time is not a content modification time. Add `lastmod` only when the relevant content source provides a trustworthy value for each entry.
 
+## Internal discovery paths
+
+Important storefront routes must be reachable through ordinary server-rendered anchors without requiring JavaScript. The primary navigation links to the catalog, events, and author page, while the persistent footer links to the return policy. Together they give crawlers and customers a clean path to every informational page without duplicating the primary navigation.
+
+The catalog links every active product card to its canonical product route, and product detail pages provide a clear path back to `/books`. Keep these destinations route-relative and do not add cache-busting or other query parameters to internal links.
+
 ## Automated verification
 
 `tests/e2e/legacy-v-redirects.spec.ts` covers:
@@ -58,11 +64,14 @@ The sitemap intentionally omits `lastmod`. The storefront product contract does 
 
 `tests/e2e/sitemap.spec.ts` parses the generated XML and verifies the exact indexable route set, uniqueness, clean canonical URLs, direct page availability, exclusion of inactive products, and omission of unsupported `lastmod` values.
 
+`tests/e2e/internal-links.spec.ts` checks the initial server-rendered HTML for persistent informational links, active product discovery, the product-to-catalog path, and the absence of legacy `v` query parameters.
+
 Run the focused regression test with:
 
 ```bash
 npx playwright test tests/e2e/legacy-v-redirects.spec.ts
 npx playwright test tests/e2e/sitemap.spec.ts
+npx playwright test tests/e2e/internal-links.spec.ts
 ```
 
 Run the complete local verification before review:
