@@ -1,4 +1,30 @@
 .wrap { display: block; }
+.catalogNav { margin-bottom: 12px; }
+.catalogLink {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .15s ease;
+}
+.catalogLink:hover {
+  background: var(--accent-weak);
+  text-decoration: none;
+}
+.catalogLink :global(i) {
+  color: var(--accent);
+  font-size: .85rem;
+}
+.catalogLink:focus-visible {
+  outline: 3px solid rgba(240,155,48,0.35);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
 .grid {
   display: grid;
   column-gap: 28px;

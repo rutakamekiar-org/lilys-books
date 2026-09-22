@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, Fragment, useEffect, useRef } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./BookDetail.module.css";
@@ -160,6 +161,12 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     }
     return (
       <section className={styles.wrap}>
+          <nav className={styles.catalogNav} aria-label="Навігація по каталогу">
+              <Link href="/books" className={styles.catalogLink}>
+                  <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                  <span>Назад до книг</span>
+              </Link>
+          </nav>
           <div className={styles.grid}>
               <div className={styles.summary}>
                   <h1 className={styles.titleRow}>

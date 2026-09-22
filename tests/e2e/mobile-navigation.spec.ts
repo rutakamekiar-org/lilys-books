@@ -7,7 +7,7 @@ test.beforeEach(async ({ request }) => {
 
 test("primary navigation and cart remain usable", async ({ page }) => {
   await page.goto("/");
-  const navigation = page.getByRole("navigation");
+  const navigation = page.getByRole("navigation", { name: "Основна навігація" });
   await expect(navigation).toBeVisible();
 
   for (const name of ["Головна", "Магазин", "Події", "Про мене"]) {
