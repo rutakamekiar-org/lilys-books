@@ -25,13 +25,12 @@ export default function GoodreadsRating({ product, compact, variant = "default" 
   ].filter(Boolean).join(", ");
   const aria = `Середня оцінка ${data.averageRating.toFixed(2)} з 5 на Goodreads${counts ? `, ${counts}` : ""}`;
   if (variant === "card") {
-    const count = data.reviewsCount ?? data.ratingsCount;
     return (
       <span className={styles.cardRating} aria-label={aria} title="Оцінка Goodreads">
         <span className={`${styles.stars} ${styles.cardStar}`} aria-hidden="true" />
         <span className={styles.cardValue} aria-hidden="true">{data.averageRating.toFixed(2)}</span>
-        {count !== undefined && (
-          <span className={styles.cardReviews} aria-hidden="true">· {count}</span>
+        {data.ratingsCount !== undefined && (
+          <span className={styles.cardCount} aria-hidden="true">· {data.ratingsCount}</span>
         )}
       </span>
     );
