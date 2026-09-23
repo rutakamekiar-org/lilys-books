@@ -32,15 +32,6 @@ export const events: SimpleEvent[] = [
         published: true,
     },
     {
-        id: "2025-10-12-author-interview-youtube",
-        title: "Подкаст на каналі «Студія Калідор»",
-        date: "2025-10-12T16:00:00Z",
-        location: "YouTube",
-        blurb: "Подкаст на каналі «Студія Калідор»",
-        url: "https://youtu.be/ii-Bk7RfVsQ?si=LrdfTJBr6ZXHMcQo",
-        published: true,
-    },
-    {
     id: "2025-10-27-presentation-brno",
     title: "Презентація «Звичайної» в Брно",
     date: "2025-10-27T17:00:00Z",
