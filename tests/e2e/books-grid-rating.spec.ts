@@ -35,14 +35,14 @@ test("shows embedded Goodreads data and omits the label when data is unavailable
   const ratedCard = bookCard(page, "Test Book");
   const rating = ratedCard.getByLabel(/4\.25 з 5 на Goodreads/);
   await expect(rating).toBeVisible();
-  await expect(rating).toHaveText("4.25· 18");
+  await expect(rating).toHaveText("4.25· 120");
 
   const unratedCard = bookCard(page, "Unavailable Book");
   await expect(unratedCard.getByLabel(/Goodreads/)).toHaveCount(0);
   expect(ratingRequests).toEqual([]);
 });
 
-test("uses the ratings count when Goodreads has no review count", async ({ page, request }) => {
+test("keeps the ratings count when Goodreads has no review count", async ({ page, request }) => {
   const state = await (await request.get(`${mockApiUrl}/__control/state`)).json();
   const product = state.products.find((candidate: { slug: string }) => candidate.slug === "test-book");
   expect(product).toBeDefined();
@@ -102,6 +102,24 @@ test("keeps the rating readable and separate from essential card content", async
     expect(formatsBox).not.toBeNull();
     expect(ratingBox!.y).toBeGreaterThanOrEqual(titleBox!.y + titleBox!.height - 1);
     expect(ratingBox!.y + ratingBox!.height).toBeLessThanOrEqual(formatsBox!.y + 1);
+
+    const singleOptionCard = bookCard(page, "Unavailable Book");
+    const singleTitle = singleOptionCard.getByRole("heading", { name: "Unavailable Book" });
+    const singleFormats = singleOptionCard.getByRole("group", { name: "Формати книги Unavailable Book" });
+    const [singleCardBox, singleTitleBox, singleFormatsBox] = await Promise.all([
+      singleOptionCard.boundingBox(),
+      singleTitle.boundingBox(),
+      singleFormats.boundingBox(),
+    ]);
+    expect(singleCardBox).not.toBeNull();
+    expect(singleTitleBox).not.toBeNull();
+    expect(singleFormatsBox).not.toBeNull();
+    expect(Math.abs(formatsBox!.y - singleFormatsBox!.y)).toBeLessThanOrEqual(1);
+    const spaceAboveOptions = singleFormatsBox!.y - (singleTitleBox!.y + singleTitleBox!.height);
+    const spaceBelowOptions = singleCardBox!.y + singleCardBox!.height -
+      (singleFormatsBox!.y + singleFormatsBox!.height);
+    expect(spaceAboveOptions).toBeLessThan(80);
+    expect(spaceBelowOptions).toBeGreaterThan(20);
   }
 });
 
