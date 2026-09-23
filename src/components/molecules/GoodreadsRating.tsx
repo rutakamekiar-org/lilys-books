@@ -1,40 +1,51 @@
 "use client";
 import styles from "./GoodreadsRating.module.css";
-import { useEffect, useState, type CSSProperties } from "react";
-import {ExternalBookRating, getExternalBookRatingType, Product} from "@/models/Product";
+import { type CSSProperties } from "react";
+import {getExternalBookRatingType, Product} from "@/models/Product";
 
 // Component uses embedded Goodreads rating from a Product only.
- type Props = {
+type Props = {
   product: Product;
   compact?: boolean;
+  variant?: "default" | "card";
 };
 
 // Extend CSSProperties to allow our CSS variable without using `any`.
- type StarStyle = CSSProperties & { ["--rating"]?: number };
+type StarStyle = CSSProperties & { ["--rating"]?: number };
 
-export default function GoodreadsRating({ product, compact }: Props) {
-  const [data, setData] = useState<ExternalBookRating | null>(null);
-  const [error, setError] = useState<string | null>(null);
+export default function GoodreadsRating({ product, compact, variant = "default" }: Props) {
+  const data = product.externalBookRatings.find(x => getExternalBookRatingType(x) === "goodreads");
 
-  useEffect(() => {
-    setError(null);
-    setData(null);
-    if (!product) return;
+  // If there is no embedded data, render nothing and never fetch per component.
+  if (!data) return null;
 
-    const rating = product.externalBookRatings.find(x => getExternalBookRatingType(x) === "goodreads");
-    if (rating) {
-      setData(rating);
-    } else {
-      setError("no_embedded_rating");
-    }
-  }, [product]);
+  const counts = [
+    data.ratingsCount === undefined ? null : `${data.ratingsCount} оцінок`,
+    data.reviewsCount === undefined ? null : `${data.reviewsCount} рецензій`,
+  ].filter(Boolean).join(", ");
+  const aria = `Середня оцінка ${data.averageRating.toFixed(2)} з 5 на Goodreads${counts ? `, ${counts}` : ""}`;
+  if (variant === "card") {
+    const count = data.reviewsCount ?? data.ratingsCount;
+    return (
+      <span className={styles.cardRating} aria-label={aria} title="Оцінка Goodreads">
+        <span className={`${styles.stars} ${styles.cardStar}`} aria-hidden="true" />
+        <span className={styles.cardValue} aria-hidden="true">{data.averageRating.toFixed(2)}</span>
+        {count !== undefined && (
+          <span className={styles.cardReviews} aria-hidden="true">· {count}</span>
+        )}
+      </span>
+    );
+  }
 
-  // If failed or no data, render nothing as per requirements
-  if (!data || error) return null;
-
-  const aria = `Середня оцінка ${data.averageRating} з 5 на Goodreads, ${data.ratingsCount} оцінок, ${data.reviewsCount} рецензій`;
   const starStyle: StarStyle = { ["--rating"]: data.averageRating };
   const url = data.externalId ? `https://www.goodreads.com/book/show/${data.externalId}` : undefined;
+  const ratingContent = (
+    <>
+      <span className={styles.stars} style={starStyle} aria-hidden="true" />
+      <span className={styles.value} aria-hidden="true">{data.averageRating.toFixed(2)}</span>
+      {counts && <span className={styles.meta} aria-hidden="true">{counts.replace(", ", " · ")}</span>}
+    </>
+  );
 
   return (
     <div className={styles.row}>
@@ -47,19 +58,11 @@ export default function GoodreadsRating({ product, compact }: Props) {
           aria-label={aria + '. Натисніть, щоб відкрити сторінку на Goodreads у новій вкладці.'}
           title="Відкрити на Goodreads"
         >
-          <span className={styles.stars} style={starStyle} aria-hidden="true" />
-          <span className={styles.value} aria-hidden="true">{data.averageRating.toFixed(2)}</span>
-          <span className={styles.meta} aria-hidden="true">
-            {data.ratingsCount}{'\u00A0'}оцінок · {data.reviewsCount}{'\u00A0'}рецензій
-          </span>
+          {ratingContent}
         </a>
       ) : (
         <div className={styles.rating} aria-label={aria}>
-          <span className={styles.stars} style={starStyle} aria-hidden="true" />
-          <span className={styles.value} aria-hidden="true">{data.averageRating.toFixed(2)}</span>
-          <span className={styles.meta} aria-hidden="true">
-            {data.ratingsCount}{'\u00A0'}оцінок · {data.reviewsCount}{'\u00A0'}рецензій
-          </span>
+          {ratingContent}
         </div>
       )}
       {url && !compact && (
