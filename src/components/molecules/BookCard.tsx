@@ -8,6 +8,7 @@ import { useProducts } from "@/components/molecules/ProductsProvider";
 import {getFormat} from "@/lib/types";
 import {useCart} from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
+import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 
 export default function BookCard({ product: staticProduct }: { product: Product }) {
   const { products } = useProducts();
@@ -51,6 +52,7 @@ export default function BookCard({ product: staticProduct }: { product: Product 
         </div>
         <div className={styles.meta}>
           <h2>{product.name}</h2>
+          <GoodreadsRating product={product} variant="card" />
         </div>
       </Link>
       <div className={styles.formats} role="group" aria-label={`Формати книги ${product.name}`}>
