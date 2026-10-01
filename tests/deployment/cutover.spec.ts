@@ -1,4 +1,7 @@
 import { expect, test, type APIRequestContext, type Page } from "@playwright/test";
+import { blockInvoiceWrites } from "../support/cutover-safety";
+
+test.use({ serviceWorkers: "block" });
 
 const configuredBaseUrl = process.env.CUTOVER_BASE_URL?.trim();
 const canonicalBaseUrl = (process.env.CUTOVER_CANONICAL_BASE_URL ?? "https://zvychajna.pp.ua")
@@ -52,6 +55,34 @@ test.describe("desktop deployment acceptance", () => {
     test.skip(testInfo.project.name !== "desktop-chromium", "Desktop-only cutover check");
   });
 
+  test("serves the storefront from Netlify with valid HTTPS and HSTS", async ({ request }) => {
+    expect(new URL(candidateBaseUrl).protocol).toBe("https:");
+    const response = await request.get("/", { maxRedirects: 0 });
+    expect(response.status()).toBe(200);
+    expect(response.headers()["server"]).toMatch(/Netlify/i);
+    expect(response.headers()["strict-transport-security"]).toMatch(/(?:^|;)\s*max-age=[1-9]\d*(?:;|$)/i);
+  });
+
+  test("www permanently redirects to the apex HTTPS URL", async ({ request }) => {
+    test.skip(candidateOrigin !== new URL(canonicalBaseUrl).origin, "Custom-domain cutover check");
+    const wwwUrl = new URL(canonicalBaseUrl);
+    wwwUrl.hostname = `www.${wwwUrl.hostname}`;
+
+    const response = await request.get(wwwUrl.href, { maxRedirects: 0 });
+    expect([301, 308]).toContain(response.status());
+    expect(new URL(response.headers()["location"], wwwUrl).href).toBe(new URL(canonicalBaseUrl).href);
+  });
+
+  test("production API health is available over valid HTTPS with CORS", async ({ request }) => {
+    expect(new URL(apiBaseUrl).protocol).toBe("https:");
+    const response = await request.get(`${apiBaseUrl}/health`, {
+      maxRedirects: 0,
+      headers: { Origin: candidateOrigin },
+    });
+    expect(response.status()).toBe(200);
+    expect(response.headers()["access-control-allow-origin"]).toBe(candidateOrigin);
+  });
+
   test("serves production robots and sitemap content", async ({ request }) => {
     const robotsResponse = await request.get("/robots.txt");
     expect(robotsResponse.status()).toBe(200);
@@ -92,13 +123,8 @@ test.describe("desktop deployment acceptance", () => {
     expect(book?.name).toBeTruthy();
   });
 
-  test("reaches checkout validation without creating an invoice", async ({ page, request }) => {
-    let invoiceRequests = 0;
-    page.on("request", outgoingRequest => {
-      if (outgoingRequest.method() === "POST" && /\/api\/invoice\//i.test(outgoingRequest.url())) {
-        invoiceRequests += 1;
-      }
-    });
+  test("reaches checkout validation without creating an invoice", async ({ page, context, request }) => {
+    const blockedInvoiceRequests = await blockInvoiceWrites(context);
 
     await openPurchasableProduct(page, request);
 
@@ -123,7 +149,7 @@ test.describe("desktop deployment acceptance", () => {
     await expect(checkout.getByText("Введіть прізвище")).toBeVisible();
     await expect(checkout.getByText("Введіть дійсний email")).toBeVisible();
     await expect(checkout.getByText(/Введіть дійсний телефон/)).toBeVisible();
-    expect(invoiceRequests).toBe(0);
+    expect(blockedInvoiceRequests).toEqual([]);
   });
 
   test("returns branded, non-indexable error pages", async ({ page }) => {

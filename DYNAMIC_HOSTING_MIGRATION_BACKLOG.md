@@ -1,13 +1,13 @@
 # Dynamic hosting migration backlog
 
-This document records the migration decision, dependency order, acceptance criteria, and production rollback plan. Linear is the source of truth for live task status; the corresponding issues are ZVY-5 through ZVY-12.
+This document records the migration decision, dependency order, acceptance criteria, and production rollback plan. Linear is the source of truth for live task status; the corresponding issues are ZVY-5 through ZVY-12 and ZVY-43.
 
 - Decision status: accepted on 2026-09-04
 - Selected host: Netlify Free
 - Alternative: Cloudflare Workers Free
 - Current production host: Netlify, cut over on 2026-09-16 at 21:42 UTC.
 
-The Netlify Free commercial-use terms and current 300-credit monthly limit are accepted for the migration and initial low-traffic launch. Usage must be monitored because exhausting the allowance pauses the site until the next billing cycle or a plan upgrade.
+The Netlify Free commercial-use terms and 300-credit monthly limit recorded at the migration decision were accepted for the initial low-traffic launch. Verify the actual account allowance during the billing review. Usage must be monitored because exhausting the allowance can pause the site until the next billing cycle or a plan upgrade.
 
 The application was completed and validated on the Netlify deployment URL
 before production traffic moved. `zvychajna.pp.ua` was cut over only after
@@ -143,7 +143,7 @@ Add automated tests for dynamic routes, metadata, cache refresh, API failure beh
 
 ## HOST-8 / ZVY-12 — Deploy a preview and perform a reversible domain cutover
 
-- Status: In progress
+- Status: Complete (ZVY-12, 2026-09-17); subsequent Pages retirement is ZVY-43
 - Priority: High
 - Estimate: 3 points
 - Blocked by: HOST-2, HOST-3, HOST-6, HOST-7
@@ -159,7 +159,7 @@ Deploy the runtime version to a provider preview URL, validate it against the pr
 - DNS records and TLS are valid for the custom domain.
 - Search-engine sitemap and robots URLs return correct production content.
 - A tested rollback procedure exists.
-- GitHub Pages is disabled only after the new deployment is verified.
+- GitHub Pages remains enabled as an inactive rollback target until the separate ZVY-43 review passes; the original full-cycle/date observation gates were waived by the owner on 2026-10-01.
 
 ### Implementation record
 
@@ -172,5 +172,139 @@ custom domain passed checkout validation without invoice creation, SEO, mobile
 320/390, 404/error-state, robots, sitemap, and production-API CORS checks on
 2026-09-16. External DNS now points the apex and `www` names to Netlify, valid
 custom-domain TLS is active, and the obsolete root `CNAME` file has been removed.
-GitHub Pages remains enabled only until the reviewed cleanup commit is pushed
-and the final production check is complete.
+GitHub Pages served as the inactive rollback target during the ZVY-43 observation
+window. It was retired on 2026-10-01 after the billing/production review and the
+owner-approved waivers recorded below.
+
+## ZVY-43 — Retire GitHub Pages after billing-cycle observation
+
+- Status: Operational retirement complete 2026-10-01; owner confirms TXT removal; final DNS/production checks and evidence self-review passed
+- Timing: Owner explicitly waived the original 2026-10-17 earliest date and full-cycle observation requirement on 2026-10-01; no waiting date remains
+- Related completed issue: ZVY-12 (reversible Netlify cutover)
+- Source of truth: [ZVY-43](https://linear.app/zvychajna/issue/ZVY-43/retire-github-pages-after-netlify-billing-cycle-observation)
+
+### Acceptance criteria and execution order
+
+1. Review the current billing cycle's credits, allowance and available pause history;
+   confirm acceptable projected monthly headroom and current/previous successful
+   Netlify deploys remain available for rollback.
+2. Verify production DNS, TLS/HSTS, `www` redirect, API health/CORS,
+   and the remote production suite (checkout validation without
+   invoice creation, SEO, robots/sitemap, branded errors, mobile 320/390).
+   Backend revalidation verification was explicitly waived by the owner on
+   2026-10-01 17:23 UTC; its unverified state is an accepted risk.
+3. Record an explicit GO/NO-GO. If headroom is insufficient or verification
+   fails, keep Pages enabled and reschedule the review.
+4. On GO, record current Pages publishing settings and the last successful
+   deployment, then disable/unpublish Pages. Preserve the old `main` snapshot,
+   audit workflows/branches against accidental republishing, and confirm the
+   active storefront branch has no root `CNAME`.
+5. Only after retirement, remove the GitHub ownership-verification TXT record.
+   Preserve `api`, Google verification TXT and unrelated DNS; consider restoring
+   apex/`www` TTLs to 14400. Retain historical GitHub A/CNAME rollback values.
+6. Rerun production verification, retain the revalidation waiver/unverified risk, and record final
+   credits, DNS, test results, Pages status, and actual retirement date in the
+   issue and runbook. Roll back if final verification fails.
+
+### Preparation and final evidence
+
+The detailed checklist and completed operational evidence record are in
+[`HOSTING_CUTOVER_RUNBOOK.md`](HOSTING_CUTOVER_RUNBOOK.md). The remote suite now
+checks Netlify HTTPS/HSTS, the apex redirect and API health as well as the original
+cutover checks. An invoice-write guard covers the actual unversioned invoice
+endpoint and versioned/query variants; deterministic local regression tests
+verify writes are blocked before reaching the API.
+
+On 2026-10-01 the owner explicitly waived waiting until October 4 (reported
+billing-cycle end) or October 17. The review now uses current-cycle evidence,
+not a completed-cycle observation. Billing data, rollback/Pages deployment
+references and current Pages settings are now recorded from owner screenshots,
+the Netlify connector and public GitHub API. Backend revalidation verification
+is waived as an accepted risk. The owner retired Pages on **2026-10-01** and
+post-disable production checks passed. Ownership TXT removal is now owner-confirmed
+and final DNS/production checks and evidence self-review passed; ZVY-43 operational
+retirement is complete.
+
+Preparation verification on 2026-10-01 passed lint, type checking, 4 deterministic
+fixtures, the application build, all 46 local browser tests and all 10 applicable
+production checks (17 desktop/mobile combinations intentionally skipped). DNS
+resolved to the expected Netlify apex A and `www` CNAME. Earlier API health
+requests without Origin had connection resets; independent checks returned 200
+and the final cross-origin health check passed. The runbook retains this
+observation for the stability review. The earlier date-based NO-GO was superseded
+by the owner's waiver.
+
+The authenticated Netlify connector verifies current production deploy
+`6ab418500c5c8000085c2f18` is ready on `codex/main` at
+`16d0c5f41389e630a8cb2433ac6bcb786b918cef` and the team is Free. Refreshed public
+checks passed all 10 applicable tests (17 intentional skips), with expected
+Netlify apex/www DNS and TTLs of 3600. The owner reports "35 credits/300", 210
+deployment credits, an October 4 cycle end and acceptable headroom; the connector
+does not expose billing totals or deployment-history listing, so these figures
+are not independently verified by the connector. Owner screenshots subsequently
+show a successful older deploy at `47bd3ec` with Publish deploy available; local
+Git resolves it to `47bd3ec91a0f991a5bb2f7c96416b45b108f96a1`. The supplied URL
+identifies deploy `6a9ac6971f08ab1024377f3b`, confirmed ready/no expiry by the
+connector. Its immutable URL requires authentication (Netlify 401/Login Redirect);
+older storefront behavior was not tested, and no sign-in was attempted.
+
+The billing screenshot clarifies 34.9/300 credits remaining and 265.1 consumed;
+grant 2026-09-04, expiry 2026-10-04. Usage is 210 production deploy credits
+(14 deploys), 8.9 requests (44,342), 24.7 compute, 21.6 bandwidth and 0 AI.
+Non-deploy usage totals 55.1. Assuming approximately 27 elapsed days, unchanged
+non-deploy daily usage and no further deploys, the cycle projects to 271.2 credits
+with 28.8 remaining. The owner accepts headroom. One further deploy at the observed
+15-credit average leaves about 13.8; two would exceed this projection's allowance.
+Historical pause history is unavailable; current production availability is verified.
+
+The owner selected connector evidence only after dashboard sign-in was blocked
+by automatic approval review. A production environment-variable read was also
+blocked; no secrets were retrieved. The owner selected "Leave revalidation
+unverified", so no further configuration read or authenticated revalidation test
+was attempted. The locally available old `main` snapshot still contains
+`.github/workflows/pages.yml` with push/manual Pages deployment triggers; its
+remote state is now public-API verified `disabled_manually` (workflow `203179149`),
+with zero queued/in-progress/waiting/pending runs. Application CI is active. Main is preserved at
+`9384428fac923992d6d42517f3cad80efeae3c2a`. Current decision: **GO** after the owner
+explicitly waived revalidation verification and accepted its unverified risk on
+2026-10-01 17:23 UTC. This applies to pre-disable and final checks; no successful
+revalidation is claimed. Billing and deployment-reference evidence is recorded.
+No waiting-date blocker remains. The owner performed the Pages settings changes;
+this review performed no Netlify configuration, deployment or DNS mutation.
+
+The pre-retirement owner screenshots on 2026-10-01 showed Pages published with GitHub
+Actions as source, the Deploy Next.js to GitHub Pages workflow, custom domain
+`zvychajna.pp.ua` and Enforce HTTPS checked. The last deployment is displayed as
+approximately four months ago by Rutakamekiar. The supplied
+[run 27026127247](https://github.com/rutakamekiar-org/lilys-books/actions/runs/27026127247)
+is public-API verified completed/success on `main` at
+`9384428fac923992d6d42517f3cad80efeae3c2a`, started 2026-06-05 16:11:16 UTC and
+updated 16:12:12 UTC, workflow path `.github/workflows/pages.yml`.
+The latest owner screenshots now show Pages workflow Disabled and cleared Pages
+custom domain/no live deployment. Public checks observed around 17:33 UTC confirm
+workflow `disabled_manually`, CI active, no pending Pages deploys, and the former
+GitHub Pages URL returning 404. The actual click time was not supplied.
+
+The browser available to this task is signed out of GitHub and no authenticated
+GitHub write connector is available. Pages settings were opened for a user sign-in
+or manual action; the owner completed the retirement through their own session.
+DNS cleanup follows this retirement.
+
+Post-disable production verification passed 10 applicable tests with 17 intentional
+skips in 31.9 seconds; output `test-results/cutover-after-pages-retirement`.
+Authoritative and public DNS retain Netlify apex A `75.2.60.5`, www Netlify CNAME
+(both TTL 3600), API Koyeb CNAME (TTL 14400), Google TXT and UADNS nameservers.
+Optional apex/www TTL restoration is intentionally not performed. The owner now
+confirms "txt removed"; no DNS mutation was performed by this review. Both public
+and authoritative lookups of the ownership candidate
+`_gh-rutakamekiar-org-o.zvychajna.pp.ua` return NXDOMAIN. The actual deleted provider
+row/value was not captured; a future GitHub verification would need a fresh challenge.
+Latest billing evidence remains the owner snapshot of 265.1 consumed/34.9 remaining,
+not an independently refreshed post-test balance. Final post-cleanup production
+suite passed 10 applicable tests with 17 intentional skips in 21.4 seconds; output
+`test-results/cutover-after-txt-cleanup`. Public/authoritative Netlify, API, Google
+and UADNS records are intact. Pages workflow remains disabled and application CI
+active. Final evidence was reconciled and self-reviewed; operational retirement is
+complete with revalidation explicitly waived/unverified. Repository documentation
+and safety-test changes are prepared on `codex/zvy-43-pages-retirement-readiness`
+and ready for review; remote CI has not run for this branch.
