@@ -4,12 +4,12 @@ import styles from "./PriceText.module.css";
 export default function PriceText({ productItem,label }: { productItem: ProductItem, label: string }) {
     return (
         <>{label}
-            {productItem.discountPrice &&
+            {productItem.discountPrice != null ?
                 <span className={styles.priceBlock}>
                     <del className={styles.oldPrice}>{productItem.price}</del>
                     <span className={styles.price}>{productItem.discountPrice} грн</span>
                 </span>
-            || `${productItem.price} грн`
+            : `${productItem.price} грн`
             }
         </>
     );

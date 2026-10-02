@@ -52,6 +52,85 @@ The catalog links every active product card to its canonical product route, and 
 
 ## Automated verification
 
+### Product structured data and titles
+
+Each product detail route renders one JSON-LD entity on the server. Books use
+`["Product", "Book"]` on that same entity, with offers directly under `offers`;
+merchandise and bundles use `Product`. The former nested `workExample` offers are
+removed so there are no separate conflicting product entities. Non-book pages use
+the `website` Open Graph type instead of claiming to be books.
+
+The product UUID is the stable SKU, and each offer includes its item UUID, name,
+canonical URL, effective price and API currency. Offer availability follows the
+purchase controls: `InStock` when available, `PreOrder` when preorderable, otherwise
+`OutOfStock`. Prices use the same discount-price fallback as the UI, including a
+zero-price discount. All current storefront offers are denominated in UAH. Invalid
+negative/non-finite prices or malformed currency codes are not emitted as offers.
+
+Images and canonical URLs are absolute and use the configured site base. Book
+author, publisher, ISBN and publication year are included only when supplied by the
+API; the site author is not substituted for an unknown author or publisher. There
+is no independent brand field in the product contract, so a brand is not invented.
+JSON-LD escapes `<` before insertion into its script element so content cannot
+terminate the script. The existing 60-second product cache and revalidation path
+still control metadata freshness.
+
+Product titles share one rule across search, Open Graph and Twitter metadata. They
+include the author when the final search title fits within 70 characters,
+including the layout's site-name suffix. Otherwise the product name takes
+priority; exceptionally long names are shortened at a word boundary. The full
+product name and author remain in the product content and structured data.
+Descriptions prefer non-blank SEO text, then product content, then a product-specific
+fallback. Existing sentence-aware description shortening remains in place.
+
+The production audit on 2026-10-02 found unique titles and descriptions across all
+11 sitemap routes. The title on `/books/pid_shepit_snihu` was 367 characters because
+it included the complete contributor list. Static page metadata already had
+distinct, concise values and did not require changes. Sitemap modification dates
+remain omitted under the policy above, implemented in ZVY-45.
+
+`tests/e2e/product-seo.spec.ts` covers product identity, direct offers, paper/digital
+prices, discounted and free prices, all three availability states, missing optional
+fields, non-book products, safe JSON serialization, long author/name cases, and
+unique concise titles/descriptions across the sitemap in initial server HTML.
+The dynamic-product and deployment acceptance tests also recognize Product/Book
+entities.
+
+Google Rich Results Code-mode validation passed on 2026-10-02 using complete,
+unmodified HTML responses from the tested local production build and deterministic
+mock API. Each sample produced one valid Product snippet and one valid merchant
+listing, with no critical errors:
+
+| Sample | Offer state | Google result |
+| --- | --- | --- |
+| `/books/test-book` | Paper and digital, `InStock` | [Passed](https://search.google.com/test/rich-results/result?id=503ngKsAmb3m4QJhKF27FA) |
+| `/books/rich-results-preorder` | Paper, `PreOrder` | [Passed](https://search.google.com/test/rich-results/result?id=zInD_Yq38IsO0w65-PNHaA) |
+| `/books/unavailable-book` | Paper, `OutOfStock` | [Passed](https://search.google.com/test/rich-results/result?id=dGpIZuPGK4xdFdYJ-U-_Ow) |
+
+The available-book merchant detail reported only optional warnings: a missing
+global identifier/brand, missing shipping and return policy fields on each offer,
+and an invalid checksum on the fixture's illustrative ISBN. The ISBN warning
+describes test data, not a verified production ISBN defect. Optional values must
+not be filled with fabricated brand, shipping or policy data. Code-mode results
+validate markup, not deployed URL accessibility or image crawling. Repeat the URL
+check after deployment with the production canonical host and public images.
+
+The raw HTML and result screenshots are saved locally in the ignored
+`build/zvy-47-validation/` folder. Google result links above are the shared
+validation record. The initial native-browser attempt failed before submission;
+the in-app browser completed all three tests successfully on continuation.
+
+The schema follows Google's [Product snippet requirements](https://developers.google.com/search/docs/appearance/structured-data/product-snippet)
+and [merchant listing requirements](https://developers.google.com/search/docs/appearance/structured-data/merchant-listing).
+Free offers can qualify for Product snippets; Google's merchant listings require
+a price greater than zero. Shipping and returns policy work belongs to ZVY-48.
+
+Run the focused product checks with:
+
+```bash
+npx playwright test tests/e2e/dynamic-products.spec.ts tests/e2e/product-seo.spec.ts
+```
+
 `tests/e2e/legacy-v-redirects.spec.ts` covers:
 
 - home, collection, informational-content, and product routes;

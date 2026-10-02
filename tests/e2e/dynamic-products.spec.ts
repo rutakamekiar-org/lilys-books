@@ -10,7 +10,7 @@ test.beforeEach(async ({ request }) => {
   await resetMockApi(request);
 });
 
-test("existing product returns server-rendered SEO metadata and Book JSON-LD", async ({ request }) => {
+test("existing product returns server-rendered SEO metadata and Product/Book JSON-LD", async ({ request }) => {
   const response = await request.get("/books/test-book");
   expect(response.status()).toBe(200);
   const html = await response.text();
@@ -19,22 +19,20 @@ test("existing product returns server-rendered SEO metadata and Book JSON-LD", a
   expect(html).toContain('<meta name="description" content="SEO description for the test book."');
   expect(html).toContain('<link rel="canonical" href="http://127.0.0.1:3100/books/test-book"');
 
-  const book = jsonLdFrom(html).find(value => value["@type"] === "Book");
+  const book = jsonLdFrom(html).find(value => Array.isArray(value["@type"]) && value["@type"].includes("Product"));
   expect(book).toMatchObject({
     "@context": "https://schema.org",
-    "@type": "Book",
+    "@type": ["Product", "Book"],
     name: "Test Book",
     url: "http://127.0.0.1:3100/books/test-book",
     description: "SEO description for the test book.",
     isbn: "978-1-23456-789-0",
   });
-  expect(book?.workExample).toEqual(expect.arrayContaining([
+  expect(book?.offers).toEqual(expect.arrayContaining([
     expect.objectContaining({
-      offers: expect.objectContaining({
-        price: "350",
-        priceCurrency: "UAH",
-        availability: "https://schema.org/InStock",
-      }),
+      price: "350",
+      priceCurrency: "UAH",
+      availability: "https://schema.org/InStock",
     }),
   ]));
 });
@@ -56,9 +54,9 @@ test("unavailable product remains indexable but cannot be purchased", async ({ p
 
   const book = await page.locator('script[type="application/ld+json"]').evaluateAll(nodes =>
     nodes.map(node => JSON.parse(node.textContent ?? "{}"))
-      .find(value => value["@type"] === "Book"),
+      .find(value => Array.isArray(value["@type"]) && value["@type"].includes("Product")),
   );
-  expect(book.workExample[0].offers.availability).toBe("https://schema.org/OutOfStock");
+  expect(book.offers[0].availability).toBe("https://schema.org/OutOfStock");
 });
 
 test("inactive product remains unavailable to the storefront", async ({ request }) => {
@@ -72,7 +70,12 @@ test("authorized revalidation refreshes cached product metadata", async ({ reque
   await request.post(`${mockApiUrl}/__control/products`, { data: initial });
   expect(await (await request.get(`/books/${slug}`)).text()).toContain("Cached Book v1");
 
-  await request.post(`${mockApiUrl}/__control/products`, { data: { ...initial, name: "Cached Book v2", seoDescription: "Cached description v2." } });
+  await request.post(`${mockApiUrl}/__control/products`, { data: {
+    ...initial,
+    name: "Cached Book v2",
+    seoDescription: "Cached description v2.",
+    items: initial.items.map(item => ({ ...item, discountPrice: 315.5, isAvailable: false, canPreorder: true })),
+  } });
   const revalidation = await request.post("/api/revalidate", {
     headers: { "x-revalidation-secret": "zvy11-test-secret" },
     data: { slug },
@@ -86,4 +89,8 @@ test("authorized revalidation refreshes cached product metadata", async ({ reque
   const refreshedHtml = await (await request.get(`/books/${slug}`)).text();
   expect(refreshedHtml).toContain("Cached Book v2");
   expect(refreshedHtml).toContain("Cached description v2.");
+  const product = jsonLdFrom(refreshedHtml).find(value => Array.isArray(value["@type"]) && value["@type"].includes("Product"));
+  expect(product?.offers).toEqual(expect.arrayContaining([
+    expect.objectContaining({ price: "315.5", priceCurrency: "UAH", availability: "https://schema.org/PreOrder" }),
+  ]));
 });

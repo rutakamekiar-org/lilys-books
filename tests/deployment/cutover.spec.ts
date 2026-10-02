@@ -101,7 +101,7 @@ test.describe("desktop deployment acceptance", () => {
     expect(locations.some(location => location.startsWith(`${canonicalBaseUrl}/books/`))).toBe(true);
   });
 
-  test("renders crawlable product metadata and Book JSON-LD", async ({ request }) => {
+  test("renders crawlable product metadata and Product JSON-LD", async ({ request }) => {
     const [productPath] = await productPaths(request);
     expect(productPath).toBeTruthy();
 
@@ -114,13 +114,17 @@ test.describe("desktop deployment acceptance", () => {
     expect(html).toContain(`<link rel="canonical" href="${canonicalBaseUrl}${productPath}"`);
     expect(html).toMatch(/<meta property="og:title" content="[^"]+"/);
 
-    const book = jsonLdFrom(html).find(value => value["@type"] === "Book");
-    expect(book).toMatchObject({
+    const product = jsonLdFrom(html).find(value => value["@type"] === "Product"
+      || (Array.isArray(value["@type"]) && value["@type"].includes("Product")));
+    expect(product).toMatchObject({
       "@context": "https://schema.org",
-      "@type": "Book",
       url: `${canonicalBaseUrl}${productPath}`,
     });
-    expect(book?.name).toBeTruthy();
+    expect(product?.name).toBeTruthy();
+    expect(product?.image).toBeTruthy();
+    expect(product?.offers).toEqual(expect.arrayContaining([
+      expect.objectContaining({ "@type": "Offer", priceCurrency: "UAH" }),
+    ]));
   });
 
   test("reaches checkout validation without creating an invoice", async ({ page, context, request }) => {
