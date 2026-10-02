@@ -103,11 +103,11 @@
   color: inherit;
 }
 
-.productTitle:hover h4 {
+.productTitle:hover h3 {
   text-decoration: underline;
 }
 
-.info h4 {
+.info h3 {
   margin: 0 0 8px;
   font-size: 1.1rem;
   line-height: 1.3;

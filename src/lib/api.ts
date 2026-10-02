@@ -1,12 +1,11 @@
 import type { CheckoutResponse } from "./types";
 import {notifyApiError, handleApi} from "@/lib/api.helper";
-import {Product, StaticMetadata} from "@/models/Product";
+import {parseProduct, parseProducts, Product} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";
 import {PromoCodeResponse} from "@/models/PromoCode";
 
-// let API_URL = "https://localhost:7213";
-const API_URL = "https://api.zvychajna.pp.ua";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.zvychajna.pp.ua").replace(/\/$/, "");
 
 export async function validatePromocode(code: string, productItemIds: string[]): Promise<PromoCodeResponse> {
     const params = new URLSearchParams();
@@ -23,16 +22,18 @@ export async function validatePromocode(code: string, productItemIds: string[]):
     return handleApi<PromoCodeResponse>(res);
 }
 export async function createInvoice(data: CheckoutFormData, items: CartItem[], promoCode?: string): Promise<CheckoutResponse> {
+    const {orderNote, ...customer} = data;
     const res = await fetch(`${API_URL}/api/invoice`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            customer: data,
+            customer,
             items: items.map(item => ({
                 productId: item.itemId,
                 quantity: item.quantity,
             })),
             promoCode,
+            orderNote,
         }),
     }).catch((err) => {
         notifyApiError(err);
@@ -40,11 +41,14 @@ export async function createInvoice(data: CheckoutFormData, items: CartItem[], p
     })
     return handleApi<CheckoutResponse>(res);
 }
-async function fetchProducts(options: { throwOnError?: boolean } = {}): Promise<Product[]> {
+async function fetchProducts(options: { throwOnError?: boolean; fresh?: boolean } = {}): Promise<Product[]> {
     try {
-        const res = await fetch(`${API_URL}/api/products`, { next: { revalidate: 60 } });
-        const data = await handleApi<Product[]>(res);
-        return Array.isArray(data) ? data : [];
+        const res = await fetch(
+            `${API_URL}/api/products`,
+            options.fresh ? { cache: "no-store" } : { next: { revalidate: 60 } },
+        );
+        const data = await handleApi<unknown>(res);
+        return parseProducts(data);
     } catch (error) {
         console.error("fetchProducts failed:", error);
         if (options.throwOnError) {
@@ -52,6 +56,30 @@ async function fetchProducts(options: { throwOnError?: boolean } = {}): Promise<
         }
         return [];
     }
+}
+
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+    const res = await fetch(`${API_URL}/api/products/${encodeURIComponent(slug)}`, {
+        next: { revalidate: 60 },
+    });
+
+    if (res.status === 404) {
+        return null;
+    }
+
+    return parseProduct(await handleApi<unknown>(res));
+}
+
+export async function getProductBySlugLive(slug: string): Promise<Product | null> {
+    const res = await fetch(`${API_URL}/api/products/${encodeURIComponent(slug)}`, {
+        cache: "no-store",
+    });
+
+    if (res.status === 404) {
+        return null;
+    }
+
+    return parseProduct(await handleApi<unknown>(res));
 }
 
 export async function getProductsForStatic(options: { required?: boolean } = {}): Promise<Product[]> {
@@ -65,16 +93,6 @@ export async function getProductsForStatic(options: { required?: boolean } = {})
     return products;
 }
 
-export async function getLocalMetadata(slug: string): Promise<StaticMetadata> {
-    try {
-        // Use relative path for better compatibility with dynamic imports in some environments
-        const meta = await import(`../content/books/${slug}`);
-        return meta.default;
-    } catch (e) {
-        console.warn(`No local metadata found for slug: ${slug}`, e);
-        return {};
-    }
-}
-
 export const getProducts = fetchProducts;
+export const getProductsLive = () => fetchProducts({ fresh: true });
 

@@ -44,7 +44,7 @@ export default function NavBar() {
 
   return (
     <>
-      <nav className={styles.nav}>
+      <nav className={styles.nav} aria-label="Основна навігація">
         <Link href="/" className={cls("/")} aria-current={pathname === "/" ? "page" : undefined}>Головна</Link>
         <Link href="/books" className={cls("/books")} aria-current={pathname === "/books" ? "page" : undefined}>Магазин</Link>
         <Link href="/events" className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>

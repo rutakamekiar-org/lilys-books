@@ -1,4 +1,5 @@
-import { CartItem } from "@/components/molecules/CartProvider";
+import type { CartItem } from "@/components/molecules/CartProvider";
+import { multiplyMoney, roundMoney, sumMoney } from "@/lib/money";
 import { getPrice } from "@/lib/product-item.helper";
 import { PromoCodeResponse, PromoCodeType } from "@/models/PromoCode";
 
@@ -59,21 +60,21 @@ export function calculateItemDiscount(
 
   const productItem = item.product.items.find(i => i.id === item.itemId);
   const price = productItem ? getPrice(productItem) ?? 0 : 0;
-  const itemSubtotal = price * units;
+  const itemSubtotal = multiplyMoney(price, units);
 
   const isGlobal = !promocode.applicableProductItemIds ||
     promocode.applicableProductItemIds.length === 0;
 
   if (promocode.type === PromoCodeType.Percentage) {
     const perUnitDiscount = price - Math.round(price * (1 - promocode.value / 100));
-    return perUnitDiscount * units;
+    return multiplyMoney(perUnitDiscount, units);
   } else {
     // Fixed amount off
     if (isGlobal) {
       // Global fixed discount is applied to the whole cart total, not per-item
       return 0;
     } else {
-      return Math.min(promocode.value * units, itemSubtotal);
+      return Math.min(multiplyMoney(promocode.value, units), itemSubtotal);
     }
   }
 }
@@ -86,17 +87,17 @@ export function calculateCartDiscount(items: CartItem[], promocode: PromoCodeRes
 
   if (promocode.type === PromoCodeType.Fixed && isGlobal) {
     // Global fixed: apply to full cart subtotal (remainingUsages doesn't change the lump-sum amount)
-    const subtotal = items.reduce((sum, item) => {
+    const subtotal = sumMoney(items.map((item) => {
       const productItem = item.product.items.find(i => i.id === item.itemId);
       const price = productItem ? getPrice(productItem) ?? 0 : 0;
-      return sum + price * item.quantity;
-    }, 0);
-    return Math.min(promocode.value, subtotal);
+      return multiplyMoney(price, item.quantity);
+    }));
+    return Math.min(roundMoney(promocode.value), subtotal);
   }
 
   const unitsMap = getDiscountedUnitsPerItem(items, promocode);
-  return items.reduce((sum, item) => {
+  return sumMoney(items.map((item) => {
     const discountedUnits = unitsMap.get(item.itemId) ?? 0;
-    return sum + calculateItemDiscount(item, promocode, discountedUnits);
-  }, 0);
+    return calculateItemDiscount(item, promocode, discountedUnits);
+  }));
 }

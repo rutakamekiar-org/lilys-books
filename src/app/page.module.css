@@ -198,11 +198,7 @@ a.secondary {
 .featuredDescription {
   margin: 0 0 16px 0;
   color: var(--muted);
-}
-
-.featuredDescription {
-  margin: 0 0 16px 0;
-  color: var(--muted);
+  white-space: pre-line;
 }
 
 .actions {

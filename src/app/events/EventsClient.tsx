@@ -21,13 +21,14 @@ export default function EventsClient({ events }: { events: EventWithImages[] }) 
 
   const pastFeatured = past[0];
   const pastRest = past.slice(1);
+  const firstVisibleEventId = featured?.id ?? pastFeatured?.id;
 
   return (
     <>
       {featured && (
         <section className={styles.section} aria-labelledby="next-event">
           <h2 id="next-event" className={styles.sectionTitle}>Найближча подія</h2>
-          <FeaturedHero event={featured} />
+          <FeaturedHero event={featured} priorityImage={featured.id === firstVisibleEventId} />
         </section>
       )}
 
@@ -35,7 +36,7 @@ export default function EventsClient({ events }: { events: EventWithImages[] }) 
         <section className={styles.section} aria-labelledby="upcoming-list">
           <h2 id="upcoming-list" className={styles.sectionTitle}>Далі</h2>
             {upcomingRest.map(e => (
-              <FeaturedHero key={e.id} event={e} />
+              <FeaturedHero key={e.id} event={e} priorityImage={e.id === firstVisibleEventId} />
             ))}
         </section>
       )}
@@ -47,10 +48,10 @@ export default function EventsClient({ events }: { events: EventWithImages[] }) 
         ) : (
           <>
             {pastFeatured && (
-              <FeaturedHero event={pastFeatured} />
+              <FeaturedHero event={pastFeatured} priorityImage={pastFeatured.id === firstVisibleEventId} />
             )}
                 {pastRest.map(e => (
-                  <FeaturedHero key={e.id} event={e} />
+                  <FeaturedHero key={e.id} event={e} priorityImage={e.id === firstVisibleEventId} />
                 ))}
           </>
         )}
@@ -59,13 +60,21 @@ export default function EventsClient({ events }: { events: EventWithImages[] }) 
   );
 }
 
-function FeaturedHero({ event }: { event: EventWithImages }){
+function FeaturedHero({ event, priorityImage = false }: { event: EventWithImages; priorityImage?: boolean }){
   const images = event.images || [];
   return (
     <article className={styles.hero}>
       <div className={styles.heroImageWrap}>
         {images.length > 0 && (
-          <ImageCarousel images={images} alt={event.title} sizes="(max-width: 800px) 100vw, 1280px" navInside ariaLabel={`Зображення події: ${event.title}`} className={styles.heroCarousel} />
+          <ImageCarousel
+            images={images}
+            alt={event.title}
+            sizes="(max-width: 640px) calc(100vw - 24px), 1068px"
+            navInside
+            ariaLabel={`Зображення події: ${event.title}`}
+            className={styles.heroCarousel}
+            priorityFirstImage={priorityImage}
+          />
         )}
         <div className={styles.heroOverlay} />
         <div className={styles.heroDateBadge}>

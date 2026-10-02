@@ -10,7 +10,7 @@ function isWinterNow() {
 }
 
 export default function Snow() {
-    const show = useMemo(isWinterNow, [])
+    const show = useMemo(() => isWinterNow(), [])
     if (!show) return null
 
     return <Snowfall

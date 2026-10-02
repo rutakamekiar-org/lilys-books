@@ -2,13 +2,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./BookCard.module.css";
-import {addBasePath} from "@/lib/paths";
 import {Product} from "@/models/Product";
 import {getPrice, getProductItemDisplayLabel} from "@/lib/product-item.helper";
 import { useProducts } from "@/components/molecules/ProductsProvider";
 import {getFormat} from "@/lib/types";
 import {useCart} from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
+import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 
 export default function BookCard({ product: staticProduct }: { product: Product }) {
   const { products } = useProducts();
@@ -31,7 +31,7 @@ export default function BookCard({ product: staticProduct }: { product: Product 
 
   return (
     <article className={styles.card}>
-      <Link href={`/books/${product.slug}`} className={styles.productLink}>
+      <Link href={`/books/${product.slug}`} prefetch={false} className={styles.productLink}>
         <div className={styles.thumb}>
           {product.ageRating && (
             <span
@@ -42,10 +42,17 @@ export default function BookCard({ product: staticProduct }: { product: Product 
               {product.ageRating}
             </span>
           )}
-          <Image src={addBasePath(product.imageUrl)} alt={product.name} width={240} height={360} />
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            width={240}
+            height={360}
+            sizes="(max-width: 520px) 46vw, (max-width: 780px) 45vw, (max-width: 1100px) 30vw, 260px"
+          />
         </div>
         <div className={styles.meta}>
-          <h3>{product.name}</h3>
+          <h2>{product.name}</h2>
+          <GoodreadsRating product={product} variant="card" />
         </div>
       </Link>
       <div className={styles.formats} role="group" aria-label={`Формати книги ${product.name}`}>

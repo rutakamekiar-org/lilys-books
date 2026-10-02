@@ -1,11 +1,12 @@
 import type {Product, ProductItem} from "@/models/Product";
 
-export function getMinPrice(items: ProductItem[]): number {
-    return Math.min(...items.map(x => getPrice(x)).filter(x => x !== null) as number[] || []);
+export function getMinPrice(items: ProductItem[]): number | null {
+    if (items.length === 0) return null;
+    return Math.min(...items.map(getPrice));
 }
 
 export function getPrice(item: ProductItem): number {
-    return Math.min(...[item.price, item.discountPrice].filter(x => x !== null) as number[] || []);
+    return item.discountPrice ?? item.price;
 }
 
 export function getProductItemDisplayLabel(product: Product, item: ProductItem): string {

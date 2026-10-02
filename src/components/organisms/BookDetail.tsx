@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState, Fragment, useEffect, useRef } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./BookDetail.module.css";
 import ImageCarousel from "@/components/organisms/ImageCarousel";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import GoodreadsButton from "@/components/molecules/GoodreadsButton";
-import { addBasePath } from "@/lib/paths";
 import ExcerptDialog from "@/components/molecules/ExcerptDialog";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
@@ -18,21 +18,11 @@ import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
-  const { products } = useProducts();
-  const liveProduct = products.find(p => p.id === staticProduct.id);
+  const { products, refreshProduct } = useProducts();
+  const [freshProduct, setFreshProduct] = useState<Product | null>(null);
   
-  // Merge live data (prices, availability) with static rich content (excerpts)
-  // We explicitly preserve rich content from staticProduct
-  const product = liveProduct 
-    ? { 
-        ...staticProduct, 
-        ...liveProduct, 
-        descriptionHtml: staticProduct.descriptionHtml || liveProduct.descriptionHtml,
-        imageUrls: staticProduct.imageUrls || liveProduct.imageUrls,
-        externalLinks: liveProduct.externalLinks ?? staticProduct.externalLinks,
-        hasExcerpt: staticProduct.hasExcerpt || liveProduct.hasExcerpt 
-      }
-    : staticProduct;
+  const currentFreshProduct = freshProduct?.slug === staticProduct.slug ? freshProduct : null;
+  const product = currentFreshProduct ?? staticProduct;
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
@@ -42,6 +32,32 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const { addItem, isInCart, openCart } = useCart();
 
   const suggestedProduct = products.find(p => p.slug === 'inaksha-art');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadFreshProduct = async () => {
+      const latestProduct = await refreshProduct(staticProduct.slug);
+      if (!cancelled && latestProduct) {
+        setFreshProduct(latestProduct);
+      }
+    };
+
+    setFreshProduct(null);
+    void loadFreshProduct();
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") {
+        void loadFreshProduct();
+      }
+    };
+
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
+  }, [refreshProduct, staticProduct.slug]);
 
   const checkSuggestion = (addedProduct: Product, addedFormat: BookFormat) => {
       if ((addedProduct.slug === 'zvychajna-and-inaksha' || addedProduct.slug === 'inaksha') && addedFormat === 'paper' && suggestedProduct) {
@@ -116,7 +132,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
         return () => {
             observer.disconnect();
         };
-    }, [product.descriptionHtml]);
+    }, [product.description]);
 
   const renderCoverActions = (className: string, keyPrefix: string) => (
       <div className={className}>
@@ -145,6 +161,12 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     }
     return (
       <section className={styles.wrap}>
+          <nav className={styles.catalogNav} aria-label="Навігація по каталогу">
+              <Link href="/books" className={styles.catalogLink}>
+                  <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                  <span>Назад до книг</span>
+              </Link>
+          </nav>
           <div className={styles.grid}>
               <div className={styles.summary}>
                   <h1 className={styles.titleRow}>
@@ -166,14 +188,20 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                       )}
                       {product.imageUrls && product.imageUrls.length > 0 ? (
                           <ImageCarousel
-                              images={product.imageUrls.map(url => addBasePath(url))}
+                              images={product.imageUrls}
                               alt={product.name}
                               sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
                               className={styles.carousel}
                               navInside={true}
                           />
                       ) : (
-                          <Image src={addBasePath(product.imageUrl)} alt={product.name} width={320} height={480}/>
+                          <Image
+                              src={product.imageUrl}
+                              alt={product.name}
+                              width={320}
+                              height={480}
+                              sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
+                          />
                       )}
                   </div>
                   {renderCoverActions(`${styles.coverActions} ${styles.desktopCoverActions}`, "desktop")}
@@ -236,15 +264,16 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           </div>
                       </div>
 
-                      {product.descriptionHtml && (
+                      {product.description && (
                           <section className={styles.descriptionPanel} aria-labelledby={descriptionTitleId}>
                               <h2 id={descriptionTitleId}>Опис</h2>
                               <div
                                   id={descriptionId}
                                   ref={descriptionRef}
                                   className={`${styles.desc} ${descriptionExpanded || !isDescriptionOverflowing ? styles.descExpanded : styles.descCollapsed}`}
-                                  dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
-                              />
+                              >
+                                  {product.description}
+                              </div>
                               {isDescriptionOverflowing && (
                                   <button
                                       type="button"
