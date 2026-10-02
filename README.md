@@ -66,6 +66,44 @@ Accessibility coverage runs in the same step. `npm run test:e2e:a11y` scans home
 
 Pull-request verification is also production-independent. `npm run test:fixtures` checks every shared product state against the storefront's Zod API contract, and `npm run build:ci` starts the local mock API before creating an optimized build. Fixture drift fails with the mismatched field path. A production API outage or data change therefore cannot break the standard CI pipeline. Real production smoke checks must remain separate, explicit, and read-only.
 
+### Pull-request verification
+
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `main`, using
+Node.js 24 and `npm ci` with `package-lock.json`. The `verify` job runs lint, type
+checking, fixture validation, a production build against the local mock API, and
+Playwright tests. Failed commands fail the check; Playwright reports failures as
+GitHub annotations.
+The `Protect main` ruleset requires `verify`, an up-to-date branch, a pull request
+and resolved review conversations before merging.
+
+Workflow permissions are limited to repository contents read access, and checkout
+does not retain Git credentials. npm downloads are cached using the lockfile;
+Playwright installs Chromium and its system dependencies on each runner. New
+commits cancel superseded runs for the same pull request or branch. If Playwright
+fails, its `test-results/` screenshots, traces and error context are available as
+the `playwright-failure-<run-id>-<attempt>` artifact for three days. Tests use only
+the local mock API and synthetic test values; production credentials are not
+provided. CI itself contains no deployment steps.
+
+### Skipping unnecessary Netlify deployments
+
+When an automatic Netlify deploy is not required, such as for CI, test-only or
+documentation-only changes, append `[skip netlify]` to the commit subject:
+
+```text
+ci: complete frontend PR validation for ZVY-30 [skip netlify]
+```
+
+Also include `[skip netlify]` in the pull-request title to skip its Deploy Preview.
+Keep the tag in the final merge/squash commit message to skip the production
+deploy. If several commits are pushed together, the latest commit must have the
+tag. Use the Netlify-specific tag instead of `[skip ci]`, which can prevent the
+required GitHub validation from running.
+
+Omit the tag when the acceptance criteria require a provider preview or production
+deployment. The next untagged commit triggers a deployment that includes the
+accumulated skipped changes. See Netlify's [skip-deploy documentation](https://docs.netlify.com/deploy/manage-deploys/manage-deploys-overview/#skip-a-deploy).
+
 Product pages are resolved from the BookPreorder API by slug and cached for up to 60 seconds. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
 
 Product identity, descriptions, SEO text, gallery order, specifications, prices, availability, external links, ratings, and excerpt availability come from the BookPreorder API. Responses are validated before rendering. If a gallery is empty, the frontend falls back to the primary `imageUrl`; optional copy is simply omitted. Excerpt HTML and image files are still frontend-hosted assets during this migration, but product-specific TypeScript content files are not used.
