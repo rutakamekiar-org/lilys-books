@@ -85,6 +85,10 @@ the `playwright-failure-<run-id>-<attempt>` artifact for three days. Tests use o
 the local mock API and synthetic test values; production credentials are not
 provided. CI itself contains no deployment steps.
 
+To inspect a failure, open the failed run in GitHub's **Actions** tab and download
+the diagnostics from **Artifacts**. Open a `trace.zip` locally with
+`npx playwright show-trace <path-to-trace.zip>` before the artifact expires.
+
 ### Skipping unnecessary Netlify deployments
 
 When an automatic Netlify deploy is not required, such as for CI, test-only or
