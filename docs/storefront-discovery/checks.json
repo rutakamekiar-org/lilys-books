@@ -1,0 +1,2254 @@
+[
+  {
+    "id": "J-DESKTOP",
+    "result": "Home > shop > known book Zvychajna > browser back succeeds. Browsing six cards: distinct formats and prices, no genre/filter/search; inspected lower items."
+  },
+  {
+    "id": "DESKTOP-CATALOG",
+    "recordedAt": "2026-10-03T22:14:25.514Z",
+    "data": {
+      "cards": [
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Брунатні історії: збірка осінніх оповідань",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 392.6666870117187,
+              "y": 674.9375
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Паперова550 грн",
+              "width": 193.6666717529297,
+              "x": 191,
+              "y": 680.4896240234375
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 42,
+            "clientWidth": 230,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "16px",
+            "height": 41.58333587646485,
+            "overflow": "hidden",
+            "scrollHeight": 42,
+            "scrollWidth": 230,
+            "text": "Брунатні історії: збірка осінніх оповідань",
+            "width": 229.6666717529297,
+            "x": 191,
+            "y": 586.0729370117188
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Комплект, Звичайна та Інакша. Дилогія повністю",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 663.6666870117188,
+              "y": 674.9375
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Комплект949 грн",
+              "width": 193.6666717529297,
+              "x": 462,
+              "y": 680.4896240234375
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 42,
+            "clientWidth": 230,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "16px",
+            "height": 41.58333587646485,
+            "overflow": "hidden",
+            "scrollHeight": 42,
+            "scrollWidth": 230,
+            "text": "Звичайна та Інакша. Дилогія повністю",
+            "width": 229.6666717529297,
+            "x": 462,
+            "y": 586.0729370117188
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Звичайна. Перша частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 934.6666870117188,
+              "y": 674.9375
+            },
+            {
+              "aria": "Додати в кошик: Електронна, Звичайна. Перша частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 934.6666870117188,
+              "y": 717.6041870117188
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Паперова499 грн",
+              "width": 193.6666717529297,
+              "x": 733,
+              "y": 680.4896240234375
+            },
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Електронна199 грн",
+              "width": 193.6666717529297,
+              "x": 733,
+              "y": 723.15625
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 42,
+            "clientWidth": 230,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "16px",
+            "height": 41.58333587646485,
+            "overflow": "hidden",
+            "scrollHeight": 42,
+            "scrollWidth": 230,
+            "text": "Звичайна. Перша частина дилогії",
+            "width": 229.6666717529297,
+            "x": 733,
+            "y": 586.0729370117188
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Інакша. Друга частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 1205.666748046875,
+              "y": 674.9375
+            },
+            {
+              "aria": "Додати в кошик: Електронна, Інакша. Друга частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 1205.666748046875,
+              "y": 717.6041870117188
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Паперова550 грн",
+              "width": 193.6666717529297,
+              "x": 1004,
+              "y": 680.4896240234375
+            },
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Електронна249 грн",
+              "width": 193.6666717529297,
+              "x": 1004,
+              "y": 723.15625
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 42,
+            "clientWidth": 230,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "16px",
+            "height": 41.58333587646485,
+            "overflow": "hidden",
+            "scrollHeight": 42,
+            "scrollWidth": 230,
+            "text": "Інакша. Друга частина дилогії",
+            "width": 229.6666717529297,
+            "x": 1004,
+            "y": 586.0729370117188
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Листівки, Листівки-ілюстрації до 'Інакшої'",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 392.6666870117187,
+              "y": 1264.3021240234375
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Листівки299 грн",
+              "width": 193.6666717529297,
+              "x": 191,
+              "y": 1269.854248046875
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 42,
+            "clientWidth": 230,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "16px",
+            "height": 41.58333587646485,
+            "overflow": "hidden",
+            "scrollHeight": 42,
+            "scrollWidth": 230,
+            "text": "Листівки-ілюстрації до 'Інакшої'",
+            "width": 229.6666717529297,
+            "x": 191,
+            "y": 1175.4375
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Під шепіт снігу: збірка різдвяної прози",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 27,
+              "clientWidth": 27,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "13.12px",
+              "height": 28,
+              "overflow": "visible",
+              "scrollHeight": 27,
+              "scrollWidth": 27,
+              "text": "",
+              "width": 28,
+              "x": 663.6666870117188,
+              "y": 1264.3021240234375
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 17,
+              "clientWidth": 194,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "14.08px",
+              "height": 16.89583396911621,
+              "overflow": "hidden",
+              "scrollHeight": 17,
+              "scrollWidth": 194,
+              "text": "Паперова349 грн",
+              "width": 193.6666717529297,
+              "x": 462,
+              "y": 1269.854248046875
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 42,
+            "clientWidth": 230,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "16px",
+            "height": 41.58333587646485,
+            "overflow": "hidden",
+            "scrollHeight": 42,
+            "scrollWidth": 230,
+            "text": "Під шепіт снігу: збірка різдвяної прози",
+            "width": 229.6666717529297,
+            "x": 462,
+            "y": 1175.4375
+          }
+        }
+      ],
+      "documentWidth": 1425,
+      "main": {
+        "aria": null,
+        "background": "rgba(0, 0, 0, 0)",
+        "clientHeight": 1274,
+        "clientWidth": 1100,
+        "color": "rgb(31, 31, 31)",
+        "fontSize": "16px",
+        "height": 1274.135498046875,
+        "overflow": "visible",
+        "scrollHeight": 1274,
+        "scrollWidth": 1100,
+        "text": "Книги та мерчБрунатні історії: збірка осінніх оповідань5.00· 2Паперова550 грн18+Звичайна та Інакша. Дилогія повністюКомплект949 грн16+Звичайна. Перша частина дилогії4.40· 80Паперова499 грнЕлектронна199 грн18+Інакша. Друга частина дилогії4.11· 18Паперова550 грнЕлектронна249 грнЛистівки-ілюстрації до 'Інакшої'Листівки299 грнПід шепіт снігу: збірка різдвяної прози5.00· 3Паперова349 грн",
+        "width": 1100,
+        "x": 162.33334350585938,
+        "y": 72.83333587646484
+      },
+      "nav": {
+        "aria": "Основна навігація",
+        "background": "rgba(0, 0, 0, 0)",
+        "clientHeight": 72,
+        "clientWidth": 1100,
+        "color": "rgb(31, 31, 31)",
+        "fontSize": "16px",
+        "height": 72.16667175292969,
+        "overflow": "auto",
+        "scrollHeight": 72,
+        "scrollWidth": 1100,
+        "text": "ГоловнаМагазинПодіїПро мене",
+        "width": 1100,
+        "x": 162.33334350585938,
+        "y": 0
+      },
+      "navItems": [
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 38,
+          "clientWidth": 81,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "16px",
+          "height": 37.59375,
+          "overflow": "visible",
+          "scrollHeight": 38,
+          "scrollWidth": 81,
+          "text": "Головна",
+          "width": 80.58333587646484,
+          "x": 178.33334350585938,
+          "y": 17.28125
+        },
+        {
+          "aria": null,
+          "background": "rgb(255, 243, 226)",
+          "clientHeight": 38,
+          "clientWidth": 82,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "16px",
+          "height": 37.59375,
+          "overflow": "visible",
+          "scrollHeight": 38,
+          "scrollWidth": 82,
+          "text": "Магазин",
+          "width": 82.4375,
+          "x": 278.91668701171875,
+          "y": 17.28125
+        },
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 38,
+          "clientWidth": 57,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "16px",
+          "height": 37.59375,
+          "overflow": "visible",
+          "scrollHeight": 38,
+          "scrollWidth": 57,
+          "text": "Події",
+          "width": 57.28125,
+          "x": 381.3541870117187,
+          "y": 17.28125
+        },
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 38,
+          "clientWidth": 92,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "16px",
+          "height": 37.59375,
+          "overflow": "visible",
+          "scrollHeight": 38,
+          "scrollWidth": 92,
+          "text": "Про мене",
+          "width": 91.78125,
+          "x": 458.6354370117187,
+          "y": 17.28125
+        },
+        {
+          "aria": "Кошик, 0 товарів",
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 44,
+          "clientWidth": 44,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "17.6px",
+          "height": 44.16666793823242,
+          "overflow": "visible",
+          "scrollHeight": 44,
+          "scrollWidth": 44,
+          "text": "",
+          "width": 43.79166793823242,
+          "x": 1202.541748046875,
+          "y": 14
+        }
+      ],
+      "url": "http://127.0.0.1:3100/books",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    }
+  },
+  {
+    "id": "MOBILE-CATALOG",
+    "recordedAt": "2026-10-03T22:14:29.155Z",
+    "data": {
+      "cards": [
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Брунатні історії: збірка осінніх оповідань",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 155.33334350585938,
+              "y": 524.6354370117188
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Паперова550 грн",
+              "width": 129.6666717529297,
+              "x": 20.666667938232425,
+              "y": 530.9166870117188
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 161,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 161,
+            "text": "Брунатні історії: збірка осінніх оповідань",
+            "width": 160.6666717529297,
+            "x": 20.666667938232425,
+            "y": 453.40625
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Комплект, Звичайна та Інакша. Дилогія повністю",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 343.3333435058594,
+              "y": 524.46875
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Комплект949 грн",
+              "width": 129.6666717529297,
+              "x": 208.6666717529297,
+              "y": 530.75
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 161,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 161,
+            "text": "Звичайна та Інакша. Дилогія повністю",
+            "width": 160.6666717529297,
+            "x": 208.6666717529297,
+            "y": 453.40625
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Звичайна. Перша частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 155.33334350585938,
+              "y": 920.1979370117188
+            },
+            {
+              "aria": "Додати в кошик: Електронна, Звичайна. Перша частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 155.33334350585938,
+              "y": 955.8646240234376
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Паперова499 грн",
+              "width": 129.6666717529297,
+              "x": 20.666667938232425,
+              "y": 926.4791870117188
+            },
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Електронна199 грн",
+              "width": 129.6666717529297,
+              "x": 20.666667938232425,
+              "y": 962.1458740234376
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 161,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 161,
+            "text": "Звичайна. Перша частина дилогії",
+            "width": 160.6666717529297,
+            "x": 20.666667938232425,
+            "y": 848.96875
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Інакша. Друга частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 343.3333435058594,
+              "y": 920.1979370117188
+            },
+            {
+              "aria": "Додати в кошик: Електронна, Інакша. Друга частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 343.3333435058594,
+              "y": 955.8646240234376
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Паперова550 грн",
+              "width": 129.6666717529297,
+              "x": 208.6666717529297,
+              "y": 926.4791870117188
+            },
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Електронна249 грн",
+              "width": 129.6666717529297,
+              "x": 208.6666717529297,
+              "y": 962.1458740234376
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 161,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 161,
+            "text": "Інакша. Друга частина дилогії",
+            "width": 160.6666717529297,
+            "x": 208.6666717529297,
+            "y": 848.96875
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Листівки, Листівки-ілюстрації до 'Інакшої'",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 155.33334350585938,
+              "y": 1351.260498046875
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Листівки299 грн",
+              "width": 129.6666717529297,
+              "x": 20.666667938232425,
+              "y": 1357.541748046875
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 161,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 161,
+            "text": "Листівки-ілюстрації до 'Інакшої'",
+            "width": 160.6666717529297,
+            "x": 20.666667938232425,
+            "y": 1280.197998046875
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Під шепіт снігу: збірка різдвяної прози",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 343.3333435058594,
+              "y": 1351.4271240234375
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 130,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 130,
+              "text": "Паперова349 грн",
+              "width": 129.6666717529297,
+              "x": 208.6666717529297,
+              "y": 1357.7083740234375
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 161,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 161,
+            "text": "Під шепіт снігу: збірка різдвяної прози",
+            "width": 160.6666717529297,
+            "x": 208.6666717529297,
+            "y": 1280.197998046875
+          }
+        }
+      ],
+      "documentWidth": 390,
+      "main": {
+        "aria": null,
+        "background": "rgba(0, 0, 0, 0)",
+        "clientHeight": 1414,
+        "clientWidth": 390,
+        "color": "rgb(31, 31, 31)",
+        "fontSize": "16px",
+        "height": 1414.4271240234375,
+        "overflow": "visible",
+        "scrollHeight": 1414,
+        "scrollWidth": 390,
+        "text": "Книги та мерчБрунатні історії: збірка осінніх оповідань5.00· 2Паперова550 грн18+Звичайна та Інакша. Дилогія повністюКомплект949 грн16+Звичайна. Перша частина дилогії4.40· 80Паперова499 грнЕлектронна199 грн18+Інакша. Друга частина дилогії4.11· 18Паперова550 грнЕлектронна249 грнЛистівки-ілюстрації до 'Інакшої'Листівки299 грнПід шепіт снігу: збірка різдвяної прози5.00· 3Паперова349 грн",
+        "width": 390,
+        "x": 0,
+        "y": 0.6666666865348816
+      },
+      "nav": {
+        "aria": "Основна навігація",
+        "background": "rgb(250, 249, 247)",
+        "clientHeight": 68,
+        "clientWidth": 390,
+        "color": "rgb(31, 31, 31)",
+        "fontSize": "16px",
+        "height": 68.16667175292969,
+        "overflow": "auto",
+        "scrollHeight": 68,
+        "scrollWidth": 390,
+        "text": "ГоловнаМагазинПодіїПро мене",
+        "width": 390,
+        "x": 0,
+        "y": 0
+      },
+      "navItems": [
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 40,
+          "clientWidth": 74,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 74,
+          "text": "Головна",
+          "width": 73.55208587646484,
+          "x": 18.854167938232425,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": null,
+          "background": "rgb(255, 243, 226)",
+          "clientHeight": 40,
+          "clientWidth": 75,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 75,
+          "text": "Магазин",
+          "width": 75.32292175292969,
+          "x": 100.40625,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 40,
+          "clientWidth": 51,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 51,
+          "text": "Події",
+          "width": 51.42708587646485,
+          "x": 183.7291717529297,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 40,
+          "clientWidth": 84,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 84,
+          "text": "Про мене",
+          "width": 84.1875,
+          "x": 243.15625,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": "Кошик, 0 товарів",
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 44,
+          "clientWidth": 36,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "17.6px",
+          "height": 44.16666793823242,
+          "overflow": "visible",
+          "scrollHeight": 44,
+          "scrollWidth": 36,
+          "text": "",
+          "width": 35.79166793823242,
+          "x": 335.34375,
+          "y": 12
+        }
+      ],
+      "url": "http://127.0.0.1:3100/books",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  },
+  {
+    "id": "J-MOBILE",
+    "result": "Known title found after scrolling past first two cards; details and Назад до книг work. Browsing all six cards successful."
+  },
+  {
+    "id": "NARROW-CATALOG",
+    "recordedAt": "2026-10-03T22:14:50.936Z",
+    "data": {
+      "cards": [
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Брунатні історії: збірка осінніх оповідань",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 140.33334350585938,
+              "y": 502.1354370117187
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Паперова550 грн",
+              "width": 114.66667175292967,
+              "x": 20.666667938232425,
+              "y": 508.4166870117187
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 146,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 51,
+            "scrollWidth": 146,
+            "text": "Брунатні історії: збірка осінніх оповідань",
+            "width": 145.6666717529297,
+            "x": 20.666667938232425,
+            "y": 430.90625
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Комплект, Звичайна та Інакша. Дилогія повністю",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 313.3333435058594,
+              "y": 501.96875
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Комплект949 грн",
+              "width": 114.66667175292967,
+              "x": 193.6666717529297,
+              "y": 508.25
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 146,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 146,
+            "text": "Звичайна та Інакша. Дилогія повністю",
+            "width": 145.6666717529297,
+            "x": 193.6666717529297,
+            "y": 430.90625
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Звичайна. Перша частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 140.33334350585938,
+              "y": 875.1979370117188
+            },
+            {
+              "aria": "Додати в кошик: Електронна, Звичайна. Перша частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 140.33334350585938,
+              "y": 910.8646240234376
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Паперова499 грн",
+              "width": 114.66667175292967,
+              "x": 20.666667938232425,
+              "y": 881.4791870117188
+            },
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Електронна199 грн",
+              "width": 114.66667175292967,
+              "x": 20.666667938232425,
+              "y": 917.1458740234376
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 146,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 146,
+            "text": "Звичайна. Перша частина дилогії",
+            "width": 145.6666717529297,
+            "x": 20.666667938232425,
+            "y": 803.96875
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Інакша. Друга частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 313.3333435058594,
+              "y": 875.1979370117188
+            },
+            {
+              "aria": "Додати в кошик: Електронна, Інакша. Друга частина дилогії",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 313.3333435058594,
+              "y": 910.8646240234376
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Паперова550 грн",
+              "width": 114.66667175292967,
+              "x": 193.6666717529297,
+              "y": 881.4791870117188
+            },
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Електронна249 грн",
+              "width": 114.66667175292967,
+              "x": 193.6666717529297,
+              "y": 917.1458740234376
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 146,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 146,
+            "text": "Інакша. Друга частина дилогії",
+            "width": 145.6666717529297,
+            "x": 193.6666717529297,
+            "y": 803.96875
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Листівки, Листівки-ілюстрації до 'Інакшої'",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 140.33334350585938,
+              "y": 1283.760498046875
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Листівки299 грн",
+              "width": 114.66667175292967,
+              "x": 20.666667938232425,
+              "y": 1290.041748046875
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 146,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 34,
+            "scrollWidth": 146,
+            "text": "Листівки-ілюстрації до 'Інакшої'",
+            "width": 145.6666717529297,
+            "x": 20.666667938232425,
+            "y": 1212.697998046875
+          }
+        },
+        {
+          "buttons": [
+            {
+              "aria": "Додати в кошик: Паперова, Під шепіт снігу: збірка різдвяної прози",
+              "background": "rgb(255, 243, 226)",
+              "clientHeight": 25,
+              "clientWidth": 25,
+              "color": "rgb(240, 155, 48)",
+              "fontSize": "12.16px",
+              "height": 26,
+              "overflow": "visible",
+              "scrollHeight": 25,
+              "scrollWidth": 25,
+              "text": "",
+              "width": 26,
+              "x": 313.3333435058594,
+              "y": 1283.9271240234375
+            }
+          ],
+          "formats": [
+            {
+              "aria": null,
+              "background": "rgba(0, 0, 0, 0)",
+              "clientHeight": 13,
+              "clientWidth": 115,
+              "color": "rgb(31, 31, 31)",
+              "fontSize": "11.2px",
+              "height": 13.4375,
+              "overflow": "hidden",
+              "scrollHeight": 14,
+              "scrollWidth": 115,
+              "text": "Паперова349 грн",
+              "width": 114.66667175292967,
+              "x": 193.6666717529297,
+              "y": 1290.2083740234375
+            }
+          ],
+          "title": {
+            "aria": null,
+            "background": "rgba(0, 0, 0, 0)",
+            "clientHeight": 34,
+            "clientWidth": 146,
+            "color": "rgb(31, 31, 31)",
+            "fontSize": "13.76px",
+            "height": 33.5625,
+            "overflow": "hidden",
+            "scrollHeight": 51,
+            "scrollWidth": 146,
+            "text": "Під шепіт снігу: збірка різдвяної прози",
+            "width": 145.6666717529297,
+            "x": 193.6666717529297,
+            "y": 1212.697998046875
+          }
+        }
+      ],
+      "documentWidth": 360,
+      "main": {
+        "aria": null,
+        "background": "rgba(0, 0, 0, 0)",
+        "clientHeight": 1347,
+        "clientWidth": 360,
+        "color": "rgb(31, 31, 31)",
+        "fontSize": "16px",
+        "height": 1346.9271240234375,
+        "overflow": "visible",
+        "scrollHeight": 1347,
+        "scrollWidth": 360,
+        "text": "Книги та мерчБрунатні історії: збірка осінніх оповідань5.00· 2Паперова550 грн18+Звичайна та Інакша. Дилогія повністюКомплект949 грн16+Звичайна. Перша частина дилогії4.40· 80Паперова499 грнЕлектронна199 грн18+Інакша. Друга частина дилогії4.11· 18Паперова550 грнЕлектронна249 грнЛистівки-ілюстрації до 'Інакшої'Листівки299 грнПід шепіт снігу: збірка різдвяної прози5.00· 3Паперова349 грн",
+        "width": 360,
+        "x": 0,
+        "y": 0.6666666865348816
+      },
+      "nav": {
+        "aria": "Основна навігація",
+        "background": "rgb(250, 249, 247)",
+        "clientHeight": 68,
+        "clientWidth": 360,
+        "color": "rgb(31, 31, 31)",
+        "fontSize": "16px",
+        "height": 68.16667175292969,
+        "overflow": "auto",
+        "scrollHeight": 68,
+        "scrollWidth": 364,
+        "text": "ГоловнаМагазинПодіїПро мене",
+        "width": 360,
+        "x": 0,
+        "y": 0
+      },
+      "navItems": [
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 40,
+          "clientWidth": 74,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 74,
+          "text": "Головна",
+          "width": 73.55208587646484,
+          "x": 3.8645834922790527,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": null,
+          "background": "rgb(255, 243, 226)",
+          "clientHeight": 40,
+          "clientWidth": 75,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 75,
+          "text": "Магазин",
+          "width": 75.32292175292969,
+          "x": 85.41667175292969,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 40,
+          "clientWidth": 51,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 51,
+          "text": "Події",
+          "width": 51.42708587646485,
+          "x": 168.73959350585938,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": null,
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 40,
+          "clientWidth": 84,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "15.2px",
+          "height": 40.3125,
+          "overflow": "visible",
+          "scrollHeight": 40,
+          "scrollWidth": 84,
+          "text": "Про мене",
+          "width": 84.1875,
+          "x": 228.1666717529297,
+          "y": 13.927083969116213
+        },
+        {
+          "aria": "Кошик, 0 товарів",
+          "background": "rgba(0, 0, 0, 0)",
+          "clientHeight": 44,
+          "clientWidth": 36,
+          "color": "rgb(31, 31, 31)",
+          "fontSize": "17.6px",
+          "height": 44.16666793823242,
+          "overflow": "visible",
+          "scrollHeight": 44,
+          "scrollWidth": 36,
+          "text": "",
+          "width": 35.79166793823242,
+          "x": 320.35418701171875,
+          "y": 12
+        }
+      ],
+      "url": "http://127.0.0.1:3100/books",
+      "viewport": {
+        "height": 844,
+        "width": 360
+      }
+    }
+  },
+  {
+    "id": "J-NARROW",
+    "result": "Known-title discovery, details and browser back completed at 360x844; six-card browsing completed. Navigation fits at normal size."
+  },
+  {
+    "id": "KEYBOARD-NARROW",
+    "data": [
+      {
+        "aria": null,
+        "height": 290.5625,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "scrollY": 0.6666666865348816,
+        "shadow": "none",
+        "tag": "A",
+        "text": "Брунатні історії: збірка осінніх оповідань5.00· 2",
+        "width": 138,
+        "x": 20.666667938232425,
+        "y": 182.73959350585935
+      },
+      {
+        "aria": "Додати в кошик: Паперова, Брунатні історії: збірка осінніх оповідань",
+        "height": 26,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "scrollY": 0.6666666865348816,
+        "shadow": "none",
+        "tag": "BUTTON",
+        "text": "",
+        "width": 26,
+        "x": 132.6666717529297,
+        "y": 489.96875
+      },
+      {
+        "aria": null,
+        "height": 290.3958435058594,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "scrollY": 0.6666666865348816,
+        "shadow": "none",
+        "tag": "A",
+        "text": "18+Звичайна та Інакша. Дилогія повністю",
+        "width": 138,
+        "x": 186,
+        "y": 182.73959350585935
+      },
+      {
+        "aria": "Додати в кошик: Комплект, Звичайна та Інакша. Дилогія повністю",
+        "height": 26,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "scrollY": 0.6666666865348816,
+        "shadow": "none",
+        "tag": "BUTTON",
+        "text": "",
+        "width": 26,
+        "x": 298,
+        "y": 489.8020935058594
+      },
+      {
+        "aria": null,
+        "height": 290.5625,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "scrollY": 0.6666666865348816,
+        "shadow": "none",
+        "tag": "A",
+        "text": "16+Звичайна. Перша частина дилогії4.40· 80",
+        "width": 138,
+        "x": 20.666667938232425,
+        "y": 544.3021240234375
+      },
+      {
+        "aria": "Додати в кошик: Паперова, Звичайна. Перша частина дилогії",
+        "height": 26,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "scrollY": 443.3333435058594,
+        "shadow": "none",
+        "tag": "BUTTON",
+        "text": "",
+        "width": 26,
+        "x": 132.6666717529297,
+        "y": 408.8645935058594
+      }
+    ],
+    "result": "Skip link focused main; six subsequent Tab stops reached card links/quick-add with outlines."
+  },
+  {
+    "id": "UNAVAILABLE-360",
+    "data": {
+      "disabled": 8,
+      "labels": [
+        "Додати в кошик: Паперова, Брунатні історії: збірка осінніх оповідань",
+        "Додати в кошик: Комплект, Звичайна та Інакша. Дилогія повністю",
+        "Додати в кошик: Паперова, Звичайна. Перша частина дилогії",
+        "Додати в кошик: Електронна, Звичайна. Перша частина дилогії",
+        "Додати в кошик: Паперова, Інакша. Друга частина дилогії",
+        "Додати в кошик: Електронна, Інакша. Друга частина дилогії",
+        "Додати в кошик: Листівки, Листівки-ілюстрації до 'Інакшої'",
+        "Додати в кошик: Паперова, Під шепіт снігу: збірка різдвяної прози"
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 360
+      },
+      "visibleAvailability": [
+        "Брунатні історії: збірка осінніх оповідань5.00· 2Паперова550 грн",
+        "18+Звичайна та Інакша. Дилогія повністюКомплект949 грн",
+        "16+Звичайна. Перша частина дилогії4.40· 80Паперова499 грнЕлектронна199 грн",
+        "18+Інакша. Друга частина дилогії4.11· 18Паперова550 грнЕлектронна249 грн",
+        "Листівки-ілюстрації до 'Інакшої'Листівки299 грн",
+        "Під шепіт снігу: збірка різдвяної прози5.00· 3Паперова349 грн"
+      ]
+    }
+  },
+  {
+    "id": "UNAVAILABLE-390",
+    "data": {
+      "disabled": 8,
+      "labels": [
+        "Додати в кошик: Паперова, Брунатні історії: збірка осінніх оповідань",
+        "Додати в кошик: Комплект, Звичайна та Інакша. Дилогія повністю",
+        "Додати в кошик: Паперова, Звичайна. Перша частина дилогії",
+        "Додати в кошик: Електронна, Звичайна. Перша частина дилогії",
+        "Додати в кошик: Паперова, Інакша. Друга частина дилогії",
+        "Додати в кошик: Електронна, Інакша. Друга частина дилогії",
+        "Додати в кошик: Листівки, Листівки-ілюстрації до 'Інакшої'",
+        "Додати в кошик: Паперова, Під шепіт снігу: збірка різдвяної прози"
+      ],
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "visibleAvailability": [
+        "Брунатні історії: збірка осінніх оповідань5.00· 2Паперова550 грн",
+        "18+Звичайна та Інакша. Дилогія повністюКомплект949 грн",
+        "16+Звичайна. Перша частина дилогії4.40· 80Паперова499 грнЕлектронна199 грн",
+        "18+Інакша. Друга частина дилогії4.11· 18Паперова550 грнЕлектронна249 грн",
+        "Листівки-ілюстрації до 'Інакшої'Листівки299 грн",
+        "Під шепіт снігу: збірка різдвяної прози5.00· 3Паперова349 грн"
+      ]
+    }
+  },
+  {
+    "id": "UNAVAILABLE-1440",
+    "data": {
+      "disabled": 8,
+      "labels": [
+        "Додати в кошик: Паперова, Брунатні історії: збірка осінніх оповідань",
+        "Додати в кошик: Комплект, Звичайна та Інакша. Дилогія повністю",
+        "Додати в кошик: Паперова, Звичайна. Перша частина дилогії",
+        "Додати в кошик: Електронна, Звичайна. Перша частина дилогії",
+        "Додати в кошик: Паперова, Інакша. Друга частина дилогії",
+        "Додати в кошик: Електронна, Інакша. Друга частина дилогії",
+        "Додати в кошик: Листівки, Листівки-ілюстрації до 'Інакшої'",
+        "Додати в кошик: Паперова, Під шепіт снігу: збірка різдвяної прози"
+      ],
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      },
+      "visibleAvailability": [
+        "Брунатні історії: збірка осінніх оповідань5.00· 2Паперова550 грн",
+        "18+Звичайна та Інакша. Дилогія повністюКомплект949 грн",
+        "16+Звичайна. Перша частина дилогії4.40· 80Паперова499 грнЕлектронна199 грн",
+        "18+Інакша. Друга частина дилогії4.11· 18Паперова550 грнЕлектронна249 грн",
+        "Листівки-ілюстрації до 'Інакшої'Листівки299 грн",
+        "Під шепіт снігу: збірка різдвяної прози5.00· 3Паперова349 грн"
+      ]
+    }
+  },
+  {
+    "id": "EMPTY",
+    "data": {
+      "h1": 0,
+      "mainText": ""
+    },
+    "result": "Empty catalog shows a message without in-content retry or action; empty home main has no content/h1; primary navigation and contacts survive."
+  },
+  {
+    "id": "PRODUCT-ERROR",
+    "result": "Controlled 500 shows branded recovery with retry/catalog action at all sizes. Catalog action successfully returns to /books."
+  },
+  {
+    "id": "CATALOG-OFFLINE",
+    "data": {
+      "buttons": [],
+      "main": "Книги та мерчПоки що немає книг для відображення."
+    },
+    "result": "Stopped task-owned loopback API, invalidated catalog cache and reloaded. Outage rendered empty-catalog text without retry/error distinction."
+  },
+  {
+    "id": "HOME-OFFLINE",
+    "data": {
+      "main": ""
+    },
+    "result": "Cold API outage produced blank home main without an error/retry explanation."
+  },
+  {
+    "id": "HOME-LAYOUT",
+    "data": [
+      {
+        "bodyFont": "16px",
+        "cta": {
+          "background": "rgb(240, 155, 48)",
+          "color": "rgb(255, 255, 255)",
+          "height": 49.59375,
+          "text": "Детальніше",
+          "top": 582.7916870117188
+        },
+        "documentWidth": 1425,
+        "mainWidth": 1100,
+        "viewport": {
+          "height": 900,
+          "width": 1440
+        }
+      },
+      {
+        "bodyFont": "16px",
+        "cta": {
+          "background": "rgb(240, 155, 48)",
+          "color": "rgb(255, 255, 255)",
+          "height": 49.59375,
+          "text": "Детальніше",
+          "top": 1247.260498046875
+        },
+        "documentWidth": 375,
+        "mainWidth": 375,
+        "viewport": {
+          "height": 844,
+          "width": 390
+        }
+      },
+      {
+        "bodyFont": "16px",
+        "cta": {
+          "background": "rgb(240, 155, 48)",
+          "color": "rgb(255, 255, 255)",
+          "height": 49.59375,
+          "text": "Детальніше",
+          "top": 1244.34375
+        },
+        "documentWidth": 345,
+        "mainWidth": 345,
+        "viewport": {
+          "height": 844,
+          "width": 360
+        }
+      }
+    ]
+  },
+  {
+    "id": "HOME-KEYBOARD",
+    "data": [
+      {
+        "aria": null,
+        "outline": "rgb(16, 16, 16) auto 0.666667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "Перейти до основного вмісту"
+      },
+      {
+        "aria": null,
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "Головна"
+      },
+      {
+        "aria": null,
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "Магазин"
+      },
+      {
+        "aria": null,
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "Події"
+      },
+      {
+        "aria": null,
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "Про мене"
+      },
+      {
+        "aria": "Кошик, 0 товарів",
+        "outline": "rgba(240, 155, 48, 0.35) solid 2px",
+        "shadow": "none",
+        "tag": "BUTTON",
+        "text": ""
+      },
+      {
+        "aria": "Середня оцінка 4.11 з 5 на Goodreads, 18 оцінок, 13 рецензій. Натисніть, щоб відкрити сторінку на Goodreads у новій вкладці.",
+        "outline": "rgb(16, 16, 16) auto 0.666667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "4.1118 оцінок · 13 рецензій"
+      },
+      {
+        "aria": "Перейти на сторінку книги на Goodreads",
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "Відгуки на Goodreads"
+      },
+      {
+        "aria": null,
+        "outline": "rgb(16, 16, 16) auto 0.666667px",
+        "shadow": "none",
+        "tag": "A",
+        "text": "Детальніше"
+      }
+    ]
+  },
+  {
+    "id": "TEXT-ENLARGEMENT",
+    "result": "Attempted Ctrl+Plus four times and Ctrl+Equal on the IAB. DOM innerWidth=360, DPR≈1, body font=16px unchanged. 200% zoom/text enlargement not verified; native browser settings are not exposed."
+  },
+  {
+    "id": "PREORDER",
+    "data": [
+      "Передзамовити — 349 грн"
+    ],
+    "result": "Normal catalog button says Додати в кошик; detail primary action says Передзамовити — 349 грн."
+  },
+  {
+    "id": "NARROW-CLIPPING-SCROLLED",
+    "data": [
+      {
+        "formats": [
+          {
+            "children": [
+              {
+                "containerRight": 127.66666793823242,
+                "right": 72.79166793823242,
+                "text": "Паперова",
+                "textRight": 72.79167175292969
+              },
+              {
+                "containerRight": 127.66666793823242,
+                "right": 119.95833969116212,
+                "text": "550 грн",
+                "textRight": 119.95833587646484
+              }
+            ],
+            "text": "Паперова550 грн",
+            "width": 107
+          }
+        ],
+        "title": "Брунатні історії: збірка осінніх оповідань",
+        "titleClient": 34,
+        "titleScroll": 51
+      },
+      {
+        "formats": [
+          {
+            "children": [
+              {
+                "containerRight": 293,
+                "right": 237.1875,
+                "text": "Комплект",
+                "textRight": 237.1875
+              },
+              {
+                "containerRight": 293,
+                "right": 284.59375,
+                "text": "949 грн",
+                "textRight": 284.59375
+              }
+            ],
+            "text": "Комплект949 грн",
+            "width": 107
+          }
+        ],
+        "title": "Звичайна та Інакша. Дилогія повністю",
+        "titleClient": 34,
+        "titleScroll": 34
+      },
+      {
+        "formats": [
+          {
+            "children": [
+              {
+                "containerRight": 127.66666793823242,
+                "right": 72.79166793823242,
+                "text": "Паперова",
+                "textRight": 72.79167175292969
+              },
+              {
+                "containerRight": 127.66666793823242,
+                "right": 120.19792175292967,
+                "text": "499 грн",
+                "textRight": 120.19792175292967
+              }
+            ],
+            "text": "Паперова499 грн",
+            "width": 107
+          },
+          {
+            "children": [
+              {
+                "containerRight": 127.66666793823242,
+                "right": 81.92708587646484,
+                "text": "Електронна",
+                "textRight": 81.92708587646484
+              },
+              {
+                "containerRight": 127.66666793823242,
+                "right": 127.80208587646484,
+                "text": "199 грн",
+                "textRight": 127.80208587646484
+              }
+            ],
+            "text": "Електронна199 грн",
+            "width": 107
+          }
+        ],
+        "title": "Звичайна. Перша частина дилогії",
+        "titleClient": 34,
+        "titleScroll": 34
+      },
+      {
+        "formats": [
+          {
+            "children": [
+              {
+                "containerRight": 293,
+                "right": 238.125,
+                "text": "Паперова",
+                "textRight": 238.125
+              },
+              {
+                "containerRight": 293,
+                "right": 285.2916679382324,
+                "text": "550 грн",
+                "textRight": 285.29168701171875
+              }
+            ],
+            "text": "Паперова550 грн",
+            "width": 107
+          },
+          {
+            "children": [
+              {
+                "containerRight": 293,
+                "right": 247.2604179382324,
+                "text": "Електронна",
+                "textRight": 247.2604217529297
+              },
+              {
+                "containerRight": 293,
+                "right": 294.6666717529297,
+                "text": "249 грн",
+                "textRight": 294.66668701171875
+              }
+            ],
+            "text": "Електронна249 грн",
+            "width": 107
+          }
+        ],
+        "title": "Інакша. Друга частина дилогії",
+        "titleClient": 34,
+        "titleScroll": 34
+      },
+      {
+        "formats": [
+          {
+            "children": [
+              {
+                "containerRight": 127.66666793823242,
+                "right": 67.03125381469727,
+                "text": "Листівки",
+                "textRight": 67.03125
+              },
+              {
+                "containerRight": 127.66666793823242,
+                "right": 114.19791793823242,
+                "text": "299 грн",
+                "textRight": 114.19792175292967
+              }
+            ],
+            "text": "Листівки299 грн",
+            "width": 107
+          }
+        ],
+        "title": "Листівки-ілюстрації до 'Інакшої'",
+        "titleClient": 34,
+        "titleScroll": 34
+      },
+      {
+        "formats": [
+          {
+            "children": [
+              {
+                "containerRight": 293,
+                "right": 238.125,
+                "text": "Паперова",
+                "textRight": 238.125
+              },
+              {
+                "containerRight": 293,
+                "right": 285.53125,
+                "text": "349 грн",
+                "textRight": 285.53125
+              }
+            ],
+            "text": "Паперова349 грн",
+            "width": 107
+          }
+        ],
+        "title": "Під шепіт снігу: збірка різдвяної прози",
+        "titleClient": 34,
+        "titleScroll": 51
+      }
+    ]
+  },
+  {
+    "id": "KEYBOARD-CATALOG-1440",
+    "data": [
+      {
+        "aria": null,
+        "href": "#main-content",
+        "outline": "rgb(16, 16, 16) auto 0.666667px",
+        "text": "Перейти до основного вмісту"
+      },
+      {
+        "aria": null,
+        "href": "/",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Головна"
+      },
+      {
+        "aria": null,
+        "href": "/books",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Магазин"
+      },
+      {
+        "aria": null,
+        "href": "/events",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Події"
+      },
+      {
+        "aria": null,
+        "href": "/about",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Про мене"
+      },
+      {
+        "aria": "Кошик, 0 товарів",
+        "href": null,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2px",
+        "text": ""
+      },
+      {
+        "aria": null,
+        "href": "/books/brunette-stories",
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "text": "Брунатні історії: збірка осінніх оповідань5.00· 2"
+      }
+    ],
+    "result": "Keyboard reached first catalog product and Enter opened its details; in-page back link returned successfully."
+  },
+  {
+    "id": "KEYBOARD-CATALOG-390",
+    "data": [
+      {
+        "aria": null,
+        "href": "#main-content",
+        "outline": "rgb(16, 16, 16) auto 0.666667px",
+        "text": "Перейти до основного вмісту"
+      },
+      {
+        "aria": null,
+        "href": "/",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Головна"
+      },
+      {
+        "aria": null,
+        "href": "/books",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Магазин"
+      },
+      {
+        "aria": null,
+        "href": "/events",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Події"
+      },
+      {
+        "aria": null,
+        "href": "/about",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Про мене"
+      },
+      {
+        "aria": "Кошик, 0 товарів",
+        "href": null,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2px",
+        "text": ""
+      },
+      {
+        "aria": null,
+        "href": "/books/brunette-stories",
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "text": "Брунатні історії: збірка осінніх оповідань5.00· 2"
+      }
+    ],
+    "result": "Keyboard reached first catalog product and Enter opened its details; in-page back link returned successfully."
+  },
+  {
+    "id": "KEYBOARD-CATALOG-360",
+    "data": [
+      {
+        "aria": null,
+        "href": "#main-content",
+        "outline": "rgb(16, 16, 16) auto 0.666667px",
+        "text": "Перейти до основного вмісту"
+      },
+      {
+        "aria": null,
+        "href": "/",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Головна"
+      },
+      {
+        "aria": null,
+        "href": "/books",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Магазин"
+      },
+      {
+        "aria": null,
+        "href": "/events",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Події"
+      },
+      {
+        "aria": null,
+        "href": "/about",
+        "outline": "rgba(240, 155, 48, 0.55) solid 2.66667px",
+        "text": "Про мене"
+      },
+      {
+        "aria": "Кошик, 0 товарів",
+        "href": null,
+        "outline": "rgba(240, 155, 48, 0.35) solid 2px",
+        "text": ""
+      },
+      {
+        "aria": null,
+        "href": "/books/brunette-stories",
+        "outline": "rgba(240, 155, 48, 0.35) solid 2.66667px",
+        "text": "Брунатні історії: збірка осінніх оповідань5.00· 2"
+      }
+    ],
+    "result": "Keyboard reached first catalog product and Enter opened its details; in-page back link returned successfully."
+  },
+  {
+    "id": "MISSING-PRODUCT",
+    "result": "Missing product explanation and catalog action present at all three sizes; catalog action works."
+  },
+  {
+    "id": "CONTRAST-CALCULATIONS",
+    "data": {
+      "whiteOnAccent": 2.225455379254755,
+      "mutedOnWhite": 5.74183648145415,
+      "cardFocusOnWhite": 1.314728081595177,
+      "navFocusOnCream": 1.507105424035905,
+      "cartFocusOnCream": 1.2954007030068213,
+      "formula": "(lighter relative luminance + 0.05)/(darker relative luminance + 0.05); alpha composited in sRGB before luminance conversion"
+    }
+  },
+  {
+    "id": "REGRESSION-RUN",
+    "command": "npm run test:e2e -- accessibility.spec.ts keyboard-navigation.spec.ts mobile-navigation.spec.ts error-experiences.spec.ts books-grid-rating.spec.ts",
+    "testResults": {
+      "passedObserved": 28,
+      "failedObserved": 0,
+      "projects": [
+        "desktop-chromium",
+        "mobile-320",
+        "mobile-390"
+      ]
+    },
+    "build": "Production build completed before tests were served by the test harness.",
+    "runner": "All 28 test entries reported ok. Runner stalled during local web-server cleanup; interrupted with Ctrl+C, exit code 1. No successful overall runner exit is claimed.",
+    "otherChecks": {
+      "lint": "exit 0",
+      "typecheck": "exit 0",
+      "fixtureValidation": "exit 0; 4 contracts; rerun outside sandbox after initial tsx user-info lookup failed"
+    },
+    "remotePipeline": "not retrieved"
+  }
+]
