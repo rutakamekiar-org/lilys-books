@@ -1,0 +1,632 @@
+[
+  {
+    "id": "SCR-01-default",
+    "filename": "SCR-01-default-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:13:57.476Z",
+    "nativeSize": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 88802,
+    "sha256": "eceb01b913a54c204d2533d0abaa0ab3f1d46fb22be2ea19fcf9db0a01017330",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-default",
+    "filename": "SCR-02-default-1440x900-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 1440,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:14:02.200Z",
+    "nativeSize": {
+      "width": 1424,
+      "height": 1543
+    },
+    "bytes": 181498,
+    "sha256": "11e8bfe3ac2f90292b98e64ecada9dd79ba57d741283d8df75da5c1e1032b549",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-03-entry",
+    "filename": "SCR-03-entry-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/zvychajna",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:14:14.340Z",
+    "nativeSize": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 89725,
+    "sha256": "f01e115206ac9b0f779e49af7a47fdb59c0fe71bbac4e1687a8054e29e3c9c1d",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-default",
+    "filename": "SCR-01-default-390x844-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 390,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:14:27.406Z",
+    "nativeSize": {
+      "width": 374,
+      "height": 1546
+    },
+    "bytes": 85493,
+    "sha256": "2cdf692622b4a0c834da6654dfde4c4388d1806b5add6168c30e55e27ad27dc9",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-default",
+    "filename": "SCR-02-default-390x844-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 390,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:14:29.142Z",
+    "nativeSize": {
+      "width": 374,
+      "height": 1584
+    },
+    "bytes": 114135,
+    "sha256": "5c400b4c488e64a2ae6c8e15c01f0c19e6a4d543264f2ff042ecb3bc62ff38b0",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-03-entry",
+    "filename": "SCR-03-entry-390x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/zvychajna",
+    "width": 390,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:14:38.332Z",
+    "nativeSize": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 39326,
+    "sha256": "6d34bd6ed63a35a1b13b445cf63303099e271f692543c43055110a39e02e12a8",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-default",
+    "filename": "SCR-01-default-360x844-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 360,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:14:40.664Z",
+    "nativeSize": {
+      "width": 344,
+      "height": 1568
+    },
+    "bytes": 78127,
+    "sha256": "4d1422771664bf89e8e919a281c664301aafdb1de5c760ae17e4cf4cc32881d1",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-default",
+    "filename": "SCR-02-default-360x844-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 360,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:14:42.363Z",
+    "nativeSize": {
+      "width": 344,
+      "height": 1543
+    },
+    "bytes": 103598,
+    "sha256": "d6c1b6267ee4505ecbaaa51a490a9eed2385ab6b1776fc769ba936ddcc9feab3",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-03-entry",
+    "filename": "SCR-03-entry-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/zvychajna",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:14:51.872Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 39154,
+    "sha256": "069f47c0233e7dc479275e2385986f444520ff378e7f5c9fe223b4a0e86616be",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-skip-focus",
+    "filename": "SCR-02-skip-focus-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:14:52.699Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 53683,
+    "sha256": "3047a92e0dc669ec63253414b599b2e08bb48968f9707d2860409c0134023eb2",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-card-focus",
+    "filename": "SCR-02-card-focus-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 443.3333435058594,
+    "url": "http://127.0.0.1:3100/books#main-content",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:15:01.615Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 59059,
+    "sha256": "da4184b6f02ca98213c4c4a22fbdb9e3164335a98bf3341c67acf177ffc1ddba",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-unavailable",
+    "filename": "SCR-02-unavailable-360x844-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 443.3333435058594,
+    "url": "http://127.0.0.1:3100/books#main-content",
+    "width": 360,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:15:31.049Z",
+    "nativeSize": {
+      "width": 344,
+      "height": 1543
+    },
+    "bytes": 97615,
+    "sha256": "18aa29bad54255ed05f57233a32c471a7a71fcd8afc98f55d23e27222cfb09cd",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-unavailable",
+    "filename": "SCR-02-unavailable-390x844-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 443.3333435058594,
+    "url": "http://127.0.0.1:3100/books#main-content",
+    "width": 390,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:15:32.220Z",
+    "nativeSize": {
+      "width": 374,
+      "height": 1584
+    },
+    "bytes": 105228,
+    "sha256": "9ffa66c3c5329ac79a7de6eaa131c9a2053f31e5ea420b68a873a9c053076e7f",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-unavailable",
+    "filename": "SCR-02-unavailable-1440x900-full.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 443.3333435058594,
+    "url": "http://127.0.0.1:3100/books#main-content",
+    "width": 1440,
+    "fullPage": true,
+    "capturedAt": "2026-10-03T22:15:33.448Z",
+    "nativeSize": {
+      "width": 1424,
+      "height": 1543
+    },
+    "bytes": 176546,
+    "sha256": "aa7b5a3a289e1cbca590de82c2606027ad99feaf33a03157570ef67d89e4f266",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-empty",
+    "filename": "SCR-02-empty-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books#main-content",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:15:46.602Z",
+    "nativeSize": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 23885,
+    "sha256": "07d51ee670b7595a994ac4130dc4d0390d92e42393dda778ac718f2e81730e96",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-empty",
+    "filename": "SCR-02-empty-390x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books#main-content",
+    "width": 390,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:15:46.693Z",
+    "nativeSize": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 18317,
+    "sha256": "a9498962a015c3ec780bd90f747c2d240bac3fb1aa6846d854340ddf0105050b",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-empty",
+    "filename": "SCR-02-empty-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books#main-content",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:15:46.781Z",
+    "nativeSize": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 18096,
+    "sha256": "3dab0ca5611d57883ae032e88e92cff578562df51f33fb898b60dd982c92dc62",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-empty",
+    "filename": "SCR-01-empty-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:15:47.564Z",
+    "nativeSize": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 19359,
+    "sha256": "83a4e36e9f4df0874c929cf1b43a31b2f2bfe4b21cc1b2cce57ae60c102549bd",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-empty",
+    "filename": "SCR-01-empty-390x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 390,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:15:47.635Z",
+    "nativeSize": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 13422,
+    "sha256": "1399f0c190b94f77db0b46281c88ab75495b83a235b1e809ac1433d69564d42a",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-empty",
+    "filename": "SCR-01-empty-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:15:47.729Z",
+    "nativeSize": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 13232,
+    "sha256": "6ee52d2d26eb1b0cc3f7508447c07f91f86848726af635eb7e9b97e53379cb4e",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-10-error",
+    "filename": "SCR-10-error-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/inaksha",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:07.648Z",
+    "nativeSize": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 44678,
+    "sha256": "2f6dd2ad173f300a87533f5e0a2727a42d1340911f418e4e5aad8aaa24a26c93",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-10-error",
+    "filename": "SCR-10-error-390x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/inaksha",
+    "width": 390,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:07.746Z",
+    "nativeSize": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 30911,
+    "sha256": "18955413974402b34133f0f43c730836b2324667a24b749303b8ad0e0e87aa4c",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-10-error",
+    "filename": "SCR-10-error-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/inaksha",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:07.839Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 30435,
+    "sha256": "35f34e7698d49b85c4b1c61812cb9a66a5b170d96cd491c8e91405013cc3fc24",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-api-offline",
+    "filename": "SCR-02-api-offline-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:33.106Z",
+    "nativeSize": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 24912,
+    "sha256": "de35dfe34bee412129fc356b9db06e48f8923ecb48420160c5647f286be55bcb",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-api-offline",
+    "filename": "SCR-02-api-offline-390x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 390,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:33.194Z",
+    "nativeSize": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 19511,
+    "sha256": "e65fc4c6fccf36fa3a5fc9e90de59edf0bc9e236455af22dfbf316f2449a6f82",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-api-offline",
+    "filename": "SCR-02-api-offline-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:33.273Z",
+    "nativeSize": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 19293,
+    "sha256": "8eee950540244376dee6a085a1867533e0e7f9e3fb27a4eb27fe412d7911d10a",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-api-offline",
+    "filename": "SCR-01-api-offline-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:25:43.453Z",
+    "nativeSize": {
+      "width": 1440,
+      "height": 810
+    },
+    "bytes": 20879,
+    "sha256": "c9d7bed628673ada6a89108934ea19a611b0b3ef605cbfac8e0abe55dc4a5a59",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-api-offline",
+    "filename": "SCR-01-api-offline-390x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 390,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:34.205Z",
+    "nativeSize": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 14620,
+    "sha256": "c7a9ef1f96cb83d02e7756c1bd2bbee616c6fc2f7570f1cefffc5c6937f15e67",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-api-offline",
+    "filename": "SCR-01-api-offline-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:16:34.297Z",
+    "nativeSize": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 14414,
+    "sha256": "970b4c72a2b60a861f15251a4b484959266a23a37dadc23a69d1a35dda141feb",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-01-cta-focus",
+    "filename": "SCR-01-cta-focus-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 724.6666870117188,
+    "url": "http://127.0.0.1:3100/",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:17:18.095Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 37632,
+    "sha256": "2dfff6299a3a599a4d0b146555d3992a354c7f52e80f76afb8951a03c49bd265",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-03-preorder-entry",
+    "filename": "SCR-03-preorder-entry-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/pid_shepit_snihu",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:17:19.917Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 44090,
+    "sha256": "5aa3d5603deb9b889ef7081b2e9320112e526eedc148bd3dc3e1ffdc8289a892",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-02-scrolled",
+    "filename": "SCR-02-scrolled-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 699.3333129882812,
+    "url": "http://127.0.0.1:3100/books",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:17:32.475Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 48100,
+    "sha256": "2f941812a8e4b84ac9dd3d9cf2e0fe1a29c4b3f0026c00b3efd3cb49f336d887",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-10-not-found",
+    "filename": "SCR-10-not-found-1440x900.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 900,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/does-not-exist",
+    "width": 1440,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:18:14.444Z",
+    "nativeSize": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 40455,
+    "sha256": "8ece46fc91a4e2c652b25d7f9f7080bccdf7f49c95e9f67259fe4b38786b80c6",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-10-not-found",
+    "filename": "SCR-10-not-found-390x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/does-not-exist",
+    "width": 390,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:18:14.548Z",
+    "nativeSize": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 24716,
+    "sha256": "20730d1d80abc94f275be31dbf3f121e64d2382e5e8c475fcf1a933a0322b733",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  },
+  {
+    "id": "SCR-10-not-found",
+    "filename": "SCR-10-not-found-360x844.jpg",
+    "dpr": 1.0000000298023224,
+    "height": 844,
+    "scrollY": 0,
+    "url": "http://127.0.0.1:3100/books/does-not-exist",
+    "width": 360,
+    "fullPage": false,
+    "capturedAt": "2026-10-03T22:18:14.640Z",
+    "nativeSize": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 25112,
+    "sha256": "79d50b903341a7029ea6ca1dda13165b138fbdd1d26335332d00eb1706cbbc49",
+    "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818"
+  }
+]

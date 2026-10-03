@@ -6,6 +6,8 @@ Repository location: `lilys-books/docs/storefront-baseline`, within the frontend
 
 Review status: **approved for completeness and correctness by Vladyslav Kovalov on 2026-10-04**. Approval was given in the implementation chat: “Approved, make commit, create PR with skip netlify and close ZVY-52”. The dependent audits may proceed. This baseline documents observed behavior; it makes no improvement decisions.
 
+Discovery audit: [ZVY-53 — desktop and mobile](https://linear.app/zvychajna/document/storefront-discovery-audit-zvy-53-desktop-and-mobile-66c998fc4770) · [local report](../storefront-discovery/REPORT.md). Eight findings with stable IDs and 35 supplemental originals; ready for ZVY-56 consolidation. Proposed improvements await ZVY-57 screen review.
+
 ## Environment and evidence
 
 Captured on 2026-10-03 in a local run of `lilys-books`, using the Codex in-app Chromium browser on Windows. Browser version is not exposed by the capture interface. Responsive desktop-browser views were used, not real phones.
