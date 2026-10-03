@@ -1,6 +1,8 @@
 'use client'
-import Snowfall from 'react-snowfall'
+import dynamic from 'next/dynamic'
 import {useMemo} from "react";
+
+const Snowfall = dynamic(() => import('react-snowfall'), { ssr: false });
 
 function isWinterNow() {
     const now = new Date()

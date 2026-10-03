@@ -2,13 +2,16 @@
 import Icon from "@/components/atoms/Icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "./NavBar.module.css";
 import { useCart } from "@/components/molecules/CartProvider";
 import ShoppingCart from "@/components/organisms/ShoppingCart";
-import CheckoutForm, { CheckoutFormData } from "@/components/organisms/CheckoutForm";
+import dynamic from "next/dynamic";
+import type { CheckoutFormData } from "@/components/organisms/CheckoutForm";
 import notify from "@/lib/toast";
 import {createInvoice} from "@/lib/api";
+
+const CheckoutForm = dynamic(() => import("@/components/organisms/CheckoutForm"), { ssr: false });
 
 export default function NavBar() {
   const pathname = usePathname() || "/";
@@ -16,11 +19,18 @@ export default function NavBar() {
   const { items, itemCount, updateQuantity, removeItem, clearCart } = cart;
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutInitialized, setCheckoutInitialized] = useState(false);
+
+  const showCart = useCallback(() => {
+    // Warm checkout on the first cart visit, then retain its mounted state and focus lifecycle.
+    setCheckoutInitialized(true);
+    setCartOpen(true);
+  }, []);
 
   // Register openCart callback in context
   useEffect(() => {
-    cart.registerOpenCallback(() => setCartOpen(true));
-  }, [cart]);
+    cart.registerOpenCallback(showCart);
+  }, [cart, showCart]);
 
   const cls = (href: string) =>
     `${styles.link} ${pathname === href ? styles.active : ""}`;
@@ -51,7 +61,7 @@ export default function NavBar() {
         <Link href="/events" className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>
         <Link href="/about" className={cls("/about")} aria-current={pathname === "/about" ? "page" : undefined}>Про мене</Link>
         <button
-          onClick={() => setCartOpen(true)}
+          onClick={showCart}
           className={styles.cartBtn}
           aria-label={`Кошик, ${itemCount} товарів`}
         >
@@ -67,12 +77,12 @@ export default function NavBar() {
         onRemoveItem={removeItem}
         onCheckout={handleCheckout}
       />
-      <CheckoutForm
+      {checkoutInitialized && <CheckoutForm
         open={checkoutOpen}
         onClose={() => setCheckoutOpen(false)}
         items={items}
         onSubmit={handleCheckoutSubmit}
-      />
+      />}
     </>
   );
 }

@@ -18,6 +18,8 @@ import PriceText from "@/components/atoms/PriceText";
 import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
+const COVER_SIZES = "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px";
+
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
   const { products, refreshProduct } = useProducts();
   const [freshProduct, setFreshProduct] = useState<Product | null>(null);
@@ -191,7 +193,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           <ImageCarousel
                               images={product.imageUrls}
                               alt={product.name}
-                              sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
+                              sizes={COVER_SIZES}
                               className={styles.carousel}
                               navInside={true}
                               priorityFirstImage
@@ -202,7 +204,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               alt={product.name}
                               width={320}
                               height={480}
-                              sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
+                              sizes={COVER_SIZES}
                               loading="eager"
                               fetchPriority="high"
                           />

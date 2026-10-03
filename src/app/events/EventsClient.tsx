@@ -21,14 +21,15 @@ export default function EventsClient({ events }: { events: EventWithImages[] }) 
 
   const pastFeatured = past[0];
   const pastRest = past.slice(1);
-  const firstVisibleEventId = featured?.id ?? pastFeatured?.id;
+  // Both leading cards can be visible on mobile; Google identified the second as LCP.
+  const priorityEventIds = new Set([...upcoming, ...past].filter(e => e.images.length > 0).slice(0, 2).map(e => e.id));
 
   return (
     <>
       {featured && (
         <section className={styles.section} aria-labelledby="next-event">
           <h2 id="next-event" className={styles.sectionTitle}>Найближча подія</h2>
-          <FeaturedHero event={featured} priorityImage={featured.id === firstVisibleEventId} />
+          <FeaturedHero event={featured} priorityImage={priorityEventIds.has(featured.id)} />
         </section>
       )}
 
@@ -36,7 +37,7 @@ export default function EventsClient({ events }: { events: EventWithImages[] }) 
         <section className={styles.section} aria-labelledby="upcoming-list">
           <h2 id="upcoming-list" className={styles.sectionTitle}>Далі</h2>
             {upcomingRest.map(e => (
-              <FeaturedHero key={e.id} event={e} priorityImage={e.id === firstVisibleEventId} />
+              <FeaturedHero key={e.id} event={e} priorityImage={priorityEventIds.has(e.id)} />
             ))}
         </section>
       )}
@@ -48,10 +49,10 @@ export default function EventsClient({ events }: { events: EventWithImages[] }) 
         ) : (
           <>
             {pastFeatured && (
-              <FeaturedHero event={pastFeatured} priorityImage={pastFeatured.id === firstVisibleEventId} />
+              <FeaturedHero event={pastFeatured} priorityImage={priorityEventIds.has(pastFeatured.id)} />
             )}
                 {pastRest.map(e => (
-                  <FeaturedHero key={e.id} event={e} priorityImage={e.id === firstVisibleEventId} />
+                  <FeaturedHero key={e.id} event={e} priorityImage={priorityEventIds.has(e.id)} />
                 ))}
           </>
         )}
@@ -69,7 +70,7 @@ function FeaturedHero({ event, priorityImage = false }: { event: EventWithImages
           <ImageCarousel
             images={images}
             alt={event.title}
-            sizes="(max-width: 640px) calc(100vw - 24px), 1068px"
+            sizes="(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px"
             navInside
             ariaLabel={`Зображення події: ${event.title}`}
             className={styles.heroCarousel}

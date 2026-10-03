@@ -17,7 +17,7 @@ test("initial content and icons render without JavaScript or icon font requests"
     if (request.resourceType() === "font") fontRequests.push(request.url());
   });
   try {
-    for (const path of ["/", "/books", "/books/test-book"]) {
+    for (const path of ["/", "/books", "/books/test-book", "/books/brunette-stories", "/about", "/events", "/return-policy", "/missing-page"]) {
       await page.goto(path);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       const cart = page.getByRole("button", { name: /Кошик/ });
@@ -30,6 +30,78 @@ test("initial content and icons render without JavaScript or icon font requests"
   } finally {
     await context.close();
   }
+});
+
+test("portrait reserves its actual aspect ratio before its image arrives", async ({ page }) => {
+  let releaseImage!: () => void;
+  const imageReady = new Promise<void>(resolve => { releaseImage = resolve; });
+  await page.route("**/_next/image?**", async route => {
+    await imageReady;
+    await route.continue();
+  });
+  try {
+    await page.goto("/about", { waitUntil: "domcontentloaded" });
+    const portrait = page.getByRole("img", { name: "Лілія Кухарець", exact: true });
+    await expect(portrait).toBeVisible();
+    const before = await portrait.boundingBox();
+    expect(before).not.toBeNull();
+    expect(before!.height / before!.width).toBeCloseTo(4 / 3, 2);
+    releaseImage();
+    await expect.poll(() => portrait.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+    const after = await portrait.boundingBox();
+    expect(after).not.toBeNull();
+    expect(after!.height).toBeCloseTo(before!.height, 0);
+    expect(after!.width).toBeCloseTo(before!.width, 0);
+  } finally {
+    releaseImage();
+  }
+});
+
+test("leading event photos are prioritized while later cards and slides stay deferred", async ({ page }) => {
+  await page.goto("/events");
+  const galleries = page.getByRole("group", { name: /Зображення події:/ });
+  await expect(galleries).toHaveCount(3);
+  for (let index = 0; index < 2; index += 1) {
+    const cover = galleries.nth(index).locator("img").first();
+    await expect(cover).toHaveAttribute("loading", "eager");
+    await expect(cover).toHaveAttribute("fetchpriority", "high");
+  }
+  await expect(galleries.nth(2).locator("img").first()).toHaveAttribute("loading", "lazy");
+  await expect(galleries.nth(2).locator("img").first()).not.toHaveAttribute("fetchpriority", "high");
+  await page.getByRole("button", { name: "Наступне фото" }).first().click();
+  await expect(galleries.first().locator("img").nth(1)).toHaveAttribute("loading", "lazy");
+  await expect(galleries.first().locator("img").nth(1)).not.toHaveAttribute("fetchpriority", "high");
+});
+
+test("checkout code waits for cart use and first-use checkout retains focus and validation", async ({ page }) => {
+  const scripts: Promise<string>[] = [];
+  page.on("response", response => {
+    if (response.request().resourceType() === "script" && response.url().includes("/_next/static/chunks/")) {
+      scripts.push(response.text());
+    }
+  });
+  await page.goto("/return-policy");
+  await page.waitForLoadState("networkidle");
+  expect((await Promise.all(scripts)).some(code => code.includes("Відділення Нової Пошти"))).toBe(false);
+  await page.getByRole("link", { name: "Магазин", exact: true }).click();
+  await page.getByRole("button", { name: "Додати в кошик: Електронна, Test Book", exact: true }).click();
+  const cartButton = page.getByRole("button", { name: "Кошик, 1 товарів", exact: true });
+  await cartButton.click();
+  await expect.poll(async () => (await Promise.all(scripts)).some(code => code.includes("Відділення Нової Пошти"))).toBe(true);
+  await page.getByRole("button", { name: "Оформити замовлення", exact: true }).click();
+  const checkout = page.getByRole("dialog", { name: "Оформлення замовлення", exact: true });
+  await expect(checkout.getByRole("button", { name: "Закрити", exact: true })).toBeFocused();
+  await checkout.getByRole("button", { name: "Підтвердити замовлення", exact: true }).click();
+  await expect(checkout.getByRole("textbox", { name: /^Email/ })).toHaveAttribute("aria-invalid", "true");
+  await page.keyboard.press("Escape");
+  await expect(checkout).not.toBeVisible();
+  await expect(cartButton).toBeFocused();
+});
+
+test("seasonal animation still appears in winter", async ({ page }) => {
+  await page.clock.install({ time: new Date("2026-01-15T12:00:00Z") });
+  await page.goto("/return-policy");
+  await expect(page.locator("canvas")).toHaveCount(1);
 });
 
 test("initial catalog covers are eager and subsequent covers stay lazy", async ({ page }) => {
