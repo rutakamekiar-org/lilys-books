@@ -65,6 +65,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 ## Deployment Notes
 
 - CI workflow: `.github/workflows/ci.yml`
+- Pull-request verification uses Node.js 24, read-only permissions and the deterministic local API. Keep the `verify` job name stable because the `Protect main` ruleset requires it. Superseded runs are cancelled; failed Playwright traces and screenshots are uploaded for three days without production secrets.
 - Netlify is the selected runtime host; production traffic moves only after the migration acceptance checks pass.
 - Configure `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_BASE` per environment.
 - Follow `HOSTING_CUTOVER_RUNBOOK.md` for preview verification, DNS changes, TLS checks, and rollback.
@@ -84,4 +85,6 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Use the `codex/` prefix by default and include the issue identifier when one is available (for example, `codex/zvy-32-hold-invoice-reminders`).
 - Do not place a new implementation on an unrelated existing feature branch. If uncommitted work makes switching branches unsafe, stop and ask the user how to proceed.
 - Skip branch creation only when the user explicitly asks to work on the current branch.
+- When an automatic Netlify deploy is not required (for example, CI, test-only or documentation-only work), append `[skip netlify]` to the commit subject and pull-request title. Preserve the tag in the final merge/squash commit message; for a multi-commit push, the latest commit must carry it. Example: `ci: complete frontend PR validation for ZVY-30 [skip netlify]`.
+- Use `[skip netlify]` rather than `[skip ci]`: GitHub's required `verify` check must still run. Omit the tag when the acceptance criteria require a provider preview or production deployment. A subsequent untagged commit deploys the accumulated skipped changes; see README for the convention.
 
