@@ -2,8 +2,9 @@
 
 ## Status
 
-Implementation and verification in progress on `codex/zvy-50-mobile-performance`.
-Do not treat this report as a production pass until the deployment evidence below is complete.
+Implementation is ready for review in [PR #25](https://github.com/rutakamekiar-org/lilys-books/pull/25)
+on `codex/zvy-50-mobile-performance`. CI and the provider preview passed for implementation commit `fd95f19`.
+Production deployment and repeated after measurements remain required; no performance improvement is claimed yet.
 
 ## Google field data — 2026-10-03
 
@@ -79,8 +80,24 @@ mounting; those remain in place. ZVY-47's server-rendered metadata and Product J
   classes; they now assert accessible controls and links. Their rerun, alongside accessibility and all performance
   checks, passed (25 tests). New performance tests passed at desktop, 320 px and 390 px; mobile paper/digital
   selection and invalid checkout tests passed at both mobile widths without any invoice writes.
-- Provider preview and repeated after measurements: pending.
-- Remote CI and production deployment verification: pending.
+- Remote CI: [run 37102888123](https://github.com/rutakamekiar-org/lilys-books/actions/runs/37102888123)
+  completed successfully for `fd95f1989477eca1d2c17566ad5139b61e4089fc`. Lint, types, fixture validation,
+  production build and the complete regression suite passed on the GitHub runner.
+- Provider preview: [deploy preview #25](https://deploy-preview-25--astounding-douhua-45280d.netlify.app/),
+  [ready deployment 6ac09f59](https://app.netlify.com/projects/astounding-douhua-45280d/deploys/6ac09f59e92ca40008ab4a2e),
+  built from the same implementation commit. Verified through the signed-in Netlify browser session on 2026-10-03.
+  Checked homepage/catalog at 390 px, anthology at 320 px and desktop at 1280 px. The observed document widths
+  excluded the browser scrollbar and matched their scroll widths. Cover images loaded successfully, the first two
+  catalog covers were eager/high priority, and the anthology cover was eager/high priority.
+  Digital selection showed 199 UAH, paper selection 499 UAH, and the combined cart 698 UAH. Digital checkout
+  omitted delivery fields; a cart containing paper added phone and Nova Poshta branch selection. No order was
+  submitted. Invalid checkout submission and zero invoice-write assertions are covered by the deterministic tests.
+  The injected Netlify preview controls overlapped the checkout button; closing those preview controls allowed
+  the storefront checkout to open. This toolbar is specific to the preview environment.
+- The preview requires Netlify team authentication. Anonymous Google PageSpeed runs cannot audit this protected
+  URL; its access controls remain intact. Comparable Google after measurements will use public production.
+- Production deployment and repeated after measurements: pending merge/publication. Production still serves
+  baseline commit `888be15`. Recheck the published commit before recording any after result.
 
 ## Remaining measured opportunities
 
@@ -104,6 +121,22 @@ mounting; those remain in place. ZVY-47's server-rendered metadata and Product J
 | Search Console mobile findings or explicit lack of data | Recorded above; unavailable, no pass claimed |
 | Repeatable representative baselines and prioritized plan | Baseline table, protocol and measured priorities |
 | Confirmed bottlenecks fixed with repeated improvement evidence | Implementation described; after measurements pending |
-| Lint/type/build/regressions and mobile/desktop purchasing preserved | Local checks/build passed; initial 76/78 plus 25/25 focused rerun after updating the two obsolete assertions |
-| Preview/production verification, report links and tracked remainder | Deployment evidence pending; remaining opportunities above |
+| Lint/type/build/regressions and mobile/desktop purchasing preserved | Local checks and focused rerun passed; complete remote CI passed; preview smoke checks above |
+| Preview/production verification, report links and tracked remainder | Preview verified; production and repeated after measurements pending; remaining opportunities above |
+
+## Changed files
+
+- Rendering and image configuration: `next.config.mjs`, `src/app/layout.tsx`, `src/app/books/BooksGrid.tsx`.
+- Icon artwork and attribution: `src/components/atoms/Icon.tsx`, `src/components/atoms/Icon.module.css`,
+  `public/icons/fontawesome-LICENSE.txt` (new).
+- Shared cards and ratings: `src/components/molecules/BookCard.tsx`, `src/components/molecules/GoodreadsButton.tsx`,
+  `src/components/molecules/GoodreadsRating.tsx`.
+- Product/gallery rendering: `src/components/organisms/BookDetail.tsx`, `src/components/organisms/BookDetail.module.css`,
+  `src/components/organisms/ImageCarousel.tsx`, `src/components/organisms/ImageCarousel.module.css`,
+  `src/components/organisms/Hero.tsx`.
+- Navigation, contacts and cart icons: `src/components/organisms/NavBar.tsx`, `src/components/organisms/Contacts.tsx`,
+  `src/components/organisms/ShoppingCart.tsx`.
+- Regression coverage: `playwright.config.ts`, `tests/e2e/performance.spec.ts` (new),
+  `tests/e2e/mobile-navigation.spec.ts`, `tests/e2e/accessibility.spec.ts`, `tests/e2e/internal-links.spec.ts`.
+- Discoverable evidence: `README.md`, `ZVY-50-PERFORMANCE.md` (new).
 
