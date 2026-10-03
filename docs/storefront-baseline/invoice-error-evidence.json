@@ -1,0 +1,34 @@
+{
+  "scenario": "invoice-error",
+  "invoiceRequests": 1,
+  "lastInvoiceRequest": {
+    "customer": {
+      "firstName": "Тест",
+      "lastName": "Покупець",
+      "email": "baseline@example.invalid",
+      "phone": "+380000000000",
+      "department": {
+        "id": 7162,
+        "shortName": "Відділення №1: вул. Пирогівський шлях, 135",
+        "address": "03026, Україна, Київська область, місто Київ, Пирогівський Шлях (Червонопрапорна), 135",
+        "addressParts": {
+          "postCode": "03026",
+          "building": "135",
+          "street": "Пирогівський Шлях (Червонопрапорна)",
+          "city": "місто Київ",
+          "region": "Київська область",
+          "note": "",
+          "block": ""
+        }
+      }
+    },
+    "items": [
+      {
+        "productId": "74f2f2c9-e789-4f07-b294-b109ae9b468b",
+        "quantity": 1
+      }
+    ],
+    "promoCode": "BASELINE10",
+    "orderNote": "Контрольний сценарій ZVY-52. Не відправляти."
+  }
+}
