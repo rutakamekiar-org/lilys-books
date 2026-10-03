@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import NavBar from "@/components/organisms/NavBar";
 import Contacts from "@/components/organisms/Contacts";
 import ClarityInit from "@/components/atoms/ClarityInit";

@@ -1,4 +1,5 @@
 "use client";
+import Icon from "@/components/atoms/Icon";
 
 import React from "react";
 
@@ -14,7 +15,7 @@ export default function Contacts() {
             rel="noopener"
             aria-label="Instagram"
           >
-            <i className="fa-brands fa-instagram" aria-hidden="true"></i>
+            <Icon name="instagram" />
           </a>
         </li>
         <li>
@@ -24,7 +25,7 @@ export default function Contacts() {
             rel="noopener"
             aria-label="Threads"
           >
-            <i className="fa-brands fa-threads" aria-hidden="true"></i>
+            <Icon name="threads" />
           </a>
         </li>
         <li>
@@ -32,7 +33,7 @@ export default function Contacts() {
             href="mailto:lillykukharets0325@gmail.com"
             aria-label="Email"
           >
-            <i className="fa-solid fa-envelope" aria-hidden="true"></i>
+            <Icon name="envelope" />
           </a>
         </li>
         <li>
@@ -42,7 +43,7 @@ export default function Contacts() {
             rel="noopener"
             aria-label="GoodReads"
           >
-            <i className="fa-brands fa-goodreads" aria-hidden="true"></i>
+            <Icon name="goodreads" />
           </a>
         </li>
         <li>
@@ -52,7 +53,7 @@ export default function Contacts() {
             rel="noopener"
             aria-label="Amazon"
           >
-            <i className="fa-brands fa-amazon" aria-hidden="true"></i>
+            <Icon name="amazon" />
           </a>
         </li>
       </ul>

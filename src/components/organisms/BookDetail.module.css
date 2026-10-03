@@ -16,7 +16,7 @@
   background: var(--accent-weak);
   text-decoration: none;
 }
-.catalogLink :global(i) {
+.catalogLink :global(svg) {
   color: var(--accent);
   font-size: .85rem;
 }

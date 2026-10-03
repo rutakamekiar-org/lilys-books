@@ -1,4 +1,5 @@
 "use client";
+import Icon from "@/components/atoms/Icon";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./BookCard.module.css";
@@ -10,7 +11,7 @@ import {useCart} from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 
-export default function BookCard({ product: staticProduct }: { product: Product }) {
+export default function BookCard({ product: staticProduct, priorityImage = false }: { product: Product; priorityImage?: boolean }) {
   const { products } = useProducts();
   const { addItem, isInCart, openCart } = useCart();
   const product = products.find(p => p.id === staticProduct.id) || staticProduct;
@@ -47,7 +48,9 @@ export default function BookCard({ product: staticProduct }: { product: Product 
             alt={product.name}
             width={240}
             height={360}
-            sizes="(max-width: 520px) 46vw, (max-width: 780px) 45vw, (max-width: 1100px) 30vw, 260px"
+            sizes="(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px"
+            loading={priorityImage ? "eager" : "lazy"}
+            fetchPriority={priorityImage ? "high" : undefined}
           />
         </div>
         <div className={styles.meta}>
@@ -78,7 +81,7 @@ export default function BookCard({ product: staticProduct }: { product: Product 
                 aria-label={`${itemInCart ? "Вже в кошику" : "Додати в кошик"}: ${label}, ${product.name}`}
                 title={itemInCart ? "Вже в кошику" : "Додати в кошик"}
               >
-                <i className={itemInCart ? "fas fa-check" : "fas fa-cart-plus"} aria-hidden="true"></i>
+                <Icon name={itemInCart ? "check" : "cart-plus"} />
               </button>
             </div>
           );

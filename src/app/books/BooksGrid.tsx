@@ -13,8 +13,8 @@ export default function BooksGrid() {
 
   return (
     <div className={styles.grid}>
-      {products.map((b) => (
-        <BookCard key={b.id} product={b} />
+      {products.map((b, index) => (
+        <BookCard key={b.id} product={b} priorityImage={index < 2} />
       ))}
     </div>
   );

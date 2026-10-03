@@ -45,10 +45,10 @@ export default function AboutPage() {
             className={styles.img}
             src="/images/photo_2025-09-21_20-57-11.jpg"
             alt={"Лілія Кухарець"}
-            width={360}
-            height={540}
-            sizes="(max-width: 780px) 70vw, 320px"
-            priority
+            width={960}
+            height={1280}
+            sizes="(max-width: 375px) calc(100vw - 56px), (max-width: 779px) 320px, (max-width: 1024px) calc((100vw - 88px) / 3), 312px"
+            loading="eager"
           />
         </div>
       </div>

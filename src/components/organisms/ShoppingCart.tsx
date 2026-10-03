@@ -1,4 +1,5 @@
 "use client";
+import Icon from "@/components/atoms/Icon";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
@@ -159,7 +160,7 @@ export default function ShoppingCart({
                       <p className={styles.itemPrice}>{formatMoney(price)} грн за шт.</p>
                       {itemDiscount > 0 && (
                         <div className={styles.promoBadge}>
-                          <i className="fas fa-tag"></i> Акція (-{formatMoney(itemDiscount)} грн)
+                          <Icon name="tag" /> Акція (-{formatMoney(itemDiscount)} грн)
                         </div>
                       )}
                       {item.format === "paper" && (
@@ -206,7 +207,7 @@ export default function ShoppingCart({
                         aria-label="Видалити з кошика"
                         className={styles.removeBtn}
                       >
-                        <i className="fas fa-trash"></i>
+                        <Icon name="trash" />
                       </button>
                     </div>
                   </div>
@@ -222,7 +223,7 @@ export default function ShoppingCart({
               {appliedPromocode ? (
                 <div className={styles.appliedPromo}>
                   <span>
-                    <i className="fas fa-tag" style={{ marginRight: '8px' }}></i>
+                    <Icon name="tag" style={{ marginRight: '8px' }} />
                     {appliedPromocode.code?.toUpperCase()}
                   </span>
                   <button onClick={removePromocode} className={styles.removePromo} aria-label="Видалити промокод">
@@ -245,7 +246,7 @@ export default function ShoppingCart({
                     disabled={isApplying || !promoInput.trim()}
                     className={styles.promoApplyBtn}
                   >
-                    {isApplying ? <i className="fas fa-spinner fa-spin"></i> : 'Застосувати'}
+                    {isApplying ? <Icon name="spinner" spin /> : 'Застосувати'}
                   </button>
                 </div>
               )}

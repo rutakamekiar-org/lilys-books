@@ -1,4 +1,5 @@
 "use client";
+import Icon from "@/components/atoms/Icon";
 import { useEffect, useState } from "react";
 import styles from "./GoodreadsButton.module.css";
 import {ExternalBookRating, getExternalBookRatingType, Product} from "@/models/Product";
@@ -35,7 +36,7 @@ export default function GoodreadsButton({ product }: { product: Product }) {
       aria-label="Перейти на сторінку книги на Goodreads"
       style={{ marginTop: 12, display: "flex", width: "100%", justifyContent: "center" }}
     >
-      <i className="fa-brands fa-goodreads" aria-hidden="true"></i>
+      <Icon name="goodreads" />
       <span>Відгуки на Goodreads</span>
     </a>
   );

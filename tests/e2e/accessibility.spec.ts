@@ -92,5 +92,5 @@ test("product imagery carries meaningful alternative text", async ({ page }) => 
 
   // Icon-only controls are named, and their glyphs are hidden from assistive technology.
   await expect(page.getByRole("button", { name: "Додати в кошик" })).toBeVisible();
-  await expect(page.locator("button i.fa-cart-plus")).toHaveAttribute("aria-hidden", "true");
+  await expect(page.getByRole("button", { name: "Додати в кошик" }).locator("svg")).toHaveAttribute("aria-hidden", "true");
 });

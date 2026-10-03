@@ -30,6 +30,7 @@
 
 .photo {
   justify-self: center;
+  width: min(100%, 320px);
 }
 
 .img {
