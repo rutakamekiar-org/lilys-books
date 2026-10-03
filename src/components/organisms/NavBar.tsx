@@ -1,4 +1,5 @@
 "use client";
+import Icon from "@/components/atoms/Icon";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -54,7 +55,7 @@ export default function NavBar() {
           className={styles.cartBtn}
           aria-label={`Кошик, ${itemCount} товарів`}
         >
-          <i className="fas fa-shopping-cart"></i>
+          <Icon name="cart-shopping" />
           {itemCount > 0 && <span className={styles.cartBadge}>{itemCount}</span>}
         </button>
       </nav>

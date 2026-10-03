@@ -1,4 +1,5 @@
 "use client";
+import Icon, { ExternalLinkIcon } from "@/components/atoms/Icon";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, Fragment, useEffect, useRef } from "react";
@@ -139,13 +140,13 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
           {product && <GoodreadsButton product={product}/>}
           {product.hasExcerpt && (
               <button type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
-                  <i className="fa-solid fa-book-open" aria-hidden="true"></i>
+                  <Icon name="book-open" />
                   <span>Читати уривок</span>
               </button>
           )}
           {externalLinks.map((link, idx) => (
               <a key={`${keyPrefix}-${idx}`} className={styles.excerptBtn} target="_blank" rel="noopener" href={link.url}>
-                  <i className={link.icon} aria-hidden="true"></i>
+                  <ExternalLinkIcon icon={link.icon} />
                   <span>{link.label}</span>
               </a>
           ))}
@@ -163,7 +164,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
       <section className={styles.wrap}>
           <nav className={styles.catalogNav} aria-label="Навігація по каталогу">
               <Link href="/books" className={styles.catalogLink}>
-                  <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                  <Icon name="arrow-left" />
                   <span>Назад до книг</span>
               </Link>
           </nav>
@@ -193,6 +194,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
                               className={styles.carousel}
                               navInside={true}
+                              priorityFirstImage
                           />
                       ) : (
                           <Image
@@ -201,6 +203,8 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               width={320}
                               height={480}
                               sizes="(max-width: 480px) 220px, (max-width: 960px) 280px, 320px"
+                              loading="eager"
+                              fetchPriority="high"
                           />
                       )}
                   </div>
@@ -245,7 +249,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                                   onClick={handleAddToCart}
                                   aria-label={itemInCart ? "Вже в кошику" : "Додати в кошик"}
                                   title={itemInCart ? "Вже в кошику" : "Додати в кошик"}>
-                                    <i className={itemInCart ? "fas fa-check" : "fas fa-cart-plus"} aria-hidden="true"></i>
+                                    <Icon name={itemInCart ? "check" : "cart-plus"} />
                                     <span className={styles.addToCartText}>
                                         {itemInCart ? "У кошику" : "Додати в кошик"}
                                     </span>

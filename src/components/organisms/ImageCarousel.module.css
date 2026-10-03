@@ -14,7 +14,7 @@
 /* Inside variant for hero overlays */
 .carouselNav.inside .carouselBtn{ background: rgba(0,0,0,.45); color:#fff; border-color: rgba(255,255,255,.55); box-shadow: 0 2px 10px rgba(0,0,0,.25); }
 .carouselBtn{ pointer-events:auto; display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:12px; border:1px solid rgba(0,0,0,.08); background: rgba(255,255,255,0.7); backdrop-filter: blur(6px); color: var(--text); box-shadow: 0 3px 12px rgba(0,0,0,.08); transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, opacity .2s ease; }
-.carouselBtn i{ font-size: 16px; line-height: 1; }
+.carouselBtn svg{ font-size: 16px; line-height: 1; }
 .carouselBtn[disabled]{ opacity: 0; pointer-events: none; }
 .carouselBtn:hover:not([disabled]){ text-decoration:none; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
 .carouselBtn:active:not([disabled]){ transform: translateY(0); box-shadow: 0 3px 12px rgba(0,0,0,.10); }

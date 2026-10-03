@@ -58,7 +58,6 @@ test("catalog and product pages expose clean reciprocal discovery paths", async 
     const productHtml = await productResponse.text();
     expect(productHtml).toContain('aria-label="Навігація по каталогу"');
     expect(productHtml).toContain("Назад до книг");
-    expect(productHtml).toContain("fa-arrow-left");
     expect(renderedHrefs(productHtml)).toContain("/books");
   }
 });

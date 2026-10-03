@@ -1,4 +1,5 @@
 "use client";
+import Icon from "@/components/atoms/Icon";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./ImageCarousel.module.css";
@@ -55,7 +56,7 @@ function CarouselImage({ src, index, alt, sizes, slideClassName, railRef, object
           alt={index === 0 ? alt : ""}
           fill
           sizes={sizes}
-          priority={priority}
+          fetchPriority={priority ? "high" : undefined}
           loading={priority ? "eager" : "lazy"}
           draggable={false}
           style={{ objectFit, objectPosition: "center", userSelect: "none" }}
@@ -146,10 +147,10 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
       {images.length > 1 && (
         <div className={`${styles.carouselNav} ${navInside ? styles.inside : ""}`}>
           <button className={styles.carouselBtn + " prev"} onClick={goPrev} disabled={!canPrev} aria-label="Попереднє фото">
-            <i className="fa-solid fa-chevron-left" aria-hidden></i>
+            <Icon name="chevron-left" />
           </button>
           <button className={styles.carouselBtn + " next"} onClick={goNext} disabled={!canNext} aria-label="Наступне фото">
-            <i className="fa-solid fa-chevron-right" aria-hidden></i>
+            <Icon name="chevron-right" />
           </button>
         </div>
       )}

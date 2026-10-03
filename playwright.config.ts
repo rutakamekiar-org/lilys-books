@@ -44,12 +44,12 @@ export default defineConfig({
     },
     {
       name: "mobile-320",
-      testMatch: /mobile-navigation\.spec\.ts/,
+      testMatch: /(mobile-navigation|performance)\.spec\.ts/,
       use: { browserName: "chromium", viewport: { width: 320, height: 720 } },
     },
     {
       name: "mobile-390",
-      testMatch: /mobile-navigation\.spec\.ts/,
+      testMatch: /(mobile-navigation|performance)\.spec\.ts/,
       use: { browserName: "chromium", viewport: { width: 390, height: 844 } },
     },
   ],

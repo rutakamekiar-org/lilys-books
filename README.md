@@ -60,6 +60,9 @@ If `dotnet` is unavailable the script warns and starts anyway. The alternative i
 
 ## Regression tests
 
+Mobile performance measurements, optimization decisions, repeated Google report links and deployment verification
+for ZVY-50 are documented in [ZVY-50-PERFORMANCE.md](ZVY-50-PERFORMANCE.md).
+
 Run `npm run test:e2e` to start the storefront and its local mock API, then execute the dynamic-route, SEO, cache refresh, purchase-flow, accessibility, keyboard-navigation, and mobile-navigation tests. The suite never calls the production API or submits a payment. Use `npm run test:e2e:ui` for Playwright's interactive runner.
 
 Accessibility coverage runs in the same step. `npm run test:e2e:a11y` scans home, catalog, product details, the excerpt dialog, cart, and checkout with axe-core, and walks the catalog-to-checkout journey using only the keyboard. The scan must report zero violations; see [ACCESSIBILITY.md](ACCESSIBILITY.md) for what is covered and which rules are deliberately not enforced.
