@@ -6,7 +6,8 @@ Implementation is ready for review in [PR #25](https://github.com/rutakamekiar-o
 on `codex/zvy-50-mobile-performance`. CI and the provider preview passed for implementation commit `fd95f19`.
 On 2026-10-03 the owner expanded coverage to every public page and deferred deployment because the Netlify
 allowance was exhausted: “let's focus on documenting and fixing all pages performance. I will tell you when I can deploy”.
-The additional changes are verified locally; their provider preview and production verification remain deferred.
+The additional changes passed local checks and the complete required GitHub validation; their provider preview
+smoke checks and production verification remain deferred.
 Commits during this pause use `[skip netlify]`; retain that tag in the PR title and final merge/squash message.
 GitHub's required verification still runs. No performance improvement is claimed before comparable published after measurements.
 
@@ -35,7 +36,6 @@ FCP/LCP/Speed Index are seconds; TBT is milliseconds; CLS is unitless.
 | `/books/pid_shepit_snihu` | 08:54 | 65 | 4.3 | 7.1 | 50 | 0 | 4.3 | [Run 8](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/6iflpvp7og?form_factor=mobile) |
 | `/books/pid_shepit_snihu` | 09:00 | 65 | 4.4 | 6.9 | 120 | 0 | 4.4 | [Run 9](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/84zqkq5ibx?form_factor=mobile) |
 | `/` | 09:05 | 86 | 1.1 | 3.8 | 210 | 0.001 | 1.7 | [Run 10](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/b1ltmi1nx4?utm_source=search_console&form_factor=mobile&hl=uk) |
-
 | `/about` | 09:32 | 64 | 4.5 | 6.8 | 110 | 0 | 4.5 | [Run 11](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-about/qc351zk25u?form_factor=mobile) |
 | `/events` | 09:32 | 77 | 1.1 | 6.8 | 60 | 0 | 1.8 | [Run 12](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/uw2b4lwj1s?form_factor=mobile) |
 | `/return-policy` | 09:32 | 83 | 1.1 | 2.5 | 580 | 0 | 1.4 | [Run 13](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/4dqnf907cp?form_factor=mobile) |
@@ -176,7 +176,14 @@ mounting; those remain in place. ZVY-47's server-rendered metadata and Product J
 - The preview requires Netlify team authentication. Anonymous Google PageSpeed runs cannot audit this protected
   URL; its access controls remain intact. Comparable Google after measurements will use public production.
 - Original report-only CI also passed: [run 37103154830](https://github.com/rutakamekiar-org/lilys-books/actions/runs/37103154830)
-  for `f61f302`. Expanded-source CI must be retrieved separately; the older green checks do not cover these edits.
+  for `f61f302`.
+- Expanded-source CI: [run 37135604796](https://github.com/rutakamekiar-org/lilys-books/actions/runs/37135604796)
+  completed successfully for `714be2e1f5c084ed7cc8f2bdac209cf7626cf742`; lint, types, fixtures, production build
+  and the complete browser regression suite passed. The earlier local failures are resolved; the final pipeline is green.
+- Deployment skip observation: Netlify built [preview 6ac127e6](https://app.netlify.com/projects/astounding-douhua-45280d/deploys/6ac127e6b724b800082d8fb1)
+  for `714be2e` despite the commit's `[skip netlify]`. Its deployment record used the untagged PR title;
+  this preview was not published to production. The owner added the PR-title marker before the final report push.
+  Do not treat the commit marker alone as a verified deployment pause, and check the next provider result.
 - Production deployment and repeated after measurements: deferred at the owner's request because of Netlify quota.
   The previously verified preview covers the initial implementation, not the additional About/events/checkout/sizing fixes.
   Recheck the published commit and reverify the accumulated changes after the owner restores deployment availability.
@@ -203,7 +210,7 @@ mounting; those remain in place. ZVY-47's server-rendered metadata and Product J
 | Search Console mobile findings or explicit lack of data | Recorded above; unavailable, no pass claimed |
 | Repeatable representative baselines and prioritized plan | 24 captures across all 11 content routes, medians/ranges, protocol and measured priorities |
 | Confirmed bottlenecks fixed with repeated improvement evidence | Implementation described; after measurements pending |
-| Lint/type/build/regressions and mobile/desktop purchasing preserved | Local checks and focused rerun passed; complete remote CI passed; preview smoke checks above |
+| Lint/type/build/regressions and mobile/desktop purchasing preserved | Local checks and 28 affected tests passed; expanded complete remote CI passed; initial preview and additional local desktop checks above |
 | Preview/production verification, report links and tracked remainder | Initial preview verified; additional preview/production and repeated after measurements deferred by owner; remainder recorded above |
 
 ## Changed files
