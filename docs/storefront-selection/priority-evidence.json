@@ -1,0 +1,259 @@
+[
+  {
+    "id": "PREORDER-390",
+    "recordedAt": "2026-10-04T06:51:11.468Z",
+    "data": {
+      "viewport": {
+        "dpr": 1.0000000298023224,
+        "height": 844,
+        "width": 390
+      },
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "text": "Читати уривок",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(31, 31, 31)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(31, 31, 31) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Передзамовити — 349 грн",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(240, 155, 48)",
+          "outline": "rgb(255, 255, 255) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Додати в кошик",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(240, 155, 48)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(240, 155, 48) none 2.66667px",
+          "fontSize": "17.6px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Читати далі ↓",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(102, 102, 102)",
+          "background": "rgba(0, 0, 0, 0)",
+          "outline": "rgb(102, 102, 102) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Читати уривок",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(31, 31, 31)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(31, 31, 31) none 2.66667px",
+          "fontSize": "16px"
+        }
+      ],
+      "offerText": "Назад до книг\nПід шепіт снігу: збірка різдвяної прози\n5.00\n3 оцінок · 1 рецензій\nПередзамовити — 349 грн\nДодати в кошик\nКупити зараз або додати до кошика\n"
+    }
+  },
+  {
+    "id": "PREORDER-CART-390",
+    "recordedAt": "2026-10-04T06:51:13.261Z",
+    "data": {
+      "cart": "Кошик\n×\nПід шепіт снігу: збірка різдвяної прози\n\nПаперова\n\n349 грн за шт.\n\nКількість:\n−\n1\n+\n\n349 грн\n\nЗастосувати\nВсього:\n349 грн\nОформити замовлення"
+    }
+  },
+  {
+    "id": "PARTIAL-INITIAL-390",
+    "recordedAt": "2026-10-04T06:54:43.578Z",
+    "data": {
+      "viewport": {
+        "dpr": 1.0000000298023224,
+        "height": 844,
+        "width": 390
+      },
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "text": "Читати уривок",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(31, 31, 31)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(31, 31, 31) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "LABEL",
+          "text": "Паперова • 499 грн",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(31, 31, 31)",
+          "background": "rgb(255, 243, 226)",
+          "outline": "rgb(31, 31, 31) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "checked": true,
+          "disabled": true,
+          "color": "rgb(84, 84, 84)",
+          "background": "rgba(0, 0, 0, 0)",
+          "outline": "rgb(84, 84, 84) none 2.66667px",
+          "fontSize": "13.3333px"
+        },
+        {
+          "tag": "LABEL",
+          "text": "Електронна • 199 грн",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(31, 31, 31)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(31, 31, 31) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "INPUT",
+          "text": "",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(0, 0, 0)",
+          "background": "rgba(0, 0, 0, 0)",
+          "outline": "rgb(0, 0, 0) none 2.66667px",
+          "fontSize": "13.3333px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Немає в наявності",
+          "checked": false,
+          "disabled": true,
+          "color": "rgb(154, 154, 154)",
+          "background": "rgb(224, 224, 224)",
+          "outline": "rgb(154, 154, 154) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Додати в кошик",
+          "checked": false,
+          "disabled": true,
+          "color": "rgb(154, 154, 154)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(154, 154, 154) none 2.66667px",
+          "fontSize": "17.6px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Читати уривок",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(31, 31, 31)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(31, 31, 31) none 2.66667px",
+          "fontSize": "16px"
+        }
+      ],
+      "offerText": "Назад до книг\nЗвичайна. Перша частина дилогії\n4.40\n80 оцінок · 48 рецензій\n16+\nПаперова • 499 грн\nЕлектронна • 199 грн\nНемає в наявності\nДодати в кошик\nКупити зараз або додати до кошика\nВікове обмеження: 16+\n"
+    }
+  },
+  {
+    "id": "PARTIAL-CART-390",
+    "recordedAt": "2026-10-04T06:54:45.760Z",
+    "data": {
+      "cart": "Кошик\n×\nЗвичайна. Перша частина дилогії\n\nЕлектронна\n\n199 грн за шт.\n\n199 грн\n\nЗастосувати\nВсього:\n199 грн\nОформити замовлення"
+    }
+  },
+  {
+    "id": "SUGGESTED-DETAIL-UNAVAILABLE-390",
+    "recordedAt": "2026-10-04T06:55:43.367Z",
+    "data": {
+      "viewport": {
+        "dpr": 1.0000000298023224,
+        "height": 844,
+        "width": 390
+      },
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "text": "Попереднє фото",
+          "checked": false,
+          "disabled": true,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.45)",
+          "outline": "rgb(255, 255, 255) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Наступне фото",
+          "checked": false,
+          "disabled": false,
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0.45)",
+          "outline": "rgb(255, 255, 255) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Немає в наявності",
+          "checked": false,
+          "disabled": true,
+          "color": "rgb(154, 154, 154)",
+          "background": "rgb(224, 224, 224)",
+          "outline": "rgb(154, 154, 154) none 2.66667px",
+          "fontSize": "16px"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Додати в кошик",
+          "checked": false,
+          "disabled": true,
+          "color": "rgb(154, 154, 154)",
+          "background": "rgb(255, 255, 255)",
+          "outline": "rgb(154, 154, 154) none 2.66667px",
+          "fontSize": "17.6px"
+        }
+      ],
+      "offerText": "Назад до книг\nЛистівки-ілюстрації до 'Інакшої'\nНемає в наявності\nДодати в кошик\nКупити зараз або додати до кошика\n"
+    }
+  },
+  {
+    "id": "SUGGESTION-UNAVAILABLE-390",
+    "recordedAt": "2026-10-04T06:55:58.147Z",
+    "data": {
+      "text": "Разом цікавіше?\n×\n\nДо Вашої книги ідеально підійдуть ці ілюстрації:\n\nЛистівки-ілюстрації до 'Інакшої'\n\n299 грн\n\nДодати до кошика\nДетальніше",
+      "addEnabled": true
+    }
+  },
+  {
+    "id": "SUGGESTION-UNAVAILABLE-CART-390",
+    "recordedAt": "2026-10-04T06:55:58.978Z",
+    "data": {
+      "cart": "Кошик\n×\nІнакша. Друга частина дилогії\n\nПаперова\n\n550 грн за шт.\n\nКількість:\n−\n1\n+\n\n550 грн\n\nЛистівки-ілюстрації до 'Інакшої'\n\nЛистівки\n\n299 грн за шт.\n\nКількість:\n−\n1\n+\n\n299 грн\n\nЗастосувати\nВсього:\n849 грн\nОформити замовлення"
+    }
+  },
+  {
+    "id": "CONTRAST-CALCULATION",
+    "recordedAt": "2026-10-04T07:05:16.230Z",
+    "data": {
+      "method": "WCAG sRGB relative luminance; computed CSS colors, not screenshot sampling",
+      "whiteOnAccent": 2.225455379254755,
+      "accentOnWhite": 2.225455379254755,
+      "mutedOnPage": 5.456973441151235,
+      "formatRingOnPage": 1.507105424035905,
+      "formatRingComposite": [
+        244.5,
+        197.3,
+        137.55
+      ]
+    }
+  }
+]

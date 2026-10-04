@@ -763,3 +763,7 @@ Captures: desktop 1440 × 900, mobile 390 × 844, narrow 360 × 844; ordered lef
 ![SCR-10-not-found: desktop, mobile and narrow mobile](https://uploads.linear.app/7221c65b-38fd-4804-8810-e36f36e09ca7/28ef7715-eb5a-4d09-9c65-d96fe70e3929/5e3926a6-bc7f-4662-99cd-944e66eec57e)
 
 Originals: `SCR-10-not-found-1440x900.jpg`, `SCR-10-not-found-360x844.jpg`, `SCR-10-not-found-390x844.jpg`.
+
+## Book selection audit — ZVY-54 (2026-10-04)
+
+[Local report](../storefront-selection/REPORT.md) · [Paired evidence index](../storefront-selection/index.html). Six products, eight normal offers, 27 paired states / 81 originals and 127 checks. Eight stable findings map related discovery findings for ZVY-56 consolidation; improvement proposals await ZVY-57. Owner correctness review is pending. Per owner instruction, reports and evidence remain local and Linear is used only for ticket updates. All evidence is complete in the local package. Physical touch, 200% text enlargement and pending SSR visuals remain unverified.

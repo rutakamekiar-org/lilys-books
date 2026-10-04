@@ -1,0 +1,1622 @@
+[
+  {
+    "id": "SCR-03-bundle",
+    "filename": "SCR-03-bundle-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna-and-inaksha",
+    "setup": "normal; bundle 949; empty cart",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:04.995Z",
+    "image": {
+      "width": 1424,
+      "height": 1092
+    },
+    "bytes": 94128,
+    "sha256": "54ebf84e386c76e596de108bde9f2db2ef7e6f3faecd3b998bcc280c5a50c24a"
+  },
+  {
+    "id": "SCR-03-bundle",
+    "filename": "SCR-03-bundle-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna-and-inaksha",
+    "setup": "normal; bundle 949; empty cart",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 102.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:12.598Z",
+    "image": {
+      "width": 344,
+      "height": 1442
+    },
+    "bytes": 60931,
+    "sha256": "b24de3688b0fe964d6d28a90f830fa88eb36149baf29605f6428afe874578424"
+  },
+  {
+    "id": "SCR-03-bundle",
+    "filename": "SCR-03-bundle-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna-and-inaksha",
+    "setup": "normal; bundle 949; empty cart",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:09.065Z",
+    "image": {
+      "width": 374,
+      "height": 1442
+    },
+    "bytes": 61300,
+    "sha256": "3771021bd7fcbfc2d8092795f1e7ffec09af79e690ca5f938b1769443568e3fc"
+  },
+  {
+    "id": "SCR-03-collection",
+    "filename": "SCR-03-collection-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/brunette-stories",
+    "setup": "normal; Brunette Stories; paper 550; empty cart",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:24.790Z",
+    "image": {
+      "width": 1424,
+      "height": 1155
+    },
+    "bytes": 119725,
+    "sha256": "a206d618e6e72594d644a8a851d855994dbca7a4135f5839a6a04ba31399b53b"
+  },
+  {
+    "id": "SCR-03-collection",
+    "filename": "SCR-03-collection-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/brunette-stories",
+    "setup": "normal; Brunette Stories; paper 550; empty cart",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:27.060Z",
+    "image": {
+      "width": 344,
+      "height": 1554
+    },
+    "bytes": 70322,
+    "sha256": "9066fb93e927274b843ffdd484db5b21cd05864244a5f0b3de3551b5e6819732"
+  },
+  {
+    "id": "SCR-03-collection",
+    "filename": "SCR-03-collection-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/brunette-stories",
+    "setup": "normal; Brunette Stories; paper 550; empty cart",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:25.914Z",
+    "image": {
+      "width": 374,
+      "height": 1529
+    },
+    "bytes": 74896,
+    "sha256": "2a07832a5823abc84202f9c52e199016d5fa80679013468827007c9cfb32a12f"
+  },
+  {
+    "id": "SCR-03-collection-expanded",
+    "filename": "SCR-03-collection-expanded-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/brunette-stories",
+    "setup": "normal; description expanded",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 382.6666564941406,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:40.837Z",
+    "image": {
+      "width": 1424,
+      "height": 1282
+    },
+    "bytes": 134657,
+    "sha256": "e1c21dd7afe4c4795e64e828a3a5983f4dce538edf69ceaaed1ea7bf9b768b4e"
+  },
+  {
+    "id": "SCR-03-collection-expanded",
+    "filename": "SCR-03-collection-expanded-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/brunette-stories",
+    "setup": "normal; description expanded",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 132,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:46.440Z",
+    "image": {
+      "width": 344,
+      "height": 1861
+    },
+    "bytes": 87643,
+    "sha256": "16d8de892378d9642cbf7989428de8ed125542b600cd7e73f5bbcecda810a12f"
+  },
+  {
+    "id": "SCR-03-collection-expanded",
+    "filename": "SCR-03-collection-expanded-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/brunette-stories",
+    "setup": "normal; description expanded",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:43.806Z",
+    "image": {
+      "width": 374,
+      "height": 1810
+    },
+    "bytes": 97768,
+    "sha256": "80db09aa13fec8f5ab3357419fdcdf4ab41a2299f0893acced3cc36ed8226702"
+  },
+  {
+    "id": "SCR-03-digital",
+    "filename": "SCR-03-digital-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; electronic selected 199; paper specifications remain",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:49.257Z",
+    "image": {
+      "width": 1424,
+      "height": 1461
+    },
+    "bytes": 133592,
+    "sha256": "b8e732301f9ff5b102daee4aaf39c1fc083881c2397c70415abd48b89221b6ea"
+  },
+  {
+    "id": "SCR-03-digital",
+    "filename": "SCR-03-digital-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; electronic selected 199; paper specifications remain",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 150,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:53:02.543Z",
+    "image": {
+      "width": 344,
+      "height": 1867
+    },
+    "bytes": 80884,
+    "sha256": "85e2de799db30a0c7cf9f39afc09673f836eee47a2bf4de33ea7ba855efbd56c"
+  },
+  {
+    "id": "SCR-03-digital",
+    "filename": "SCR-03-digital-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; electronic selected 199; paper specifications remain",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 176,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:55.983Z",
+    "image": {
+      "width": 374,
+      "height": 1842
+    },
+    "bytes": 84477,
+    "sha256": "44b4659d35ed12b378f0649ff8d32a2dc47f68f680e57385df7a3dc6860fbe7e"
+  },
+  {
+    "id": "SCR-03-discount-digital",
+    "filename": "SCR-03-discount-digital-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "discount; electronic base 199 effective 149",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:15.571Z",
+    "image": {
+      "width": 1424,
+      "height": 1461
+    },
+    "bytes": 133580,
+    "sha256": "0b05bcf3dfea93a9db224740791661fb92e3e0ebc6f97f1ec5f10ac0971c73cf"
+  },
+  {
+    "id": "SCR-03-discount-digital",
+    "filename": "SCR-03-discount-digital-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "discount; electronic base 199 effective 149",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 150,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:27.882Z",
+    "image": {
+      "width": 344,
+      "height": 1867
+    },
+    "bytes": 81828,
+    "sha256": "18ce4f7304d9a38428f65a9c2d0c9f1ae8e584175265cd99d135f5271b4f858d"
+  },
+  {
+    "id": "SCR-03-discount-digital",
+    "filename": "SCR-03-discount-digital-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "discount; electronic base 199 effective 149",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 176,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:21.801Z",
+    "image": {
+      "width": 374,
+      "height": 1842
+    },
+    "bytes": 84535,
+    "sha256": "651d4a58271a8319f2ae8fc723893ab48c638cd53d452ff7b2e170d606a0b75f"
+  },
+  {
+    "id": "SCR-03-discount-paper",
+    "filename": "SCR-03-discount-paper-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "discount; paper base 499 effective 399",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 205.3333282470703,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:12.012Z",
+    "image": {
+      "width": 1424,
+      "height": 1461
+    },
+    "bytes": 130069,
+    "sha256": "8170e27b71c22aac4787be809292b2392864a228384910d6a15acd7eb1c798f9"
+  },
+  {
+    "id": "SCR-03-discount-paper",
+    "filename": "SCR-03-discount-paper-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "discount; paper base 499 effective 399",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 96.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:24.860Z",
+    "image": {
+      "width": 344,
+      "height": 1867
+    },
+    "bytes": 79345,
+    "sha256": "6cedac7623202a90926fa6dbe4f9c35165c09ebb05d8fb300299fe5fef09491f"
+  },
+  {
+    "id": "SCR-03-discount-paper",
+    "filename": "SCR-03-discount-paper-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "discount; paper base 499 effective 399",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 122.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:18.743Z",
+    "image": {
+      "width": 374,
+      "height": 1842
+    },
+    "bytes": 82715,
+    "sha256": "a033ed3655c4248a7a23a8f981b5f5f4d9e707c4ea9100a1a7191283f84eb099"
+  },
+  {
+    "id": "SCR-03-excerpt",
+    "filename": "SCR-03-excerpt-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; excerpt opened with Read excerpt; replacement desktop export after visual QA",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 308.6666564941406,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T07:10:57.360Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 116554,
+    "sha256": "067ebd0f811baa1e96f16630240f7b2a0c2c3a7e3477564b0f9dc88e2de51edb"
+  },
+  {
+    "id": "SCR-03-excerpt",
+    "filename": "SCR-03-excerpt-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; electronic selected; excerpt loaded",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 561.3333129882812,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:53:23.782Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 52008,
+    "sha256": "df216c09942233649606b518c34d6958fd0dd59e9bc0da43bd6698d8fa34e553"
+  },
+  {
+    "id": "SCR-03-excerpt",
+    "filename": "SCR-03-excerpt-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; electronic selected; excerpt loaded",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 561.3333129882812,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:53:23.700Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 48024,
+    "sha256": "79ae804204c461e17eaa1a2da5b980537af7c0046913fedec95ef16907ec22a2"
+  },
+  {
+    "id": "SCR-03-format-focus",
+    "filename": "SCR-03-format-focus-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; keyboard selected paper; label focus ring",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:53:34.668Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 89607,
+    "sha256": "2c56d3abee71b46df0d180fbd33fe89d74f07c7e85d23ab88150554331285146"
+  },
+  {
+    "id": "SCR-03-format-focus",
+    "filename": "SCR-03-format-focus-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; keyboard selected paper; label focus ring",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:53:38.259Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 39645,
+    "sha256": "628fbf3e0a4109aaced0775e023e0ba51436c1455749af6e2321ae899ceb7952"
+  },
+  {
+    "id": "SCR-03-format-focus",
+    "filename": "SCR-03-format-focus-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; keyboard selected paper; label focus ring",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:53:36.790Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 41131,
+    "sha256": "4d4ba42d87dc62e8b04cadaad634cb121802c28d61a47644ca6115dfa6e83712"
+  },
+  {
+    "id": "SCR-03-gallery",
+    "filename": "SCR-03-gallery-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "normal; postcard gallery after one Next action; replacement desktop export after geometry check",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T07:10:02.967Z",
+    "image": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 68785,
+    "sha256": "21eba49ebb46feb0abafe083389b8c23065ee8c562fd4ae2752ec72ab569b44e"
+  },
+  {
+    "id": "SCR-03-gallery",
+    "filename": "SCR-03-gallery-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "normal; postcards gallery representative second image",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T07:00:07.834Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 33196,
+    "sha256": "7459baee9c8320eb7e9fe51d6cf35856c5a6afa16da188beca48b71e8a61abda"
+  },
+  {
+    "id": "SCR-03-gallery",
+    "filename": "SCR-03-gallery-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "normal; postcards gallery representative second image",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T07:00:07.767Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 32670,
+    "sha256": "fa6b5fddd9a28aeaf3ecb7d1c4ac4126b466d7df7f5cc89f5685ee271e51a064"
+  },
+  {
+    "id": "SCR-03-merch",
+    "filename": "SCR-03-merch-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "normal; postcards 299; empty cart",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:23.929Z",
+    "image": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 85516,
+    "sha256": "31a3268366e0eecb542625b5af601bf6601627b7abb9046885c75499b162e768"
+  },
+  {
+    "id": "SCR-03-merch",
+    "filename": "SCR-03-merch-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "normal; postcards 299; empty cart",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 102.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:29.556Z",
+    "image": {
+      "width": 344,
+      "height": 1229
+    },
+    "bytes": 51933,
+    "sha256": "a9bce2780ae33ad7ea95495aebc0886cdf52fe806ffab995daa59d2ca7c74251"
+  },
+  {
+    "id": "SCR-03-merch",
+    "filename": "SCR-03-merch-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "normal; postcards 299; empty cart",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:26.927Z",
+    "image": {
+      "width": 374,
+      "height": 1204
+    },
+    "bytes": 56292,
+    "sha256": "aceb0e652c69875cc0a35ed7670413e37d54664c588f6aa19bd498513caa46dd"
+  },
+  {
+    "id": "SCR-03-merch-unavailable",
+    "filename": "SCR-03-merch-unavailable-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "suggestion-unavailable; direct postcards purchase disabled",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:43.334Z",
+    "image": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 84060,
+    "sha256": "a001fdfc4d3109ec1a47a1bedeabadc2f247fcb5065834ec4a60d3b611348fac"
+  },
+  {
+    "id": "SCR-03-merch-unavailable",
+    "filename": "SCR-03-merch-unavailable-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "suggestion-unavailable; direct postcards purchase disabled",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:45.615Z",
+    "image": {
+      "width": 344,
+      "height": 1229
+    },
+    "bytes": 51410,
+    "sha256": "86e213685714de6ab2b23b8cf7dfcacb1d0ef8f62c1ee65441f9328f9d8b7f0f"
+  },
+  {
+    "id": "SCR-03-merch-unavailable",
+    "filename": "SCR-03-merch-unavailable-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha-art",
+    "setup": "suggestion-unavailable; direct postcards purchase disabled",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:55:44.474Z",
+    "image": {
+      "width": 374,
+      "height": 1204
+    },
+    "bytes": 53161,
+    "sha256": "892ad5be7a1e6fa94637c017982a5c6c3c0c9600413253772b5d98eac37a4033"
+  },
+  {
+    "id": "SCR-03-paper",
+    "filename": "SCR-03-paper-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; paper selected 499; empty cart",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:45.373Z",
+    "image": {
+      "width": 1424,
+      "height": 1461
+    },
+    "bytes": 129963,
+    "sha256": "b47dccdfae14d7ee5efd7870559605da5695cb6af2498fb29edee6c0a7995d81"
+  },
+  {
+    "id": "SCR-03-paper",
+    "filename": "SCR-03-paper-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; paper selected 499; empty cart",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 96.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:59.075Z",
+    "image": {
+      "width": 344,
+      "height": 1867
+    },
+    "bytes": 79559,
+    "sha256": "66a24e192df190c5af495ed1972a98e1f1ff583b4f2a6e493e405e839c3a5eff"
+  },
+  {
+    "id": "SCR-03-paper",
+    "filename": "SCR-03-paper-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; paper selected 499; empty cart",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 122.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:52:52.499Z",
+    "image": {
+      "width": 374,
+      "height": 1842
+    },
+    "bytes": 82705,
+    "sha256": "d6641285311d5a3dce1b76d5ed2a391c705884d3b7941a9ac13d527c2f7ce089"
+  },
+  {
+    "id": "SCR-03-paper-unavailable",
+    "filename": "SCR-03-paper-unavailable-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "paper-unavailable; default paper checked and disabled; digital available",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:54:41.153Z",
+    "image": {
+      "width": 1424,
+      "height": 1461
+    },
+    "bytes": 126589,
+    "sha256": "486ca312fa049f05cd78313a3cd51dba4a5f2c70f1843b3f680683863f88a85c"
+  },
+  {
+    "id": "SCR-03-paper-unavailable",
+    "filename": "SCR-03-paper-unavailable-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "paper-unavailable; default paper checked and disabled; digital available",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 231.3333282470703,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:54:47.995Z",
+    "image": {
+      "width": 344,
+      "height": 1867
+    },
+    "bytes": 77963,
+    "sha256": "50e6c36f0c54e8fb015afc83d38ab518cfefdace19ee27367adb547739ec29ea"
+  },
+  {
+    "id": "SCR-03-paper-unavailable",
+    "filename": "SCR-03-paper-unavailable-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "paper-unavailable; default paper checked and disabled; digital available",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:54:44.783Z",
+    "image": {
+      "width": 374,
+      "height": 1842
+    },
+    "bytes": 82195,
+    "sha256": "4bedc46f9e45d4e4e7fe3d4c61115f75e1643d80a6e198076eb14854fab64efb"
+  },
+  {
+    "id": "SCR-03-preorder",
+    "filename": "SCR-03-preorder-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/pid_shepit_snihu",
+    "setup": "normal; paper preorder 349; empty cart",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 106,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:09.508Z",
+    "image": {
+      "width": 1424,
+      "height": 1344
+    },
+    "bytes": 164894,
+    "sha256": "35f1fc77b6157c18e69696d37da1c57b4d5b1fdb9bf138d46dbcb581f65b5393"
+  },
+  {
+    "id": "SCR-03-preorder",
+    "filename": "SCR-03-preorder-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/pid_shepit_snihu",
+    "setup": "normal; paper preorder 349; empty cart",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 132,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:15.396Z",
+    "image": {
+      "width": 344,
+      "height": 2287
+    },
+    "bytes": 100443,
+    "sha256": "2ecb461f7b02171d10840492354e80b23fcc2b4ad996328fa065447bfa30ec14"
+  },
+  {
+    "id": "SCR-03-preorder",
+    "filename": "SCR-03-preorder-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/pid_shepit_snihu",
+    "setup": "normal; paper preorder 349; empty cart",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:51:12.646Z",
+    "image": {
+      "width": 374,
+      "height": 2185
+    },
+    "bytes": 101840,
+    "sha256": "73429e68c2b7706b1081ba4c28023464926c4e5552d9eb629ab4a4d59e9e2e52"
+  },
+  {
+    "id": "SCR-03-sequel",
+    "filename": "SCR-03-sequel-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; paper 550; empty cart",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:53:53.093Z",
+    "image": {
+      "width": 1424,
+      "height": 1424
+    },
+    "bytes": 130196,
+    "sha256": "50be87bbe9c2adec35dfbd40148570aa6a745f2a0571f6c729cd803af6499216"
+  },
+  {
+    "id": "SCR-03-sequel",
+    "filename": "SCR-03-sequel-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; paper 550; empty cart",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 96.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:54:07.159Z",
+    "image": {
+      "width": 344,
+      "height": 1912
+    },
+    "bytes": 79100,
+    "sha256": "c91874ed759a327aeaab30f72ac9f6e6e96a79dec14aefce8a23f5e2a4a98a2f"
+  },
+  {
+    "id": "SCR-03-sequel",
+    "filename": "SCR-03-sequel-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; paper 550; empty cart",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 122.66666412353516,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:54:00.577Z",
+    "image": {
+      "width": 374,
+      "height": 1861
+    },
+    "bytes": 80498,
+    "sha256": "b3afd1ea7d0f6cec9f65d3676378eb0b840cfffad5dfe4bc709bba47fb7f9784"
+  },
+  {
+    "id": "SCR-03-sequel-digital",
+    "filename": "SCR-03-sequel-digital-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; electronic 249",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:53:57.400Z",
+    "image": {
+      "width": 1424,
+      "height": 1424
+    },
+    "bytes": 129754,
+    "sha256": "5245e0cb3acb9cfd2af17b25a5660d1d3de4dc9efbf3d5ce8dd9069272517a43"
+  },
+  {
+    "id": "SCR-03-sequel-digital",
+    "filename": "SCR-03-sequel-digital-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; electronic 249",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 150,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:54:10.661Z",
+    "image": {
+      "width": 344,
+      "height": 1912
+    },
+    "bytes": 78989,
+    "sha256": "0fee9bb85d11fb10549c715a5bacbc759b493e933951c6608e3135c9fd1fd094"
+  },
+  {
+    "id": "SCR-03-sequel-digital",
+    "filename": "SCR-03-sequel-digital-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; electronic 249",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 176,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:54:04.104Z",
+    "image": {
+      "width": 374,
+      "height": 1861
+    },
+    "bytes": 84666,
+    "sha256": "f18a3b44110406fdaa61c3fe656f00a6c4422cf69485160f8a67b0012ec3c4bc"
+  },
+  {
+    "id": "SCR-03-slow-arrival",
+    "filename": "SCR-03-slow-arrival-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "product-loading; completed arrival after 5s server delay; pending state not captured",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:58:18.524Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 89671,
+    "sha256": "f6e93f21ac6f60c1c195710a28611554c3a82e63c2edbb14322ae7b06c6c3807"
+  },
+  {
+    "id": "SCR-03-slow-arrival",
+    "filename": "SCR-03-slow-arrival-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "product-loading; completed arrival after 5s server delay; pending state not captured",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:57:44.932Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 38502,
+    "sha256": "00d0c8dda99c2f6c3262afb55d110bee1561a89b18fd86d7af0b6c839a417600"
+  },
+  {
+    "id": "SCR-03-slow-arrival",
+    "filename": "SCR-03-slow-arrival-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "product-loading; completed arrival after 5s server delay; pending state not captured",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:58:39.072Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 38547,
+    "sha256": "55debf901cc1a1c15337e22605f970b94c5fe6139a7a25057700b8f157340fa8"
+  },
+  {
+    "id": "SCR-03-suggestion",
+    "filename": "SCR-03-suggestion-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; Buy opens suggested postcards before cart",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:53:53.964Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 60388,
+    "sha256": "712abb8e07e11c9ccdad4e68340a48bd7eddccba5f792dced968ddd5855c4e35"
+  },
+  {
+    "id": "SCR-03-suggestion",
+    "filename": "SCR-03-suggestion-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; Buy opens suggested postcards before cart",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 205.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:54:07.600Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 28903,
+    "sha256": "02679d6fa1c029a8bf6da3dc6039aa3bfb4100f8dcade3acfc6d1c29f0936550"
+  },
+  {
+    "id": "SCR-03-suggestion",
+    "filename": "SCR-03-suggestion-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "normal; Buy opens suggested postcards before cart",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 231.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:54:01.032Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 29095,
+    "sha256": "c3ba89555b0c23f96f319d800d0e6f41882e582a315339fd96d660c6aa81950b"
+  },
+  {
+    "id": "SCR-03-suggestion-unavailable",
+    "filename": "SCR-03-suggestion-unavailable-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "suggestion-unavailable; suggestion still offers Add at 299",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:55:55.540Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 62239,
+    "sha256": "e1370c56cefcee11977e6eb993f3bb1bd1d8bcd87864ed268db872860d4c8d27"
+  },
+  {
+    "id": "SCR-03-suggestion-unavailable",
+    "filename": "SCR-03-suggestion-unavailable-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "suggestion-unavailable; suggestion still offers Add at 299",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 205.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:56:00.934Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 30021,
+    "sha256": "5a2ee12eab280d6cdfa0e356a84a1d2cfad8a1cc37bb887078a7c3d1446e5012"
+  },
+  {
+    "id": "SCR-03-suggestion-unavailable",
+    "filename": "SCR-03-suggestion-unavailable-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "suggestion-unavailable; suggestion still offers Add at 299",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 231.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:55:58.188Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 31365,
+    "sha256": "ef7c650b89b8089f503d026c7fed6c11aad9cc6cdfcdffd5eb7db6310da740e9"
+  },
+  {
+    "id": "SCR-03-unavailable",
+    "filename": "SCR-03-unavailable-1440x900-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "unavailable; both formats and purchase actions disabled",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:56:20.372Z",
+    "image": {
+      "width": 1424,
+      "height": 1461
+    },
+    "bytes": 125696,
+    "sha256": "f47cd25e7ade54b4ec247c77e47e50346cb05b166e80195e6917d40b425d747b"
+  },
+  {
+    "id": "SCR-03-unavailable",
+    "filename": "SCR-03-unavailable-360x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "unavailable; both formats and purchase actions disabled",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:56:22.642Z",
+    "image": {
+      "width": 344,
+      "height": 1867
+    },
+    "bytes": 79281,
+    "sha256": "350d884c64f4a38e228ea6606dc35b83092f29cfd46f10a362b57556a0acdfd6"
+  },
+  {
+    "id": "SCR-03-unavailable",
+    "filename": "SCR-03-unavailable-390x844-full.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "unavailable; both formats and purchase actions disabled",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": true,
+    "recordedAt": "2026-10-04T06:56:21.516Z",
+    "image": {
+      "width": 374,
+      "height": 1842
+    },
+    "bytes": 82546,
+    "sha256": "7e00d456989b4b17f48ffb0f7b047308dadbca300b440368376aa87cd1b7d512"
+  },
+  {
+    "id": "SCR-04-digital",
+    "filename": "SCR-04-digital-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; digital cart quantity constrained to one; total 199",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:52:49.682Z",
+    "image": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 58165,
+    "sha256": "0cc1651e707bd3fbd82c8595efeb077cfc8f19b771b8b8df97cdb73bd6a61d11"
+  },
+  {
+    "id": "SCR-04-digital",
+    "filename": "SCR-04-digital-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; digital cart quantity constrained to one; total 199",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 205.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:53:02.971Z",
+    "image": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 17371,
+    "sha256": "d36b4e802ac758115d49e8c047811ec7ec356c440d8216e7d133adddbb3f88b2"
+  },
+  {
+    "id": "SCR-04-digital",
+    "filename": "SCR-04-digital-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; digital cart quantity constrained to one; total 199",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 231.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:52:56.425Z",
+    "image": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 18237,
+    "sha256": "d0f35cfddb9feda65915a0252e981ffdcabd73243b871ee3bf0c4d8f268eeb2a"
+  },
+  {
+    "id": "SCR-04-paper",
+    "filename": "SCR-04-paper-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; repeated Add opens cart; quantity 1; total 499",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:52:46.628Z",
+    "image": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 60867,
+    "sha256": "81d99cf4824bbb0a481f9f7acc795cd7f26190265b3fb0ae3b510d7bb1417c89"
+  },
+  {
+    "id": "SCR-04-paper",
+    "filename": "SCR-04-paper-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; repeated Add opens cart; quantity 1; total 499",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 263.3333435058594,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:52:59.892Z",
+    "image": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 18394,
+    "sha256": "75af8a4a44b7764d3f58b3a588dd59e3d1cec79eddf61931fc1526b94be6555f"
+  },
+  {
+    "id": "SCR-04-paper",
+    "filename": "SCR-04-paper-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; repeated Add opens cart; quantity 1; total 499",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 289.3333435058594,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:52:53.326Z",
+    "image": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 18044,
+    "sha256": "415973589040d62d29561ec87cbc0886ab9e1e0df39ed57b050d012da74ef0a1"
+  },
+  {
+    "id": "SCR-04-preorder",
+    "filename": "SCR-04-preorder-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/pid_shepit_snihu",
+    "setup": "normal; preorder item added; cart 349",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:51:10.367Z",
+    "image": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 65699,
+    "sha256": "0a20b300369ef9c71f35ae74bb82b7030e399dff54705a33c15cffa3ecac7e54"
+  },
+  {
+    "id": "SCR-04-preorder",
+    "filename": "SCR-04-preorder-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/pid_shepit_snihu",
+    "setup": "normal; preorder item added; cart 349",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 106,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:51:16.072Z",
+    "image": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 18889,
+    "sha256": "2065bc077e8d2504627039736528d0efda596ba6c3072a3b852032c921ecdcf7"
+  },
+  {
+    "id": "SCR-04-preorder",
+    "filename": "SCR-04-preorder-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/pid_shepit_snihu",
+    "setup": "normal; preorder item added; cart 349",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 132,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:51:13.316Z",
+    "image": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 19802,
+    "sha256": "d2fee1391db7b08f03c5cc836dfa7e24b83d79d13251a6f01fe917e364a5f94a"
+  },
+  {
+    "id": "SCR-04-unavailable-suggestion",
+    "filename": "SCR-04-unavailable-suggestion-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "suggestion-unavailable; unavailable postcards accepted; cart total 849",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:55:56.130Z",
+    "image": {
+      "width": 1440,
+      "height": 900
+    },
+    "bytes": 70036,
+    "sha256": "2e593f16117f7b0fe46760a4ac88d1c5981097015a0a165be26e07da66562374"
+  },
+  {
+    "id": "SCR-04-unavailable-suggestion",
+    "filename": "SCR-04-unavailable-suggestion-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "suggestion-unavailable; unavailable postcards accepted; cart total 849",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 205.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:56:01.786Z",
+    "image": {
+      "width": 360,
+      "height": 844
+    },
+    "bytes": 25430,
+    "sha256": "6c9df72101af96e31ecf4b5720e2ed870dbe7047f5ce9cfc5e18708ec7cc8e97"
+  },
+  {
+    "id": "SCR-04-unavailable-suggestion",
+    "filename": "SCR-04-unavailable-suggestion-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/inaksha",
+    "setup": "suggestion-unavailable; unavailable postcards accepted; cart total 849",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 231.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:55:59.018Z",
+    "image": {
+      "width": 390,
+      "height": 844
+    },
+    "bytes": 25202,
+    "sha256": "b5c8c38690d559696d595481c1db666d9b9b987db7f3d482f31528aed29ace37"
+  },
+  {
+    "id": "SCR-10-error",
+    "filename": "SCR-10-error-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "product-error; zvychajna cache invalidated; API 500; branded recovery screen; replacement desktop export",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 143.3333282470703,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T07:11:17.730Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 50940,
+    "sha256": "cda46ee1d1cd11609b697a011e2a1b26b058cf721491eab9e75462cc2878d967"
+  },
+  {
+    "id": "SCR-10-error",
+    "filename": "SCR-10-error-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "product-error; HTTP 500; retry and catalog actions present",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:56:44.492Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 30435,
+    "sha256": "35f34e7698d49b85c4b1c61812cb9a66a5b170d96cd491c8e91405013cc3fc24"
+  },
+  {
+    "id": "SCR-10-error",
+    "filename": "SCR-10-error-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "product-error; HTTP 500; retry and catalog actions present",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:56:44.413Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 30911,
+    "sha256": "18955413974402b34133f0f43c730836b2324667a24b749303b8ad0e0e87aa4c"
+  },
+  {
+    "id": "SCR-10-not-found",
+    "filename": "SCR-10-not-found-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvy54-missing-book",
+    "setup": "normal; unknown slug; missing-product explanation and catalog action",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:57:16.755Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 40455,
+    "sha256": "8ece46fc91a4e2c652b25d7f9f7080bccdf7f49c95e9f67259fe4b38786b80c6"
+  },
+  {
+    "id": "SCR-10-not-found",
+    "filename": "SCR-10-not-found-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvy54-missing-book",
+    "setup": "normal; unknown slug; missing-product explanation and catalog action",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:57:16.918Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 25112,
+    "sha256": "79d50b903341a7029ea6ca1dda13165b138fbdd1d26335332d00eb1706cbbc49"
+  },
+  {
+    "id": "SCR-10-not-found",
+    "filename": "SCR-10-not-found-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvy54-missing-book",
+    "setup": "normal; unknown slug; missing-product explanation and catalog action",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 0,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:57:16.844Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 24716,
+    "sha256": "20730d1d80abc94f275be31dbf3f121e64d2382e5e8c475fcf1a933a0322b733"
+  },
+  {
+    "id": "SCR-10-recovered",
+    "filename": "SCR-10-recovered-1440x900.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal; zvychajna cache invalidated; clicked Retry from API 500; replacement desktop export",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 97.33333587646484,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T07:11:35.368Z",
+    "image": {
+      "width": 1425,
+      "height": 891
+    },
+    "bytes": 96430,
+    "sha256": "bbc76924ae0306e48f54fb0dbb48d61309faecd3a15cdde62ec17023f54d31a1"
+  },
+  {
+    "id": "SCR-10-recovered",
+    "filename": "SCR-10-recovered-360x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal restored; retry returned product successfully",
+    "viewport": {
+      "width": 360,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 100.66666412353516,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:57:12.363Z",
+    "image": {
+      "width": 345,
+      "height": 809
+    },
+    "bytes": 42345,
+    "sha256": "7bdc445773e2c4c7753f75a862970fbbb695cf78043ce3e5d06b6dd184e190ee"
+  },
+  {
+    "id": "SCR-10-recovered",
+    "filename": "SCR-10-recovered-390x844.jpg",
+    "route": "http://127.0.0.1:3100/books/zvychajna",
+    "setup": "normal restored; retry returned product successfully",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 1.0000000298023224,
+    "scrollY": 100.66666412353516,
+    "fullPage": false,
+    "recordedAt": "2026-10-04T06:57:12.303Z",
+    "image": {
+      "width": 375,
+      "height": 812
+    },
+    "bytes": 42814,
+    "sha256": "165bf4b3868f4d2dd51e9711c7d76a5e0f7f622a4f8f8075e68a03e19ebe686f"
+  }
+]
