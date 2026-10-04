@@ -1,0 +1,3439 @@
+{
+  "issue": "ZVY-56",
+  "date": "2026-10-04",
+  "timezone": "Europe/Kyiv",
+  "frontendRevision": "28f0367c1a5b57bb43ea8e03900675a466dc35eb",
+  "status": "consolidation checked for source/evidence consistency and correctness; ready for ZVY-57 product-owner screen decisions; no fixes approved",
+  "counts": {
+    "sourceFindings": 26,
+    "canonicalFindings": 22,
+    "confirmedCanonical": 14,
+    "hypothesesCanonical": 8,
+    "acceptedTextContrastExceptions": 1,
+    "originalCaptures": 221,
+    "recordedChecks": 297
+  },
+  "sources": [
+    {
+      "issue": "ZVY-53",
+      "directory": "../storefront-discovery",
+      "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+      "findings": 8,
+      "captures": 35,
+      "checks": 25,
+      "files": [
+        {
+          "path": "../storefront-discovery/REPORT.md",
+          "sha256": "93f74173506090502583f4436da162998bb84f140905ce2cbb171717b33f3b3f"
+        },
+        {
+          "path": "../storefront-discovery/findings.json",
+          "sha256": "5b5becdc4493adb7ff8933e5305bda9287de3edec016dc0c7ad7c407426f524b"
+        },
+        {
+          "path": "../storefront-discovery/checks.json",
+          "sha256": "fc30dd4ca44fb0d242ea0d6146c1cdb8047ad0109fa308ca8da339fcb6057f7a"
+        },
+        {
+          "path": "../storefront-discovery/captures.json",
+          "sha256": "70396e1b7b9fd163981e1a6404e9e6486e50b04f83066786c18cc3a3878b5095"
+        }
+      ]
+    },
+    {
+      "issue": "ZVY-54",
+      "directory": "../storefront-selection",
+      "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+      "findings": 8,
+      "captures": 81,
+      "checks": 127,
+      "files": [
+        {
+          "path": "../storefront-selection/REPORT.md",
+          "sha256": "a4f5650cb1cca8e8673bd712f704ae6a641bafceb696b834b5241b8a07098fce"
+        },
+        {
+          "path": "../storefront-selection/findings.json",
+          "sha256": "fa1cf7ea77063c4a8b3245d9c4a08521d1a9ad798042f88591c1a5016428fe6b"
+        },
+        {
+          "path": "../storefront-selection/checks.json",
+          "sha256": "ac5eb65d0d4a08a5d34d154124e3e1c37df3b504f94d201556e16d52252f8528"
+        },
+        {
+          "path": "../storefront-selection/captures.json",
+          "sha256": "954db56c1ceaa4315b8e177b86802a0ce9d5e10a001e72ce4352102e01c6fb2e"
+        }
+      ]
+    },
+    {
+      "issue": "ZVY-55",
+      "directory": "../storefront-checkout",
+      "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+      "findings": 10,
+      "captures": 105,
+      "checks": 145,
+      "files": [
+        {
+          "path": "../storefront-checkout/REPORT.md",
+          "sha256": "75de2d8a8af8e626e549aec928ed28b49542f306bab4fd4e34592f81d8360c72"
+        },
+        {
+          "path": "../storefront-checkout/findings.json",
+          "sha256": "1850f162d6c4750d43cb85aa951281bcb69e527bdffa8d45a97749d3b7c35640"
+        },
+        {
+          "path": "../storefront-checkout/checks.json",
+          "sha256": "c74b16db5473f4b316e8b90547cbdb7457a5bb2c90478888171147acb3393a96"
+        },
+        {
+          "path": "../storefront-checkout/captures.json",
+          "sha256": "e32b5cac2084ebc1708f45ced9897013bc8c26ef8684d6e772b6f0b49a48a37d"
+        }
+      ]
+    }
+  ],
+  "mapping": [
+    {
+      "sourceId": "F-DISC-001",
+      "canonicalId": "F-DISC-001"
+    },
+    {
+      "sourceId": "F-DISC-002",
+      "canonicalId": "F-DISC-002"
+    },
+    {
+      "sourceId": "F-DISC-003",
+      "canonicalId": "F-DISC-003"
+    },
+    {
+      "sourceId": "F-DISC-004",
+      "canonicalId": "F-DISC-004"
+    },
+    {
+      "sourceId": "F-DISC-005",
+      "canonicalId": "F-DISC-005"
+    },
+    {
+      "sourceId": "F-DISC-006",
+      "canonicalId": "F-DISC-006"
+    },
+    {
+      "sourceId": "F-DISC-007",
+      "canonicalId": "F-DISC-007"
+    },
+    {
+      "sourceId": "F-DISC-008",
+      "canonicalId": "F-DISC-008"
+    },
+    {
+      "sourceId": "F-BOOK-001",
+      "canonicalId": "F-BOOK-001"
+    },
+    {
+      "sourceId": "F-BOOK-002",
+      "canonicalId": "F-BOOK-002"
+    },
+    {
+      "sourceId": "F-BOOK-003",
+      "canonicalId": "F-DISC-002"
+    },
+    {
+      "sourceId": "F-BOOK-004",
+      "canonicalId": "F-BOOK-004"
+    },
+    {
+      "sourceId": "F-BOOK-005",
+      "canonicalId": "F-BOOK-005"
+    },
+    {
+      "sourceId": "F-BOOK-006",
+      "canonicalId": "F-BOOK-006"
+    },
+    {
+      "sourceId": "F-BOOK-007",
+      "canonicalId": "F-DISC-007"
+    },
+    {
+      "sourceId": "F-BOOK-008",
+      "canonicalId": "F-DISC-008"
+    },
+    {
+      "sourceId": "F-CHECK-001",
+      "canonicalId": "F-CHECK-001"
+    },
+    {
+      "sourceId": "F-CHECK-002",
+      "canonicalId": "F-CHECK-002"
+    },
+    {
+      "sourceId": "F-CHECK-003",
+      "canonicalId": "F-CHECK-003"
+    },
+    {
+      "sourceId": "F-CHECK-004",
+      "canonicalId": "F-CHECK-004"
+    },
+    {
+      "sourceId": "F-CHECK-005",
+      "canonicalId": "F-CHECK-005"
+    },
+    {
+      "sourceId": "F-CHECK-006",
+      "canonicalId": "F-CHECK-006"
+    },
+    {
+      "sourceId": "F-CHECK-007",
+      "canonicalId": "F-CHECK-007"
+    },
+    {
+      "sourceId": "F-CHECK-008",
+      "canonicalId": "F-CHECK-008"
+    },
+    {
+      "sourceId": "F-CHECK-009",
+      "canonicalId": "F-DISC-007"
+    },
+    {
+      "sourceId": "F-CHECK-010",
+      "canonicalId": "F-CHECK-010"
+    }
+  ],
+  "findings": [
+    {
+      "id": "F-DISC-006",
+      "sourceIds": [
+        "F-DISC-006"
+      ],
+      "screen": "Home",
+      "reviewRank": 17,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-006",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "The action is below the first mobile viewport, but shop navigation remains available. No observed purchase failure or customer confusion justifies P1.",
+      "classification": "usability hypothesis",
+      "title": "Mobile home places the featured action below a long cover and description",
+      "screenStates": [
+        "SCR-01-default"
+      ],
+      "routes": [
+        "/"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        }
+      ],
+      "devices": [
+        "mobile 390x844",
+        "narrow mobile 360x844; desktop 1440x900 compared"
+      ],
+      "deviceDifference": "Mobile hierarchy; desktop action is already in the first viewport.",
+      "observedBehavior": "The mobile cover precedes the copy, followed by the full featured description. Детальніше begins around document y=1247px at 390px and y=1244px at 360px, below the 844px viewport; desktop places it around y=583px. 'Від 249 грн' does not name the electronic edition that supplies the minimum price; detail selection initially shows paper at 550 грн. Shop navigation remains visible at the top.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Mobile customers may delay finding the featured action or assume the displayed minimum applies to the paper book. Actual confusion was not observed with users."
+      },
+      "expected": "The featured offer and a clear next action are discoverable early, with the meaning of the starting price understandable.",
+      "suggestedImprovement": "Review a compact initial mobile offer with an earlier details/shop action and a format-qualified starting price. Retain the description as supporting content.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-006",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "Open home at 390x844 or 360x844 with the normal catalog snapshot.",
+            "Locate the featured title, starting price and Детальніше action by scrolling.",
+            "Compare the first viewport with desktop and open the featured book."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-01-default-1440x900.jpg",
+        "../storefront-discovery/screenshots/SCR-01-default-390x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-01-default-360x844-full.jpg",
+        "../storefront-discovery/checks.json#HOME-LAYOUT",
+        "../storefront-baseline/REFERENCE.md#scr-03-sequel--sequel-product"
+      ],
+      "limits": [
+        "Vertical positions depend on this frozen featured description, fonts and browser scrollbar geometry. This is not proof of abandonment or a misleading-price defect."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-006",
+            "title": "Mobile home places the featured action below a long cover and description",
+            "screenStates": [
+              "SCR-01-default"
+            ],
+            "routes": [
+              "/"
+            ],
+            "devices": [
+              "mobile 390x844",
+              "narrow mobile 360x844; desktop 1440x900 compared"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "steps": [
+              "Open home at 390x844 or 360x844 with the normal catalog snapshot.",
+              "Locate the featured title, starting price and Детальніше action by scrolling.",
+              "Compare the first viewport with desktop and open the featured book."
+            ],
+            "actual": "The mobile cover precedes the copy, followed by the full featured description. Детальніше begins around document y=1247px at 390px and y=1244px at 360px, below the 844px viewport; desktop places it around y=583px. 'Від 249 грн' does not name the electronic edition that supplies the minimum price; detail selection initially shows paper at 550 грн. Shop navigation remains visible at the top.",
+            "expected": "The featured offer and a clear next action are discoverable early, with the meaning of the starting price understandable.",
+            "impact": "Mobile customers may delay finding the featured action or assume the displayed minimum applies to the paper book. Actual confusion was not observed with users.",
+            "improvement": "Review a compact initial mobile offer with an earlier details/shop action and a format-qualified starting price. Retain the description as supporting content.",
+            "evidence": [
+              "screenshots/SCR-01-default-1440x900.jpg",
+              "screenshots/SCR-01-default-390x844-full.jpg",
+              "screenshots/SCR-01-default-360x844-full.jpg",
+              "checks.json#HOME-LAYOUT",
+              "../storefront-baseline/REFERENCE.md#scr-03-sequel--sequel-product"
+            ],
+            "status": "proposed; screen review required",
+            "limitations": "Vertical positions depend on this frozen featured description, fonts and browser scrollbar geometry. This is not proof of abandonment or a misleading-price defect."
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-DISC-001",
+      "sourceIds": [
+        "F-DISC-001"
+      ],
+      "screen": "Catalog",
+      "reviewRank": 6,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-001",
+          "priority": "P1"
+        }
+      ],
+      "tier": "conditional blocker",
+      "priorityReason": "A cold catalog outage removes the offers and supplies no retry; a customer cannot continue discovery in this scenario. Production outage frequency and warm-cache behavior are unknown.",
+      "classification": "confirmed defect",
+      "title": "Catalog outage is presented as empty stock; home loses its content",
+      "screenStates": [
+        "SCR-01-api-offline",
+        "SCR-02-api-offline"
+      ],
+      "routes": [
+        "/",
+        "/books"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; cold load after local cache invalidation only.",
+      "observedBehavior": "The catalog displays 'Поки що немає книг для відображення.' without an error or retry action. Home main is empty. The local server logged ECONNREFUSED 127.0.0.1:4100; both routes returned HTTP 200.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers may conclude that no books are sold, abandon discovery, or have no clear way to recover."
+      },
+      "expected": "Distinguish unavailable catalog data from a successfully loaded empty catalog, preserve the page purpose, and offer recovery.",
+      "suggestedImprovement": "Review separate loading, empty and failure presentations with a retry action and useful navigation. Keep known data during refresh failures with an explicit freshness cue.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-001",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "Start the ZVY-52 loopback API and frontend with the documented capture settings.",
+            "Stop only the capture-api.mjs process listening on loopback port 4100.",
+            "Invalidate / and /books using the local revalidation endpoint.",
+            "Reload /books and then open /."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-02-api-offline-1440x900.jpg",
+        "../storefront-discovery/screenshots/SCR-02-api-offline-390x844.jpg",
+        "../storefront-discovery/screenshots/SCR-02-api-offline-360x844.jpg",
+        "../storefront-discovery/screenshots/SCR-01-api-offline-1440x900.jpg",
+        "../storefront-discovery/screenshots/SCR-01-api-offline-390x844.jpg",
+        "../storefront-discovery/screenshots/SCR-01-api-offline-360x844.jpg",
+        "../storefront-discovery/checks.json#CATALOG-OFFLINE",
+        "../storefront-discovery/checks.json#HOME-OFFLINE",
+        "../../src/lib/api.ts",
+        "../../src/components/molecules/ProductsProvider.tsx"
+      ],
+      "limits": [
+        "Confirmed for a cold load after cache invalidation and a refused loopback connection. Warm-cache retention, HTTP 500 on the catalog endpoint and production outage timing were not separately reproduced."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-001",
+            "title": "Catalog outage is presented as empty stock; home loses its content",
+            "screenStates": [
+              "SCR-01-api-offline",
+              "SCR-02-api-offline"
+            ],
+            "routes": [
+              "/",
+              "/books"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "steps": [
+              "Start the ZVY-52 loopback API and frontend with the documented capture settings.",
+              "Stop only the capture-api.mjs process listening on loopback port 4100.",
+              "Invalidate / and /books using the local revalidation endpoint.",
+              "Reload /books and then open /."
+            ],
+            "actual": "The catalog displays 'Поки що немає книг для відображення.' without an error or retry action. Home main is empty. The local server logged ECONNREFUSED 127.0.0.1:4100; both routes returned HTTP 200.",
+            "expected": "Distinguish unavailable catalog data from a successfully loaded empty catalog, preserve the page purpose, and offer recovery.",
+            "impact": "Customers may conclude that no books are sold, abandon discovery, or have no clear way to recover.",
+            "improvement": "Review separate loading, empty and failure presentations with a retry action and useful navigation. Keep known data during refresh failures with an explicit freshness cue.",
+            "evidence": [
+              "screenshots/SCR-02-api-offline-1440x900.jpg",
+              "screenshots/SCR-02-api-offline-390x844.jpg",
+              "screenshots/SCR-02-api-offline-360x844.jpg",
+              "screenshots/SCR-01-api-offline-1440x900.jpg",
+              "screenshots/SCR-01-api-offline-390x844.jpg",
+              "screenshots/SCR-01-api-offline-360x844.jpg",
+              "checks.json#CATALOG-OFFLINE",
+              "checks.json#HOME-OFFLINE",
+              "../../src/lib/api.ts",
+              "../../src/components/molecules/ProductsProvider.tsx"
+            ],
+            "status": "proposed; screen review required",
+            "limitations": "Confirmed for a cold load after cache invalidation and a refused loopback connection. Warm-cache retention, HTTP 500 on the catalog endpoint and production outage timing were not separately reproduced."
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-DISC-002",
+      "sourceIds": [
+        "F-DISC-002",
+        "F-BOOK-003"
+      ],
+      "screen": "Catalog",
+      "reviewRank": 5,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-002",
+          "priority": "P1"
+        },
+        {
+          "id": "F-BOOK-003",
+          "priority": "P1"
+        }
+      ],
+      "tier": "likely mistake",
+      "priorityReason": "Preorder and unavailable status becomes inconsistent across multiple purchase entry points and cart review. Mistaken delivery expectations are plausible but were not observed with customers.",
+      "classification": "confirmed defect",
+      "title": "Availability and preorder disclosure is inconsistent from catalog to cart",
+      "screenStates": [
+        "SCR-02-default",
+        "SCR-02-unavailable",
+        "SCR-03-preorder",
+        "SCR-04-preorder",
+        "SCR-03-unavailable"
+      ],
+      "routes": [
+        "/books",
+        "/books/pid_shepit_snihu",
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; catalog, product guidance and cart must agree.",
+      "observedBehavior": "Catalog preorder uses the ordinary Add label; unavailable quick-add actions are faded/disabled without status text. Product preorder correctly says Передзамовити, but adjacent guidance says Купити зараз; the cart loses preorder status. Fully unavailable products keep the same buy-now hint. No verified dispatch date is present in the captured offer.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers may expect immediate availability from a preorder, or waste detail-page visits to understand faded controls."
+      },
+      "expected": "Show truthful edition availability and preorder status consistently at discovery, selection and cart review, without inventing a shipping date.",
+      "suggestedImprovement": "Review format-level status, availability-specific guidance and a persistent cart preorder label together. Confirm any dispatch wording with the owner; explicitly say timing is unspecified when no verified date exists.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-002",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "In the normal snapshot, scroll to Під шепіт снігу in the catalog.",
+            "Inspect its price and quick-add label; open its detail page to compare the primary action.",
+            "Set the unavailable scenario, invalidate catalog data, reload and inspect the cards."
+          ]
+        },
+        {
+          "sourceId": "F-BOOK-003",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Open Pid shepit snihu using the normal snapshot.",
+            "Compare 'Передзамовити — 349 грн' with the guidance underneath.",
+            "Press Preorder and inspect the cart line.",
+            "In the unavailable scenario, compare disabled actions with the same guidance."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-02-default-1440x900-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-390x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-360x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-unavailable-1440x900-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-unavailable-390x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-unavailable-360x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-03-preorder-entry-360x844.jpg",
+        "../storefront-discovery/checks.json#PREORDER",
+        "../storefront-baseline/catalog-snapshot.json",
+        "../../src/components/molecules/BookCard.tsx",
+        "../storefront-selection/paired/SCR-03-preorder.jpg",
+        "../storefront-selection/paired/SCR-04-preorder.jpg",
+        "../storefront-selection/paired/SCR-03-unavailable.jpg",
+        "../storefront-selection/checks.json#PREORDER-390",
+        "../storefront-selection/checks.json#PREORDER-CART-390",
+        "../storefront-selection/checks.json#UNAVAILABLE-360",
+        "../../src/components/organisms/BookDetail.tsx",
+        "../../src/components/organisms/ShoppingCart.tsx"
+      ],
+      "limits": [
+        "Availability is the frozen approved snapshot or controlled flags, not current production stock. Shipping promises and subsequent cart disclosure belong to ZVY-54/55.",
+        "The contradictory hint and missing cart disclosure are confirmed. Actual customer confusion and delivery dates are not established. Cart/checkout consolidation should retain this originating ID."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-002",
+            "title": "Catalog does not disclose preorder or unavailable status in text",
+            "screenStates": [
+              "SCR-02-default",
+              "SCR-02-unavailable",
+              "SCR-03-preorder"
+            ],
+            "routes": [
+              "/books",
+              "/books/pid_shepit_snihu"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "steps": [
+              "In the normal snapshot, scroll to Під шепіт снігу in the catalog.",
+              "Inspect its price and quick-add label; open its detail page to compare the primary action.",
+              "Set the unavailable scenario, invalidate catalog data, reload and inspect the cards."
+            ],
+            "actual": "The preorder item has isAvailable=false and canPreorder=true but uses the same 'Додати в кошик' label and styling as in-stock items. Its details say 'Передзамовити — 349 грн'. Unavailable rows are faded with disabled quick-add buttons, while their labels still say 'Додати в кошик'; no visible status text explains why.",
+            "expected": "Customers can identify preorder and unavailable editions during comparison, before deciding to add or open them.",
+            "impact": "Customers may expect immediate availability from a preorder, or waste detail-page visits to understand faded controls.",
+            "improvement": "Review explicit format-level status text and a preorder-specific action label. Reuse verified backend flags; do not infer delivery dates.",
+            "evidence": [
+              "screenshots/SCR-02-default-1440x900-full.jpg",
+              "screenshots/SCR-02-default-390x844-full.jpg",
+              "screenshots/SCR-02-default-360x844-full.jpg",
+              "screenshots/SCR-02-unavailable-1440x900-full.jpg",
+              "screenshots/SCR-02-unavailable-390x844-full.jpg",
+              "screenshots/SCR-02-unavailable-360x844-full.jpg",
+              "screenshots/SCR-03-preorder-entry-360x844.jpg",
+              "checks.json#PREORDER",
+              "../storefront-baseline/catalog-snapshot.json",
+              "../../src/components/molecules/BookCard.tsx"
+            ],
+            "status": "proposed; screen review required",
+            "limitations": "Availability is the frozen approved snapshot or controlled flags, not current production stock. Shipping promises and subsequent cart disclosure belong to ZVY-54/55."
+          }
+        },
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-003",
+            "title": "Preorder wording is contradicted by the hint and lost on cart entry",
+            "group": "Edition selection and availability",
+            "screenStates": [
+              "SCR-03-preorder",
+              "SCR-04-preorder",
+              "SCR-03-unavailable"
+            ],
+            "routes": [
+              "/books/pid_shepit_snihu",
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "scenario": "normal; unavailable for the secondary hint check",
+            "steps": [
+              "Open Pid shepit snihu using the normal snapshot.",
+              "Compare 'Передзамовити — 349 грн' with the guidance underneath.",
+              "Press Preorder and inspect the cart line.",
+              "In the unavailable scenario, compare disabled actions with the same guidance."
+            ],
+            "actual": "The preorder action correctly says 'Передзамовити', but nearby guidance says 'Купити зараз або додати до кошика'. The cart shows only paper, price and quantity, with no preorder status. Fully unavailable products retain the same buy-now guidance. No availability date or dispatch timing is provided in the captured offer.",
+            "expected": "Purchase guidance reflects availability, and the selected preorder status remains visible when entering the cart. Timing should be stated only when reliable data exists.",
+            "impact": "Customers may mistake a preorder for an immediately available physical book, especially after leaving the detail page.",
+            "improvement": "Review availability-specific guidance, a persistent preorder badge in cart, and a verified timing explanation or an explicit statement that timing is unspecified.",
+            "evidence": [
+              "paired/SCR-03-preorder.jpg",
+              "paired/SCR-04-preorder.jpg",
+              "paired/SCR-03-unavailable.jpg",
+              "checks.json#PREORDER-390",
+              "checks.json#PREORDER-CART-390",
+              "checks.json#UNAVAILABLE-360",
+              "../../src/components/organisms/BookDetail.tsx",
+              "../../src/components/organisms/ShoppingCart.tsx"
+            ],
+            "relatedFindings": [
+              "F-DISC-002"
+            ],
+            "limits": "The contradictory hint and missing cart disclosure are confirmed. Actual customer confusion and delivery dates are not established. Cart/checkout consolidation should retain this originating ID.",
+            "status": "proposed; screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "One availability-disclosure decision spans catalog, product guidance and cart; preserve both originating IDs. Eligibility default and suggestion bypass remain separate defects.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-DISC-003",
+      "sourceIds": [
+        "F-DISC-003"
+      ],
+      "screen": "Catalog",
+      "reviewRank": 13,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-003",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "Current collection identification is visibly clipped at 360 px; complete accessible names and detail pages still exist.",
+      "classification": "confirmed defect",
+      "title": "Two-line card titles hide collection descriptions on narrow screens",
+      "screenStates": [
+        "SCR-02-default"
+      ],
+      "routes": [
+        "/books"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        }
+      ],
+      "devices": [
+        "narrow mobile 360x844; desktop 1440x900 and mobile 390x844 compared"
+      ],
+      "deviceDifference": "Confirmed narrow 360 px clipping; desktop titles fit this snapshot.",
+      "observedBehavior": "Брунатні історії and Під шепіт снігу titles are clamped to two lines with ellipses. Measured title content is 51px tall within a 34px box. Full titles remain in the accessibility tree, but the visual list hides the collection description. Desktop titles fit in this snapshot.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers comparing collections lose identifying information. The mismatch between visual and accessible titles complicates shared review."
+      },
+      "expected": "The visible catalog identifies each book and its collection context without requiring a detail-page visit.",
+      "suggestedImprovement": "Review wrapping complete titles or separating a short display title and meaningful subtitle. Preserve the full accessible product name.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-003",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "Open the normal catalog at 360x844.",
+            "Read the first collection title and scroll to Під шепіт снігу.",
+            "Compare visible titles with the complete accessible labels or product headings."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-02-default-1440x900-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-390x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-360x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-scrolled-360x844.jpg",
+        "../storefront-discovery/checks.json#NARROW-CLIPPING-SCROLLED",
+        "../../src/components/molecules/BookCard.module.css"
+      ],
+      "limits": [
+        "Confirmed for the two current collection titles at 360px. More extreme future titles and enlarged-text behavior remain unverified."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-003",
+            "title": "Two-line card titles hide collection descriptions on narrow screens",
+            "screenStates": [
+              "SCR-02-default"
+            ],
+            "routes": [
+              "/books"
+            ],
+            "devices": [
+              "narrow mobile 360x844; desktop 1440x900 and mobile 390x844 compared"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "steps": [
+              "Open the normal catalog at 360x844.",
+              "Read the first collection title and scroll to Під шепіт снігу.",
+              "Compare visible titles with the complete accessible labels or product headings."
+            ],
+            "actual": "Брунатні історії and Під шепіт снігу titles are clamped to two lines with ellipses. Measured title content is 51px tall within a 34px box. Full titles remain in the accessibility tree, but the visual list hides the collection description. Desktop titles fit in this snapshot.",
+            "expected": "The visible catalog identifies each book and its collection context without requiring a detail-page visit.",
+            "impact": "Customers comparing collections lose identifying information. The mismatch between visual and accessible titles complicates shared review.",
+            "improvement": "Review wrapping complete titles or separating a short display title and meaningful subtitle. Preserve the full accessible product name.",
+            "evidence": [
+              "screenshots/SCR-02-default-1440x900-full.jpg",
+              "screenshots/SCR-02-default-390x844-full.jpg",
+              "screenshots/SCR-02-default-360x844-full.jpg",
+              "screenshots/SCR-02-scrolled-360x844.jpg",
+              "checks.json#NARROW-CLIPPING-SCROLLED",
+              "../../src/components/molecules/BookCard.module.css"
+            ],
+            "status": "proposed; screen review required",
+            "limitations": "Confirmed for the two current collection titles at 360px. More extreme future titles and enlarged-text behavior remain unverified."
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-DISC-004",
+      "sourceIds": [
+        "F-DISC-004"
+      ],
+      "screen": "Catalog",
+      "reviewRank": 16,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-004",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "Small mobile rows and targets suggest ergonomic friction. The measured 26 px quick-add target is not evidence of a minimum-target violation.",
+      "classification": "usability hypothesis",
+      "title": "Compact mobile price rows and quick-add targets may hinder comparison",
+      "screenStates": [
+        "SCR-02-default"
+      ],
+      "routes": [
+        "/books"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        }
+      ],
+      "devices": [
+        "mobile 390x844",
+        "narrow mobile 360x844; desktop 1440x900 compared"
+      ],
+      "deviceDifference": "Mobile 390 and 360 px; desktop is the comparison.",
+      "observedBehavior": "Mobile format/price text is 11.2 CSS px; titles are 13.76px. Quick-add buttons are 26x26px, compared with 28x28px on desktop. Complete currency labels remain visually readable in the captured normal state, despite minimal horizontal spare space.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Small dense rows may require closer reading and increase touch mistakes. No user error rate was measured."
+      },
+      "expected": "Customers can comfortably compare formats and prices and reliably choose the intended format on a phone.",
+      "suggestedImprovement": "Review larger readable rows and more generous action targets; evaluate a single-column or less dense layout with representative customers.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-004",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "Browse the catalog at 390x844 and 360x844.",
+            "Compare paper/electronic rows for Звичайна and Інакша.",
+            "Measure the rendered price text and quick-add button bounds."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-02-default-1440x900-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-390x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-360x844-full.jpg",
+        "../storefront-discovery/checks.json#MOBILE-CATALOG",
+        "../storefront-discovery/checks.json#NARROW-CATALOG"
+      ],
+      "limits": [
+        "26px targets exceed the WCAG 2.2 24px minimum size. This is an ergonomic hypothesis, not a target-size violation. No physical phone, touch simulation or observed customer mistake is claimed."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-004",
+            "title": "Compact mobile price rows and quick-add targets may hinder comparison",
+            "screenStates": [
+              "SCR-02-default"
+            ],
+            "routes": [
+              "/books"
+            ],
+            "devices": [
+              "mobile 390x844",
+              "narrow mobile 360x844; desktop 1440x900 compared"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "steps": [
+              "Browse the catalog at 390x844 and 360x844.",
+              "Compare paper/electronic rows for Звичайна and Інакша.",
+              "Measure the rendered price text and quick-add button bounds."
+            ],
+            "actual": "Mobile format/price text is 11.2 CSS px; titles are 13.76px. Quick-add buttons are 26x26px, compared with 28x28px on desktop. Complete currency labels remain visually readable in the captured normal state, despite minimal horizontal spare space.",
+            "expected": "Customers can comfortably compare formats and prices and reliably choose the intended format on a phone.",
+            "impact": "Small dense rows may require closer reading and increase touch mistakes. No user error rate was measured.",
+            "improvement": "Review larger readable rows and more generous action targets; evaluate a single-column or less dense layout with representative customers.",
+            "evidence": [
+              "screenshots/SCR-02-default-1440x900-full.jpg",
+              "screenshots/SCR-02-default-390x844-full.jpg",
+              "screenshots/SCR-02-default-360x844-full.jpg",
+              "checks.json#MOBILE-CATALOG",
+              "checks.json#NARROW-CATALOG"
+            ],
+            "status": "proposed; screen review required",
+            "limitations": "26px targets exceed the WCAG 2.2 24px minimum size. This is an ergonomic hypothesis, not a target-size violation. No physical phone, touch simulation or observed customer mistake is claimed."
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-DISC-005",
+      "sourceIds": [
+        "F-DISC-005"
+      ],
+      "screen": "Catalog",
+      "reviewRank": 18,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-005",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "Missing subject/type cues increase expert-walkthrough effort, but six entries remain browsable and demand for search has not been demonstrated.",
+      "classification": "usability hypothesis",
+      "title": "Browsing without a title requires opening books to learn their subject",
+      "screenStates": [
+        "SCR-02-default"
+      ],
+      "routes": [
+        "/books"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; do not assume a mobile menu or search state exists.",
+      "observedBehavior": "Cards show covers, titles, age badges where present, embedded ratings and format prices. Genres or short descriptions are absent; books, bundle and postcards share one grid. Search/filter/sort are not implemented. Titles and covers provide some context, and the six-item list can be scanned manually.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Unknown-title browsing may require repeated detail-page visits. The small list may make search unnecessary; there is no evidence of a search-related blocker."
+      },
+      "expected": "Customers can make an informed shortlist from the catalog with enough subject/type context.",
+      "suggestedImprovement": "Review concise genre/type/series cues or book/merch grouping first. Add search or filters only if catalog size and customer evidence justify them.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-005",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "Enter the shop without a known title and compare all six entries.",
+            "Try to identify a romantic novel, story collection, bundle or merchandise from cards alone.",
+            "Look for search, filter, sort or descriptive discovery controls."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-02-default-1440x900-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-390x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-02-default-360x844-full.jpg",
+        "../storefront-discovery/checks.json#J-DESKTOP",
+        "../storefront-discovery/checks.json#J-MOBILE",
+        "../storefront-discovery/checks.json#J-NARROW"
+      ],
+      "limits": [
+        "This is an expert walkthrough, not a usability study. No timed discovery task, demand for filtering, or abandonment rate was measured."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-005",
+            "title": "Browsing without a title requires opening books to learn their subject",
+            "screenStates": [
+              "SCR-02-default"
+            ],
+            "routes": [
+              "/books"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "steps": [
+              "Enter the shop without a known title and compare all six entries.",
+              "Try to identify a romantic novel, story collection, bundle or merchandise from cards alone.",
+              "Look for search, filter, sort or descriptive discovery controls."
+            ],
+            "actual": "Cards show covers, titles, age badges where present, embedded ratings and format prices. Genres or short descriptions are absent; books, bundle and postcards share one grid. Search/filter/sort are not implemented. Titles and covers provide some context, and the six-item list can be scanned manually.",
+            "expected": "Customers can make an informed shortlist from the catalog with enough subject/type context.",
+            "impact": "Unknown-title browsing may require repeated detail-page visits. The small list may make search unnecessary; there is no evidence of a search-related blocker.",
+            "improvement": "Review concise genre/type/series cues or book/merch grouping first. Add search or filters only if catalog size and customer evidence justify them.",
+            "evidence": [
+              "screenshots/SCR-02-default-1440x900-full.jpg",
+              "screenshots/SCR-02-default-390x844-full.jpg",
+              "screenshots/SCR-02-default-360x844-full.jpg",
+              "checks.json#J-DESKTOP",
+              "checks.json#J-MOBILE",
+              "checks.json#J-NARROW"
+            ],
+            "status": "proposed; screen review required",
+            "limitations": "This is an expert walkthrough, not a usability study. No timed discovery task, demand for filtering, or abandonment rate was measured."
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-BOOK-001",
+      "sourceIds": [
+        "F-BOOK-001"
+      ],
+      "screen": "Product",
+      "reviewRank": 7,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-BOOK-001",
+          "priority": "P1"
+        }
+      ],
+      "tier": "likely mistake",
+      "priorityReason": "The initial unavailable paper offer can conceal an eligible digital alternative. Switching to digital works, so this is not a complete purchase blocker.",
+      "classification": "confirmed defect",
+      "title": "Unavailable paper is the default even when digital is purchasable",
+      "screenStates": [
+        "SCR-03-paper-unavailable"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; controlled partial availability.",
+      "observedBehavior": "Paper 499 is checked and disabled; the primary action says 'Немає в наявності' although electronic 199 is enabled. The hint still says 'Купити зараз або додати до кошика'. Selecting electronic manually enables purchasing and produces the correct 199 UAH cart item at every width.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "A customer may read the unavailable primary action as applying to the book and miss the electronic alternative."
+      },
+      "expected": "The initial offer makes the available edition explicit, through a purchasable default or clear edition-level availability and an alternative action.",
+      "suggestedImprovement": "Review selecting an eligible initial edition, retaining deliberate customer choices during refresh, and naming unavailable editions and alternatives explicitly.",
+      "reproduction": [
+        {
+          "sourceId": "F-BOOK-001",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Start the audit API and frontend using REPORT.md.",
+            "Set paper-unavailable, invalidate zvychajna and reload the product.",
+            "Inspect the initial format and main action, then select electronic and buy."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-selection/paired/SCR-03-paper-unavailable.jpg",
+        "../storefront-selection/checks.json#PARTIAL-INITIAL-1440",
+        "../storefront-selection/checks.json#PARTIAL-INITIAL-390",
+        "../storefront-selection/checks.json#PARTIAL-INITIAL-360",
+        "../storefront-selection/checks.json#PARTIAL-CART-390",
+        "../../src/components/organisms/BookDetail.tsx"
+      ],
+      "limits": [
+        "Controlled flags, not a claim about current stock. Purchasing digital succeeds; this is an initial-state defect, not a complete purchase blocker."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-001",
+            "title": "Unavailable paper is the default even when digital is purchasable",
+            "group": "Edition selection and availability",
+            "screenStates": [
+              "SCR-03-paper-unavailable"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "scenario": "paper-unavailable",
+            "steps": [
+              "Start the audit API and frontend using REPORT.md.",
+              "Set paper-unavailable, invalidate zvychajna and reload the product.",
+              "Inspect the initial format and main action, then select electronic and buy."
+            ],
+            "actual": "Paper 499 is checked and disabled; the primary action says 'Немає в наявності' although electronic 199 is enabled. The hint still says 'Купити зараз або додати до кошика'. Selecting electronic manually enables purchasing and produces the correct 199 UAH cart item at every width.",
+            "expected": "The initial offer makes the available edition explicit, through a purchasable default or clear edition-level availability and an alternative action.",
+            "impact": "A customer may read the unavailable primary action as applying to the book and miss the electronic alternative.",
+            "improvement": "Review selecting an eligible initial edition, retaining deliberate customer choices during refresh, and naming unavailable editions and alternatives explicitly.",
+            "evidence": [
+              "paired/SCR-03-paper-unavailable.jpg",
+              "checks.json#PARTIAL-INITIAL-1440",
+              "checks.json#PARTIAL-INITIAL-390",
+              "checks.json#PARTIAL-INITIAL-360",
+              "checks.json#PARTIAL-CART-390",
+              "../../src/components/organisms/BookDetail.tsx"
+            ],
+            "relatedFindings": [
+              "F-DISC-002"
+            ],
+            "limits": "Controlled flags, not a claim about current stock. Purchasing digital succeeds; this is an initial-state defect, not a complete purchase blocker.",
+            "status": "proposed; screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-BOOK-002",
+      "sourceIds": [
+        "F-BOOK-002"
+      ],
+      "screen": "Product",
+      "reviewRank": 4,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-BOOK-002",
+          "priority": "P1"
+        }
+      ],
+      "tier": "likely mistake",
+      "priorityReason": "The suggestion bypasses the availability rule observed on the same item detail page and adds an unavailable non-preorder edition. Later rejection/fulfillment is untested.",
+      "classification": "confirmed defect",
+      "title": "Suggestion adds an unavailable item that its detail page cannot sell",
+      "screenStates": [
+        "SCR-03-merch-unavailable",
+        "SCR-03-suggestion-unavailable",
+        "SCR-04-unavailable-suggestion"
+      ],
+      "routes": [
+        "/books/inaksha",
+        "/books/inaksha-art"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; optional suggestion and resulting cart.",
+      "observedBehavior": "The postcard edition has isAvailable=false and canPreorder=false. Its own purchase actions disable, but the suggestion still displays an enabled add action at 299 UAH. Adding it opens a cart containing paper Inaksha 550 and unavailable postcards 299, total 849 UAH, without an availability warning.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers can select an offer the shop cannot fulfill and encounter a later checkout rejection or misleading stock expectations."
+      },
+      "expected": "The suggestion follows the same edition eligibility rules as the detail page and cannot add an unavailable, non-preorder item.",
+      "suggestedImprovement": "Review suppressing unavailable suggestions or displaying an explicit unavailable state; validate the exact suggested edition before adding it.",
+      "reproduction": [
+        {
+          "sourceId": "F-BOOK-002",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Set suggestion-unavailable and invalidate inaksha and inaksha-art.",
+            "Open the postcard detail page and confirm unavailable purchase actions.",
+            "Open Inaksha, choose paper 550 and press Buy.",
+            "Press 'Додати до кошика' in the suggested-postcards dialog and inspect the cart."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-selection/paired/SCR-03-merch-unavailable.jpg",
+        "../storefront-selection/paired/SCR-03-suggestion-unavailable.jpg",
+        "../storefront-selection/paired/SCR-04-unavailable-suggestion.jpg",
+        "../storefront-selection/checks.json#SUGGESTION-UNAVAILABLE-1440",
+        "../storefront-selection/checks.json#SUGGESTION-UNAVAILABLE-390",
+        "../storefront-selection/checks.json#SUGGESTION-UNAVAILABLE-360",
+        "../storefront-selection/checks.json#SUGGESTION-UNAVAILABLE-CART-390",
+        "../../src/components/molecules/SuggestionDialog.tsx"
+      ],
+      "limits": [
+        "Selection and cart acceptance reproduced at all widths. No checkout or invoice was submitted; backend fulfillment or rejection is not claimed."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-002",
+            "title": "Suggestion adds an unavailable item that its detail page cannot sell",
+            "group": "Purchase actions and suggestions",
+            "screenStates": [
+              "SCR-03-merch-unavailable",
+              "SCR-03-suggestion-unavailable",
+              "SCR-04-unavailable-suggestion"
+            ],
+            "routes": [
+              "/books/inaksha",
+              "/books/inaksha-art"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "scenario": "suggestion-unavailable",
+            "steps": [
+              "Set suggestion-unavailable and invalidate inaksha and inaksha-art.",
+              "Open the postcard detail page and confirm unavailable purchase actions.",
+              "Open Inaksha, choose paper 550 and press Buy.",
+              "Press 'Додати до кошика' in the suggested-postcards dialog and inspect the cart."
+            ],
+            "actual": "The postcard edition has isAvailable=false and canPreorder=false. Its own purchase actions disable, but the suggestion still displays an enabled add action at 299 UAH. Adding it opens a cart containing paper Inaksha 550 and unavailable postcards 299, total 849 UAH, without an availability warning.",
+            "expected": "The suggestion follows the same edition eligibility rules as the detail page and cannot add an unavailable, non-preorder item.",
+            "impact": "Customers can select an offer the shop cannot fulfill and encounter a later checkout rejection or misleading stock expectations.",
+            "improvement": "Review suppressing unavailable suggestions or displaying an explicit unavailable state; validate the exact suggested edition before adding it.",
+            "evidence": [
+              "paired/SCR-03-merch-unavailable.jpg",
+              "paired/SCR-03-suggestion-unavailable.jpg",
+              "paired/SCR-04-unavailable-suggestion.jpg",
+              "checks.json#SUGGESTION-UNAVAILABLE-1440",
+              "checks.json#SUGGESTION-UNAVAILABLE-390",
+              "checks.json#SUGGESTION-UNAVAILABLE-360",
+              "checks.json#SUGGESTION-UNAVAILABLE-CART-390",
+              "../../src/components/molecules/SuggestionDialog.tsx"
+            ],
+            "relatedFindings": [],
+            "limits": "Selection and cart acceptance reproduced at all widths. No checkout or invoice was submitted; backend fulfillment or rejection is not claimed.",
+            "status": "proposed; screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required",
+      "evidenceQuality": "SCR-03-suggestion-unavailable is ghosted and is weak layout evidence. Stable SCR-04-unavailable-suggestion, cart check records, controlled flags and current code support the eligibility defect. No separate ghosting defect is asserted."
+    },
+    {
+      "id": "F-BOOK-004",
+      "sourceIds": [
+        "F-BOOK-004"
+      ],
+      "screen": "Product",
+      "reviewRank": 14,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-BOOK-004",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "Dismissing the suggestion interrupts the observed Buy-to-cart transition, but the book remains in cart and the cart can be opened manually.",
+      "classification": "usability hypothesis",
+      "title": "Declining the optional suggestion interrupts the Buy journey",
+      "screenStates": [
+        "SCR-03-suggestion",
+        "SCR-03-sequel",
+        "SCR-03-bundle"
+      ],
+      "routes": [
+        "/books/inaksha",
+        "/books/zvychajna-and-inaksha"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; preserve direct Buy and Add distinctions.",
+      "observedBehavior": "The book is added before the suggestion appears. The dialog has Close, Add and Details, but no explicit continue-without-postcards action. Dismissal returns focus to Buy and leaves the cart closed. Other tested Buy actions open the cart directly; the cart is still reachable manually.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers may think the purchase was cancelled, hesitate, or repeat Buy to discover the next step. Abandonment was not measured."
+      },
+      "expected": "Declining an optional add-on clearly continues the purchase intent and explains that the original book is already selected.",
+      "suggestedImprovement": "Review an explicit 'continue without' action, confirmation of the selected book, and continuation to cart after declining a suggestion during Buy.",
+      "reproduction": [
+        {
+          "sourceId": "F-BOOK-004",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Open Inaksha or the bundle with empty cart.",
+            "Choose the paper offer and press Buy.",
+            "Dismiss 'Разом цікавіше?' using Close or Escape.",
+            "Inspect whether cart review continues and open the cart manually."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-selection/paired/SCR-03-suggestion.jpg",
+        "../storefront-selection/checks.json#J-MOBILE-SUGGESTION",
+        "../storefront-selection/checks.json#J-MOBILE-CART",
+        "../storefront-selection/checks.json#SUGGESTION-DISMISS-1440",
+        "../storefront-selection/checks.json#SUGGESTION-DISMISS-390",
+        "../storefront-selection/checks.json#SUGGESTION-DISMISS-360",
+        "../../src/components/organisms/BookDetail.tsx"
+      ],
+      "limits": [
+        "The transition is observed; the customer impact is a hypothesis. The original book remains in cart and no duplicate quantity was added by repeated detail-page Add."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-004",
+            "title": "Declining the optional suggestion interrupts the Buy journey",
+            "group": "Purchase actions and suggestions",
+            "screenStates": [
+              "SCR-03-suggestion",
+              "SCR-03-sequel",
+              "SCR-03-bundle"
+            ],
+            "routes": [
+              "/books/inaksha",
+              "/books/zvychajna-and-inaksha"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "scenario": "normal; empty cart",
+            "steps": [
+              "Open Inaksha or the bundle with empty cart.",
+              "Choose the paper offer and press Buy.",
+              "Dismiss 'Разом цікавіше?' using Close or Escape.",
+              "Inspect whether cart review continues and open the cart manually."
+            ],
+            "actual": "The book is added before the suggestion appears. The dialog has Close, Add and Details, but no explicit continue-without-postcards action. Dismissal returns focus to Buy and leaves the cart closed. Other tested Buy actions open the cart directly; the cart is still reachable manually.",
+            "expected": "Declining an optional add-on clearly continues the purchase intent and explains that the original book is already selected.",
+            "impact": "Customers may think the purchase was cancelled, hesitate, or repeat Buy to discover the next step. Abandonment was not measured.",
+            "improvement": "Review an explicit 'continue without' action, confirmation of the selected book, and continuation to cart after declining a suggestion during Buy.",
+            "evidence": [
+              "paired/SCR-03-suggestion.jpg",
+              "checks.json#J-MOBILE-SUGGESTION",
+              "checks.json#J-MOBILE-CART",
+              "checks.json#SUGGESTION-DISMISS-1440",
+              "checks.json#SUGGESTION-DISMISS-390",
+              "checks.json#SUGGESTION-DISMISS-360",
+              "../../src/components/organisms/BookDetail.tsx"
+            ],
+            "relatedFindings": [],
+            "limits": "The transition is observed; the customer impact is a hypothesis. The original book remains in cart and no duplicate quantity was added by repeated detail-page Add.",
+            "status": "proposed; screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-BOOK-005",
+      "sourceIds": [
+        "F-BOOK-005"
+      ],
+      "screen": "Product",
+      "reviewRank": 15,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-BOOK-005",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "Edition IDs and prices are correct; missing file/delivery information is a comprehension hypothesis awaiting verified copy and customer validation.",
+      "classification": "usability hypothesis",
+      "title": "Electronic selection does not explain the delivered file or reading requirements",
+      "screenStates": [
+        "SCR-03-digital",
+        "SCR-03-sequel-digital",
+        "SCR-04-digital"
+      ],
+      "routes": [
+        "/books/zvychajna",
+        "/books/inaksha"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; electronic offer and cart.",
+      "observedBehavior": "The selected radio, purchase price and cart format clearly say electronic. The page still shows physical specifications (hard cover, paper, dimensions and, for Zvychajna, weight). It provides no visible EPUB/file type, compatible reader, delivery method or timing explanation before cart entry. Backend delivery uses watermarked EPUB attachments; that source fact is not a tested delivery outcome.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers may be uncertain whether their device can read the purchase or whether a physical book is involved. Wrong-format purchases were not observed."
+      },
+      "expected": "The electronic offer explains what is supplied and how it will be received/read; print-only specifications are clearly qualified.",
+      "suggestedImprovement": "Review edition-specific supporting information based on verified delivery contracts, with print specifications labelled separately.",
+      "reproduction": [
+        {
+          "sourceId": "F-BOOK-005",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Choose the electronic edition of Zvychajna or Inaksha.",
+            "Read the description, purchase hints and specifications.",
+            "Buy the electronic edition and inspect its cart line."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-selection/paired/SCR-03-digital.jpg",
+        "../storefront-selection/paired/SCR-04-digital.jpg",
+        "../storefront-selection/checks.json#DIGITAL-1440",
+        "../storefront-selection/checks.json#DIGITAL-390",
+        "../storefront-selection/checks.json#DIGITAL-360",
+        "../../src/components/organisms/BookDetail.tsx"
+      ],
+      "limits": [
+        "Correct edition IDs and prices reached the cart. No payment, email delivery or reader compatibility was exercised."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-005",
+            "title": "Electronic selection does not explain the delivered file or reading requirements",
+            "group": "Offer content and mobile layout",
+            "screenStates": [
+              "SCR-03-digital",
+              "SCR-03-sequel-digital",
+              "SCR-04-digital"
+            ],
+            "routes": [
+              "/books/zvychajna",
+              "/books/inaksha"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "scenario": "normal",
+            "steps": [
+              "Choose the electronic edition of Zvychajna or Inaksha.",
+              "Read the description, purchase hints and specifications.",
+              "Buy the electronic edition and inspect its cart line."
+            ],
+            "actual": "The selected radio, purchase price and cart format clearly say electronic. The page still shows physical specifications (hard cover, paper, dimensions and, for Zvychajna, weight). It provides no visible EPUB/file type, compatible reader, delivery method or timing explanation before cart entry. Backend delivery uses watermarked EPUB attachments; that source fact is not a tested delivery outcome.",
+            "expected": "The electronic offer explains what is supplied and how it will be received/read; print-only specifications are clearly qualified.",
+            "impact": "Customers may be uncertain whether their device can read the purchase or whether a physical book is involved. Wrong-format purchases were not observed.",
+            "improvement": "Review edition-specific supporting information based on verified delivery contracts, with print specifications labelled separately.",
+            "evidence": [
+              "paired/SCR-03-digital.jpg",
+              "paired/SCR-04-digital.jpg",
+              "checks.json#DIGITAL-1440",
+              "checks.json#DIGITAL-390",
+              "checks.json#DIGITAL-360",
+              "../../src/components/organisms/BookDetail.tsx"
+            ],
+            "relatedFindings": [],
+            "limits": "Correct edition IDs and prices reached the cart. No payment, email delivery or reader compatibility was exercised.",
+            "status": "proposed; screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-BOOK-006",
+      "sourceIds": [
+        "F-BOOK-006"
+      ],
+      "screen": "Product",
+      "reviewRank": 19,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-BOOK-006",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "Mobile sampling and return to purchase require scrolling. Actions remain reachable; a sticky control is a proposal with untested keyboard/viewport tradeoffs.",
+      "classification": "usability hypothesis",
+      "title": "Mobile sampling follows the description and leaves purchase actions above the reading position",
+      "screenStates": [
+        "SCR-03-paper",
+        "SCR-03-collection-expanded",
+        "SCR-03-excerpt"
+      ],
+      "routes": [
+        "/books/zvychajna",
+        "/books/brunette-stories"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        }
+      ],
+      "devices": [
+        "mobile 390x844",
+        "narrow mobile 360x844",
+        "desktop 1440x900 compared"
+      ],
+      "deviceDifference": "Mobile 390 and 360 px; desktop places sampling under the cover.",
+      "observedBehavior": "Mobile places the cover before the title, then formats, purchase actions and description; cover actions including the excerpt move below the description. Long descriptions expand and wrap successfully. The title drops from 36px desktop to 18.4px at 390 and 16.8px at 360. Purchase actions are not sticky, while navigation/cart remain available during scrolling.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Readers may overlook the sample or need extra scrolling to resume a format-specific purchase. No customer study or physical-touch observation confirms this impact."
+      },
+      "expected": "Customers can find a sample before committing and easily resume purchasing after reading; title and offer hierarchy remain clear on narrow screens.",
+      "suggestedImprovement": "Review placing a sample link near the initial offer and a clear return-to-purchase path after reading; compare a compact mobile hierarchy before deciding on any sticky purchase control.",
+      "reproduction": [
+        {
+          "sourceId": "F-BOOK-006",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Open a book at 390x844 and 360x844.",
+            "Locate the format and purchase actions, expand the description and find Read excerpt.",
+            "Compare desktop's under-cover excerpt action; scroll the mobile page after reading."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-selection/paired/SCR-03-paper.jpg",
+        "../storefront-selection/paired/SCR-03-collection-expanded.jpg",
+        "../storefront-selection/paired/SCR-03-excerpt.jpg",
+        "../storefront-selection/checks.json#PAPER-390",
+        "../storefront-selection/checks.json#PAPER-360",
+        "../storefront-selection/checks.json#STICKY-SCROLLED-MOBILE",
+        "../storefront-selection/checks.json#STICKY-SCROLLED-NARROW",
+        "../../src/components/organisms/BookDetail.module.css"
+      ],
+      "limits": [
+        "All tested actions remain reachable. No initial normal-size document overflow was measured; future longer titles and enlarged-text layouts remain unverified."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-006",
+            "title": "Mobile sampling follows the description and leaves purchase actions above the reading position",
+            "group": "Offer content and mobile layout",
+            "screenStates": [
+              "SCR-03-paper",
+              "SCR-03-collection-expanded",
+              "SCR-03-excerpt"
+            ],
+            "routes": [
+              "/books/zvychajna",
+              "/books/brunette-stories"
+            ],
+            "devices": [
+              "mobile 390x844",
+              "narrow mobile 360x844",
+              "desktop 1440x900 compared"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "scenario": "normal",
+            "steps": [
+              "Open a book at 390x844 and 360x844.",
+              "Locate the format and purchase actions, expand the description and find Read excerpt.",
+              "Compare desktop's under-cover excerpt action; scroll the mobile page after reading."
+            ],
+            "actual": "Mobile places the cover before the title, then formats, purchase actions and description; cover actions including the excerpt move below the description. Long descriptions expand and wrap successfully. The title drops from 36px desktop to 18.4px at 390 and 16.8px at 360. Purchase actions are not sticky, while navigation/cart remain available during scrolling.",
+            "expected": "Customers can find a sample before committing and easily resume purchasing after reading; title and offer hierarchy remain clear on narrow screens.",
+            "impact": "Readers may overlook the sample or need extra scrolling to resume a format-specific purchase. No customer study or physical-touch observation confirms this impact.",
+            "improvement": "Review placing a sample link near the initial offer and a clear return-to-purchase path after reading; compare a compact mobile hierarchy before deciding on any sticky purchase control.",
+            "evidence": [
+              "paired/SCR-03-paper.jpg",
+              "paired/SCR-03-collection-expanded.jpg",
+              "paired/SCR-03-excerpt.jpg",
+              "checks.json#PAPER-390",
+              "checks.json#PAPER-360",
+              "checks.json#STICKY-SCROLLED-MOBILE",
+              "checks.json#STICKY-SCROLLED-NARROW",
+              "../../src/components/organisms/BookDetail.module.css"
+            ],
+            "relatedFindings": [
+              "F-DISC-006"
+            ],
+            "limits": "All tested actions remain reachable. No initial normal-size document overflow was measured; future longer titles and enlarged-text layouts remain unverified.",
+            "status": "proposed; screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-010",
+      "sourceIds": [
+        "F-CHECK-010"
+      ],
+      "screen": "Cart",
+      "reviewRank": 8,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-010",
+          "priority": "P2"
+        }
+      ],
+      "tier": "likely mistake",
+      "priorityReason": "Raised from audit P2 to proposed P1: displayed lines disagree with the amount payable by 20 UAH in the controlled mixed cart. This is a monetary explanation defect, not proof of overcharging.",
+      "classification": "confirmed defect",
+      "title": "Limited-use promo item prices do not add up to the cart total",
+      "screenStates": [
+        "SCR-04-promo-one10"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; limited-use percentage promo.",
+      "observedBehavior": "The paper line shows 948 UAH and the electronic line shows 179 UAH, adding to 1127 UAH. The cart summary correctly allocates the single discount to one paper unit and shows discount50 and total1147. CartProvider passes an absent map entry as undefined for the electronic item; calculateItemDiscount defaults undefined to the full item quantity. The total calculation instead supplies zero for an absent entry.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers see an apparent20 UAH discrepancy between discounted items and the amount payable, undermining confidence in the promotion and order total."
+      },
+      "expected": "All item-level discounts use the same eligible-unit allocation as the cart total. The electronic line remains199 and the displayed lines add to1147.",
+      "suggestedImprovement": "Review consistent item and total discount allocation, including eligible items with zero discounted units. Add a mixed-cart limited-use regression case when the approved fix is implemented.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-010",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Add two paper copies at 499 UAH and one electronic copy at 199 UAH.",
+            "Apply the controlled ONE10 percentage promo with one remaining discounted unit.",
+            "Compare the displayed discounted item amounts with the discount summary and total."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-04-promo-one10.jpg",
+        "../storefront-checkout/checks.json#SCR-04-promo-one10-1440",
+        "../storefront-checkout/checks.json#SCR-04-promo-one10-390",
+        "../storefront-checkout/checks.json#SCR-04-promo-one10-360",
+        "../../src/components/molecules/CartProvider.tsx",
+        "../../src/lib/promocode.helper.ts"
+      ],
+      "limits": [
+        "The display defect is confirmed with a controlled API response matching the frontend promo contract and inspected source. No real limited-use promo was consumed, and no incorrect payment amount or backend allocation defect is claimed."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-010",
+            "title": "Limited-use promo item prices do not add up to the cart total",
+            "group": "Cart and promotions",
+            "screenStates": [
+              "SCR-04-promo-one10"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "scenario": "normal; ONE10 with remainingUsages=1",
+            "steps": [
+              "Add two paper copies at 499 UAH and one electronic copy at 199 UAH.",
+              "Apply the controlled ONE10 percentage promo with one remaining discounted unit.",
+              "Compare the displayed discounted item amounts with the discount summary and total."
+            ],
+            "actual": "The paper line shows 948 UAH and the electronic line shows 179 UAH, adding to 1127 UAH. The cart summary correctly allocates the single discount to one paper unit and shows discount50 and total1147. CartProvider passes an absent map entry as undefined for the electronic item; calculateItemDiscount defaults undefined to the full item quantity. The total calculation instead supplies zero for an absent entry.",
+            "expected": "All item-level discounts use the same eligible-unit allocation as the cart total. The electronic line remains199 and the displayed lines add to1147.",
+            "impact": "Customers see an apparent20 UAH discrepancy between discounted items and the amount payable, undermining confidence in the promotion and order total.",
+            "improvement": "Review consistent item and total discount allocation, including eligible items with zero discounted units. Add a mixed-cart limited-use regression case when the approved fix is implemented.",
+            "evidence": [
+              "paired/SCR-04-promo-one10.jpg",
+              "checks.json#SCR-04-promo-one10-1440",
+              "checks.json#SCR-04-promo-one10-390",
+              "checks.json#SCR-04-promo-one10-360",
+              "../../src/components/molecules/CartProvider.tsx",
+              "../../src/lib/promocode.helper.ts"
+            ],
+            "relatedFindings": [],
+            "limits": "The display defect is confirmed with a controlled API response matching the frontend promo contract and inspected source. No real limited-use promo was consumed, and no incorrect payment amount or backend allocation defect is claimed.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-008",
+      "sourceIds": [
+        "F-CHECK-008"
+      ],
+      "screen": "Cart",
+      "reviewRank": 10,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-008",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "A recovered service accepts the unchanged code, but temporary failure is labeled invalid. Customers can continue without a promo; real outage frequency is unknown.",
+      "classification": "confirmed defect",
+      "title": "A promo-service outage is reported as an invalid code",
+      "screenStates": [
+        "SCR-04-promo-invalid",
+        "SCR-04-promo-outage",
+        "SCR-04-promo-loading"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; local 503, invalid 404 and recovery.",
+      "observedBehavior": "HTTP503 and invalid-code HTTP404 both show 'Невірний або недійсний промокод'. The value remains editable. A recovered service accepts the unchanged code. Loading disables the apply button and displays a spinner.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers may abandon a valid discount or assume the promotion is unavailable, rather than retrying a temporary failure."
+      },
+      "expected": "Distinguish temporary validation-service failure from an invalid/expired code and offer a suitable retry.",
+      "suggestedImprovement": "Review separate invalid-code and temporary-failure messages with retained input and clear retry behavior.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-008",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Enter the fixture's valid AUDIT10 code.",
+            "Set promo-error and apply it; the API returns503.",
+            "Compare the toast with rejection of INVALID.",
+            "Restore promo-loading/normal and apply AUDIT10 again."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-04-promo-outage.jpg",
+        "../storefront-checkout/paired/SCR-04-promo-invalid.jpg",
+        "../storefront-checkout/checks.json#PROMO-OUTAGE-RECOVERED",
+        "../storefront-checkout/promo-outage-evidence.json",
+        "../../src/components/organisms/ShoppingCart.tsx"
+      ],
+      "limits": [
+        "Confirmed using a controlled503; no production promo outage is claimed. Expiry/restriction enforcement in the real backend was not tested."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-008",
+            "title": "A promo-service outage is reported as an invalid code",
+            "group": "Cart and promotions",
+            "screenStates": [
+              "SCR-04-promo-invalid",
+              "SCR-04-promo-outage",
+              "SCR-04-promo-loading"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "scenario": "promo-error / promo-loading / normal",
+            "steps": [
+              "Enter the fixture's valid AUDIT10 code.",
+              "Set promo-error and apply it; the API returns503.",
+              "Compare the toast with rejection of INVALID.",
+              "Restore promo-loading/normal and apply AUDIT10 again."
+            ],
+            "actual": "HTTP503 and invalid-code HTTP404 both show 'Невірний або недійсний промокод'. The value remains editable. A recovered service accepts the unchanged code. Loading disables the apply button and displays a spinner.",
+            "expected": "Distinguish temporary validation-service failure from an invalid/expired code and offer a suitable retry.",
+            "impact": "Customers may abandon a valid discount or assume the promotion is unavailable, rather than retrying a temporary failure.",
+            "improvement": "Review separate invalid-code and temporary-failure messages with retained input and clear retry behavior.",
+            "evidence": [
+              "paired/SCR-04-promo-outage.jpg",
+              "paired/SCR-04-promo-invalid.jpg",
+              "checks.json#PROMO-OUTAGE-RECOVERED",
+              "promo-outage-evidence.json",
+              "../../src/components/organisms/ShoppingCart.tsx"
+            ],
+            "relatedFindings": [],
+            "limits": "Confirmed using a controlled503; no production promo outage is claimed. Expiry/restriction enforcement in the real backend was not tested.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-003",
+      "sourceIds": [
+        "F-CHECK-003"
+      ],
+      "screen": "Cart",
+      "reviewRank": 12,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-003",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "The visible apply target is clipped at 360 px, while Enter still applies the code. Production geometry supports the defect, not a general touch blocker.",
+      "classification": "confirmed defect",
+      "title": "The promo application button is clipped at 360 px",
+      "screenStates": [
+        "SCR-04-promo-entry"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900 (fits)",
+        "mobile 390x844 (comparison)",
+        "narrow mobile 360x844 (clipped)"
+      ],
+      "deviceDifference": "360 px specific; 390 px and desktop fit.",
+      "observedBehavior": "At 360 px the apply button's right edge extends beyond the viewport and the cart clips its right side. The measured row overflow is about 9 CSS px. The input has a flexible width with an intrinsic minimum; the button retains its width/padding. Production reproduces the clipping. Keyboard Enter still applies the promo.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "The promo action is visually cut off and provides less visible target area on narrow screens. It did not block keyboard application; actual touch errors were not measured."
+      },
+      "expected": "The complete input and application action fit in the visible cart at the supported narrow width.",
+      "suggestedImprovement": "Review a shrinkable input or stacked narrow-screen promo row with a fully visible action.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-003",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Open a populated cart with no applied promo.",
+            "Enter AUDIT10 without applying it.",
+            "At 360 px inspect the input/button row and compare it with 390 px and desktop."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-04-promo-entry.jpg",
+        "../storefront-checkout/checks.json#SCR-04-promo-entry-360",
+        "../../src/components/organisms/ShoppingCart.module.css"
+      ],
+      "limits": [
+        "Geometry is from DOM CSS measurements; exported screenshots can omit scrollbar space and must not be used directly as CSS measurements. No universal 390 px overflow defect is asserted."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-003",
+            "title": "The promo application button is clipped at 360 px",
+            "group": "Cart and promotions",
+            "screenStates": [
+              "SCR-04-promo-entry"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900 (fits)",
+              "mobile 390x844 (comparison)",
+              "narrow mobile 360x844 (clipped)"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "scenario": "normal and discount; no applied promo",
+            "steps": [
+              "Open a populated cart with no applied promo.",
+              "Enter AUDIT10 without applying it.",
+              "At 360 px inspect the input/button row and compare it with 390 px and desktop."
+            ],
+            "actual": "At 360 px the apply button's right edge extends beyond the viewport and the cart clips its right side. The measured row overflow is about 9 CSS px. The input has a flexible width with an intrinsic minimum; the button retains its width/padding. Production reproduces the clipping. Keyboard Enter still applies the promo.",
+            "expected": "The complete input and application action fit in the visible cart at the supported narrow width.",
+            "impact": "The promo action is visually cut off and provides less visible target area on narrow screens. It did not block keyboard application; actual touch errors were not measured.",
+            "improvement": "Review a shrinkable input or stacked narrow-screen promo row with a fully visible action.",
+            "evidence": [
+              "paired/SCR-04-promo-entry.jpg",
+              "checks.json#SCR-04-promo-entry-360",
+              "../../src/components/organisms/ShoppingCart.module.css"
+            ],
+            "relatedFindings": [],
+            "limits": "Geometry is from DOM CSS measurements; exported screenshots can omit scrollbar space and must not be used directly as CSS measurements. No universal 390 px overflow defect is asserted.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-005",
+      "sourceIds": [
+        "F-CHECK-005"
+      ],
+      "screen": "Checkout",
+      "reviewRank": 1,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-005",
+          "priority": "P1"
+        }
+      ],
+      "tier": "conditional blocker",
+      "priorityReason": "A deterministic server rejection gives no actionable correction, and an unchanged retry repeats it. Prioritize recovery from rejected orders; synthetic errors do not prove deployed rejection rates.",
+      "classification": "confirmed defect",
+      "title": "Checkout discards actionable server validation errors",
+      "screenStates": [
+        "SCR-05-server-validation",
+        "SCR-05-invoice-error"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; local invoice-validation and invoice-error scenarios.",
+      "observedBehavior": "HTTP400 ProblemDetails with item/field paths produces only 'Помилка при оформленні замовлення. Спробуйте ще раз.' Checkout does not display the specific rejection or associate it with a field/item. HTTP500 uses the same message. The form remains available but an unchanged retry of a deterministic rejection returns the same error.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers receive a retry instruction without learning what must change, and can repeatedly submit an unrecoverable request."
+      },
+      "expected": "Explain a correctable server rejection and identify the relevant field/offer; distinguish it from a transient service failure.",
+      "suggestedImprovement": "Review mapping API validation paths to checkout fields and cart lines, preserving entered details and providing actionable recovery for unavailable offers.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-005",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Complete digital checkout with synthetic valid details.",
+            "Set the local API to invoice-validation and submit.",
+            "Compare the generic toast with the fixture's HTTP400 errors object.",
+            "Retry unchanged and compare the feedback with an HTTP500 submission failure."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-05-server-validation.jpg",
+        "../storefront-checkout/paired/SCR-05-invoice-error.jpg",
+        "../storefront-checkout/checks.json#SCR-05-server-validation-1440",
+        "../storefront-checkout/invoice-validation-evidence.json",
+        "../storefront-checkout/invoice-error-evidence.json",
+        "../../src/components/organisms/NavBar.tsx",
+        "../../src/lib/api.helper.ts"
+      ],
+      "limits": [
+        "The error values are controlled fixture data, not evidence that the backend rejects these synthetic valid customer values. Backend source confirms the ValidationProblemDetails path contract; its deployed validation/availability behavior was not exercised."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-005",
+            "title": "Checkout discards actionable server validation errors",
+            "group": "Customer details and validation",
+            "screenStates": [
+              "SCR-05-server-validation",
+              "SCR-05-invoice-error"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "scenario": "invoice-validation / invoice-error",
+            "steps": [
+              "Complete digital checkout with synthetic valid details.",
+              "Set the local API to invoice-validation and submit.",
+              "Compare the generic toast with the fixture's HTTP400 errors object.",
+              "Retry unchanged and compare the feedback with an HTTP500 submission failure."
+            ],
+            "actual": "HTTP400 ProblemDetails with item/field paths produces only 'Помилка при оформленні замовлення. Спробуйте ще раз.' Checkout does not display the specific rejection or associate it with a field/item. HTTP500 uses the same message. The form remains available but an unchanged retry of a deterministic rejection returns the same error.",
+            "expected": "Explain a correctable server rejection and identify the relevant field/offer; distinguish it from a transient service failure.",
+            "impact": "Customers receive a retry instruction without learning what must change, and can repeatedly submit an unrecoverable request.",
+            "improvement": "Review mapping API validation paths to checkout fields and cart lines, preserving entered details and providing actionable recovery for unavailable offers.",
+            "evidence": [
+              "paired/SCR-05-server-validation.jpg",
+              "paired/SCR-05-invoice-error.jpg",
+              "checks.json#SCR-05-server-validation-1440",
+              "invoice-validation-evidence.json",
+              "invoice-error-evidence.json",
+              "../../src/components/organisms/NavBar.tsx",
+              "../../src/lib/api.helper.ts"
+            ],
+            "relatedFindings": [
+              "F-BOOK-002: unavailable suggestion enters cart"
+            ],
+            "limits": "The error values are controlled fixture data, not evidence that the backend rejects these synthetic valid customer values. Backend source confirms the ValidationProblemDetails path contract; its deployed validation/availability behavior was not exercised.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-002",
+      "sourceIds": [
+        "F-CHECK-002"
+      ],
+      "screen": "Checkout",
+      "reviewRank": 2,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-002",
+          "priority": "P1"
+        }
+      ],
+      "tier": "conditional blocker",
+      "priorityReason": "The host close action disappears on mobile, leaving no visible cancellation path in inspected picker states. Treat visible exit as urgent; do not assert a proven iframe keyboard trap.",
+      "classification": "confirmed defect",
+      "title": "Mobile delivery picker hides the host close control",
+      "screenStates": [
+        "SCR-05-delivery-picker",
+        "SCR-05-delivery-picker-loaded",
+        "SCR-05-delivery-picker-production"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900 (control comparison)",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "Mobile 390 and 360 px; desktop host exit exists.",
+      "observedBehavior": "Desktop shows a named close button and Escape from the host close control returns to checkout. At both mobile widths the host header, title and close button are display:none and the widget fills the screen. The inspected provider list/search has no visible cancel/close action. Production captures confirm the hidden host control.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers who open the picker accidentally or cannot find a branch have no clear visible way back. Real-phone back-button and keyboard behavior remain unverified."
+      },
+      "expected": "Provide a visible, accessible exit that returns to checkout without requiring branch selection or navigation away.",
+      "suggestedImprovement": "Review a persistent mobile close/back control and focus return, including no-results and provider-failure states.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-002",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Open physical checkout and choose the delivery-branch field.",
+            "Compare the picker at desktop, mobile and narrow widths.",
+            "Inspect the loaded list or a search with no results and look for an exit without selecting a branch."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-05-delivery-picker-loaded.jpg",
+        "../storefront-checkout/paired/SCR-05-delivery-picker-production.jpg",
+        "../storefront-checkout/checks.json#J-NARROW-PICKER-RECOVERY",
+        "../storefront-checkout/checks.json#PICKER-DESKTOP-ESCAPE",
+        "../storefront-checkout/checks.json#DELIVERY-SELECTION-LIMIT",
+        "../../src/components/organisms/NovaPoshtaWidget.module.css"
+      ],
+      "limits": [
+        "The public branch list loaded on a later fresh opening; the earlier no-results search is not evidence of a provider outage. Branch selection and Escape inside the iframe could not be delivered safely by the browser tool, so a successful physical invoice journey and a keyboard trap inside the provider are not claimed."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-002",
+            "title": "Mobile delivery picker hides the host close control",
+            "group": "Delivery selection and checkout continuity",
+            "screenStates": [
+              "SCR-05-delivery-picker",
+              "SCR-05-delivery-picker-loaded",
+              "SCR-05-delivery-picker-production"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900 (control comparison)",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "scenario": "physical checkout; live public Nova Post widget",
+            "steps": [
+              "Open physical checkout and choose the delivery-branch field.",
+              "Compare the picker at desktop, mobile and narrow widths.",
+              "Inspect the loaded list or a search with no results and look for an exit without selecting a branch."
+            ],
+            "actual": "Desktop shows a named close button and Escape from the host close control returns to checkout. At both mobile widths the host header, title and close button are display:none and the widget fills the screen. The inspected provider list/search has no visible cancel/close action. Production captures confirm the hidden host control.",
+            "expected": "Provide a visible, accessible exit that returns to checkout without requiring branch selection or navigation away.",
+            "impact": "Customers who open the picker accidentally or cannot find a branch have no clear visible way back. Real-phone back-button and keyboard behavior remain unverified.",
+            "improvement": "Review a persistent mobile close/back control and focus return, including no-results and provider-failure states.",
+            "evidence": [
+              "paired/SCR-05-delivery-picker-loaded.jpg",
+              "paired/SCR-05-delivery-picker-production.jpg",
+              "checks.json#J-NARROW-PICKER-RECOVERY",
+              "checks.json#PICKER-DESKTOP-ESCAPE",
+              "checks.json#DELIVERY-SELECTION-LIMIT",
+              "../../src/components/organisms/NovaPoshtaWidget.module.css"
+            ],
+            "relatedFindings": [],
+            "limits": "The public branch list loaded on a later fresh opening; the earlier no-results search is not evidence of a provider outage. Branch selection and Escape inside the iframe could not be delivered safely by the browser tool, so a successful physical invoice journey and a keyboard trap inside the provider are not claimed.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-004",
+      "sourceIds": [
+        "F-CHECK-004"
+      ],
+      "screen": "Checkout",
+      "reviewRank": 9,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-004",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "Correct entries retain invalid feedback until another submission. Valid submission remains possible; user uncertainty and assistive-technology speech were not measured.",
+      "classification": "confirmed defect",
+      "title": "Corrected fields keep stale error messages and invalid semantics",
+      "screenStates": [
+        "SCR-05-validation",
+        "SCR-05-corrected-errors"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; also reproduced in a production build.",
+      "observedBehavior": "All four corrected fields retain their old errors and aria-invalid=true after blur. Validation runs only on Submit, so another submission is required to clear them. Error text also becomes part of the input's wrapped-label accessible name. Invalid submission leaves focus on Submit rather than moving to the first invalid field. The corrected-error behavior also reproduces in production.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "The UI tells customers that correct entries are still invalid, creating uncertainty and extra attempts. Screen-reader speech and abandonment were not measured."
+      },
+      "expected": "Corrected fields no longer report outdated failures; validation feedback helps the customer reach and resolve remaining errors.",
+      "suggestedImprovement": "Review clearing/revalidating touched fields after changes and blur, separate label/error descriptions, and first-error focus or an error summary.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-004",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Submit an empty physical checkout.",
+            "Fill valid first name, last name, email and phone.",
+            "Leave each field and inspect its message and aria-invalid state before submitting again."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-05-corrected-errors.jpg",
+        "../storefront-checkout/paired/SCR-05-validation.jpg",
+        "../storefront-checkout/checks.json#SCR-05-corrected-errors-390",
+        "../storefront-checkout/checks.json#SCR-05-validation-360",
+        "../../src/components/organisms/CheckoutForm.tsx"
+      ],
+      "limits": [
+        "Client validation blocks blank invoice submission and error elements have role=alert and descriptions. This finding concerns stale feedback, not missing validation altogether. Actual assistive-technology output was not tested."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-004",
+            "title": "Corrected fields keep stale error messages and invalid semantics",
+            "group": "Customer details and validation",
+            "screenStates": [
+              "SCR-05-validation",
+              "SCR-05-corrected-errors"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "scenario": "normal; production confirmation with discount scenario",
+            "steps": [
+              "Submit an empty physical checkout.",
+              "Fill valid first name, last name, email and phone.",
+              "Leave each field and inspect its message and aria-invalid state before submitting again."
+            ],
+            "actual": "All four corrected fields retain their old errors and aria-invalid=true after blur. Validation runs only on Submit, so another submission is required to clear them. Error text also becomes part of the input's wrapped-label accessible name. Invalid submission leaves focus on Submit rather than moving to the first invalid field. The corrected-error behavior also reproduces in production.",
+            "expected": "Corrected fields no longer report outdated failures; validation feedback helps the customer reach and resolve remaining errors.",
+            "impact": "The UI tells customers that correct entries are still invalid, creating uncertainty and extra attempts. Screen-reader speech and abandonment were not measured.",
+            "improvement": "Review clearing/revalidating touched fields after changes and blur, separate label/error descriptions, and first-error focus or an error summary.",
+            "evidence": [
+              "paired/SCR-05-corrected-errors.jpg",
+              "paired/SCR-05-validation.jpg",
+              "checks.json#SCR-05-corrected-errors-390",
+              "checks.json#SCR-05-validation-360",
+              "../../src/components/organisms/CheckoutForm.tsx"
+            ],
+            "relatedFindings": [],
+            "limits": "Client validation blocks blank invoice submission and error elements have role=alert and descriptions. This finding concerns stale feedback, not missing validation altogether. Actual assistive-technology output was not tested.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-006",
+      "sourceIds": [
+        "F-CHECK-006"
+      ],
+      "screen": "Checkout",
+      "reviewRank": 11,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-006",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "The observed reset is intentional behavior; preserving a session draft is a usability proposal that needs retention/reset rules.",
+      "classification": "usability hypothesis",
+      "title": "Returning to edit the cart resets all checkout details",
+      "screenStates": [
+        "SCR-05-corrected-errors",
+        "SCR-05-mixed-promo"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; cart/promo survives while form details reset.",
+      "observedBehavior": "Every opening resets names, email, phone, selected branch, note, errors and touched state. The cart/promo survives the transition; there is no dedicated back-to-cart action in checkout. While submission is pending, reopening also resets the fields but keeps the submit button disabled until the original response resolves.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers may have to re-enter details after correcting an order, increasing effort and possible mistakes. Resetting on open is deliberate in the source; actual abandonment and user expectations were not measured."
+      },
+      "expected": "Support cart edits without unexpectedly losing the customer's current checkout draft, subject to an agreed privacy/reset policy.",
+      "suggestedImprovement": "Review a back-to-cart action and draft continuity within a purchase session, with explicit reset/expiry behavior.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-006",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Enter customer details and an optional note.",
+            "Close checkout to return to the cart.",
+            "Open checkout again, optionally after editing a quantity or promo."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/checks.json#REOPEN-RESET-1440",
+        "../storefront-checkout/checks.json#REOPEN-RESET-390",
+        "../storefront-checkout/checks.json#REOPEN-RESET-360",
+        "../storefront-checkout/checks.json#SUBMITTING-REOPEN",
+        "../../src/components/organisms/CheckoutForm.tsx"
+      ],
+      "limits": [
+        "This is a usability proposal around an observed intentional reset, not a claim that a documented functional requirement was violated. No cross-device draft storage is proposed by this audit."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-006",
+            "title": "Returning to edit the cart resets all checkout details",
+            "group": "Delivery selection and checkout continuity",
+            "screenStates": [
+              "SCR-05-corrected-errors",
+              "SCR-05-mixed-promo"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "scenario": "normal; close and reopen checkout",
+            "steps": [
+              "Enter customer details and an optional note.",
+              "Close checkout to return to the cart.",
+              "Open checkout again, optionally after editing a quantity or promo."
+            ],
+            "actual": "Every opening resets names, email, phone, selected branch, note, errors and touched state. The cart/promo survives the transition; there is no dedicated back-to-cart action in checkout. While submission is pending, reopening also resets the fields but keeps the submit button disabled until the original response resolves.",
+            "expected": "Support cart edits without unexpectedly losing the customer's current checkout draft, subject to an agreed privacy/reset policy.",
+            "impact": "Customers may have to re-enter details after correcting an order, increasing effort and possible mistakes. Resetting on open is deliberate in the source; actual abandonment and user expectations were not measured.",
+            "improvement": "Review a back-to-cart action and draft continuity within a purchase session, with explicit reset/expiry behavior.",
+            "evidence": [
+              "checks.json#REOPEN-RESET-1440",
+              "checks.json#REOPEN-RESET-390",
+              "checks.json#REOPEN-RESET-360",
+              "checks.json#SUBMITTING-REOPEN",
+              "../../src/components/organisms/CheckoutForm.tsx"
+            ],
+            "relatedFindings": [
+              "F-CHECK-001: pending request and recovery context"
+            ],
+            "limits": "This is a usability proposal around an observed intentional reset, not a claim that a documented functional requirement was violated. No cross-device draft storage is proposed by this audit.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-007",
+      "sourceIds": [
+        "F-CHECK-007"
+      ],
+      "screen": "Checkout",
+      "reviewRank": 20,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-007",
+          "priority": "P2"
+        }
+      ],
+      "tier": "friction",
+      "priorityReason": "The product-only summary lacks delivery-fee explanation. The actual payer/tariff is unknown, so approve truthful policy wording before presentation.",
+      "classification": "usability hypothesis",
+      "title": "The physical-order total does not explain delivery charges",
+      "screenStates": [
+        "SCR-05-paper",
+        "SCR-05-summary",
+        "SCR-05-mixed-promo"
+      ],
+      "routes": [
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "Physical and mixed checkout at all three widths; digital has no shipping requirement.",
+      "observedBehavior": "The form names Nova Post and asks for a branch. The summary labels the product sum minus discounts as the total payable but has no delivery-fee line or explanation of whether delivery is included or paid separately.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers may interpret a product-only total as the full order cost and be surprised later. No shipping overcharge or measured misunderstanding was observed."
+      },
+      "expected": "Customers can understand the scope of the displayed total and any delivery charges before committing.",
+      "suggestedImprovement": "Confirm the actual delivery charging policy with the owner, then review a concise disclosure beside the physical-order total.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-007",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Open a physical or mixed checkout.",
+            "Read the delivery note and scroll to the order summary.",
+            "Check what is included in 'Всього до сплати' and who pays delivery."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-05-summary.jpg",
+        "../storefront-checkout/paired/SCR-05-paper.jpg",
+        "../storefront-checkout/checks.json#SCR-05-summary-390",
+        "../../src/components/organisms/CheckoutForm.tsx"
+      ],
+      "limits": [
+        "The carrier tariff, who pays it, and a completed physical purchase were not verified. This finding does not invent a shipping price or require a shipping calculator."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-007",
+            "title": "The physical-order total does not explain delivery charges",
+            "group": "Delivery selection and checkout continuity",
+            "screenStates": [
+              "SCR-05-paper",
+              "SCR-05-summary",
+              "SCR-05-mixed-promo"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "usability hypothesis",
+            "priority": "P2",
+            "scenario": "physical and mixed checkout",
+            "steps": [
+              "Open a physical or mixed checkout.",
+              "Read the delivery note and scroll to the order summary.",
+              "Check what is included in 'Всього до сплати' and who pays delivery."
+            ],
+            "actual": "The form names Nova Post and asks for a branch. The summary labels the product sum minus discounts as the total payable but has no delivery-fee line or explanation of whether delivery is included or paid separately.",
+            "expected": "Customers can understand the scope of the displayed total and any delivery charges before committing.",
+            "impact": "Customers may interpret a product-only total as the full order cost and be surprised later. No shipping overcharge or measured misunderstanding was observed.",
+            "improvement": "Confirm the actual delivery charging policy with the owner, then review a concise disclosure beside the physical-order total.",
+            "evidence": [
+              "paired/SCR-05-summary.jpg",
+              "paired/SCR-05-paper.jpg",
+              "checks.json#SCR-05-summary-390",
+              "../../src/components/organisms/CheckoutForm.tsx"
+            ],
+            "relatedFindings": [],
+            "limits": "The carrier tariff, who pays it, and a completed physical purchase were not verified. This finding does not invent a shipping price or require a shipping calculator.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-CHECK-001",
+      "sourceIds": [
+        "F-CHECK-001"
+      ],
+      "screen": "Payment",
+      "reviewRank": 3,
+      "priority": "P1",
+      "sourcePriorities": [
+        {
+          "id": "F-CHECK-001",
+          "priority": "P1"
+        }
+      ],
+      "tier": "likely abandonment",
+      "priorityReason": "Invoice creation clears selection and promo before verified payment. The local unverified return loses retry context; real provider cancellation and abandonment remain untested.",
+      "classification": "confirmed defect",
+      "title": "Invoice handoff clears the cart before any payment is verified",
+      "screenStates": [
+        "SCR-05-submitting",
+        "SCR-06-unverified-return",
+        "SCR-04-handoff-cleared"
+      ],
+      "routes": [
+        "/books/zvychajna",
+        "/?audit-handoff=unverified"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "All three widths; controlled digital handoff and delayed response.",
+      "observedBehavior": "A successful invoice-creation response closes checkout and clears cart/promo before navigation. The unverified return shows an empty cart and no order/payment status. Closing pending checkout does not cancel its request; its late response still redirects and clears the cart. The production source performs clearCart before window.location.href; production refresh separately preserves a populated cart when there has been no handoff.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "The customer loses selected items and discounts on an unverified return and must reconstruct the purchase to retry. Actual provider cancellation and resulting abandonment were not exercised or measured."
+      },
+      "expected": "Keep enough order/cart context to recover from an unverified, failed or cancelled payment and reconcile the eventual outcome without presenting a false success state.",
+      "suggestedImprovement": "Review persistence of pending-order context and restoration/retry rules together with ZVY-40. Make the pending-request close behavior clear; distinguish verified success from other outcomes.",
+      "reproduction": [
+        {
+          "sourceId": "F-CHECK-001",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Add an electronic book and complete checkout with the synthetic audit customer.",
+            "Submit to the loopback invoice fixture, which returns an unverified redirect URL.",
+            "On the local home return, open the cart.",
+            "For the delay variant, close and reopen checkout while submission is pending; observe its late completion."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-checkout/paired/SCR-04-handoff-cleared.jpg",
+        "../storefront-checkout/paired/SCR-06-unverified-return.jpg",
+        "../storefront-checkout/paired/SCR-05-submitting.jpg",
+        "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF",
+        "../storefront-checkout/checks.json#RETRY-HANDOFF-AFTER-CLOSE",
+        "../storefront-checkout/checks.json#SUBMITTING-REOPEN",
+        "../storefront-checkout/invoice-evidence.json",
+        "../storefront-checkout/invoice-loading-evidence.json",
+        "../../src/components/organisms/NavBar.tsx"
+      ],
+      "limits": [
+        "Confirmed loss of context at invoice handoff, not a claim of a real payment failure, provider UI test, receipt or fulfillment. The local fixture returns home and never confirms payment."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-001",
+            "title": "Invoice handoff clears the cart before any payment is verified",
+            "group": "Payment handoff and recovery",
+            "screenStates": [
+              "SCR-05-submitting",
+              "SCR-06-unverified-return",
+              "SCR-04-handoff-cleared"
+            ],
+            "routes": [
+              "/books/zvychajna",
+              "/?audit-handoff=unverified"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P1",
+            "scenario": "normal / invoice-loading",
+            "steps": [
+              "Add an electronic book and complete checkout with the synthetic audit customer.",
+              "Submit to the loopback invoice fixture, which returns an unverified redirect URL.",
+              "On the local home return, open the cart.",
+              "For the delay variant, close and reopen checkout while submission is pending; observe its late completion."
+            ],
+            "actual": "A successful invoice-creation response closes checkout and clears cart/promo before navigation. The unverified return shows an empty cart and no order/payment status. Closing pending checkout does not cancel its request; its late response still redirects and clears the cart. The production source performs clearCart before window.location.href; production refresh separately preserves a populated cart when there has been no handoff.",
+            "expected": "Keep enough order/cart context to recover from an unverified, failed or cancelled payment and reconcile the eventual outcome without presenting a false success state.",
+            "impact": "The customer loses selected items and discounts on an unverified return and must reconstruct the purchase to retry. Actual provider cancellation and resulting abandonment were not exercised or measured.",
+            "improvement": "Review persistence of pending-order context and restoration/retry rules together with ZVY-40. Make the pending-request close behavior clear; distinguish verified success from other outcomes.",
+            "evidence": [
+              "paired/SCR-04-handoff-cleared.jpg",
+              "paired/SCR-06-unverified-return.jpg",
+              "paired/SCR-05-submitting.jpg",
+              "checks.json#J-MOBILE-DIGITAL-HANDOFF",
+              "checks.json#RETRY-HANDOFF-AFTER-CLOSE",
+              "checks.json#SUBMITTING-REOPEN",
+              "invoice-evidence.json",
+              "invoice-loading-evidence.json",
+              "../../src/components/organisms/NavBar.tsx"
+            ],
+            "relatedFindings": [
+              "ZVY-40: planned payment confirmation; not implemented",
+              "F-BOOK-005: digital delivery explanation"
+            ],
+            "limits": "Confirmed loss of context at invoice handoff, not a claim of a real payment failure, provider UI test, receipt or fulfillment. The local fixture returns home and never confirms payment.",
+            "status": "proposed; ZVY-57 screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "Distinct finding retained; related patterns are cross-referenced without merging different behavior.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-DISC-008",
+      "sourceIds": [
+        "F-DISC-008",
+        "F-BOOK-008"
+      ],
+      "screen": "Shared",
+      "reviewRank": 21,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-008",
+          "priority": "P2"
+        },
+        {
+          "id": "F-BOOK-008",
+          "priority": "P2"
+        }
+      ],
+      "tier": "accessibility friction",
+      "priorityReason": "Measured authored indicators are faint even though keyboard operation works. This is independent of the accepted CTA text-color exception.",
+      "classification": "confirmed defect",
+      "title": "Authored focus indicators are faint across navigation and purchase controls",
+      "screenStates": [
+        "SCR-01-default",
+        "SCR-02-default",
+        "SCR-03-format-focus",
+        "SCR-04-paper",
+        "SCR-04-promo-entry",
+        "SCR-05-summary"
+      ],
+      "routes": [
+        "/",
+        "/books",
+        "/books/zvychajna"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "Shared navigation, cards and edition selectors; checkout focus is supporting evidence.",
+      "observedBehavior": "Keyboard operation and authored outlines are present, but semi-transparent accent rings measure below the reported 3:1 comparison threshold: approximately 1.30–1.51:1 for sampled discovery controls and 1.51:1 for the format selector. Checkout evidence also reports faint authored rings. Presence-only keyboard assertions do not test contrast.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers relying on visible focus may struggle to locate their current control even though all inspected controls are keyboard reachable."
+      },
+      "expected": "Provide a clearly visible authored focus indicator consistently across shared controls; treat focus separately from the accepted action-text exception.",
+      "suggestedImprovement": "Review one focus treatment for navigation, cards, quick-add, format selection and checkout. Preserve working keyboard navigation, trapping and focus restoration; verify appearance with supported assistive-technology/device checks.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-008",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "Reload the catalog and use Tab to reach navigation, a card and quick-add controls.",
+            "Observe the focus outline and inspect its computed authored color.",
+            "Composite the rgba outline over the adjacent white/cream background and calculate contrast."
+          ]
+        },
+        {
+          "sourceId": "F-BOOK-008",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Reach format radios using Tab, then select paper with ArrowUp.",
+            "Inspect the label's computed focus outline at all widths.",
+            "Composite rgba(240,155,48,0.55) over the adjacent #faf9f7 page and compare with the 3:1 non-text contrast criterion."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-02-card-focus-360x844.jpg",
+        "../storefront-discovery/screenshots/SCR-02-skip-focus-360x844.jpg",
+        "../storefront-discovery/checks.json#KEYBOARD-NARROW",
+        "../storefront-discovery/checks.json#HOME-KEYBOARD",
+        "../storefront-discovery/checks.json#KEYBOARD-CATALOG-1440",
+        "../storefront-discovery/checks.json#KEYBOARD-CATALOG-390",
+        "../storefront-discovery/checks.json#KEYBOARD-CATALOG-360",
+        "../../src/components/organisms/NavBar.module.css",
+        "../../src/components/molecules/BookCard.module.css",
+        "../storefront-selection/paired/SCR-03-format-focus.jpg",
+        "../storefront-selection/checks.json#FORMAT-KEYBOARD-1440",
+        "../storefront-selection/checks.json#FORMAT-KEYBOARD-390",
+        "../storefront-selection/checks.json#FORMAT-KEYBOARD-360",
+        "../../src/components/organisms/BookDetail.module.css",
+        "../storefront-checkout/paired/SCR-05-summary.jpg",
+        "../storefront-checkout/checks.json#SCR-05-summary-390",
+        "../storefront-checkout/checks.json#CONTRAST-CALCULATION",
+        "../../ACCESSIBILITY.md"
+      ],
+      "limits": [
+        "The calculation applies to authored rings only, not the browser's default focus indicator. The existing keyboard tests check for an outline/shadow but do not check its contrast.",
+        "Keyboard operation and restoration succeeded. This is separate from the accepted CTA text palette exception; presence-only regression assertions do not establish sufficient contrast."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-008",
+            "title": "Authored focus rings have low contrast despite being present",
+            "screenStates": [
+              "SCR-01-default",
+              "SCR-02-default"
+            ],
+            "routes": [
+              "/",
+              "/books"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "steps": [
+              "Reload the catalog and use Tab to reach navigation, a card and quick-add controls.",
+              "Observe the focus outline and inspect its computed authored color.",
+              "Composite the rgba outline over the adjacent white/cream background and calculate contrast."
+            ],
+            "actual": "Navigation uses rgba(240,155,48,.55), while cards and quick-add use .35 and cart uses .35. These authored focus rings calculate below 3:1 against the adjacent light backgrounds. Keyboard operation succeeds and outlines are present; existence alone does not establish sufficient contrast.",
+            "expected": "The visual information identifying keyboard focus has at least 3:1 contrast against adjacent colors when author styled.",
+            "impact": "Customers relying on visible focus may struggle to locate their current control even though all inspected controls are keyboard reachable.",
+            "improvement": "Review a contrasting focus outline independently of the accepted CTA text palette. Preserve focus indication on every navigation, card and quick-add action.",
+            "evidence": [
+              "screenshots/SCR-02-card-focus-360x844.jpg",
+              "screenshots/SCR-02-skip-focus-360x844.jpg",
+              "checks.json#KEYBOARD-NARROW",
+              "checks.json#HOME-KEYBOARD",
+              "checks.json#KEYBOARD-CATALOG-1440",
+              "checks.json#KEYBOARD-CATALOG-390",
+              "checks.json#KEYBOARD-CATALOG-360",
+              "../../src/components/organisms/NavBar.module.css",
+              "../../src/components/molecules/BookCard.module.css"
+            ],
+            "status": "proposed; screen review required",
+            "limitations": "The calculation applies to authored rings only, not the browser's default focus indicator. The existing keyboard tests check for an outline/shadow but do not check its contrast."
+          }
+        },
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-008",
+            "title": "Format focus rings are present but faint against the page",
+            "group": "Shared accessibility",
+            "screenStates": [
+              "SCR-03-format-focus"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "scenario": "normal",
+            "steps": [
+              "Reach format radios using Tab, then select paper with ArrowUp.",
+              "Inspect the label's computed focus outline at all widths.",
+              "Composite rgba(240,155,48,0.55) over the adjacent #faf9f7 page and compare with the 3:1 non-text contrast criterion."
+            ],
+            "actual": "Native radios work with arrow keys and the label paints a focus outline, but the authored semi-transparent accent outline has less than 3:1 contrast against the page. The focus styling follows the same faint-ring pattern already reported in discovery.",
+            "expected": "The focus indicator is distinguishable against adjacent surfaces, including for customers with reduced contrast sensitivity.",
+            "impact": "A keyboard user may lose track of the active edition despite the controls being keyboard operable.",
+            "improvement": "Consolidate the focus-ring treatment with F-DISC-008 and review a stronger indicator across selectors and shared controls.",
+            "evidence": [
+              "paired/SCR-03-format-focus.jpg",
+              "checks.json#FORMAT-KEYBOARD-1440",
+              "checks.json#FORMAT-KEYBOARD-390",
+              "checks.json#FORMAT-KEYBOARD-360",
+              "../../src/components/organisms/BookDetail.module.css"
+            ],
+            "relatedFindings": [
+              "F-DISC-008"
+            ],
+            "limits": "Keyboard operation and restoration succeeded. This is separate from the accepted CTA text palette exception; presence-only regression assertions do not establish sufficient contrast.",
+            "status": "proposed; screen review required"
+          }
+        }
+      ],
+      "supportingSourceIds": [
+        "F-CHECK-009"
+      ],
+      "reconciliation": "The same translucent authored focus treatment affects navigation/cards and edition selection. Checkout focus information in F-CHECK-009 is supporting evidence, not a second primary mapping.",
+      "decision": "proposed; ZVY-57 decision required"
+    },
+    {
+      "id": "F-DISC-007",
+      "sourceIds": [
+        "F-DISC-007",
+        "F-BOOK-007",
+        "F-CHECK-009"
+      ],
+      "screen": "Shared",
+      "reviewRank": 22,
+      "priority": "P2",
+      "sourcePriorities": [
+        {
+          "id": "F-DISC-007",
+          "priority": "P2"
+        },
+        {
+          "id": "F-BOOK-007",
+          "priority": "P2"
+        },
+        {
+          "id": "F-CHECK-009",
+          "priority": "P2"
+        }
+      ],
+      "tier": "accepted accessibility debt",
+      "priorityReason": "The confirmed 2.23:1 text treatment is already accepted by the owner. Keep the cost explicit and do not silently reopen the brand decision.",
+      "classification": "confirmed shortfall; accepted exception",
+      "title": "Purchase labels and totals retain the accepted low contrast treatment",
+      "screenStates": [
+        "SCR-01-default",
+        "SCR-03-paper",
+        "SCR-03-suggestion",
+        "SCR-04-paper",
+        "SCR-04-promo-entry",
+        "SCR-05-summary"
+      ],
+      "routes": [
+        "/",
+        "/books/zvychajna",
+        "/books/inaksha"
+      ],
+      "affectedJourneys": [
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-DESKTOP",
+          "evidence": "../storefront-discovery/checks.json#J-DESKTOP"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-MOBILE",
+          "evidence": "../storefront-discovery/checks.json#J-MOBILE"
+        },
+        {
+          "issue": "ZVY-53",
+          "checkId": "J-NARROW",
+          "evidence": "../storefront-discovery/checks.json#J-NARROW"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-DESKTOP-DIGITAL",
+          "evidence": "../storefront-selection/checks.json#J-DESKTOP-DIGITAL"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-MOBILE-SUGGESTION",
+          "evidence": "../storefront-selection/checks.json#J-MOBILE-SUGGESTION"
+        },
+        {
+          "issue": "ZVY-54",
+          "checkId": "J-NARROW-PREORDER",
+          "evidence": "../storefront-selection/checks.json#J-NARROW-PREORDER"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-DESKTOP-PHYSICAL-VALIDATION",
+          "evidence": "../storefront-checkout/checks.json#J-DESKTOP-PHYSICAL-VALIDATION"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-MOBILE-DIGITAL-HANDOFF",
+          "evidence": "../storefront-checkout/checks.json#J-MOBILE-DIGITAL-HANDOFF"
+        },
+        {
+          "issue": "ZVY-55",
+          "checkId": "J-NARROW-MIXED",
+          "evidence": "../storefront-checkout/checks.json#J-NARROW-MIXED"
+        }
+      ],
+      "devices": [
+        "desktop 1440x900",
+        "mobile 390x844",
+        "narrow mobile 360x844"
+      ],
+      "deviceDifference": "Home, product, suggestion, cart, promo and checkout at all three widths.",
+      "observedBehavior": "Enabled white text on #f09b30 and accent text on white measure approximately 2.23:1. Affected surfaces include home Details, product Buy/Add, suggestion price, cart checkout/total, promo apply and checkout submit/total. ACCESSIBILITY.md records the accepted text-color exception; automated axe scans omit color-contrast. This acceptance does not establish accessibility conformance.",
+      "customerImpact": {
+        "basis": "expert inference from observed UI behavior; no measured customer confusion, error rate or abandonment",
+        "text": "Customers with reduced contrast sensitivity may have difficulty reading the featured action."
+      },
+      "expected": "Keep the accepted text-contrast debt explicit. Change treatment only if the owner reopens that decision; retain the current accent until then.",
+      "suggestedImprovement": "Record one shared exception and its full affected surface list. Ask whether to retain or reopen it during ZVY-57; do not create repeated palette tasks.",
+      "reproduction": [
+        {
+          "sourceId": "F-DISC-007",
+          "setup": "../storefront-discovery/REPORT.md",
+          "steps": [
+            "Locate Детальніше on home at each viewport.",
+            "Read computed foreground/background colors and compare their relative luminance."
+          ]
+        },
+        {
+          "sourceId": "F-BOOK-007",
+          "setup": "../storefront-selection/REPORT.md",
+          "steps": [
+            "Inspect enabled Buy and Add labels and the suggested-item price.",
+            "Compare their computed white/accent colors with WCAG relative-luminance thresholds and ACCESSIBILITY.md."
+          ]
+        },
+        {
+          "sourceId": "F-CHECK-009",
+          "setup": "../storefront-checkout/REPORT.md",
+          "steps": [
+            "Inspect enabled checkout, submit and promo-apply actions at the recorded widths.",
+            "Read computed foreground/background colors and compare their contrast with the existing accessibility exception."
+          ]
+        }
+      ],
+      "evidence": [
+        "../storefront-discovery/screenshots/SCR-01-default-1440x900.jpg",
+        "../storefront-discovery/screenshots/SCR-01-default-390x844-full.jpg",
+        "../storefront-discovery/screenshots/SCR-01-cta-focus-360x844.jpg",
+        "../storefront-discovery/checks.json#HOME-LAYOUT",
+        "../../ACCESSIBILITY.md",
+        "../storefront-selection/paired/SCR-03-paper.jpg",
+        "../storefront-selection/checks.json#READABILITY-390",
+        "../storefront-selection/checks.json#PAPER-1440",
+        "../storefront-selection/checks.json#PAPER-360",
+        "../storefront-checkout/paired/SCR-05-summary.jpg",
+        "../storefront-checkout/checks.json#SCR-05-summary-390",
+        "../storefront-checkout/checks.json#CONTRAST-CALCULATION"
+      ],
+      "limits": [
+        "Confirmed color contrast, not a claim about any particular user's visual acuity, display or lighting. Disabled controls are exempt and were not counted as failures.",
+        "This is an existing accepted exception, not a newly approved change. Disabled actions are excluded from the contrast finding. No physical-screen sunlight check was performed.",
+        "The text-contrast shortfall is confirmed from computed colors, not JPEG sampling. The product owner previously accepted it; this audit does not authorize palette changes or claim a complete accessibility conformance assessment."
+      ],
+      "sourceRecords": [
+        {
+          "issue": "ZVY-53",
+          "report": "../storefront-discovery/REPORT.md",
+          "records": "../storefront-discovery/findings.json",
+          "sourceRevision": "5f918a2511ccccd8c200427f18a71fe044c61818",
+          "finding": {
+            "id": "F-DISC-007",
+            "title": "Featured CTA retains the accepted low text-contrast exception",
+            "screenStates": [
+              "SCR-01-default"
+            ],
+            "routes": [
+              "/"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "steps": [
+              "Locate Детальніше on home at each viewport.",
+              "Read computed foreground/background colors and compare their relative luminance."
+            ],
+            "actual": "White text on #f09b30 has approximately 2.23:1 contrast. The CTA label is 16px bold and does not qualify for the large-text exception. ACCESSIBILITY.md explicitly records the owner's acceptance of this palette risk; automated axe scans disable color-contrast.",
+            "expected": "Normal-size action text meets 4.5:1 contrast, or the existing accepted accessibility debt remains explicit in the screen decision.",
+            "impact": "Customers with reduced contrast sensitivity may have difficulty reading the featured action.",
+            "improvement": "Carry the existing accepted exception into consolidation. Revisit text/background treatment only if the owner reopens the decision; preserve the current accent pending that review.",
+            "evidence": [
+              "screenshots/SCR-01-default-1440x900.jpg",
+              "screenshots/SCR-01-default-390x844-full.jpg",
+              "screenshots/SCR-01-cta-focus-360x844.jpg",
+              "checks.json#HOME-LAYOUT",
+              "../../ACCESSIBILITY.md"
+            ],
+            "status": "existing accepted exception; no change approved",
+            "limitations": "Confirmed color contrast, not a claim about any particular user's visual acuity, display or lighting. Disabled controls are exempt and were not counted as failures."
+          }
+        },
+        {
+          "issue": "ZVY-54",
+          "report": "../storefront-selection/REPORT.md",
+          "records": "../storefront-selection/findings.json",
+          "sourceRevision": "e2c94130358aa095bea28e14f54cf1a8057818c9",
+          "finding": {
+            "id": "F-BOOK-007",
+            "title": "Purchase labels retain the accepted low-contrast brand treatment",
+            "group": "Shared accessibility",
+            "screenStates": [
+              "SCR-03-paper",
+              "SCR-03-suggestion"
+            ],
+            "routes": [
+              "/books/zvychajna",
+              "/books/inaksha"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect",
+            "priority": "P2",
+            "scenario": "normal",
+            "steps": [
+              "Inspect enabled Buy and Add labels and the suggested-item price.",
+              "Compare their computed white/accent colors with WCAG relative-luminance thresholds and ACCESSIBILITY.md."
+            ],
+            "actual": "Buy uses 16px white text on #f09b30, approximately 2.23:1; accent-colored Add text on white has the same ratio. This is the deliberately accepted palette exception documented in ACCESSIBILITY.md. Existing axe scans skip color-contrast.",
+            "expected": "Normal-size labels meet 4.5:1, or the owner retains the explicitly acknowledged accessibility debt when reviewing these screens.",
+            "impact": "Customers with reduced contrast sensitivity may struggle to read purchase actions or the add-on price.",
+            "improvement": "Consolidate with the accepted discovery contrast exception. Reopen treatment only through owner screen review; preserve the current accent pending that decision.",
+            "evidence": [
+              "paired/SCR-03-paper.jpg",
+              "checks.json#READABILITY-390",
+              "checks.json#PAPER-1440",
+              "checks.json#PAPER-360",
+              "../../ACCESSIBILITY.md"
+            ],
+            "relatedFindings": [
+              "F-DISC-007"
+            ],
+            "limits": "This is an existing accepted exception, not a newly approved change. Disabled actions are excluded from the contrast finding. No physical-screen sunlight check was performed.",
+            "status": "existing accepted exception; screen decision required before changes"
+          }
+        },
+        {
+          "issue": "ZVY-55",
+          "report": "../storefront-checkout/REPORT.md",
+          "records": "../storefront-checkout/findings.json",
+          "sourceRevision": "5373680bcb29b2b7a49a315897f9e6bc0d81653a",
+          "finding": {
+            "id": "F-CHECK-009",
+            "title": "Purchase actions retain the accepted low-contrast brand treatment",
+            "group": "Shared accessibility",
+            "screenStates": [
+              "SCR-04-paper",
+              "SCR-04-promo-entry",
+              "SCR-05-summary"
+            ],
+            "routes": [
+              "/books/zvychajna"
+            ],
+            "devices": [
+              "desktop 1440x900",
+              "mobile 390x844",
+              "narrow mobile 360x844"
+            ],
+            "classification": "confirmed defect; existing accepted accessibility exception",
+            "priority": "P2",
+            "scenario": "enabled cart/checkout actions",
+            "steps": [
+              "Inspect enabled checkout, submit and promo-apply actions at the recorded widths.",
+              "Read computed foreground/background colors and compare their contrast with the existing accessibility exception."
+            ],
+            "actual": "Enabled actions use white text on #f09b30, approximately2.23:1. The current submit text is16px on desktop and15.2px on mobile. Orange totals on white have the same ratio. Authored translucent focus rings are present but faint; their appearance also overlaps earlier audit findings. ACCESSIBILITY.md explicitly accepts the brand text-contrast exception, and existing axe tests skip color-contrast.",
+            "expected": "Readable action text and clearly visible focus indicators under the reviewed accessibility policy; acceptance of a product exception must not be reported as standards compliance.",
+            "impact": "Low-contrast purchase labels and totals may be hard to read for people with reduced contrast sensitivity or under glare. Actual impairment simulations and outdoor phone use were not tested.",
+            "improvement": "Carry the accepted exception and affected checkout controls into consolidation; review any treatment change with the owner while preserving the established brand color unless separately approved.",
+            "evidence": [
+              "paired/SCR-05-summary.jpg",
+              "checks.json#SCR-05-summary-390",
+              "checks.json#CONTRAST-CALCULATION",
+              "../../ACCESSIBILITY.md"
+            ],
+            "relatedFindings": [
+              "F-DISC-007",
+              "F-BOOK-007",
+              "F-DISC-008",
+              "F-BOOK-008"
+            ],
+            "limits": "The text-contrast shortfall is confirmed from computed colors, not JPEG sampling. The product owner previously accepted it; this audit does not authorize palette changes or claim a complete accessibility conformance assessment.",
+            "status": "accepted exception recorded; changes require owner screen review"
+          }
+        }
+      ],
+      "supportingSourceIds": [],
+      "reconciliation": "The same accepted brand text-contrast exception occurs on multiple screens. Count it once; retain every affected control and all three source records.",
+      "decision": "existing exception retained pending any explicit owner revision"
+    }
+  ],
+  "verification": {
+    "date": "2026-10-04",
+    "timezone": "Europe/Kyiv",
+    "sourceIdMapping": "26 unique source IDs preserved exactly once",
+    "canonicalCounts": "22 canonical: 14 confirmed, 8 hypotheses",
+    "priorities": "8 P1, 14 P2; ranks 1 through 22 unique",
+    "originalCaptureIntegrity": "221 SHA256 hashes, byte counts and native dimensions passed",
+    "recordedChecks": 297,
+    "localReportLinksAndAnchors": 328,
+    "sourceFindingSnapshots": "all originals deeply equal; no source evidence omitted",
+    "reproductionReview": "compared with documented local setup, scenario helpers, recorded checks and relevant source; no new browser journey run",
+    "visualReview": "priority comparisons inspected; ghosted suggestion and partly obscured toast caveats retained",
+    "applicationTestsAndBuild": "not rerun for documentation-only change",
+    "remotePipeline": "not retrieved",
+    "markdownPreview": "rendered layout unverified; media integrity and links checked independently"
+  }
+}
