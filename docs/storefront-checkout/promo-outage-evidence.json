@@ -1,0 +1,24 @@
+{
+  "scenario": "promo-error",
+  "invoiceRequests": [],
+  "promoRequests": [
+    {
+      "code": "AUDIT10",
+      "ids": [
+        "74f2f2c9-e789-4f07-b294-b109ae9b468b"
+      ]
+    },
+    {
+      "code": "AUDIT10",
+      "ids": [
+        "74f2f2c9-e789-4f07-b294-b109ae9b468b"
+      ]
+    },
+    {
+      "code": "AUDIT10",
+      "ids": [
+        "74f2f2c9-e789-4f07-b294-b109ae9b468b"
+      ]
+    }
+  ]
+}
