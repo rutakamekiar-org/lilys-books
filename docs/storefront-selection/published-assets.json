@@ -1,0 +1,16 @@
+{
+  "issue": "ZVY-54",
+  "storagePolicy": "Owner requires reports and files to remain local; Linear only for ticket updates.",
+  "cleanup": {
+    "attachmentsRemoved": 4,
+    "issueReportLinkRemoved": true,
+    "sharedLinearAppendixReverted": true,
+    "auditDocumentContentCleared": true,
+    "emptyDocumentEntryDeletionPending": true
+  },
+  "emptyDocument": {
+    "id": "7cc91817-2419-4edd-8c7b-5b0654172478",
+    "url": "https://linear.app/zvychajna/document/storefront-book-selection-audit-zvy-54-desktop-and-mobile-0d59fb78f6d7"
+  },
+  "limitation": "Connector has no document-delete capability. Browser requires login. Deleting attachment rows does not establish physical deletion of retained upload bytes or document version history."
+}
