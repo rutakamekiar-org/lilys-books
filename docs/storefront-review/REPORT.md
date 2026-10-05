@@ -893,6 +893,8 @@ Events/about/returns pages are documented in the baseline but were outside these
 
 ## Product owner handoff
 
+The [ZVY-57 decision log](DECISIONS.md) records the completed screen review and owner-approved final v1 dated 2026-10-05: 18 approved scopes, three rejected proposals and contrast treatment deferred at Low priority. Its verified handoff lists 15 new implementation issues plus reused ZVY-40, all blocking ZVY-58. The full log remains local at the owner's request; this consolidated report preserves the original evidence, proposed priorities and recommendations rather than rewriting them as owner decisions. Application implementation and final verification remain separate work.
+
 Recommend accepting this evidence reconciliation as the input to ZVY-57, then deciding the top five outcomes before visual redesign. Keep proposed priorities adjustable: evidence supports the behavior, while business impact and frequency still need owner judgment. Resolve the shared eligibility/disclosure, feedback and focus rules once and apply them to every listed screen.
 
 1. Check the 22 canonical findings and 26-ID mapping for completeness/correctness. Record acceptance or corrections before screen decisions.
