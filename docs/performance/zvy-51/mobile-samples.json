@@ -1,0 +1,1366 @@
+{
+  "date": "2026-10-05",
+  "timezone": "Europe/Kiev",
+  "runner": {
+    "lighthouseVersion": "13.5.0",
+    "browser": "HeadlessChromium 153.0.8010.36",
+    "device": "Emulated Moto G Power",
+    "mode": "mobile",
+    "throttling": "Slow 4G",
+    "singlePageSession": true,
+    "initialPageLoad": true,
+    "cdnTemperature": "Unknown; Google controls runner and CDN location",
+    "fieldData": "No Data"
+  },
+  "precision": "Displayed metrics retained for comparison with the displayed baseline; report creation timestamp is not Lighthouse capture time.",
+  "samples": [
+    {
+      "route": "/",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/p9ilp1fs77?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:37:52+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:37:00+03:00",
+      "score": 95,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.5,
+      "tbtMilliseconds": 160,
+      "cls": 0.001,
+      "speedIndexSeconds": 1.9,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/393rln86m2?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:08+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 67,
+      "fcpSeconds": 2.9,
+      "lcpSeconds": 6.4,
+      "tbtMilliseconds": 170,
+      "cls": 0,
+      "speedIndexSeconds": 4.6,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/ms123cq3k9?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:58+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:41:00+03:00",
+      "score": 98,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.3,
+      "tbtMilliseconds": 110,
+      "cls": 0.001,
+      "speedIndexSeconds": 1.6,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books/v13mujyikb?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:27+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 98,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.1,
+      "tbtMilliseconds": 140,
+      "cls": 0,
+      "speedIndexSeconds": 1.7,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books/bz36wkvqjn?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:08+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 94,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.6,
+      "tbtMilliseconds": 180,
+      "cls": 0,
+      "speedIndexSeconds": 1.9,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books/29hv687xoj?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:30+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 75,
+      "fcpSeconds": 2.9,
+      "lcpSeconds": 5.1,
+      "tbtMilliseconds": 110,
+      "cls": 0,
+      "speedIndexSeconds": 3.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/about",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-about/40e7n2aimf?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:28+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 94,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2,
+      "tbtMilliseconds": 250,
+      "cls": 0,
+      "speedIndexSeconds": 1.4,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/about",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-about/tyye0dpx0l?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:09+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 75,
+      "fcpSeconds": 3.1,
+      "lcpSeconds": 5.1,
+      "tbtMilliseconds": 40,
+      "cls": 0,
+      "speedIndexSeconds": 3.4,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/about",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-about/nhcr1ixerf?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:59+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:41:00+03:00",
+      "score": 76,
+      "fcpSeconds": 2.8,
+      "lcpSeconds": 5.1,
+      "tbtMilliseconds": 50,
+      "cls": 0,
+      "speedIndexSeconds": 3.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/events",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/2wwwcpnef1?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:29+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 91,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.9,
+      "tbtMilliseconds": 20,
+      "cls": 0.085,
+      "speedIndexSeconds": 4.6,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/events",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/jsk9npamzk?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:09+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 99,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2,
+      "tbtMilliseconds": 100,
+      "cls": 0,
+      "speedIndexSeconds": 1.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/events",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/gidrlmg4b2?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:30+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 71,
+      "fcpSeconds": 2.8,
+      "lcpSeconds": 5.5,
+      "tbtMilliseconds": 40,
+      "cls": 0.085,
+      "speedIndexSeconds": 4.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/return-policy",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/5gen5o2eam?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:36+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 94,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 1.9,
+      "tbtMilliseconds": 280,
+      "cls": 0,
+      "speedIndexSeconds": 1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/return-policy",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/uxttoshu0b?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:10+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 76,
+      "fcpSeconds": 3,
+      "lcpSeconds": 4.6,
+      "tbtMilliseconds": 170,
+      "cls": 0,
+      "speedIndexSeconds": 3.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/return-policy",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/ilvwrylii3?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:31+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 95,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 1.6,
+      "tbtMilliseconds": 250,
+      "cls": 0,
+      "speedIndexSeconds": 1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/zvychajna",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/r0747592iy?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:37+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 63,
+      "fcpSeconds": 2.9,
+      "lcpSeconds": 7.4,
+      "tbtMilliseconds": 230,
+      "cls": 0,
+      "speedIndexSeconds": 4.9,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/zvychajna",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/9zkam4gs2z?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:11+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 73,
+      "fcpSeconds": 2.8,
+      "lcpSeconds": 5.6,
+      "tbtMilliseconds": 130,
+      "cls": 0,
+      "speedIndexSeconds": 3.3,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/zvychajna",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/eyx46lpbnl?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:31+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 92,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.7,
+      "tbtMilliseconds": 250,
+      "cls": 0,
+      "speedIndexSeconds": 1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/inaksha",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha/idix923z90?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:38+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 67,
+      "fcpSeconds": 2.9,
+      "lcpSeconds": 7,
+      "tbtMilliseconds": 70,
+      "cls": 0,
+      "speedIndexSeconds": 5.3,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/inaksha",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha/oqd9h41i73?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:11+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 67,
+      "fcpSeconds": 2.9,
+      "lcpSeconds": 7,
+      "tbtMilliseconds": 110,
+      "cls": 0,
+      "speedIndexSeconds": 5.2,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/inaksha",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha/1c22e60q2r?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:32+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 95,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.7,
+      "tbtMilliseconds": 150,
+      "cls": 0,
+      "speedIndexSeconds": 1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/zvychajna-and-inaksha",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/vgdfbcv8ht?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:40+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 75,
+      "fcpSeconds": 3.1,
+      "lcpSeconds": 4.9,
+      "tbtMilliseconds": 110,
+      "cls": 0,
+      "speedIndexSeconds": 3.3,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/zvychajna-and-inaksha",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/zm959bbwop?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:11+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 79,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 1.7,
+      "tbtMilliseconds": 920,
+      "cls": 0,
+      "speedIndexSeconds": 1.8,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/zvychajna-and-inaksha",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/d33wv5y13e?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:41:02+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:41:00+03:00",
+      "score": 94,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.5,
+      "tbtMilliseconds": 200,
+      "cls": 0,
+      "speedIndexSeconds": 1.3,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/pid_shepit_snihu",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/kzxe9119b4?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:41+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 97,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.5,
+      "tbtMilliseconds": 80,
+      "cls": 0,
+      "speedIndexSeconds": 1.2,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/pid_shepit_snihu",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/xcip6by5zz?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:12+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 68,
+      "fcpSeconds": 2.9,
+      "lcpSeconds": 7,
+      "tbtMilliseconds": 120,
+      "cls": 0,
+      "speedIndexSeconds": 4.8,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/pid_shepit_snihu",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/xzq162nrhe?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:32+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 95,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.5,
+      "tbtMilliseconds": 160,
+      "cls": 0,
+      "speedIndexSeconds": 1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/brunette-stories",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-brunette-stories/mw1xolff20?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:42+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 80,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 5.4,
+      "tbtMilliseconds": 60,
+      "cls": 0,
+      "speedIndexSeconds": 1.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/brunette-stories",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-brunette-stories/smvm1tjdno?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:12+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 65,
+      "fcpSeconds": 2.9,
+      "lcpSeconds": 7.4,
+      "tbtMilliseconds": 160,
+      "cls": 0,
+      "speedIndexSeconds": 5.6,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/brunette-stories",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-brunette-stories/cdvuyw9aj7?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:33+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 79,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 5.2,
+      "tbtMilliseconds": 150,
+      "cls": 0,
+      "speedIndexSeconds": 1.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/inaksha-art",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha-art/wms557ybgz?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:38:43+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:38:00+03:00",
+      "score": 64,
+      "fcpSeconds": 3.1,
+      "lcpSeconds": 6.9,
+      "tbtMilliseconds": 200,
+      "cls": 0,
+      "speedIndexSeconds": 5.4,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/inaksha-art",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha-art/8iqxt7yz4n?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:40:13+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:40:00+03:00",
+      "score": 94,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.6,
+      "tbtMilliseconds": 190,
+      "cls": 0,
+      "speedIndexSeconds": 1.1,
+      "captureTimePrecision": "minute"
+    },
+    {
+      "route": "/books/inaksha-art",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha-art/l4z6syy5fk?form_factor=mobile",
+      "reportCreatedAt": "2026-10-05T09:45:33+03:00",
+      "lighthouseCapturedAt": "2026-10-05T09:45:00+03:00",
+      "score": 95,
+      "fcpSeconds": 0.9,
+      "lcpSeconds": 2.6,
+      "tbtMilliseconds": 180,
+      "cls": 0,
+      "speedIndexSeconds": 1,
+      "captureTimePrecision": "minute"
+    }
+  ],
+  "excluded": [
+    {
+      "route": "/books",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books/7rm6euh0kj?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    },
+    {
+      "route": "/events",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/8pzypl2q45?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    },
+    {
+      "route": "/return-policy",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/vsc04e13k2?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    },
+    {
+      "route": "/books/zvychajna",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/0wl4l6lcbg?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    },
+    {
+      "route": "/books/inaksha",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha/78yb71vsf9?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    },
+    {
+      "route": "/books/pid_shepit_snihu",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/7etd1zpvu3?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    },
+    {
+      "route": "/books/brunette-stories",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-brunette-stories/jpf4ortxdy?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    },
+    {
+      "route": "/books/inaksha-art",
+      "reportUrl": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha-art/movt6bkw6l?form_factor=mobile",
+      "reason": "Older actual Lighthouse capture time and identical precise calculator metrics despite a new report URL/header time."
+    }
+  ],
+  "comparison": [
+    {
+      "route": "/",
+      "baselineSamples": 4,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 92,
+            "min": 78,
+            "max": 100
+          },
+          "after": {
+            "median": 95,
+            "min": 67,
+            "max": 98
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 1.1,
+            "min": 1.1,
+            "max": 1.1
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 2.9
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 3.05,
+            "min": 1.5,
+            "max": 6.2
+          },
+          "after": {
+            "median": 2.5,
+            "min": 2.3,
+            "max": 6.4
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 70,
+            "min": 30,
+            "max": 210
+          },
+          "after": {
+            "median": 160,
+            "min": 110,
+            "max": 170
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.001,
+            "min": 0,
+            "max": 0.001
+          },
+          "after": {
+            "median": 0.001,
+            "min": 0,
+            "max": 0.001
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 1.8,
+            "min": 1.1,
+            "max": 2
+          },
+          "after": {
+            "median": 1.9,
+            "min": 1.6,
+            "max": 4.6
+          }
+        }
+      }
+    },
+    {
+      "route": "/books",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 83.5,
+            "min": 82,
+            "max": 85
+          },
+          "after": {
+            "median": 94,
+            "min": 75,
+            "max": 98
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 2.1,
+            "min": 1.8,
+            "max": 2.4
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 2.9
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 3.7,
+            "min": 3.3,
+            "max": 4.1
+          },
+          "after": {
+            "median": 2.6,
+            "min": 2.1,
+            "max": 5.1
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 200,
+            "min": 110,
+            "max": 290
+          },
+          "after": {
+            "median": 140,
+            "min": 110,
+            "max": 180
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 2.95,
+            "min": 2.5,
+            "max": 3.4
+          },
+          "after": {
+            "median": 1.9,
+            "min": 1.7,
+            "max": 3.1
+          }
+        }
+      }
+    },
+    {
+      "route": "/about",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 63.5,
+            "min": 63,
+            "max": 64
+          },
+          "after": {
+            "median": 76,
+            "min": 75,
+            "max": 94
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 4.45,
+            "min": 4.4,
+            "max": 4.5
+          },
+          "after": {
+            "median": 2.8,
+            "min": 0.9,
+            "max": 3.1
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 7,
+            "min": 6.8,
+            "max": 7.2
+          },
+          "after": {
+            "median": 5.1,
+            "min": 2,
+            "max": 5.1
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 145,
+            "min": 110,
+            "max": 180
+          },
+          "after": {
+            "median": 50,
+            "min": 40,
+            "max": 250
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.025,
+            "min": 0,
+            "max": 0.05
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 4.45,
+            "min": 4.4,
+            "max": 4.5
+          },
+          "after": {
+            "median": 3.1,
+            "min": 1.4,
+            "max": 3.4
+          }
+        }
+      }
+    },
+    {
+      "route": "/events",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 74.5,
+            "min": 72,
+            "max": 77
+          },
+          "after": {
+            "median": 91,
+            "min": 71,
+            "max": 99
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 1.1,
+            "min": 1.1,
+            "max": 1.1
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 2.8
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 6.7,
+            "min": 6.6,
+            "max": 6.8
+          },
+          "after": {
+            "median": 2.9,
+            "min": 2,
+            "max": 5.5
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 120,
+            "min": 60,
+            "max": 180
+          },
+          "after": {
+            "median": 40,
+            "min": 20,
+            "max": 100
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0.046,
+            "min": 0,
+            "max": 0.092
+          },
+          "after": {
+            "median": 0.085,
+            "min": 0,
+            "max": 0.085
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 1.85,
+            "min": 1.8,
+            "max": 1.9
+          },
+          "after": {
+            "median": 4.1,
+            "min": 1.1,
+            "max": 4.6
+          }
+        }
+      }
+    },
+    {
+      "route": "/return-policy",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 91.5,
+            "min": 83,
+            "max": 100
+          },
+          "after": {
+            "median": 94,
+            "min": 76,
+            "max": 95
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 1.1,
+            "min": 1.1,
+            "max": 1.1
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 3
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 2.15,
+            "min": 1.8,
+            "max": 2.5
+          },
+          "after": {
+            "median": 1.9,
+            "min": 1.6,
+            "max": 4.6
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 310,
+            "min": 40,
+            "max": 580
+          },
+          "after": {
+            "median": 250,
+            "min": 170,
+            "max": 280
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 1.55,
+            "min": 1.4,
+            "max": 1.7
+          },
+          "after": {
+            "median": 1,
+            "min": 1,
+            "max": 3.1
+          }
+        }
+      }
+    },
+    {
+      "route": "/books/zvychajna",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 64.5,
+            "min": 55,
+            "max": 74
+          },
+          "after": {
+            "median": 73,
+            "min": 63,
+            "max": 92
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 3.1,
+            "min": 1.7,
+            "max": 4.5
+          },
+          "after": {
+            "median": 2.8,
+            "min": 0.9,
+            "max": 2.9
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 7.4,
+            "min": 6,
+            "max": 8.8
+          },
+          "after": {
+            "median": 5.6,
+            "min": 2.7,
+            "max": 7.4
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 235,
+            "min": 190,
+            "max": 280
+          },
+          "after": {
+            "median": 230,
+            "min": 130,
+            "max": 250
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 4.7,
+            "min": 3.3,
+            "max": 6.1
+          },
+          "after": {
+            "median": 3.3,
+            "min": 1,
+            "max": 4.9
+          }
+        }
+      }
+    },
+    {
+      "route": "/books/inaksha",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 66.5,
+            "min": 60,
+            "max": 73
+          },
+          "after": {
+            "median": 67,
+            "min": 67,
+            "max": 95
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 3.45,
+            "min": 2.4,
+            "max": 4.5
+          },
+          "after": {
+            "median": 2.9,
+            "min": 0.9,
+            "max": 2.9
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 7.75,
+            "min": 7.1,
+            "max": 8.4
+          },
+          "after": {
+            "median": 7,
+            "min": 2.7,
+            "max": 7
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 120,
+            "min": 80,
+            "max": 160
+          },
+          "after": {
+            "median": 110,
+            "min": 70,
+            "max": 150
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 4.2,
+            "min": 2.5,
+            "max": 5.9
+          },
+          "after": {
+            "median": 5.2,
+            "min": 1,
+            "max": 5.3
+          }
+        }
+      }
+    },
+    {
+      "route": "/books/zvychajna-and-inaksha",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 70.5,
+            "min": 63,
+            "max": 78
+          },
+          "after": {
+            "median": 79,
+            "min": 75,
+            "max": 94
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 3.6,
+            "min": 2.4,
+            "max": 4.8
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 3.1
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 5.55,
+            "min": 4.1,
+            "max": 7
+          },
+          "after": {
+            "median": 2.5,
+            "min": 1.7,
+            "max": 4.9
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 200,
+            "min": 150,
+            "max": 250
+          },
+          "after": {
+            "median": 200,
+            "min": 110,
+            "max": 920
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 3.6,
+            "min": 2.4,
+            "max": 4.8
+          },
+          "after": {
+            "median": 1.8,
+            "min": 1.3,
+            "max": 3.3
+          }
+        }
+      }
+    },
+    {
+      "route": "/books/pid_shepit_snihu",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 65,
+            "min": 65,
+            "max": 65
+          },
+          "after": {
+            "median": 95,
+            "min": 68,
+            "max": 97
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 4.35,
+            "min": 4.3,
+            "max": 4.4
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 2.9
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 7,
+            "min": 6.9,
+            "max": 7.1
+          },
+          "after": {
+            "median": 2.5,
+            "min": 2.5,
+            "max": 7
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 85,
+            "min": 50,
+            "max": 120
+          },
+          "after": {
+            "median": 120,
+            "min": 80,
+            "max": 160
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 4.35,
+            "min": 4.3,
+            "max": 4.4
+          },
+          "after": {
+            "median": 1.2,
+            "min": 1,
+            "max": 4.8
+          }
+        }
+      }
+    },
+    {
+      "route": "/books/brunette-stories",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 63,
+            "min": 61,
+            "max": 65
+          },
+          "after": {
+            "median": 79,
+            "min": 65,
+            "max": 80
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 4.35,
+            "min": 4.3,
+            "max": 4.4
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 2.9
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 7.1,
+            "min": 7.1,
+            "max": 7.1
+          },
+          "after": {
+            "median": 5.4,
+            "min": 5.2,
+            "max": 7.4
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 120,
+            "min": 10,
+            "max": 230
+          },
+          "after": {
+            "median": 150,
+            "min": 60,
+            "max": 160
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 4.4,
+            "min": 4.4,
+            "max": 4.4
+          },
+          "after": {
+            "median": 1.1,
+            "min": 1.1,
+            "max": 5.6
+          }
+        }
+      }
+    },
+    {
+      "route": "/books/inaksha-art",
+      "baselineSamples": 2,
+      "afterSamples": 3,
+      "metrics": {
+        "score": {
+          "before": {
+            "median": 80,
+            "min": 73,
+            "max": 87
+          },
+          "after": {
+            "median": 94,
+            "min": 64,
+            "max": 95
+          }
+        },
+        "fcpSeconds": {
+          "before": {
+            "median": 1.75,
+            "min": 1.1,
+            "max": 2.4
+          },
+          "after": {
+            "median": 0.9,
+            "min": 0.9,
+            "max": 3.1
+          }
+        },
+        "lcpSeconds": {
+          "before": {
+            "median": 5.45,
+            "min": 4,
+            "max": 6.9
+          },
+          "after": {
+            "median": 2.6,
+            "min": 2.6,
+            "max": 6.9
+          }
+        },
+        "tbtMilliseconds": {
+          "before": {
+            "median": 65,
+            "min": 10,
+            "max": 120
+          },
+          "after": {
+            "median": 190,
+            "min": 180,
+            "max": 200
+          }
+        },
+        "cls": {
+          "before": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "after": {
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "speedIndexSeconds": {
+          "before": {
+            "median": 2.4,
+            "min": 2.1,
+            "max": 2.7
+          },
+          "after": {
+            "median": 1.1,
+            "min": 1,
+            "max": 5.4
+          }
+        }
+      }
+    }
+  ],
+  "baselineSource": {
+    "date": "2026-10-03",
+    "commit": "34f900babe7391159256be9a1e7cf8d01dabdd3d",
+    "report": "ZVY-50-PERFORMANCE.md",
+    "samples": 24
+  }
+}

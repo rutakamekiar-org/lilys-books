@@ -1,0 +1,1563 @@
+{
+  "verifiedDate": "2026-10-05",
+  "timezone": "Europe/Kiev",
+  "baseUrl": "https://zvychajna.pp.ua",
+  "productionCommit": "b4f8d3b2860df044bb72bcdb9c13bf3eb1ca9e5d",
+  "browser": "Playwright Chromium; desktop 1280x720, mobile 320x720 and 390x844; deviceScaleFactor 1",
+  "standardLocalSuite": {
+    "command": "npm run test:e2e -- --reporter=json",
+    "startTime": "2026-10-05T06:42:22.152Z",
+    "duration": 144354.826,
+    "expected": 91,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0,
+    "productionModeBuild": "passed against deterministic local API",
+    "externalSystems": "local mock API only"
+  },
+  "existingCutoverSuite": {
+    "command": "npm run test:cutover -- --reporter=json",
+    "startTime": "2026-10-05T06:39:40.855Z",
+    "duration": 25779.784,
+    "expected": 10,
+    "skipped": 17,
+    "unexpected": 0,
+    "flaky": 0,
+    "coverage": "TLS/HSTS/www redirect, health/CORS, robots/sitemap, SSR metadata/Product JSON-LD, invalid checkout, missing product/404 and mobile navigation",
+    "invoiceWritesAttempted": 0
+  },
+  "expandedDeployedSuite": {
+    "command": "npm run test:cutover -- performance-verification --reporter=list,json",
+    "startTime": "2026-10-05T12:33:51.521Z",
+    "duration": 169202.39099999997,
+    "expected": 45,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0,
+    "allChecksPass": false,
+    "invoiceWritesAttempted": 0,
+    "invoiceRequestsSent": 0,
+    "notes": "Earlier test-only locator/readiness assumptions were corrected. This final full run reports actual deployed accessibility failures, without suppressing rules. Gallery and excerpt focus evidence is attached before the loaded excerpt scan."
+  },
+  "accessibility": {
+    "axeVersion": "4.13.0",
+    "acceptedException": [
+      "color-contrast"
+    ],
+    "failures": [
+      {
+        "rule": "image-redundant-alt",
+        "impact": "minor",
+        "route": "/books",
+        "projects": [
+          "desktop-chromium",
+          "mobile-320",
+          "mobile-390"
+        ],
+        "products": [
+          "brunette-stories",
+          "inaksha-art",
+          "pid_shepit_snihu"
+        ],
+        "issue": "ZVY-77"
+      },
+      {
+        "rule": "scrollable-region-focusable",
+        "impact": "serious",
+        "route": "/books/zvychajna",
+        "state": "loaded excerpt dialog",
+        "projects": [
+          "desktop-chromium",
+          "mobile-320",
+          "mobile-390"
+        ],
+        "issue": "ZVY-78"
+      }
+    ]
+  },
+  "preview": {
+    "deploymentId": "6ac127e6b724b800082d8fb1",
+    "sourceRuntimeMatchesProduction": true,
+    "initialAuthenticatedHomeCheck": "passed in the earlier browser session",
+    "expandedChecks": "Not completed. The later resumed browser session reaches Netlify team protection; no protection changed and no Google capture sent to it.",
+    "separateFromProduction": true
+  },
+  "screenshots": [
+    {
+      "route": "/",
+      "project": "mobile-390",
+      "file": "screenshots/home-390.jpg"
+    },
+    {
+      "route": "/books",
+      "project": "mobile-320",
+      "file": "screenshots/catalog-320.jpg"
+    },
+    {
+      "route": "/books/zvychajna",
+      "project": "mobile-390",
+      "file": "screenshots/product-390.jpg"
+    },
+    {
+      "route": "/about",
+      "project": "desktop-chromium",
+      "file": "screenshots/about-desktop.jpg"
+    },
+    {
+      "route": "/events",
+      "project": "mobile-390",
+      "file": "screenshots/events-390.jpg"
+    }
+  ],
+  "verification": [
+    {
+      "title": "deployed / preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 3165,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=360&q=75",
+            "loading": "auto",
+            "priority": null,
+            "sizes": "(max-width: 560px) calc(100vw - 58px), (max-width: 640px) calc(100vw - 82px), (max-width: 980px) calc(100vw - 90px), 360px",
+            "width": 360,
+            "height": 536,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "failed",
+      "durationMilliseconds": 2726,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Брунатні історії: збірка осінніх оповідань",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.png&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 253,
+            "height": 379.5,
+            "loaded": true
+          },
+          {
+            "alt": "Звичайна та Інакша. Дилогія повністю",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 253,
+            "height": 379.5,
+            "loaded": true
+          },
+          {
+            "alt": "Звичайна. Перша частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 253,
+            "height": 379.5,
+            "loaded": true
+          },
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 253,
+            "height": 379.5,
+            "loaded": true
+          },
+          {
+            "alt": "Листівки-ілюстрації до 'Інакшої'",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 253,
+            "height": 379.5,
+            "loaded": true
+          },
+          {
+            "alt": "Під шепіт снігу: збірка різдвяної прози",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 253,
+            "height": 379.5,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      },
+      "failure": "Error: Accessibility violations on deployed /books:\n  [minor] image-redundant-alt: Alternative text of images should not be repeated as text\n      - a[href$=\"brunette-stories\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"eager\"][fetchpriority=\"high\"]\n      - a[href$=\"inaksha-art\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"lazy\"]\n      - a[href$=\"pid_shepit_snihu\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"lazy\"]\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 75\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure image alternative is not repeated as text\",\n+     \"help\": \"Alternative text of images should not be repeated as text\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.13/image-redundant-alt?application=playwright\",\n+     \"id\": \"image-redundant-alt\",\n+     \"impact\": \"minor\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Брунатні історії: зб...\\\" fetchpriority=\\\"high\\\" loading=\\\"eager\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"brunette-stories\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"eager\\\"][fetchpriority=\\\"high\\\"]\",\n+         ],\n+       },\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Листівки-ілюстрації ...\\\" loading=\\\"lazy\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"inaksha-art\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"lazy\\\"]\",\n+         ],\n+       },\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Під шепіт снігу: збі...\\\" loading=\\\"lazy\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"pid_shepit_snihu\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"lazy\\\"]\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.text-alternatives\",\n+       \"best-practice\",\n+     ],\n+   },\n+ ]\n\n   at ..\\e2e\\a11y.ts:39\n\n  37 | export async function expectNoA11yViolations(page: Page, context: string) {\n  38 |   const violations = await findA11yViolations(page);\n> 39 |   expect(violations, `Accessibility violations on ${context}:\\n${describe(violations)}`).toEqual([]);\n     |                                                                                          ^\n  40 | }\n  41 |\n    at expectNoA11yViolations (C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\e2e\\a11y.ts:39:90)\n    at C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\deployment\\performance-verification.spec.ts:86:5"
+    },
+    {
+      "title": "deployed /about preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2184,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/about",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Лілія Кухарець",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fphoto_2025-09-21_20-57-11.jpg&w=360&q=75",
+            "loading": "eager",
+            "priority": null,
+            "sizes": "(max-width: 375px) calc(100vw - 56px), (max-width: 779px) 320px, (max-width: 1024px) calc((100vw - 88px) / 3), 312px",
+            "width": 312,
+            "height": 416,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /events preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 1908,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/events",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Презентація «Звичайної» в Брно",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2Fa.PNG&w=1080&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 1066,
+            "height": 639.59375,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 1066,
+            "height": 639.59375,
+            "loaded": false
+          },
+          {
+            "alt": "Презентація «Звичайної» у Відні",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2Fa.jpg&w=1080&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 1066,
+            "height": 639.59375,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 1066,
+            "height": 639.59375,
+            "loaded": false
+          },
+          {
+            "alt": "Презентація «Звичайної» у Кракові",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2Fa.JPG&w=1080&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 1066,
+            "height": 639.59375,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 1066,
+            "height": 639.59375,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /return-policy preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 1476,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/return-policy",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/zvychajna preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2347,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/zvychajna",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Звичайна. Перша частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/inaksha preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2468,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/inaksha",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/zvychajna-and-inaksha preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2421,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/zvychajna-and-inaksha",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Звичайна та Інакша. Дилогія повністю",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/pid_shepit_snihu preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2104,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/pid_shepit_snihu",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Під шепіт снігу: збірка різдвяної прози",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/brunette-stories preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2630,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/brunette-stories",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Брунатні історії: збірка осінніх оповідань",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.png&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/inaksha-art preserves layout, image delivery, metadata and accessible controls",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2600,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/inaksha-art",
+        "width": 1280,
+        "scrollWidth": 1280,
+        "images": [
+          {
+            "alt": "Листівки-ілюстрації до 'Інакшої'",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 340,
+            "height": 510,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed Паперова cart and invalid checkout preserve focus and delivery fields",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 6351,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed Електронна cart and invalid checkout preserve focus and delivery fields",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 7733,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed mixed-cart totals and quantity rules remain consistent",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2367,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed checkout code loads on first cart use",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 3388,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed gallery and excerpt retain lazy loading, keyboard focus and accessibility",
+      "project": "desktop-chromium",
+      "status": "failed",
+      "durationMilliseconds": 4576,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "galleryExcerptBehavior": {
+        "galleryNavigation": "passed",
+        "focusTrap": "passed",
+        "escape": "passed",
+        "focusRestoration": "passed",
+        "scrollRegion": {
+          "clientHeight": 618,
+          "scrollHeight": 25623,
+          "tabIndex": -1
+        }
+      },
+      "failure": "Error: Accessibility violations on deployed loaded excerpt:\n  [serious] scrollable-region-focusable: Scrollable region must have keyboard access\n      - .ExcerptDialog-module__sKT5Xq__body\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 52\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure elements that have scrollable content are accessible by keyboard in Safari\",\n+     \"help\": \"Scrollable region must have keyboard access\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.13/scrollable-region-focusable?application=playwright\",\n+     \"id\": \"scrollable-region-focusable\",\n+     \"impact\": \"serious\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"focusable-content\",\n+             \"impact\": \"serious\",\n+             \"message\": \"Element should have focusable content\",\n+             \"relatedNodes\": Array [],\n+           },\n+           Object {\n+             \"data\": null,\n+             \"id\": \"focusable-element\",\n+             \"impact\": \"serious\",\n+             \"message\": \"Element should be focusable\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"failureSummary\": \"Fix any of the following:\n+   Element should have focusable content\n+   Element should be focusable\",\n+         \"html\": \"<div class=\\\"ExcerptDialog-module__sKT5Xq__body\\\">\",\n+         \"impact\": \"serious\",\n+         \"none\": Array [],\n+         \"target\": Array [\n+           \".ExcerptDialog-module__sKT5Xq__body\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.keyboard\",\n+       \"wcag2a\",\n+       \"wcag211\",\n+       \"wcag213\",\n+       \"TTv5\",\n+       \"TT4.a\",\n+       \"EN-301-549\",\n+       \"EN-9.2.1.1\",\n+       \"EN-9.2.1.3\",\n+       \"RGAAv4\",\n+       \"RGAA-7.3.2\",\n+     ],\n+   },\n+ ]\n\n   at ..\\e2e\\a11y.ts:39\n\n  37 | export async function expectNoA11yViolations(page: Page, context: string) {\n  38 |   const violations = await findA11yViolations(page);\n> 39 |   expect(violations, `Accessibility violations on ${context}:\\n${describe(violations)}`).toEqual([]);\n     |                                                                                          ^\n  40 | }\n  41 |\n    at expectNoA11yViolations (C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\e2e\\a11y.ts:39:90)\n    at C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\deployment\\performance-verification.spec.ts:199:3"
+    },
+    {
+      "title": "deployed portrait reserves its ratio and leading event photos retain priority",
+      "project": "desktop-chromium",
+      "status": "passed",
+      "durationMilliseconds": 2613,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed / preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 2532,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=360&q=75",
+            "loading": "auto",
+            "priority": null,
+            "sizes": "(max-width: 560px) calc(100vw - 58px), (max-width: 640px) calc(100vw - 82px), (max-width: 980px) calc(100vw - 90px), 360px",
+            "width": 262,
+            "height": 390.078125,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "failed",
+      "durationMilliseconds": 1947,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Брунатні історії: збірка осінніх оповідань",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.png&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 141,
+            "height": 211.5,
+            "loaded": true
+          },
+          {
+            "alt": "Звичайна та Інакша. Дилогія повністю",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 141,
+            "height": 211.5,
+            "loaded": true
+          },
+          {
+            "alt": "Звичайна. Перша частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 141,
+            "height": 211.5,
+            "loaded": true
+          },
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 141,
+            "height": 211.5,
+            "loaded": true
+          },
+          {
+            "alt": "Листівки-ілюстрації до 'Інакшої'",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 141,
+            "height": 211.5,
+            "loaded": true
+          },
+          {
+            "alt": "Під шепіт снігу: збірка різдвяної прози",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 141,
+            "height": 211.5,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      },
+      "failure": "Error: Accessibility violations on deployed /books:\n  [minor] image-redundant-alt: Alternative text of images should not be repeated as text\n      - a[href$=\"brunette-stories\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"eager\"][fetchpriority=\"high\"]\n      - a[href$=\"inaksha-art\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"lazy\"]\n      - a[href$=\"pid_shepit_snihu\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"lazy\"]\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 75\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure image alternative is not repeated as text\",\n+     \"help\": \"Alternative text of images should not be repeated as text\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.13/image-redundant-alt?application=playwright\",\n+     \"id\": \"image-redundant-alt\",\n+     \"impact\": \"minor\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Брунатні історії: зб...\\\" fetchpriority=\\\"high\\\" loading=\\\"eager\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"brunette-stories\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"eager\\\"][fetchpriority=\\\"high\\\"]\",\n+         ],\n+       },\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Листівки-ілюстрації ...\\\" loading=\\\"lazy\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"inaksha-art\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"lazy\\\"]\",\n+         ],\n+       },\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Під шепіт снігу: збі...\\\" loading=\\\"lazy\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"pid_shepit_snihu\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"lazy\\\"]\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.text-alternatives\",\n+       \"best-practice\",\n+     ],\n+   },\n+ ]\n\n   at ..\\e2e\\a11y.ts:39\n\n  37 | export async function expectNoA11yViolations(page: Page, context: string) {\n  38 |   const violations = await findA11yViolations(page);\n> 39 |   expect(violations, `Accessibility violations on ${context}:\\n${describe(violations)}`).toEqual([]);\n     |                                                                                          ^\n  40 | }\n  41 |\n    at expectNoA11yViolations (C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\e2e\\a11y.ts:39:90)\n    at C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\deployment\\performance-verification.spec.ts:86:5"
+    },
+    {
+      "title": "deployed /about preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 1627,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/about",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Лілія Кухарець",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fphoto_2025-09-21_20-57-11.jpg&w=360&q=75",
+            "loading": "eager",
+            "priority": null,
+            "sizes": "(max-width: 375px) calc(100vw - 56px), (max-width: 779px) 320px, (max-width: 1024px) calc((100vw - 88px) / 3), 312px",
+            "width": 264,
+            "height": 352,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /events preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 1586,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/events",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Презентація «Звичайної» в Брно",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2Fa.PNG&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 294,
+            "height": 165.375,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 294,
+            "height": 165.375,
+            "loaded": false
+          },
+          {
+            "alt": "Презентація «Звичайної» у Відні",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2Fa.jpg&w=360&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 294,
+            "height": 165.375,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 294,
+            "height": 165.375,
+            "loaded": false
+          },
+          {
+            "alt": "Презентація «Звичайної» у Кракові",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2Fa.JPG&w=360&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 294,
+            "height": 165.375,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 294,
+            "height": 165.375,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /return-policy preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 1084,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/return-policy",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/zvychajna preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 1836,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/zvychajna",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Звичайна. Перша частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/inaksha preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 2895,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/inaksha",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/zvychajna-and-inaksha preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 3873,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/zvychajna-and-inaksha",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Звичайна та Інакша. Дилогія повністю",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/pid_shepit_snihu preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 2281,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/pid_shepit_snihu",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Під шепіт снігу: збірка різдвяної прози",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/brunette-stories preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 3549,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/brunette-stories",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Брунатні історії: збірка осінніх оповідань",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.png&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories2.png&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/inaksha-art preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 2321,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/inaksha-art",
+        "width": 320,
+        "scrollWidth": 320,
+        "images": [
+          {
+            "alt": "Листівки-ілюстрації до 'Інакшої'",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 190,
+            "height": 285,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed Паперова cart and invalid checkout preserve focus and delivery fields",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 7354,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed Електронна cart and invalid checkout preserve focus and delivery fields",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 6973,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed mixed-cart totals and quantity rules remain consistent",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 1821,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed checkout code loads on first cart use",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 3855,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed gallery and excerpt retain lazy loading, keyboard focus and accessibility",
+      "project": "mobile-320",
+      "status": "failed",
+      "durationMilliseconds": 3781,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "galleryExcerptBehavior": {
+        "galleryNavigation": "passed",
+        "focusTrap": "passed",
+        "escape": "passed",
+        "focusRestoration": "passed",
+        "scrollRegion": {
+          "clientHeight": 595,
+          "scrollHeight": 59509,
+          "tabIndex": -1
+        }
+      },
+      "failure": "Error: Accessibility violations on deployed loaded excerpt:\n  [serious] scrollable-region-focusable: Scrollable region must have keyboard access\n      - .ExcerptDialog-module__sKT5Xq__body\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 52\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure elements that have scrollable content are accessible by keyboard in Safari\",\n+     \"help\": \"Scrollable region must have keyboard access\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.13/scrollable-region-focusable?application=playwright\",\n+     \"id\": \"scrollable-region-focusable\",\n+     \"impact\": \"serious\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"focusable-content\",\n+             \"impact\": \"serious\",\n+             \"message\": \"Element should have focusable content\",\n+             \"relatedNodes\": Array [],\n+           },\n+           Object {\n+             \"data\": null,\n+             \"id\": \"focusable-element\",\n+             \"impact\": \"serious\",\n+             \"message\": \"Element should be focusable\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"failureSummary\": \"Fix any of the following:\n+   Element should have focusable content\n+   Element should be focusable\",\n+         \"html\": \"<div class=\\\"ExcerptDialog-module__sKT5Xq__body\\\">\",\n+         \"impact\": \"serious\",\n+         \"none\": Array [],\n+         \"target\": Array [\n+           \".ExcerptDialog-module__sKT5Xq__body\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.keyboard\",\n+       \"wcag2a\",\n+       \"wcag211\",\n+       \"wcag213\",\n+       \"TTv5\",\n+       \"TT4.a\",\n+       \"EN-301-549\",\n+       \"EN-9.2.1.1\",\n+       \"EN-9.2.1.3\",\n+       \"RGAAv4\",\n+       \"RGAA-7.3.2\",\n+     ],\n+   },\n+ ]\n\n   at ..\\e2e\\a11y.ts:39\n\n  37 | export async function expectNoA11yViolations(page: Page, context: string) {\n  38 |   const violations = await findA11yViolations(page);\n> 39 |   expect(violations, `Accessibility violations on ${context}:\\n${describe(violations)}`).toEqual([]);\n     |                                                                                          ^\n  40 | }\n  41 |\n    at expectNoA11yViolations (C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\e2e\\a11y.ts:39:90)\n    at C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\deployment\\performance-verification.spec.ts:199:3"
+    },
+    {
+      "title": "deployed portrait reserves its ratio and leading event photos retain priority",
+      "project": "mobile-320",
+      "status": "passed",
+      "durationMilliseconds": 1534,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed / preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 2218,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=360&q=75",
+            "loading": "auto",
+            "priority": null,
+            "sizes": "(max-width: 560px) calc(100vw - 58px), (max-width: 640px) calc(100vw - 82px), (max-width: 980px) calc(100vw - 90px), 360px",
+            "width": 332,
+            "height": 494.296875,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "failed",
+      "durationMilliseconds": 2466,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Брунатні історії: збірка осінніх оповідань",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.png&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 176,
+            "height": 264,
+            "loaded": true
+          },
+          {
+            "alt": "Звичайна та Інакша. Дилогія повністю",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 176,
+            "height": 264,
+            "loaded": true
+          },
+          {
+            "alt": "Звичайна. Перша частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 176,
+            "height": 264,
+            "loaded": true
+          },
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 176,
+            "height": 264,
+            "loaded": true
+          },
+          {
+            "alt": "Листівки-ілюстрації до 'Інакшої'",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 176,
+            "height": 264,
+            "loaded": true
+          },
+          {
+            "alt": "Під шепіт снігу: збірка різдвяної прози",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px",
+            "width": 176,
+            "height": 264,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      },
+      "failure": "Error: Accessibility violations on deployed /books:\n  [minor] image-redundant-alt: Alternative text of images should not be repeated as text\n      - a[href$=\"brunette-stories\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"eager\"][fetchpriority=\"high\"]\n      - a[href$=\"inaksha-art\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"lazy\"]\n      - a[href$=\"pid_shepit_snihu\"] > .BookCard-module__o9fQEW__thumb > img[loading=\"lazy\"]\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 75\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure image alternative is not repeated as text\",\n+     \"help\": \"Alternative text of images should not be repeated as text\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.13/image-redundant-alt?application=playwright\",\n+     \"id\": \"image-redundant-alt\",\n+     \"impact\": \"minor\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Брунатні історії: зб...\\\" fetchpriority=\\\"high\\\" loading=\\\"eager\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"brunette-stories\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"eager\\\"][fetchpriority=\\\"high\\\"]\",\n+         ],\n+       },\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Листівки-ілюстрації ...\\\" loading=\\\"lazy\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"inaksha-art\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"lazy\\\"]\",\n+         ],\n+       },\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [],\n+         \"failureSummary\": \"Fix all of the following:\n+   Element contains <img> element with alt text that duplicates existing text\",\n+         \"html\": \"<img alt=\\\"Під шепіт снігу: збі...\\\" loading=\\\"lazy\\\" width=\\\"240\\\" height=\\\"360\\\" decoding=\\\"async\\\" data-nimg=\\\"1\\\" style=\\\"color:transparent\\\" sizes=\\\"(max-width: 520px) c...\\\" srcset=\\\"/_next/image?url=htt...\\\" src=\\\"/_next/image?url=htt...\\\">\",\n+         \"impact\": \"minor\",\n+         \"none\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"duplicate-img-label\",\n+             \"impact\": \"minor\",\n+             \"message\": \"Element contains <img> element with alt text that duplicates existing text\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"target\": Array [\n+           \"a[href$=\\\"pid_shepit_snihu\\\"] > .BookCard-module__o9fQEW__thumb > img[loading=\\\"lazy\\\"]\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.text-alternatives\",\n+       \"best-practice\",\n+     ],\n+   },\n+ ]\n\n   at ..\\e2e\\a11y.ts:39\n\n  37 | export async function expectNoA11yViolations(page: Page, context: string) {\n  38 |   const violations = await findA11yViolations(page);\n> 39 |   expect(violations, `Accessibility violations on ${context}:\\n${describe(violations)}`).toEqual([]);\n     |                                                                                          ^\n  40 | }\n  41 |\n    at expectNoA11yViolations (C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\e2e\\a11y.ts:39:90)\n    at C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\deployment\\performance-verification.spec.ts:86:5"
+    },
+    {
+      "title": "deployed /about preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 1360,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/about",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Лілія Кухарець",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fphoto_2025-09-21_20-57-11.jpg&w=360&q=75",
+            "loading": "eager",
+            "priority": null,
+            "sizes": "(max-width: 375px) calc(100vw - 56px), (max-width: 779px) 320px, (max-width: 1024px) calc((100vw - 88px) / 3), 312px",
+            "width": 320,
+            "height": 426.65625,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /events preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 1861,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/events",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Презентація «Звичайної» в Брно",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2Fa.PNG&w=384&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 364,
+            "height": 204.75,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 364,
+            "height": 204.75,
+            "loaded": false
+          },
+          {
+            "alt": "Презентація «Звичайної» у Відні",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2Fa.jpg&w=384&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 364,
+            "height": 204.75,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 364,
+            "height": 204.75,
+            "loaded": false
+          },
+          {
+            "alt": "Презентація «Звичайної» у Кракові",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2Fa.JPG&w=384&q=75",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 364,
+            "height": 204.75,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) calc(100vw - 26px), (max-width: 1100px) calc(100vw - 34px), 1066px",
+            "width": 364,
+            "height": 204.75,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /return-policy preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 1830,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/return-policy",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/zvychajna preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 3268,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/zvychajna",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Звичайна. Перша частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/inaksha preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 3192,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/inaksha",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Інакша. Друга частина дилогії",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/zvychajna-and-inaksha preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 4462,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/zvychajna-and-inaksha",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Звичайна та Інакша. Дилогія повністю",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/pid_shepit_snihu preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 2462,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/pid_shepit_snihu",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Під шепіт снігу: збірка різдвяної прози",
+            "src": "https://zvychajna.pp.ua/_next/image?url=https%3A%2F%2Fzvychajna.pp.ua%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": true
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/brunette-stories preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 2604,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/brunette-stories",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Брунатні історії: збірка осінніх оповідань",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.png&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed /books/inaksha-art preserves layout, image delivery, metadata and accessible controls",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 2601,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "routeEvidence": {
+        "route": "/books/inaksha-art",
+        "width": 390,
+        "scrollWidth": 390,
+        "images": [
+          {
+            "alt": "Листівки-ілюстрації до 'Інакшої'",
+            "src": "https://zvychajna.pp.ua/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+            "loading": "eager",
+            "priority": "high",
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": true
+          },
+          {
+            "alt": "",
+            "src": "",
+            "loading": "lazy",
+            "priority": null,
+            "sizes": "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px",
+            "width": 210.59375,
+            "height": 315.890625,
+            "loaded": false
+          }
+        ],
+        "fonts": []
+      }
+    },
+    {
+      "title": "deployed Паперова cart and invalid checkout preserve focus and delivery fields",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 6392,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed Електронна cart and invalid checkout preserve focus and delivery fields",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 6627,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed mixed-cart totals and quantity rules remain consistent",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 1364,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed checkout code loads on first cart use",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 2891,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    },
+    {
+      "title": "deployed gallery and excerpt retain lazy loading, keyboard focus and accessibility",
+      "project": "mobile-390",
+      "status": "failed",
+      "durationMilliseconds": 3951,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      },
+      "galleryExcerptBehavior": {
+        "galleryNavigation": "passed",
+        "focusTrap": "passed",
+        "escape": "passed",
+        "focusRestoration": "passed",
+        "scrollRegion": {
+          "clientHeight": 747,
+          "scrollHeight": 48837,
+          "tabIndex": -1
+        }
+      },
+      "failure": "Error: Accessibility violations on deployed loaded excerpt:\n  [serious] scrollable-region-focusable: Scrollable region must have keyboard access\n      - .ExcerptDialog-module__sKT5Xq__body\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  -  1\n+ Received  + 52\n\n- Array []\n+ Array [\n+   Object {\n+     \"description\": \"Ensure elements that have scrollable content are accessible by keyboard in Safari\",\n+     \"help\": \"Scrollable region must have keyboard access\",\n+     \"helpUrl\": \"https://dequeuniversity.com/rules/axe/4.13/scrollable-region-focusable?application=playwright\",\n+     \"id\": \"scrollable-region-focusable\",\n+     \"impact\": \"serious\",\n+     \"nodes\": Array [\n+       Object {\n+         \"all\": Array [],\n+         \"any\": Array [\n+           Object {\n+             \"data\": null,\n+             \"id\": \"focusable-content\",\n+             \"impact\": \"serious\",\n+             \"message\": \"Element should have focusable content\",\n+             \"relatedNodes\": Array [],\n+           },\n+           Object {\n+             \"data\": null,\n+             \"id\": \"focusable-element\",\n+             \"impact\": \"serious\",\n+             \"message\": \"Element should be focusable\",\n+             \"relatedNodes\": Array [],\n+           },\n+         ],\n+         \"failureSummary\": \"Fix any of the following:\n+   Element should have focusable content\n+   Element should be focusable\",\n+         \"html\": \"<div class=\\\"ExcerptDialog-module__sKT5Xq__body\\\">\",\n+         \"impact\": \"serious\",\n+         \"none\": Array [],\n+         \"target\": Array [\n+           \".ExcerptDialog-module__sKT5Xq__body\",\n+         ],\n+       },\n+     ],\n+     \"tags\": Array [\n+       \"cat.keyboard\",\n+       \"wcag2a\",\n+       \"wcag211\",\n+       \"wcag213\",\n+       \"TTv5\",\n+       \"TT4.a\",\n+       \"EN-301-549\",\n+       \"EN-9.2.1.1\",\n+       \"EN-9.2.1.3\",\n+       \"RGAAv4\",\n+       \"RGAA-7.3.2\",\n+     ],\n+   },\n+ ]\n\n   at ..\\e2e\\a11y.ts:39\n\n  37 | export async function expectNoA11yViolations(page: Page, context: string) {\n  38 |   const violations = await findA11yViolations(page);\n> 39 |   expect(violations, `Accessibility violations on ${context}:\\n${describe(violations)}`).toEqual([]);\n     |                                                                                          ^\n  40 | }\n  41 |\n    at expectNoA11yViolations (C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\e2e\\a11y.ts:39:90)\n    at C:\\Users\\vladk\\Desktop\\Development\\Personal\\zvychaijna-store\\lilys-books\\tests\\deployment\\performance-verification.spec.ts:199:3"
+    },
+    {
+      "title": "deployed portrait reserves its ratio and leading event photos retain priority",
+      "project": "mobile-390",
+      "status": "passed",
+      "durationMilliseconds": 2049,
+      "invoiceSafety": {
+        "blockedInvoiceRequests": []
+      }
+    }
+  ]
+}

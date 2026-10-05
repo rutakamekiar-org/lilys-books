@@ -62,6 +62,21 @@ If `dotnet` is unavailable the script warns and starts anyway. The alternative i
 
 Mobile performance measurements, optimization decisions, repeated Google report links and deployment verification
 for ZVY-50 are documented in [ZVY-50-PERFORMANCE.md](ZVY-50-PERFORMANCE.md).
+Its [ZVY-51 deployed verification](ZVY-50-PERFORMANCE.md#zvy-51-deployed-verification--2026-10-05)
+retains 33 fresh mobile samples, deployment evidence, diagnostics and live smoke results in
+[docs/performance/zvy-51](docs/performance/zvy-51). Deployed catalog and loaded-excerpt accessibility failures
+are tracked in ZVY-77/ZVY-78; the report does not claim an all-checks-pass or field Core Web Vitals result.
+
+Run the separate read-only deployed suite explicitly:
+
+```powershell
+$env:CUTOVER_BASE_URL = 'https://zvychajna.pp.ua'
+npm run test:cutover -- performance-verification
+```
+
+It tests desktop, 320 px and 390 px, blocks invoice writes and stops at invalid checkout.
+It deliberately fails on unresolved deployed accessibility findings and is excluded from normal local/PR CI.
+Protected provider previews require an authorized browser session; keep their evidence separate and do not send Google to them.
 
 Run `npm run test:e2e` to start the storefront and its local mock API, then execute the dynamic-route, SEO, cache refresh, purchase-flow, accessibility, keyboard-navigation, and mobile-navigation tests. The suite never calls the production API or submits a payment. Use `npm run test:e2e:ui` for Playwright's interactive runner.
 
