@@ -1,0 +1,10 @@
+{
+  "verifiedDate": "2026-10-05",
+  "timezone": "Europe/Kiev",
+  "reportUrl": "https://search.google.com/search-console/core-web-vitals?resource_id=sc-domain%3Azvychajna.pp.ua",
+  "lastReportUpdate": "2026-10-03",
+  "mobile": "Insufficient usage data over the last 90 days; Open Report disabled.",
+  "desktop": "Insufficient usage data over the last 90 days; Open Report disabled.",
+  "urlGroups": [],
+  "conclusion": "Field data unavailable; no Core Web Vitals pass established. Rolling field results cannot be inferred from immediate lab samples."
+}

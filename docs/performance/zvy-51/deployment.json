@@ -1,0 +1,38 @@
+{
+  "verifiedDate": "2026-10-05",
+  "timezone": "Europe/Kiev",
+  "provider": "Netlify",
+  "siteId": "33b0cd6f-930d-44fc-a206-e31dd69c24f0",
+  "production": {
+    "deploymentId": "6ac3422b5d734b73866ddeb6",
+    "commit": "b4f8d3b2860df044bb72bcdb9c13bf3eb1ca9e5d",
+    "context": "production",
+    "state": "ready",
+    "publishedAt": "2026-10-05T06:23:13.530Z",
+    "url": "https://zvychajna.pp.ua",
+    "providerUrl": "https://app.netlify.com/projects/astounding-douhua-45280d/deploys/6ac3422b5d734b73866ddeb6",
+    "currentDeployConfirmedByProvider": true
+  },
+  "preview": {
+    "deploymentId": "6ac127e6b724b800082d8fb1",
+    "commit": "714be2e1f5c084ed7cc8f2bdac209cf7626cf742",
+    "context": "deploy-preview",
+    "state": "ready",
+    "publishedAt": null,
+    "url": "https://deploy-preview-25--astounding-douhua-45280d.netlify.app",
+    "providerUrl": "https://app.netlify.com/projects/astounding-douhua-45280d/deploys/6ac127e6b724b800082d8fb1",
+    "authentication": "Existing authenticated browser session; team protection preserved; excluded from Google tests.",
+    "verification": {
+      "initialAuthenticatedHome": "passed in the earlier browser session",
+      "expandedSmoke": "not completed: resumed browser remains on Netlify team protection after a normal reload",
+      "protectionChanged": false,
+      "googleReportsRequested": false
+    }
+  },
+  "sourceVerification": {
+    "mergedFixCommit": "34f900babe7391159256be9a1e7cf8d01dabdd3d",
+    "sourceCommit": "714be2e1f5c084ed7cc8f2bdac209cf7626cf742",
+    "mergedFixIsAncestorOfPublishedCommit": true,
+    "sourceAndNextConfigDiffBetweenPreviewAndPublishedCommit": "empty"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "verifiedDate": "2026-10-05",
+  "productionCommit": "b4f8d3b2860df044bb72bcdb9c13bf3eb1ca9e5d",
+  "interpretation": "Google headline LCP is simulated Slow 4G. Its detailed LCP phase breakdown is unthrottled and must not be equated with the headline. Savings are audit estimates, not measured savings or guaranteed fixes.",
+  "reports": [
+    {
+      "route": "/books/zvychajna",
+      "url": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/r0747592iy?form_factor=mobile",
+      "headlineLcpSeconds": 7.4,
+      "lcpImage": { "initialHtmlDiscovery": true, "loading": "eager", "fetchPriority": "high", "requestedPixels": [476, 714], "displayedCssPixels": [222, 330], "estimatedImageSavingsKiB": 29 },
+      "unthrottledLcpMilliseconds": { "ttfb": 20, "resourceLoadDelay": 330, "resourceLoadDuration": 220, "elementRenderDelay": 1930 },
+      "renderBlockingCss": { "requests": 3, "transferKiB": 10.7, "durationMilliseconds": 1050 },
+      "criticalChainMilliseconds": 616,
+      "conclusion": "Eager discovery/priority is verified, but render delay remains. A good later sample does not negate two slow samples."
+    },
+    {
+      "route": "/",
+      "url": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/393rln86m2?form_factor=mobile",
+      "headlineLcpSeconds": 6.4,
+      "lcpImage": { "description": "Inaksha cover", "initialHtmlDiscovery": true, "lazy": false, "preloadPriorityWarning": "fetchpriority=high should be applied to the image preload request", "requestedPixels": [640, 954], "displayedCssPixels": [354, 528], "transferKiB": 41.4, "estimatedImageSavingsKiB": 28.8 },
+      "unthrottledLcpMilliseconds": { "ttfb": 10, "resourceLoadDelay": 250, "resourceLoadDuration": 500, "elementRenderDelay": 1640 },
+      "renderBlockingCss": { "requests": 3, "transferKiB": 10.2, "durationMilliseconds": 1150 },
+      "criticalChainMilliseconds": 544,
+      "unusedJavaScript": { "estimatedSavingsKiB": 163, "firstPartyTransferKiB": 143.2, "firstPartyEstimatedUnusedKiB": 86.3, "googleTagManagerTransferKiB": 192.1, "googleTagManagerEstimatedUnusedKiB": 76.9 },
+      "thirdParties": { "googleTransferKiB": 193, "googleMainThreadMilliseconds": 210, "clarityTransferKiB": 28, "clarityMainThreadMilliseconds": 57 },
+      "conclusion": "Residual CSS, rendering and JavaScript costs warrant investigation; do not infer a backend cause from the LCP headline."
+    },
+    {
+      "route": "/events",
+      "url": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/2wwwcpnef1?form_factor=mobile",
+      "headlineLcpSeconds": 2.9,
+      "cls": 0.085,
+      "layoutShiftTarget": { "event": "Vienna", "selector": ".page-module__wYSDIa__hero", "attributedCls": 0.085 },
+      "lcpImage": { "description": "Vienna event image", "loading": "eager", "fetchPriority": "high" },
+      "unthrottledLcpMilliseconds": { "ttfb": 60, "resourceLoadDelay": 2640, "resourceLoadDuration": 280, "elementRenderDelay": 20 },
+      "criticalChainMilliseconds": 2933,
+      "initialNavigationMilliseconds": 2702,
+      "renderBlockingCss": { "requests": 3, "transferKiB": 9.9, "durationMilliseconds": 1050, "estimatedSavingsMilliseconds": 300 },
+      "imageAudit": { "totalTransferKiB": 135.3, "estimatedSavingsKiB": 74, "brnoRequestedPixels": [750, 937], "brnoDisplayedCssPixels": [304, 380], "brnoTransferKiB": 59.5, "brnoEstimatedSavingsKiB": 49.7, "laterImageTransferKiB": 75.7, "laterImageCompressionEstimateKiB": 24.3 },
+      "unusedJavaScript": { "estimatedSavingsKiB": 165, "firstPartyEstimatedUnusedKiB": 86.2, "googleTagManagerEstimatedUnusedKiB": 79.3 },
+      "linkNames": { "warning": "Unscored identical-link-purpose diagnostic", "observedLabel": "Відкрити посилання на подію", "differentDestinations": 3, "axeEventPageResult": "passed at all three viewports" },
+      "conclusion": "Event CLS remains reproducible in two of three Google samples; eager images and removal of icon fonts have not eliminated it. Median rose from 0.046 to 0.085, within overlapping ranges. Attribution does not by itself prove the image is the root cause."
+    },
+    {
+      "route": "/books/zvychajna-and-inaksha",
+      "url": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/vgdfbcv8ht?form_factor=mobile",
+      "unthrottledLcpMilliseconds": { "ttfb": 20, "resourceLoadDelay": 270, "resourceLoadDuration": 230, "elementRenderDelay": 910 },
+      "renderBlockingCssTransferKiB": 10.7,
+      "estimatedUnusedJavaScriptKiB": 154,
+      "blockingOutlier": { "url": "https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/zm959bbwop?form_factor=mobile", "lcpSeconds": 1.7, "tbtMilliseconds": 920, "scriptExecutionSeconds": 1.7, "mainThreadWorkSeconds": 2.2, "longTasks": 9 },
+      "conclusion": "A fast LCP can coexist with high JavaScript blocking. Median TBT stayed at 200 ms; all samples are retained."
+    }
+  ],
+  "sharedConclusions": {
+    "fonts": "No icon-font requests in live route captures at desktop/320/390 px. The baseline 26.8 KiB Font Awesome sheet and its fonts are absent. Remaining CSS still blocks rendering; this is not a total-CSS before/after transfer comparison.",
+    "images": "Actual currentSrc URLs, CSS dimensions, sizes and priority are retained in smoke-checks.json for every route and viewport. Google DPR and candidate buckets affect apparent oversizing; its image savings remain estimates, not grounds to force blurry variants.",
+    "portrait": "Correct 4:3 height/width reservation verified before and after delayed image loading at desktop/320/390 px; About CLS is zero in all three fresh Google samples versus baseline 0–0.05.",
+    "events": "First two event galleries retain eager/high priority; third stays lazy. Google still attributes 0.085 CLS to the Vienna hero in two samples. Separate layout investigation is required.",
+    "checkout": "Delivery code is absent on initial return-policy load and appears on first cart use at all three viewports. Later gallery slides retain lazy loading; initial art-gallery HTML has only the first image.",
+    "javascript": "Estimated unused JavaScript remains roughly 153–166 KiB, comparable with the prior audit. Removing checkout code from initial loading does not remove framework/analytics costs. Legacy JavaScript estimate remains about 13 KiB and third-party cache-lifetime estimate about 10 KiB.",
+    "causality": "Before/after samples share Google's runner profile but have unknown CDN temperature and overlapping ranges. Observed median gains are not proof of a sole cause or a field Core Web Vitals pass."
+  },
+  "followUpIssues": [
+    { "id": "ZVY-75", "url": "https://linear.app/zvychajna/issue/ZVY-75/investigate-remaining-storefront-lcp-render-delays-and-javascript", "scope": "Residual LCP render delay, CSS/JavaScript/analytics and responsive-image audit estimates" },
+    { "id": "ZVY-76", "url": "https://linear.app/zvychajna/issue/ZVY-76/stabilize-event-card-layout-during-initial-image-loading", "scope": "Reproduce and stabilize Vienna event-card layout" },
+    { "id": "ZVY-77", "url": "https://linear.app/zvychajna/issue/ZVY-77/resolve-deployed-catalog-redundant-image-alternatives-and-review-event", "scope": "Catalog redundant image alternatives and separate event-link name warning" },
+    { "id": "ZVY-78", "url": "https://linear.app/zvychajna/issue/ZVY-78/make-the-loaded-excerpt-scrolling-region-accessible-by-keyboard", "scope": "Loaded excerpt scrolling-region keyboard accessibility" }
+  ]
+}
