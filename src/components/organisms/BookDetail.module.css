@@ -254,8 +254,8 @@
 @media (max-width: 960px) { .mobileExcerptAction { margin-top: 12px; margin-bottom: 0; } }
 @media (max-width: 640px) {
   .grid { grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "cover summary" "content content"; column-gap: 14px; row-gap: 16px; align-items: start; }
-  .cover { width: 112px; margin: 0; }
-  .summary { min-width: 0; margin: 0; }
+  .cover { width: 112px; margin: 0; align-self: end; }
+  .summary { min-width: 0; min-height: 168px; margin: 0; display: flex; flex-direction: column; align-self: stretch; }
   .titleRow { margin: 0 0 8px; font-size: 1.15rem; line-height: 1.35; white-space: normal; }
   .titleText { white-space: normal; }
   .mobileExcerptAction .excerptBtn { width: 100%; min-height: 44px; padding: 10px 8px; gap: 7px; font-size: .9rem; }
@@ -265,17 +265,17 @@
   .segmented .opt { min-height: 44px; box-sizing: border-box; }
 }
 @media (max-width: 380px) {
-  .grid { grid-template-columns: 104px minmax(0, 1fr); column-gap: 12px; }
-  .cover { width: 104px; }
+  .grid { column-gap: 12px; }
   .titleRow { font-size: 1.05rem; }
 }
 
-@media (max-width: 640px) { .summary > .mobileExcerptAction { margin-top: 12px; } }
+@media (max-width: 640px) { .summary > .mobileExcerptAction { margin-top: auto; padding-top: 12px; } }
 
 .mobileCoverPreview { display: none; }
 @media (max-width: 640px) {
   .desktopCoverMedia { display: none; }
   .mobileCoverPreview { display: block; width: 100%; padding: 0; border: 0; border-radius: 14px; background: transparent; cursor: zoom-in; }
+  .mobileCoverPreview img { width: 112px; height: 168px; object-fit: cover; object-position: center; }
   .mobileCoverPreview:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .ageBadge { pointer-events: none; }
 }
