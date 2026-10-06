@@ -201,6 +201,14 @@ a.secondary {
   white-space: pre-line;
 }
 
+.desktopSupporting {
+  display: contents;
+}
+
+.mobileSupporting, .mobileRating {
+  display: none;
+}
+
 .actions {
   display: flex;
   gap: 12px;
@@ -289,4 +297,7 @@ a.secondary {
   .cta, .secondary { width: 100%; text-align: center; }
   .ageBadge { font-size: 11px; padding: 2px 5px; }
   .featuredDescription, .copy { overflow-wrap: anywhere; word-break: break-word; }
+  .desktopSupporting { display: none; }
+  .mobileSupporting, .mobileRating { display: contents; }
+  .mobileSupporting > :first-child, .mobileSupporting > .featuredDescription { margin-top: 16px; }
 }

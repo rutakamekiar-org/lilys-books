@@ -21,6 +21,9 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
 
   if (!product) return null;
   const minPrice = getMinPrice(product.items);
+  const description = product.description && (
+    <div className={styles.featuredDescription}>{product.description}</div>
+  );
 
   return (
     <section className={styles.hero}>
@@ -30,12 +33,15 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
           {product.genre && <p>{product.genre}</p>}
 
           <>
-            {/* Goodreads rating for featured */}
-            <GoodreadsRating product={product} />
-
-            {product.description && (
-              <div className={styles.featuredDescription}>{product.description}</div>
-            )}
+            {/* Only one supporting block is displayed at each breakpoint, so
+                reading order follows the offer's mobile and desktop placement. */}
+            <div className={styles.desktopSupporting}>
+              <GoodreadsRating product={product} />
+              {description}
+            </div>
+            <div className={styles.mobileRating}>
+              <GoodreadsRating product={product} part="rating" />
+            </div>
 
             {minPrice !== null && (
               <p className={styles.featuredLine}>Від {minPrice} грн</p>
@@ -45,6 +51,11 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
               <Link href={`/books/${product.slug}`} prefetch={false} className={styles.cta}>
                 Детальніше
               </Link>
+            </div>
+
+            <div className={styles.mobileSupporting}>
+              <GoodreadsRating product={product} part="reviews" />
+              {description}
             </div>
           </>
         </div>
