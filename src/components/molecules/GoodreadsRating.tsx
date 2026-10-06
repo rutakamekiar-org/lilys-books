@@ -9,12 +9,13 @@ type Props = {
   product: Product;
   compact?: boolean;
   variant?: "default" | "card";
+  part?: "all" | "rating" | "reviews";
 };
 
 // Extend CSSProperties to allow our CSS variable without using `any`.
 type StarStyle = CSSProperties & { ["--rating"]?: number };
 
-export default function GoodreadsRating({ product, compact, variant = "default" }: Props) {
+export default function GoodreadsRating({ product, compact, variant = "default", part = "all" }: Props) {
   const data = product.externalBookRatings.find(x => getExternalBookRatingType(x) === "goodreads");
 
   // If there is no embedded data, render nothing and never fetch per component.
@@ -39,6 +40,7 @@ export default function GoodreadsRating({ product, compact, variant = "default" 
 
   const starStyle: StarStyle = { ["--rating"]: data.averageRating };
   const url = data.externalId ? `https://www.goodreads.com/book/show/${data.externalId}` : undefined;
+  if (part === "reviews" && (!url || compact)) return null;
   const ratingContent = (
     <>
       <span className={styles.stars} style={starStyle} aria-hidden="true" />
@@ -49,7 +51,7 @@ export default function GoodreadsRating({ product, compact, variant = "default" 
 
   return (
     <div className={`${styles.row} ${compact ? styles.compact : ""}`}>
-      {url ? (
+      {part !== "reviews" && (url ? (
         <a
           className={styles.rating}
           href={url}
@@ -64,8 +66,8 @@ export default function GoodreadsRating({ product, compact, variant = "default" 
         <div className={styles.rating} aria-label={aria}>
           {ratingContent}
         </div>
-      )}
-      {url && !compact && (
+      ))}
+      {part !== "rating" && url && !compact && (
         <a
           className={`${styles.btn} ${styles.btnGoodreads}`}
           href={url}
