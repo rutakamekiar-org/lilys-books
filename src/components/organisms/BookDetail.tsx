@@ -20,7 +20,7 @@ import PriceText from "@/components/atoms/PriceText";
 import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
-const COVER_SIZES = "(max-width: 380px) 104px, (max-width: 640px) 112px, (max-width: 960px) clamp(220px, 48vw, 280px), 340px";
+const COVER_SIZES = "(max-width: 640px) 112px, (max-width: 960px) clamp(220px, 48vw, 280px), 340px";
 
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
   const { products, refreshProduct } = useProducts();
