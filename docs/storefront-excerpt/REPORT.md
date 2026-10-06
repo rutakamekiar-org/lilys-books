@@ -4,7 +4,7 @@ Verified 2026-10-06 on `codex/zvy-60-mobile-excerpt`, based on `main` at `05ff82
 
 ## Final behaviour
 
-- Mobile: a 104–112 px cover sits beside the title, rating and “Читати уривок”, with 12 px above the excerpt action. Format selection and a single Buy action follow. Buy adds the selected edition once and opens the existing cart; an already-added edition shows “Переглянути кошик” without increasing its quantity.
+- Mobile: a consistent 112 × 168 px cover sits beside the title, rating and “Читати уривок”. The cover and excerpt button share the same bottom edge, with at least 12 px above the excerpt action. Format selection and a single Buy action follow. Buy adds the selected edition once and opens the existing cart; an already-added edition shows “Переглянути кошик” without increasing its quantity.
 - Desktop: the inline cover carousel and two purchase actions remain. Add to cart adds once, shows a confirmation toast and stays on the page. Buy opens the cart through the existing postcard suggestion flow. Buy has no toast at any viewport.
 - Cart: clearer mobile item cards, 44 px quantity/remove controls, promo entry, tighter checkout spacing and “Продовжити покупки”. The selected item scrolls into view. Existing items, digital quantity limits, prices, discounts and checkout contracts are preserved.
 - Excerpt: original cream background, a two-line mobile header, keyboard-scrollable reading area and the same sheet geometry as the cart. Close/Escape and backdrop taps restore focus; background scrolling is locked.
