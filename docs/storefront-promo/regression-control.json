@@ -1,0 +1,164 @@
+{
+  "date": "2026-10-06",
+  "appRevision": "9900f38c1c99bec6185805aec3da28d6a0fbd047",
+  "browser": "153.0.8010.12",
+  "description": "Production localhost app. Negative control overrides input min-width:auto only in the browser; application files unchanged. This is not a historical screenshot or a production-site check.",
+  "checks": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "current": {
+        "row": {
+          "left": 1017,
+          "right": 1424,
+          "width": 407,
+          "height": 39
+        },
+        "input": {
+          "left": 1017,
+          "right": 1282.453125,
+          "width": 265.453125,
+          "height": 39
+        },
+        "button": {
+          "left": 1290.453125,
+          "right": 1424,
+          "width": 133.546875,
+          "height": 39
+        },
+        "scrollWidth": 407,
+        "clientWidth": 407,
+        "overflows": false
+      },
+      "withoutShrink": {
+        "row": {
+          "left": 1017,
+          "right": 1424,
+          "width": 407,
+          "height": 39
+        },
+        "input": {
+          "left": 1017,
+          "right": 1282.453125,
+          "width": 265.453125,
+          "height": 39
+        },
+        "button": {
+          "left": 1290.453125,
+          "right": 1424,
+          "width": 133.546875,
+          "height": 39
+        },
+        "scrollWidth": 407,
+        "clientWidth": 407,
+        "overflows": false
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "current": {
+        "row": {
+          "left": 13,
+          "right": 378,
+          "width": 365,
+          "height": 44
+        },
+        "input": {
+          "left": 13,
+          "right": 252.453125,
+          "width": 239.453125,
+          "height": 44
+        },
+        "button": {
+          "left": 260.453125,
+          "right": 378,
+          "width": 117.546875,
+          "height": 44
+        },
+        "scrollWidth": 365,
+        "clientWidth": 365,
+        "overflows": false
+      },
+      "withoutShrink": {
+        "row": {
+          "left": 13,
+          "right": 378,
+          "width": 365,
+          "height": 44
+        },
+        "input": {
+          "left": 13,
+          "right": 252.453125,
+          "width": 239.453125,
+          "height": 44
+        },
+        "button": {
+          "left": 260.453125,
+          "right": 378,
+          "width": 117.546875,
+          "height": 44
+        },
+        "scrollWidth": 365,
+        "clientWidth": 365,
+        "overflows": false
+      }
+    },
+    {
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "current": {
+        "row": {
+          "left": 13,
+          "right": 348,
+          "width": 335,
+          "height": 44
+        },
+        "input": {
+          "left": 13,
+          "right": 222.453125,
+          "width": 209.453125,
+          "height": 44
+        },
+        "button": {
+          "left": 230.453125,
+          "right": 348,
+          "width": 117.546875,
+          "height": 44
+        },
+        "scrollWidth": 335,
+        "clientWidth": 335,
+        "overflows": false
+      },
+      "withoutShrink": {
+        "row": {
+          "left": 13,
+          "right": 348,
+          "width": 335,
+          "height": 44
+        },
+        "input": {
+          "left": 13,
+          "right": 232,
+          "width": 219,
+          "height": 44
+        },
+        "button": {
+          "left": 240,
+          "right": 357.546875,
+          "width": 117.546875,
+          "height": 44
+        },
+        "scrollWidth": 345,
+        "clientWidth": 335,
+        "overflows": true
+      }
+    }
+  ]
+}
