@@ -78,7 +78,7 @@ test("discounted paper and digital offers match the visible format prices", asyn
   await expect(page.getByRole("radio", { name: "Паперова • 299.95 грн" })).toBeChecked();
   await expect(page.getByRole("button", { name: /Купити —/ })).toContainText("299.95 грн");
   await page.getByRole("radio", { name: "Електронна • 180 грн" }).check();
-  await expect(page.getByRole("button", { name: /Купити —/ })).toHaveText("Купити — 180 грн");
+  await expect(page.getByRole("button", { name: /Купити —/ })).toHaveAccessibleName("Купити — 180 грн");
 });
 
 test("zero-price discounts match the visible purchase price", async ({ page, request }) => {
@@ -89,7 +89,7 @@ test("zero-price discounts match the visible purchase price", async ({ page, req
   const response = await page.goto(`/books/${product.slug}`);
   expect(productJsonLd(await response!.text()).offers[0]).toMatchObject({ price: "0", priceCurrency: "UAH" });
   await expect(page.getByRole("button", { name: /Купити —/ })).toContainText("0 грн");
-  await expect(page.getByRole("button", { name: /Купити —/ }).locator("del")).toHaveText("350");
+  await expect(page.getByRole("button", { name: /Купити —/ }).locator("del:visible")).toHaveText("350");
 });
 
 for (const availability of [

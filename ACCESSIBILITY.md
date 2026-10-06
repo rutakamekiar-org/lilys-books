@@ -13,6 +13,7 @@ API in `tests/support/mock-api.mjs`.
 | --- | --- |
 | `tests/e2e/accessibility.spec.ts` | axe-core scans of home, catalog, product details, excerpt dialog, cart, checkout, and checkout in its error state; meaningful image alternatives |
 | `tests/e2e/keyboard-navigation.spec.ts` | keyboard-only catalog → checkout journey, visible focus, dialog focus trapping/restoration, error announcement, skip link |
+| `tests/e2e/book-excerpt.spec.ts` | desktop/mobile excerpt placement, keyboard scrolling of long excerpt text, focus restoration, edition/price preservation and excerpt failures |
 
 Run them locally:
 
@@ -47,6 +48,15 @@ fails the build. Do not add entries without recording the reason below.
 | Nova Poshta field unlabelled | — | A `<label>` cannot name a `<button>`, so the field is wired up with `aria-labelledby`/`aria-describedby` and its modal is a real `role="dialog"` with a named close button. |
 | No skip link | — | `Перейти до основного вмісту` jumps past the navigation to `<main id="main-content">`. |
 | Promo code input named only by its placeholder | — | It now carries an explicit `aria-label`. |
+
+## Excerpt keyboard scrolling follow-up (ZVY-60)
+
+The long «Звичайна» excerpt exposed `scrollable-region-focusable` when tested at
+1440×900, 390×844 and 360×844. Its text area now has `tabIndex={0}`, `role="region"`
+and the accessible name «Текст уривку». Tab reaches the text, arrow keys scroll it,
+and the shared dialog trap still cycles through its controls. Close and Escape return
+focus to the visible opener and preserve the chosen edition. This is a fix, not an
+additional axe exception.
 
 ## Accepted exceptions
 
@@ -110,3 +120,15 @@ information. The rail itself is a named `group`, which is what assistive technol
   re-implementing Escape, focus trapping and focus restoration.
 - Never silence a rule inline. If something genuinely cannot be fixed, add it to
   `SKIPPED_RULES` and explain it here.
+
+Mobile purchase/cart regression coverage: `tests/e2e/mobile-purchase.spec.ts` checks 360/390 px cart retention, amounts, 44 px quantity/removal targets, promo fit, axe, empty-cart focus trapping and Continue shopping focus restoration. Shared dialog focus lists exclude controls hidden by responsive styles.
+
+Sheet dismissal: `tests/e2e/sheet-dismiss.spec.ts` covers real touch drags, short-drag cancellation, scrolling excerpt text, backdrop taps and restored opener focus at 360/390 px. Swipe gestures are confined to the header so reading scrolls normally; Close and Escape remain available.
+
+Sheet gestures now use a 27% height threshold or a deliberate fast downward swipe. Below-threshold and cancelled drags return to zero offset with a 180 ms transition; reduced-motion users receive no animation. The touch tests cover all these outcomes and the mobile reader’s smaller second-line book title.
+
+Mobile book covers now open an enlarged gallery using the shared dialog focus trap and scroll lock. `tests/e2e/book-gallery.spec.ts` verifies axe, gallery navigation, Close/Escape focus restoration and silent Buy behavior. Successful sheet swipes retain focus trapping during the 220 ms exit animation and restore focus after closing; reduced motion closes immediately.
+
+The enlarged gallery has an accessible image counter (`role="status"`), preserves its last selected image within the current product visit, and opens on the cover by default. The mobile zoom badge is decorative; the cover button retains its descriptive accessible name and visible keyboard focus. Gallery regressions check the counter, cover ordering and restored scroll position after reopening.
+
+The image viewer uses the book title as its visible heading and accessible dialog name. Absolute storefront cover URLs and equivalent relative paths are deduplicated before calculating the image count, so a single-cover book has one slide and no redundant navigation arrows.

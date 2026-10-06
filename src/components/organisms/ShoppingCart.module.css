@@ -546,3 +546,41 @@
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
+
+.content { min-height: 0; }
+.itemDetails { min-width: 0; }
+.continueShopping { display: none; }
+@media (max-width: 640px) {
+  .overlay { align-items: flex-end; }
+  .cart { height: calc(var(--cart-viewport-height, 100dvh) - 56px); min-height: 0; border-radius: 18px 18px 0 0; }
+  .item { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; position: relative; padding: 12px; }
+  .itemThumb { width: 60px; height: 90px; }
+  .itemTitle { padding-right: 78px; font-size: .95rem; overflow-wrap: anywhere; }
+  .itemDetails { gap: 5px; }
+  .itemActions { display: contents; }
+  .itemTotalContainer { position: absolute; top: 12px; right: 12px; max-width: 76px; }
+  .itemTotal { font-size: .95rem; overflow-wrap: anywhere; }
+  .quantityRow { gap: 6px; margin-top: 10px; padding-right: 44px; flex-wrap: wrap; }
+  .quantity { gap: 0; padding: 0; }
+  .quantityBtn { width: 44px; height: 44px; }
+  .quantityValue { min-width: 24px; }
+  .quantityLabel { font-size: .75rem; }
+  .removeBtn { position: absolute; bottom: 12px; right: 12px; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .item:not(:has(.quantityRow)) .itemDetails { padding-bottom: 44px; }
+  .promoInput { min-width: 0; padding: 10px 12px; min-height: 44px; box-sizing: border-box; }
+  .promoApplyBtn { flex-shrink: 0; padding: 0 12px; min-height: 44px; }
+  .close { min-width: 44px; min-height: 44px; }
+  .continueShopping { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; border: 0; background: transparent; color: var(--muted, #666); text-decoration: underline; cursor: pointer; font: inherit; }
+  .continueShopping:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+}
+
+@media (max-width: 640px) { .cart { overflow: hidden; } }
+
+@media (max-width: 640px) {
+  .header { position: relative; padding-top: 24px; touch-action: none; }
+  .header::before { content: ""; position: absolute; top: 9px; left: calc(50% - 18px); width: 36px; height: 4px; border-radius: 4px; background: var(--border); }
+  .continueShopping { margin-top: -6px; }
+}
+
+@media (max-width: 640px) { .cart { transition: transform 180ms ease-out; } }
+@media (prefers-reduced-motion: reduce) { .cart { transition: none; } }

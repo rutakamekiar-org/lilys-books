@@ -1,30 +1,4 @@
 .wrap { display: block; }
-.catalogNav { margin-bottom: 12px; }
-.catalogLink {
-  display: inline-flex;
-  min-height: 36px;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  color: var(--text);
-  font-weight: 600;
-  text-decoration: none;
-  transition: background .15s ease;
-}
-.catalogLink:hover {
-  background: var(--accent-weak);
-  text-decoration: none;
-}
-.catalogLink :global(svg) {
-  color: var(--accent);
-  font-size: .85rem;
-}
-.catalogLink:focus-visible {
-  outline: 3px solid rgba(240,155,48,0.35);
-  outline-offset: 2px;
-  border-radius: 8px;
-}
 .grid {
   display: grid;
   column-gap: 28px;
@@ -42,6 +16,7 @@
 .coverMedia { position: relative; width: 100%; }
 .coverActions { display: grid; gap: 10px; margin-top: 10px; }
 .mobileCoverActions { display: none; }
+.mobileExcerptAction { display: none; }
 .purchasePanel { min-width: 0; }
 .cover :global(img){ display:block; width:100%; height:auto; border-radius: 14px; box-shadow: 0 12px 28px rgba(0,0,0,.08); background:#f4f1ec; }
 .carousel {
@@ -207,6 +182,16 @@
     display: grid;
     margin-top: 14px;
   }
+  .mobileExcerptAction { display: block; margin-bottom: 12px; }
+  .mobileExcerptAction .excerptBtn {
+    width: auto;
+    margin-top: 0;
+    padding: 10px 16px;
+    background: var(--accent-weak);
+    border-color: var(--accent);
+  }
+  .mobileExcerptAction .excerptBtn :global(svg) { color: var(--accent); }
+  .mobileExcerptAction + .buybar .buyButtons { margin-top: 0; }
   .segmented {
     gap: 8px;
     margin-top: 0;
@@ -264,3 +249,38 @@
 .coverActions .excerptBtn { margin-top: 0; }
 .excerptBtn:focus-visible{ outline: 3px solid rgba(240,155,48,0.35); outline-offset: 2px; }
 .excerptBtn :global(span){ font-weight: 600; }
+
+.mobileBuyText { display: none; }
+@media (max-width: 960px) { .mobileExcerptAction { margin-top: 12px; margin-bottom: 0; } }
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 112px minmax(0, 1fr); grid-template-areas: "cover summary" "content content"; column-gap: 14px; row-gap: 16px; align-items: start; }
+  .cover { width: 112px; margin: 0; }
+  .summary { min-width: 0; margin: 0; }
+  .titleRow { margin: 0 0 8px; font-size: 1.15rem; line-height: 1.35; white-space: normal; }
+  .titleText { white-space: normal; }
+  .mobileExcerptAction .excerptBtn { width: 100%; min-height: 44px; padding: 10px 8px; gap: 7px; font-size: .9rem; }
+  .addToCart, .desktopBuyText { display: none; }
+  .mobileBuyText { display: inline; }
+  .buy { min-height: 48px; }
+  .segmented .opt { min-height: 44px; box-sizing: border-box; }
+}
+@media (max-width: 380px) {
+  .grid { grid-template-columns: 104px minmax(0, 1fr); column-gap: 12px; }
+  .cover { width: 104px; }
+  .titleRow { font-size: 1.05rem; }
+}
+
+@media (max-width: 640px) { .summary > .mobileExcerptAction { margin-top: 12px; } }
+
+.mobileCoverPreview { display: none; }
+@media (max-width: 640px) {
+  .desktopCoverMedia { display: none; }
+  .mobileCoverPreview { display: block; width: 100%; padding: 0; border: 0; border-radius: 14px; background: transparent; cursor: zoom-in; }
+  .mobileCoverPreview:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .ageBadge { pointer-events: none; }
+}
+
+.coverZoom { position: absolute; right: 5px; bottom: 5px; width: 22px; height: 22px; display: grid; place-items: center; color: var(--text); background: rgba(255,255,255,.88); border-radius: 6px; pointer-events: none; }
+.coverZoom svg { width: 14px; height: 14px; }
+@media (max-width: 640px) { .mobileCoverPreview { position: relative; transition: transform 100ms ease; } .mobileCoverPreview:active { transform: scale(.97); } }
+@media (prefers-reduced-motion: reduce) { .mobileCoverPreview { transition: none; } }

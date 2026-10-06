@@ -125,7 +125,9 @@ test("product cover is discoverable before hydration without preloading the gall
   try {
     const page = await context.newPage();
     await page.goto(`/books/${product.slug}`);
-    const gallery = page.getByRole("group", { name: `Зображення: ${product.name}` });
+    const gallery = (page.viewportSize()?.width ?? 1280) <= 640
+      ? page.getByRole("button", { name: `Відкрити зображення книги: ${product.name}`, exact: true })
+      : page.getByRole("group", { name: `Зображення: ${product.name}` });
     await expect(gallery.locator("img")).toHaveCount(1);
     await expect(gallery.locator("img")).toHaveAttribute("loading", "eager");
     await expect(gallery.locator("img")).toHaveAttribute("fetchpriority", "high");
@@ -142,7 +144,10 @@ test("product cover is discoverable before hydration without preloading the gall
 
 test("gallery navigation loads later slides lazily", async ({ page }) => {
   await page.goto("/books/brunette-stories");
-  const gallery = page.getByRole("group", { name: "Зображення: Excerpt Book" });
+  if ((page.viewportSize()?.width ?? 1280) <= 640) {
+    await page.getByRole("button", { name: "Відкрити зображення книги: Excerpt Book", exact: true }).click();
+  }
+  const gallery = page.getByRole("group", { name: "Зображення: Excerpt Book" }).filter({ visible: true });
   await page.getByRole("button", { name: "Наступне фото" }).click();
   await expect(gallery.locator("img").nth(1)).toHaveAttribute("loading", "lazy");
   await expect(gallery.locator("img").nth(1)).not.toHaveAttribute("fetchpriority", "high");
