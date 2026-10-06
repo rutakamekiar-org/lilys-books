@@ -9,7 +9,8 @@ const openDialogs: object[] = [];
 
 function focusableElementsIn(root: HTMLElement): HTMLElement[] {
   return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
-    element => !element.hasAttribute("disabled") && element.getAttribute("aria-hidden") !== "true",
+    element => !element.hasAttribute("disabled") && element.getAttribute("aria-hidden") !== "true"
+      && element.getClientRects().length > 0 && getComputedStyle(element).visibility !== "hidden",
   );
 }
 

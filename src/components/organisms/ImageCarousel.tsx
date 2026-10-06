@@ -1,7 +1,7 @@
 "use client";
 import Icon from "@/components/atoms/Icon";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import styles from "./ImageCarousel.module.css";
 import { getImageMetadata } from "@/lib/image-metadata";
 
@@ -14,6 +14,10 @@ export type ImageCarouselProps = {
   navInside?: boolean; // place nav inside overlay (for hero)
   ariaLabel?: string;
   priorityFirstImage?: boolean;
+  imageFit?: "cover" | "contain";
+  navigationAlwaysVisible?: boolean;
+  initialIndex?: number;
+  onIndexChange?: (index: number) => void;
 };
 
 type CarouselImageProps = {
@@ -25,11 +29,12 @@ type CarouselImageProps = {
   railRef: React.RefObject<HTMLDivElement | null>;
   objectFit: "cover" | "contain";
   priority: boolean;
+  initiallyVisible: boolean;
 };
 
-function CarouselImage({ src, index, alt, sizes, slideClassName, railRef, objectFit, priority }: CarouselImageProps) {
+function CarouselImage({ src, index, alt, sizes, slideClassName, railRef, objectFit, priority, initiallyVisible }: CarouselImageProps) {
   const slideRef = useRef<HTMLDivElement>(null);
-  const [shouldRender, setShouldRender] = useState(index === 0);
+  const [shouldRender, setShouldRender] = useState(index === 0 || initiallyVisible);
 
   useEffect(() => {
     if (shouldRender) return;
@@ -57,7 +62,7 @@ function CarouselImage({ src, index, alt, sizes, slideClassName, railRef, object
           fill
           sizes={sizes}
           fetchPriority={priority ? "high" : undefined}
-          loading={priority ? "eager" : "lazy"}
+          loading={priority || initiallyVisible ? "eager" : "lazy"}
           draggable={false}
           style={{ objectFit, objectPosition: "center", userSelect: "none" }}
         />
@@ -66,8 +71,9 @@ function CarouselImage({ src, index, alt, sizes, slideClassName, railRef, object
   );
 }
 
-export default function ImageCarousel({ images, alt, sizes, className, slideClassName, navInside = true, ariaLabel, priorityFirstImage = false }: ImageCarouselProps){
+export default function ImageCarousel({ images, alt, sizes, className, slideClassName, navInside = true, ariaLabel, priorityFirstImage = false, imageFit, navigationAlwaysVisible = false, initialIndex = 0, onIndexChange }: ImageCarouselProps){
   const railRef = useRef<HTMLDivElement>(null);
+  const startingIndex = useRef(Math.max(0, Math.min(initialIndex, images.length - 1)));
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
   const [containerIsLandscape, setContainerIsLandscape] = useState(true);
@@ -78,9 +84,15 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
     const { scrollLeft, scrollWidth, clientWidth, clientHeight } = rail;
     setCanPrev(scrollLeft > 2);
     setCanNext(scrollLeft < scrollWidth - clientWidth - 2);
+    if (clientWidth > 0) onIndexChange?.(Math.max(0, Math.min(images.length - 1, Math.round(scrollLeft / clientWidth))));
     if (clientWidth > 0 && clientHeight > 0) {
       setContainerIsLandscape(clientWidth > clientHeight);
     }
+  }, [images.length, onIndexChange]);
+
+  useLayoutEffect(() => {
+    const rail = railRef.current;
+    if (rail) rail.scrollTo({ left: startingIndex.current * rail.clientWidth, behavior: "instant" });
   }, []);
 
   useEffect(() => {
@@ -139,13 +151,14 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
             sizes={sizes}
             slideClassName={slideClassName}
             railRef={railRef}
-            objectFit={fitForIndex(i)}
+            objectFit={imageFit ?? fitForIndex(i)}
             priority={priorityFirstImage && i === 0}
+            initiallyVisible={initialIndex > 0 && i === initialIndex}
           />
         ))}
       </div>
       {images.length > 1 && (
-        <div className={`${styles.carouselNav} ${navInside ? styles.inside : ""}`}>
+        <div className={`${styles.carouselNav} ${navInside ? styles.inside : ""} ${navigationAlwaysVisible ? styles.alwaysVisible : ""}`}>
           <button className={styles.carouselBtn + " prev"} onClick={goPrev} disabled={!canPrev} aria-label="Попереднє фото">
             <Icon name="chevron-left" />
           </button>

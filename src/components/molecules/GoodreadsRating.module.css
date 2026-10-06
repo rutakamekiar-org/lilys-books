@@ -133,3 +133,9 @@
   .stars.cardStar { --star-size: 16px; }
   .btn { width: 100%; justify-content: center; }
 }
+
+@media (max-width: 640px) {
+  .compact { min-width: 0; grid-auto-flow: row; grid-auto-columns: 1fr; }
+  .compact .rating { grid-template-columns: max-content max-content; grid-auto-columns: auto; gap: 6px 10px; margin: 0; }
+  .compact .meta { grid-column: 1 / -1; font-size: .8rem; overflow-wrap: anywhere; }
+}

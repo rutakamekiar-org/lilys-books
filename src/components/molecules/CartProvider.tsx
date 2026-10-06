@@ -21,8 +21,8 @@ interface CartContextType {
   clearCart: () => void;
   itemCount: number;
   isInCart: (itemId: string) => boolean;
-  openCart: () => void;
-  registerOpenCallback: (callback: () => void) => void;
+  openCart: (itemId?: string) => void;
+  registerOpenCallback: (callback: (itemId?: string) => void) => void;
   appliedPromocode: PromoCodeResponse | null;
   discountAmount: number;
   getItemDiscount: (itemId: string) => number;
@@ -36,7 +36,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { products } = useProducts();
   const [items, setItems] = useState<CartItem[]>([]);
   const [appliedPromocode, setAppliedPromocode] = useState<PromoCodeResponse | null>(null);
-  const cartOpenCallbackRef = useRef<(() => void) | null>(null);
+  const cartOpenCallbackRef = useRef<((itemId?: string) => void) | null>(null);
 
   const discountAmount = useMemo(() =>
     calculateCartDiscount(items, appliedPromocode),
@@ -158,14 +158,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return items.some((item) => item.itemId === itemId);
   };
 
-  const openCart = () => {
+  const openCart = (itemId?: string) => {
     if (cartOpenCallbackRef.current) {
-      cartOpenCallbackRef.current();
+      cartOpenCallbackRef.current(itemId);
     }
   };
 
   // Method to register the callback from NavBar
-  const registerOpenCallback = (callback: () => void) => {
+  const registerOpenCallback = (callback: (itemId?: string) => void) => {
     cartOpenCallbackRef.current = callback;
   };
 

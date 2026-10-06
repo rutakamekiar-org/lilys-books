@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import styles from "./ExcerptDialog.module.css";
+import { useSheetDismiss } from "@/lib/sheet-dismiss";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 
 export default function ExcerptDialog({
@@ -14,7 +15,8 @@ export default function ExcerptDialog({
   const [html, setHtml] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  useDialogA11y({ open, onClose, dialogRef: panelRef });
+  const { dragHandleProps, dragStyle } = useSheetDismiss(onClose);
+  useDialogA11y({ open, onClose, dialogRef: panelRef, lockScroll: true });
 
   useEffect(() => {
     if (!open || !slug) return;
@@ -48,14 +50,14 @@ export default function ExcerptDialog({
   if (!open) return null;
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="excerpt-title" onMouseDown={onOverlayClick}>
-      <div className={styles.panel} ref={panelRef}>
+    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby="excerpt-title" onClick={onOverlayClick}>
+      <div className={styles.panel} ref={panelRef} style={dragStyle}>
         {/* h2 keeps the heading order valid: excerpt bodies start their own sections at h2. */}
-        <div className={styles.header}>
-          <h2 id="excerpt-title" className={styles.title}>Читати уривок — {title}</h2>
+        <div className={styles.header} {...dragHandleProps}>
+          <h2 id="excerpt-title" className={styles.title}><span>Читати уривок</span><span className={styles.titleSeparator}> — </span><span className={styles.bookTitle}>{title}</span></h2>
           <button aria-label="Закрити" className={styles.close} onClick={onClose}>×</button>
         </div>
-        <div className={styles.body}>
+        <div className={styles.body} role="region" aria-label="Текст уривку" tabIndex={0}>
           {loading ? <p>Завантаження...</p> : <div dangerouslySetInnerHTML={{ __html: html }} />}
         </div>
       </div>

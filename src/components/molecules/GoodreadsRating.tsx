@@ -48,7 +48,7 @@ export default function GoodreadsRating({ product, compact, variant = "default" 
   );
 
   return (
-    <div className={styles.row}>
+    <div className={`${styles.row} ${compact ? styles.compact : ""}`}>
       {url ? (
         <a
           className={styles.rating}

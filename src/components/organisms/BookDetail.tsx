@@ -1,16 +1,18 @@
 "use client";
 import Icon, { ExternalLinkIcon } from "@/components/atoms/Icon";
 import Image from "next/image";
-import Link from "next/link";
+
 import { useState, Fragment, useEffect, useRef } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./BookDetail.module.css";
 import ImageCarousel from "@/components/organisms/ImageCarousel";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import GoodreadsButton from "@/components/molecules/GoodreadsButton";
+import BookGallery from "@/components/molecules/BookGallery";
 import ExcerptDialog from "@/components/molecules/ExcerptDialog";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
+import { getProductGalleryImages } from "@/lib/product-gallery";
 
 import type { Product } from "@/models/Product";
 import {getPrice, getProductItemDisplayLabel} from "@/lib/product-item.helper";
@@ -18,7 +20,7 @@ import PriceText from "@/components/atoms/PriceText";
 import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
-const COVER_SIZES = "(max-width: 640px) clamp(190px, 54vw, 220px), (max-width: 960px) clamp(220px, 48vw, 280px), 340px";
+const COVER_SIZES = "(max-width: 380px) 104px, (max-width: 640px) 112px, (max-width: 960px) clamp(220px, 48vw, 280px), 340px";
 
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
   const { products, refreshProduct } = useProducts();
@@ -26,6 +28,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   
   const currentFreshProduct = freshProduct?.slug === staticProduct.slug ? freshProduct : null;
   const product = currentFreshProduct ?? staticProduct;
+  const [galleryOpen, setGalleryOpen] = useState(false);
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [suggestionOpen, setSuggestionOpen] = useState(false);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
@@ -77,29 +80,30 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const itemInCart = selected ? isInCart(selected.id) : false;
   const handleBuyNow = () => {
     if (!selected) return;
-    if (!isInCart(selected.id)) {
-      const wasAdded = addItem(product, selected.id, format, 1);
-      if (wasAdded) {
-        notify.success(`"${product.name}" додано до кошика`);
-      }
+    const isMobilePurchase = window.matchMedia("(max-width: 640px)").matches;
+    if (isMobilePurchase && isInCart(selected.id)) {
+      openCart(selected.id);
+      return;
     }
-    if (!checkSuggestion(product, format)) {
-      openCart();
+    if (!isInCart(selected.id)) {
+      addItem(product, selected.id, format, 1);
+    }
+    if (isMobilePurchase || !checkSuggestion(product, format)) {
+      openCart(selected.id);
     }
   };
 
   const handleAddToCart = () => {
     if (!selected) return;
-    if (isInCart(selected.id)) {
-      openCart();
-    } else {
+    if (!isInCart(selected.id)) {
       const wasAdded = addItem(product, selected.id, format, 1);
       if (wasAdded) {
         notify.success(`"${product.name}" додано до кошика`);
       }
-      checkSuggestion(product, format);
+
     }
   };
+  const galleryImages = getProductGalleryImages(product.imageUrl, product.imageUrls);
   const externalLinks = product?.externalLinks || []
   const descriptionId = `book-description-${product.slug}`;
   const descriptionTitleId = `${descriptionId}-title`;
@@ -137,15 +141,16 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
         };
     }, [product.description]);
 
-  const renderCoverActions = (className: string, keyPrefix: string) => (
+  const renderExcerptAction = () => (
+      <button type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
+          <Icon name="book-open" />
+          <span>Читати уривок</span>
+      </button>
+  );
+  const renderCoverActions = (className: string, keyPrefix: string, includeExcerpt = true) => (
       <div className={className}>
           {product && <GoodreadsButton product={product}/>}
-          {product.hasExcerpt && (
-              <button type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
-                  <Icon name="book-open" />
-                  <span>Читати уривок</span>
-              </button>
-          )}
+          {includeExcerpt && product.hasExcerpt && renderExcerptAction()}
           {externalLinks.map((link, idx) => (
               <a key={`${keyPrefix}-${idx}`} className={styles.excerptBtn} target="_blank" rel="noopener" href={link.url}>
                   <ExternalLinkIcon icon={link.icon} />
@@ -164,12 +169,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     }
     return (
       <section className={styles.wrap}>
-          <nav className={styles.catalogNav} aria-label="Навігація по каталогу">
-              <Link href="/books" className={styles.catalogLink}>
-                  <Icon name="arrow-left" />
-                  <span>Назад до книг</span>
-              </Link>
-          </nav>
+
           <div className={styles.grid}>
               <div className={styles.summary}>
                   <h1 className={styles.titleRow}>
@@ -177,6 +177,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                   </h1>
 
                   {product && <GoodreadsRating product={product} compact/>}
+                  {product.hasExcerpt && <div className={styles.mobileExcerptAction}>{renderExcerptAction()}</div>}
               </div>
               <div className={styles.cover}>
                   <div className={styles.coverMedia}>
@@ -189,6 +190,11 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               {product.ageRating}
                           </span>
                       )}
+                      <button type="button" className={styles.mobileCoverPreview} aria-label={`Відкрити зображення книги: ${product.name}`} onClick={() => setGalleryOpen(true)}>
+                          <Image src={product.imageUrl} alt={product.name} width={320} height={480} sizes={COVER_SIZES} loading="eager" fetchPriority="high" />
+                          <span className={styles.coverZoom} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="10" cy="10" r="6" /><path d="M14.5 14.5 21 21M10 7v6M7 10h6" /></svg></span>
+                      </button>
+                      <div className={styles.desktopCoverMedia}>
                       {product.imageUrls && product.imageUrls.length > 0 ? (
                           <ImageCarousel
                               images={product.imageUrls}
@@ -209,12 +215,14 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               fetchPriority="high"
                           />
                       )}
+                      </div>
                   </div>
                   {renderCoverActions(`${styles.coverActions} ${styles.desktopCoverActions}`, "desktop")}
               </div>
               <div className={styles.content}>
                   <div className={styles.detailBody}>
                       <div className={styles.purchasePanel}>
+
                           {product.items.length > 1 && (
                               <div role="radiogroup" aria-label="Формат" className={styles.segmented}>
                                   {product.items.map(f => {
@@ -243,23 +251,23 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               <div className={styles.buyButtons}>
                                 <button className={styles.buy} disabled={!selected?.isAvailable && !selected?.canPreorder}
                                         onClick={handleBuyNow}>
-                                    {buyText}
+                                    <span className={styles.desktopBuyText}>{buyText}</span>
+                                    <span className={styles.mobileBuyText}>{itemInCart ? "Переглянути кошик" : buyText}</span>
                                 </button>
                                 <button
                                   className={`${styles.addToCart} ${itemInCart ? styles.inCart : ""}`}
                                   disabled={!selected?.isAvailable && !selected?.canPreorder}
                                   onClick={handleAddToCart}
                                   aria-label={itemInCart ? "Вже в кошику" : "Додати в кошик"}
-                                  title={itemInCart ? "Вже в кошику" : "Додати в кошик"}>
+                                  title={itemInCart ? "Вже в кошику" : "Додати в кошик"}
+                                  aria-pressed={itemInCart}>
                                     <Icon name={itemInCart ? "check" : "cart-plus"} />
                                     <span className={styles.addToCartText}>
                                         {itemInCart ? "У кошику" : "Додати в кошик"}
                                     </span>
                                 </button>
                               </div>
-                              <small className={styles.hint}>
-                                {itemInCart ? "Товар вже в кошику" : "Купити зараз або додати до кошика"}
-                              </small>
+
                               {selected?.note && (
                                   <small className={styles.hint}>{selected.note}</small>
                               )}
@@ -294,7 +302,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           </section>
                       )}
 
-                      {renderCoverActions(`${styles.coverActions} ${styles.mobileCoverActions}`, "mobile")}
+                      {renderCoverActions(`${styles.coverActions} ${styles.mobileCoverActions}`, "mobile", false)}
 
                       {product.physicalDetails && (
                           <section className={styles.specs} aria-labelledby="specs-title">
@@ -329,6 +337,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
               </div>
           </div>
 
+          <BookGallery key={product.slug} open={galleryOpen} onClose={() => setGalleryOpen(false)} images={galleryImages} title={product.name} />
           {product.hasExcerpt && (
               <ExcerptDialog open={excerptOpen} onClose={() => setExcerptOpen(false)} title={product.name}
                              slug={product.slug}/>

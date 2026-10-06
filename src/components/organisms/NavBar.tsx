@@ -17,11 +17,13 @@ export default function NavBar() {
   const pathname = usePathname() || "/";
   const cart = useCart();
   const { items, itemCount, updateQuantity, removeItem, clearCart } = cart;
+  const [cartTargetItemId, setCartTargetItemId] = useState<string>();
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [checkoutInitialized, setCheckoutInitialized] = useState(false);
 
-  const showCart = useCallback(() => {
+  const showCart = useCallback((itemId?: string) => {
+    setCartTargetItemId(itemId);
     // Warm checkout on the first cart visit, then retain its mounted state and focus lifecycle.
     setCheckoutInitialized(true);
     setCartOpen(true);
@@ -61,7 +63,7 @@ export default function NavBar() {
         <Link href="/events" className={cls("/events")} aria-current={pathname === "/events" ? "page" : undefined}>Події</Link>
         <Link href="/about" className={cls("/about")} aria-current={pathname === "/about" ? "page" : undefined}>Про мене</Link>
         <button
-          onClick={showCart}
+          onClick={() => showCart()}
           className={styles.cartBtn}
           aria-label={`Кошик, ${itemCount} товарів`}
         >
@@ -71,6 +73,7 @@ export default function NavBar() {
       </nav>
       <ShoppingCart
         open={cartOpen}
+        targetItemId={cartTargetItemId}
         onClose={() => setCartOpen(false)}
         items={items}
         onUpdateQuantity={updateQuantity}

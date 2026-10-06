@@ -8,6 +8,7 @@ import { Product } from "@/models/Product";
 import { getPrice, getProductItemDisplayLabel } from "@/lib/product-item.helper";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
+import { useSheetDismiss } from "@/lib/sheet-dismiss";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 
@@ -20,6 +21,7 @@ export interface CartItem {
 
 interface ShoppingCartProps {
   open: boolean;
+  targetItemId?: string;
   onClose: () => void;
   items: CartItem[];
   onUpdateQuantity: (itemId: string, quantity: number) => void;
@@ -29,6 +31,7 @@ interface ShoppingCartProps {
 
 export default function ShoppingCart({
   open,
+  targetItemId,
   onClose,
   items,
   onUpdateQuantity,
@@ -42,6 +45,7 @@ export default function ShoppingCart({
   const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
+  const { dragHandleProps, dragStyle } = useSheetDismiss(onClose);
 
   // The dialog only exists once mounted, so focus management waits for the portal.
   useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: true });
@@ -69,6 +73,18 @@ export default function ShoppingCart({
       window.removeEventListener("resize", updateViewportHeight);
     };
   }, [open]);
+
+  useEffect(() => {
+    if (!open || !mounted) return;
+    const frame = requestAnimationFrame(() => {
+      const content = dialogRef.current?.querySelector(`.${styles.content}`);
+      const target = targetItemId && Array.from(dialogRef.current?.querySelectorAll<HTMLElement>("[data-cart-item-id]") ?? [])
+        .find(node => node.dataset.cartItemId === targetItemId);
+      if (content instanceof HTMLElement) content.scrollTop = 0;
+      if (target) target.scrollIntoView({ block: "nearest" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [open, mounted, targetItemId]);
 
   const handleApplyPromo = async () => {
     if (!promoInput.trim()) return;
@@ -111,8 +127,8 @@ export default function ShoppingCart({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className={styles.cart} ref={dialogRef}>
-        <div className={styles.header}>
+      <div className={styles.cart} ref={dialogRef} style={dragStyle}>
+        <div className={styles.header} {...dragHandleProps}>
           <h2 id={titleId} className={styles.title}>Кошик</h2>
           <button
             onClick={onClose}
@@ -127,6 +143,7 @@ export default function ShoppingCart({
           {isEmpty ? (
             <div className={styles.empty}>
               <p>Ваш кошик порожній</p>
+              <button className={styles.continueShopping} onClick={onClose}><Icon name="arrow-left" /> Продовжити покупки</button>
             </div>
           ) : (
             <div className={styles.items}>
@@ -140,7 +157,7 @@ export default function ShoppingCart({
                 const itemDiscount = getItemDiscount(item.itemId);
 
                 return (
-                  <div key={item.itemId} className={`${styles.item} ${itemDiscount > 0 ? styles.itemPromo : ''}`}>
+                  <div key={item.itemId} data-cart-item-id={item.itemId} role="group" aria-label={`${item.product.name}, ${item.format === "paper" ? "Паперова" : "Електронна"}`} className={`${styles.item} ${itemDiscount > 0 ? styles.itemPromo : ''}`}>
                     <div className={styles.itemThumb}>
                       <Image
                         src={item.product.imageUrl}
@@ -270,6 +287,7 @@ export default function ShoppingCart({
             <button onClick={onCheckout} className={styles.checkoutBtn}>
               Оформити замовлення
             </button>
+            <button className={styles.continueShopping} onClick={onClose}><Icon name="arrow-left" /> Продовжити покупки</button>
           </div>
         )}
       </div>

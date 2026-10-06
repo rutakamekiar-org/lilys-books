@@ -12,7 +12,7 @@ test("portrait, event and product requests match their rendered widths across br
       const page = await context.newPage();
       for (const route of ["/about", "/events", "/books/test-book"]) {
         await page.goto(route);
-        const image = page.getByRole("main").locator("img").first();
+        const image = page.getByRole("main").locator("img:visible").first();
         await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).complete)).toBe(true);
         const delivered = await image.evaluate(node => {
           const img = node as HTMLImageElement;
