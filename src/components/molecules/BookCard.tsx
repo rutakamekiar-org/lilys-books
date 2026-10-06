@@ -10,6 +10,7 @@ import {getFormat} from "@/lib/types";
 import {useCart} from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
+import PreorderLabel from "@/components/atoms/PreorderLabel";
 
 export default function BookCard({ product: staticProduct, priorityImage = false }: { product: Product; priorityImage?: boolean }) {
   const { products } = useProducts();
@@ -69,9 +70,12 @@ export default function BookCard({ product: staticProduct, priorityImage = false
               key={item.id}
               className={`${styles.formatRow} ${!isAvailable ? styles.unavailable : ""}`}
             >
-              <span className={styles.formatText}>
-                <span className={styles.formatName}>{label}</span>
-                <span className={styles.formatPrice}>{getPrice(item)} грн</span>
+              <span className={styles.formatInfo}>
+                <span className={styles.formatText}>
+                  <span className={styles.formatName}>{label}</span>
+                  <span className={styles.formatPrice}>{getPrice(item)} грн</span>
+                </span>
+                <PreorderLabel item={item} />
               </span>
               <button
                 type="button"

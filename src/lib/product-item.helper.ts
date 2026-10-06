@@ -1,5 +1,9 @@
 import type {Product, ProductItem} from "@/models/Product";
 
+export function isPreorder(item: ProductItem | null | undefined): boolean {
+    return !!item && !item.isAvailable && item.canPreorder;
+}
+
 export function getMinPrice(items: ProductItem[]): number | null {
     if (items.length === 0) return null;
     return Math.min(...items.map(getPrice));

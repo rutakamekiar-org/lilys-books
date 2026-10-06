@@ -1,0 +1,10 @@
+.label {
+  display: block;
+  max-width: 100%;
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
