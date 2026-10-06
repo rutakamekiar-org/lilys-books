@@ -11,6 +11,7 @@ import notify from "@/lib/toast";
 import { useSheetDismiss } from "@/lib/sheet-dismiss";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
+import PreorderLabel from "@/components/atoms/PreorderLabel";
 
 export interface CartItem {
   product: Product;
@@ -174,6 +175,7 @@ export default function ShoppingCart({
                           ? getProductItemDisplayLabel(item.product, productItem)
                           : item.format === "paper" ? "Паперова" : "Електронна"}
                       </p>
+                      <PreorderLabel item={productItem} />
                       <p className={styles.itemPrice}>{formatMoney(price)} грн за шт.</p>
                       {itemDiscount > 0 && (
                         <div className={styles.promoBadge}>

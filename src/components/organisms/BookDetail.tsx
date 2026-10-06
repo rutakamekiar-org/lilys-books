@@ -15,7 +15,7 @@ import notify from "@/lib/toast";
 import { getProductGalleryImages } from "@/lib/product-gallery";
 
 import type { Product } from "@/models/Product";
-import {getPrice, getProductItemDisplayLabel} from "@/lib/product-item.helper";
+import {getPrice, getProductItemDisplayLabel, isPreorder} from "@/lib/product-item.helper";
 import PriceText from "@/components/atoms/PriceText";
 import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
@@ -268,6 +268,9 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                                 </button>
                               </div>
 
+                              {isPreorder(selected) && (
+                                  <small className={styles.hint}>Передзамовити або додати до кошика</small>
+                              )}
                               {selected?.note && (
                                   <small className={styles.hint}>{selected.note}</small>
                               )}
