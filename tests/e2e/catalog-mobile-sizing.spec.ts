@@ -93,7 +93,9 @@ for (const width of [320, 360, 390, 520, 521, 640, 768, 1440]) {
             expect(priceBox.x + priceBox.width).toBeLessThanOrEqual(buttonBox.x);
             expect(Math.abs(priceBox.y + priceBox.height / 2 - (buttonBox.y + buttonBox.height / 2))).toBeLessThanOrEqual(1);
             const withinOptionGap = priceBox.y - (labelBox.y + labelBox.height);
-            expect(withinOptionGap).toBeLessThanOrEqual(10);
+            // Glyph bounds vary with the OS font. Keep the gap smaller than a
+            // text em, and smaller than the spacing between separate editions.
+            expect(withinOptionGap).toBeLessThan(await price.evaluate(element => parseFloat(getComputedStyle(element).fontSize)));
             expect(await price.evaluate(element => parseFloat(getComputedStyle(element).fontWeight)))
               .toBeGreaterThan(await label.evaluate(element => parseFloat(getComputedStyle(element).fontWeight)));
             if (previousPriceBottom !== null) {
