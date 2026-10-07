@@ -9,7 +9,7 @@ import { Suspense } from "react";
 import ToastProvider from "@/components/atoms/ToastProvider";
 import { CartProvider } from "@/components/molecules/CartProvider";
 import { ProductsProvider } from "@/components/molecules/ProductsProvider";
-import { getProductsForStatic } from "@/lib/api";
+import { getProductsForStorefront } from "@/lib/api";
 import Snow from "@/components/atoms/Snow";
 import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_NAME } from "@/lib/site";
 import { absoluteUrl, resolveSiteBaseUrl } from "@/lib/site.server";
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const initialProducts = await getProductsForStatic();
+  const initialCatalog = await getProductsForStorefront();
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -116,7 +116,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Snow/>
         <ClarityInit />
         <ToastProvider />
-        <ProductsProvider initialProducts={initialProducts}>
+        <ProductsProvider initialProducts={initialCatalog.products} initialHasError={initialCatalog.hasError}>
           <CartProvider>
             <a className="skip-link" href="#main-content">Перейти до основного вмісту</a>
             <header>
