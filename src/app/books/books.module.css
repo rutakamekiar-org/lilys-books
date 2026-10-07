@@ -7,9 +7,14 @@
 
 /* Force a real grid on small phones: 2 columns */
 @media (max-width: 520px) {
+  .title {
+    font-size: 29px;
+    margin: 11px 0 0;
+  }
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
+    margin-top: 13px;
   }
 }
 
