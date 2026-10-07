@@ -85,9 +85,10 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Use the `codex/` prefix by default and include the issue identifier when one is available (for example, `codex/zvy-32-hold-invoice-reminders`).
 - Do not place a new implementation on an unrelated existing feature branch. If uncommitted work makes switching branches unsafe, stop and ask the user how to proceed.
 - Skip branch creation only when the user explicitly asks to work on the current branch.
-- Before creating a pull request that skips Netlify deployment (including a PR tagged `[skip netlify]`), ask the user for explicit approval unless they have already approved creating that specific PR without Netlify. Approval to implement the work does not by itself authorize creating a PR without Netlify deployment.
-- When an automatic Netlify deploy is not required (for example, CI, test-only or documentation-only work), append `[skip netlify]` to the commit subject and pull-request title. Preserve the tag in the final merge/squash commit message; for a multi-commit push, the latest commit must carry it. Example: `ci: complete frontend PR validation for ZVY-30 [skip netlify]`.
-- Use `[skip netlify]` rather than `[skip ci]`: GitHub's required `verify` check must still run. Omit the tag when the acceptance criteria require a provider preview or production deployment. A subsequent untagged commit deploys the accumulated skipped changes; see README for the convention.
+- Netlify deployment rules apply only to this frontend repository (`lilys-books`), not to the `BookPreorder` backend.
+- Include `[skip netlify]` in frontend commit subjects and pull-request titles by default. Preserve the tag in the final merge/squash commit message; for a multi-commit push, the latest commit must carry it. Example: `ci: complete frontend PR validation for ZVY-30 [skip netlify]`.
+- Before creating a frontend pull request without `[skip netlify]`, pushing an untagged frontend commit, removing the tag, or otherwise triggering a Netlify deployment, obtain the user's explicit approval for that deployment unless it is already authorized in the conversation. Approval to implement work or create a pull request does not by itself authorize a Deploy Preview or production deployment. Acceptance criteria requiring a provider preview or production deployment do not waive this approval requirement.
+- Use `[skip netlify]` rather than `[skip ci]`: GitHub's required `verify` check must still run. An approved untagged commit deploys the accumulated skipped changes; see README for the convention.
 
 
 <!-- BEGIN:nextjs-agent-rules -->
