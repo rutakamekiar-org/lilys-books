@@ -102,6 +102,8 @@
 .disabled { opacity: .55; cursor: not-allowed; }
 
 .buybar { display: grid; gap: 6px; padding: 6px 0; }
+.ebookDelivery { margin: 10px 0 0; font-size: 1rem; line-height: 1.5; color: var(--text); overflow-wrap: anywhere; }
+.ebookDelivery + .buyButtons { margin-top: 6px; }
 .buyButtons { display: flex; gap: 10px; margin-top: 18px; }
 .buy { flex: 1; display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; }
 .buy:disabled { background: #e0e0e0; color: #9a9a9a; cursor: not-allowed; }

@@ -77,6 +77,8 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   };
 
   const selected = product.items.find(f => getFormat(f) === format);
+  const ebookDeliveryId = selected && getFormat(selected) === "digital"
+    ? `ebook-delivery-${product.slug}` : undefined;
   const itemInCart = selected ? isInCart(selected.id) : false;
   const handleBuyNow = () => {
     if (!selected) return;
@@ -248,8 +250,14 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           }
 
                           <div className={styles.buybar}>
+                              {ebookDeliveryId && (
+                                  <p id={ebookDeliveryId} className={styles.ebookDelivery}>
+                                      Електронна книга у форматі EPUB. Надсилаємо файл на електронну пошту.
+                                  </p>
+                              )}
                               <div className={styles.buyButtons}>
                                 <button className={styles.buy} disabled={!selected?.isAvailable && !selected?.canPreorder}
+                                        aria-describedby={ebookDeliveryId}
                                         onClick={handleBuyNow}>
                                     <span className={styles.desktopBuyText}>{buyText}</span>
                                     <span className={styles.mobileBuyText}>{itemInCart ? "Переглянути кошик" : buyText}</span>
@@ -258,6 +266,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                                   className={`${styles.addToCart} ${itemInCart ? styles.inCart : ""}`}
                                   disabled={!selected?.isAvailable && !selected?.canPreorder}
                                   onClick={handleAddToCart}
+                                  aria-describedby={ebookDeliveryId}
                                   aria-label={itemInCart ? "Вже в кошику" : "Додати в кошик"}
                                   title={itemInCart ? "Вже в кошику" : "Додати в кошик"}
                                   aria-pressed={itemInCart}>
