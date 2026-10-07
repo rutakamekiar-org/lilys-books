@@ -1,4 +1,15 @@
 import type {Product, ProductItem} from "@/models/Product";
+import type { BookFormat } from "@/lib/types";
+
+export function canPurchase(item: ProductItem | null | undefined): boolean {
+    return !!item && (item.isAvailable || item.canPreorder);
+}
+
+export function getInitialBookFormat(items: ProductItem[]): BookFormat {
+    const paper = items.find(item => item.type === 1);
+    const ebook = items.find(item => item.type === 2);
+    return !canPurchase(paper) && ebook?.isAvailable ? "digital" : "paper";
+}
 
 export function isPreorder(item: ProductItem | null | undefined): boolean {
     return !!item && !item.isAvailable && item.canPreorder;
