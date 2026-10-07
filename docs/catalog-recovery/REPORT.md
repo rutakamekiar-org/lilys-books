@@ -24,6 +24,7 @@ Warm offers retain their existing presentation during background failures and em
 | `src/app/books/BooksGrid.tsx` | Render shared feedback when no products have loaded. |
 | `tests/support/mock-api.mjs` | Deterministic catalog error, empty and malformed controls. |
 | `tests/e2e/catalog-recovery.spec.ts` | Recovery regressions and opt-in screenshot recording. |
+| `tests/e2e/home-featured.spec.ts` | Align the existing no-invented-offer regression with the newly required empty-state heading. |
 | `docs/catalog-recovery/REPORT.md`, `before/*.jpg`, `after/*.jpg` | Verification handoff and 36 screenshots. |
 
 ## Acceptance and evidence
@@ -60,6 +61,8 @@ Omit the variable for ordinary regression runs. The six screenshot-only tests th
 - Lint, TypeScript typecheck and deterministic product fixture validation passed.
 - Initial production-build browser run: 21 checks passed, including the six screenshot scenarios and ZVY-22 regressions.
 - Expanded production-build browser run: 43 checks passed, including 20 new behavior regressions, six evidence checks and the existing accessibility, keyboard and ZVY-22 checks.
+- The first full CI run passed 262 checks but exposed three outdated home-empty assertions requiring no heading. Those assertions now require the approved empty-state heading/message and retain the no-invented-offer/price and available-navigation checks.
+- The corrected home-featured and catalog-recovery production-build rerun passed all 35 behavior checks; six opt-in evidence checks skipped as intended.
 - GitHub CI: the required `verify` result for the current branch is recorded in [PR #43 checks](https://github.com/rutakamekiar-org/lilys-books/pull/43/checks). Treat the current PR head's result as authoritative.
 - Self-review covered the API/provider boundary, initial server HTML, retries, schema failures, warm-cache exclusions, heading structure and the complete implementation/test diff; no outstanding implementation defects were found.
 - Visual review checked Ukrainian wrapping, recovery buttons, empty/loading feedback and preserved navigation at the required widths.
