@@ -252,7 +252,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           <div className={styles.buybar}>
                               {ebookDeliveryId && (
                                   <p id={ebookDeliveryId} className={styles.ebookDelivery}>
-                                      Електронна книга у форматі EPUB. Надсилаємо файл на електронну пошту.
+                                      Формат EPUB. Файл надійде на вашу електронну пошту.
                                   </p>
                               )}
                               <div className={styles.buyButtons}>

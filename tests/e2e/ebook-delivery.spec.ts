@@ -3,7 +3,7 @@ import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import { makeProduct, mockApiUrl, resetMockApi } from "./helpers";
 
-const deliveryCopy = "Електронна книга у форматі EPUB. Надсилаємо файл на електронну пошту.";
+const deliveryCopy = "Формат EPUB. Файл надійде на вашу електронну пошту.";
 const books = [
   { slug: "zvychajna", name: "Звичайна", suffix: "1", price: 199, discountPrice: 179 },
   { slug: "inaksha", name: "Інакша", suffix: "2", price: 249, discountPrice: null },
@@ -104,6 +104,11 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         await expect(page.getByRole("button", { name: "Додати в кошик", exact: true, includeHidden: true })).toHaveAccessibleDescription(deliveryCopy);
         const copyBox = await copy.boundingBox();
         const buyBox = await buy.boundingBox();
+        const optionBox = await digital.locator("..").boundingBox();
+        expect(copyBox!.y - (optionBox!.y + optionBox!.height)).toBeGreaterThanOrEqual(0);
+        expect(copyBox!.y - (optionBox!.y + optionBox!.height)).toBeLessThanOrEqual(12);
+        expect(await copy.evaluate(node => Number.parseFloat(getComputedStyle(node).fontSize)
+          < Number.parseFloat(getComputedStyle(document.body).fontSize))).toBe(true);
         expect(copyBox!.y + copyBox!.height).toBeLessThanOrEqual(buyBox!.y);
         await page.getByRole("radio", { name: /Паперова/ }).check();
         await expect(copy).toHaveCount(0);

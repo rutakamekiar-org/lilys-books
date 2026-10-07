@@ -102,7 +102,7 @@
 .disabled { opacity: .55; cursor: not-allowed; }
 
 .buybar { display: grid; gap: 6px; padding: 6px 0; }
-.ebookDelivery { margin: 10px 0 0; font-size: 1rem; line-height: 1.5; color: var(--text); overflow-wrap: anywhere; }
+.ebookDelivery { margin: 4px 0 0; font-size: .875rem; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
 .ebookDelivery + .buyButtons { margin-top: 6px; }
 .buyButtons { display: flex; gap: 10px; margin-top: 18px; }
 .buy { flex: 1; display: inline-block; padding: 13px 16px; border-radius: 12px; border: none; background: var(--accent); color: #fff; font-weight: 800; cursor: pointer; }
