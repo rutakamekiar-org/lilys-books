@@ -188,23 +188,42 @@
     padding-top: 7px;
   }
   .formatRow {
-    grid-template-columns: minmax(0, 1fr) 26px;
+    grid-template-columns: minmax(0, 1fr) 44px;
     gap: 5px;
-    min-height: 27px;
     padding: 1px 0;
   }
   .formatRow + .formatRow {
     margin-top: 3px;
     padding-top: 5px;
   }
+  .formatInfo,
   .formatText {
-    gap: 5px;
-    font-size: 0.7rem;
+    display: contents;
+  }
+  .formatName,
+  .formatPrice {
+    min-width: 0;
+    font-size: 14px;
+    line-height: 1.2;
     letter-spacing: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .formatName {
+    grid-column: 1 / -1;
+  }
+  .formatPrice {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .formatInfo > :not(.formatText) {
+    grid-column: 1 / -1;
   }
   .quickAdd {
-    width: 26px;
-    height: 26px;
-    font-size: 0.76rem;
+    grid-column: 2;
+    grid-row: 2;
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
   }
 }
