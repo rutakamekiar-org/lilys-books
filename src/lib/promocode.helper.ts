@@ -10,7 +10,8 @@ function isItemApplicable(item: CartItem, promocode: PromoCodeResponse): boolean
 }
 
 /**
- * Returns a map of itemId -> number of units that actually receive the discount.
+ * Returns a map of eligible itemId -> number of units that actually receive the discount,
+ * including zero when no discounted unit is allocated to an eligible item.
  * When remainingUsages is set, only the top N units by price (desc) are discounted.
  */
 export function getDiscountedUnitsPerItem(
@@ -21,6 +22,7 @@ export function getDiscountedUnitsPerItem(
   if (!promocode) return map;
 
   const applicableItems = items.filter(item => isItemApplicable(item, promocode));
+  applicableItems.forEach(item => map.set(item.itemId, 0));
 
   // No usage limit — all applicable units are discounted
   if (promocode.remainingUsages == null) {

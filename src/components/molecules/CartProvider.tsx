@@ -51,7 +51,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const getItemDiscount = (itemId: string): number => {
     const item = items.find(i => i.itemId === itemId);
     if (!item) return 0;
-    return calculateItemDiscount(item, appliedPromocode, discountedUnitsPerItem.get(itemId));
+    return calculateItemDiscount(item, appliedPromocode, discountedUnitsPerItem.get(itemId) ?? 0);
   };
 
   // Sync items with latest product data from ProductsProvider
