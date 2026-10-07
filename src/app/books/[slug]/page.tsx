@@ -65,7 +65,7 @@ export default async function BookPage(props: Props) {
   return (
     <>
       <script type="application/ld+json" suppressHydrationWarning dangerouslySetInnerHTML={{ __html: serializeProductJsonLd(jsonLd) }} />
-      <BookDetail product={fullProduct} />
+      <BookDetail key={fullProduct.slug} product={fullProduct} />
     </>
   );
 }

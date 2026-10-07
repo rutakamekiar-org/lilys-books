@@ -15,7 +15,7 @@ import notify from "@/lib/toast";
 import { getProductGalleryImages } from "@/lib/product-gallery";
 
 import type { Product } from "@/models/Product";
-import {getPrice, getProductItemDisplayLabel, isPreorder} from "@/lib/product-item.helper";
+import {canPurchase, getInitialBookFormat, getPrice, getProductItemDisplayLabel, isPreorder} from "@/lib/product-item.helper";
 import PriceText from "@/components/atoms/PriceText";
 import { useProducts } from "@/components/molecules/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
@@ -30,11 +30,12 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const product = currentFreshProduct ?? staticProduct;
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [excerptOpen, setExcerptOpen] = useState(false);
-  const [suggestionOpen, setSuggestionOpen] = useState(false);
+  const [suggestionItemId, setSuggestionItemId] = useState<string | null>(null);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
     const [isDescriptionOverflowing, setIsDescriptionOverflowing] = useState(false);
     const descriptionRef = useRef<HTMLDivElement | null>(null);
-  const [format, setFormat] = useState<BookFormat>("paper");
+  const [format, setFormat] = useState<BookFormat>(() => getInitialBookFormat(staticProduct.items));
+  const hasChosenFormat = useRef(false);
   const { addItem, isInCart, openCart } = useCart();
 
   const suggestedProduct = products.find(p => p.slug === 'inaksha-art');
@@ -42,15 +43,18 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   useEffect(() => {
     let cancelled = false;
 
-    const loadFreshProduct = async () => {
+    const loadFreshProduct = async (initialLoad = false) => {
       const latestProduct = await refreshProduct(staticProduct.slug);
       if (!cancelled && latestProduct) {
         setFreshProduct(latestProduct);
+        if (initialLoad && !hasChosenFormat.current) {
+          setFormat(getInitialBookFormat(latestProduct.items));
+        }
       }
     };
 
     setFreshProduct(null);
-    void loadFreshProduct();
+    void loadFreshProduct(true);
 
     const refreshWhenVisible = () => {
       if (document.visibilityState === "visible") {
@@ -67,9 +71,9 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
 
   const checkSuggestion = (addedProduct: Product, addedFormat: BookFormat) => {
       if ((addedProduct.slug === 'zvychajna-and-inaksha' || addedProduct.slug === 'inaksha') && addedFormat === 'paper' && suggestedProduct) {
-          const artItemId = suggestedProduct.items[0]?.id;
-          if (artItemId && !isInCart(artItemId)) {
-              setSuggestionOpen(true);
+          const artItem = suggestedProduct.items.find(item => item.type === 1);
+          if (artItem && canPurchase(artItem) && !isInCart(artItem.id)) {
+              setSuggestionItemId(artItem.id);
               return true;
           }
       }
@@ -81,7 +85,8 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     ? `ebook-delivery-${product.slug}` : undefined;
   const itemInCart = selected ? isInCart(selected.id) : false;
   const handleBuyNow = () => {
-    if (!selected) return;
+    if (!selected || !canPurchase(selected)) return;
+    hasChosenFormat.current = true;
     const isMobilePurchase = window.matchMedia("(max-width: 640px)").matches;
     if (isMobilePurchase && isInCart(selected.id)) {
       openCart(selected.id);
@@ -96,7 +101,8 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   };
 
   const handleAddToCart = () => {
-    if (!selected) return;
+    if (!selected || !canPurchase(selected)) return;
+    hasChosenFormat.current = true;
     if (!isInCart(selected.id)) {
       const wasAdded = addItem(product, selected.id, format, 1);
       if (wasAdded) {
@@ -229,7 +235,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                               <div role="radiogroup" aria-label="Формат" className={styles.segmented}>
                                   {product.items.map(f => {
                                       const itemFormat = getFormat(f);
-                                      const isDisabled = !f.isAvailable && !f.canPreorder;
+                                      const isDisabled = !canPurchase(f);
                                       return (
                                           <label key={f.type}
                                                  className={`${styles.opt} ${format === itemFormat ? styles.active : ""} ${isDisabled ? styles.disabled : ""}`}>
@@ -239,7 +245,10 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                                                   value={f.type}
                                                   checked={format === itemFormat}
                                                   disabled={isDisabled}
-                                                  onChange={() => setFormat(itemFormat)}
+                                                  onChange={() => {
+                                                      hasChosenFormat.current = true;
+                                                      setFormat(itemFormat);
+                                                  }}
                                               />
                                           <span>{getProductItemDisplayLabel(product, f)} • {getPrice(f)} грн</span>
                                           </label>
@@ -256,7 +265,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                                   </p>
                               )}
                               <div className={styles.buyButtons}>
-                                <button className={styles.buy} disabled={!selected?.isAvailable && !selected?.canPreorder}
+                                <button className={styles.buy} disabled={!canPurchase(selected)}
                                         aria-describedby={ebookDeliveryId}
                                         onClick={handleBuyNow}>
                                     <span className={styles.desktopBuyText}>{buyText}</span>
@@ -264,7 +273,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                                 </button>
                                 <button
                                   className={`${styles.addToCart} ${itemInCart ? styles.inCart : ""}`}
-                                  disabled={!selected?.isAvailable && !selected?.canPreorder}
+                                  disabled={!canPurchase(selected)}
                                   onClick={handleAddToCart}
                                   aria-describedby={ebookDeliveryId}
                                   aria-label={itemInCart ? "Вже в кошику" : "Додати в кошик"}
@@ -356,9 +365,10 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
           )}
           {suggestedProduct && (
               <SuggestionDialog
-                  open={suggestionOpen}
-                  onClose={() => setSuggestionOpen(false)}
+                  open={suggestionItemId !== null}
+                  onClose={() => setSuggestionItemId(null)}
                   suggestedProduct={suggestedProduct}
+                  suggestedItemId={suggestionItemId}
               />
           )}
       </section>

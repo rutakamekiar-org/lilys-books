@@ -7,35 +7,38 @@ import { Product } from "@/models/Product";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 import { useDialogA11y } from "@/lib/dialog-a11y";
+import { canPurchase, getPrice } from "@/lib/product-item.helper";
+import PreorderLabel from "@/components/atoms/PreorderLabel";
 
 interface SuggestionDialogProps {
   open: boolean;
   onClose: () => void;
   suggestedProduct: Product;
+  suggestedItemId: string | null;
 }
 
-export default function SuggestionDialog({ open, onClose, suggestedProduct }: SuggestionDialogProps) {
+export default function SuggestionDialog({ open, onClose, suggestedProduct, suggestedItemId }: SuggestionDialogProps) {
   const { addItem, openCart } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
+  const unavailableId = useId();
 
   useDialogA11y({ open, onClose, dialogRef: panelRef });
 
   if (!open) return null;
 
+  const item = suggestedProduct.items.find(item => item.id === suggestedItemId);
+  const eligible = item?.type === 1 && canPurchase(item);
+
   const handleAddSuggested = () => {
-    const paperItem = suggestedProduct.items.find(i => i.type === 1);
-    if (paperItem) {
-      addItem(suggestedProduct, paperItem.id, "paper", 1);
+    if (item && eligible) {
+      addItem(suggestedProduct, item.id, "paper", 1);
       notify.success(`"${suggestedProduct.name}" додано до кошика`);
       onClose();
       openCart();
     }
   };
 
-  const item = suggestedProduct.items[0];
-  if (!item) return null;
-  const price = item.discountPrice || item.price;
   const productUrl = `/books/${suggestedProduct.slug}`;
 
   return (
@@ -55,8 +58,16 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct }: Su
                 <Link href={productUrl} prefetch={false} className={styles.productTitle} onClick={onClose}>
                     <h3>{suggestedProduct.name}</h3>
                 </Link>
-                <p className={styles.price}>{price} грн</p>
-                <button className={styles.addButton} onClick={handleAddSuggested}>Додати до кошика</button>
+                {item && <p className={styles.price}>{getPrice(item)} грн</p>}
+                <PreorderLabel item={item} />
+                {!eligible && (
+                  <p id={unavailableId} role="status" className={styles.unavailable}>
+                    Це видання більше не доступне для покупки або передзамовлення.
+                  </p>
+                )}
+                <button className={styles.addButton} disabled={!eligible}
+                        aria-describedby={!eligible ? unavailableId : undefined}
+                        onClick={handleAddSuggested}>Додати до кошика</button>
                 <Link href={productUrl} prefetch={false} className={styles.detailsLink} onClick={onClose}>
                     Детальніше
                 </Link>
