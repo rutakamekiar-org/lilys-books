@@ -6,7 +6,7 @@ Verification date: 2026-10-07 (Europe/Kyiv). Issue: [ZVY-65](https://linear.app/
 
 When the currently selected product item is digital, its purchase controls show **Формат EPUB. Файл надійде на вашу електронну пошту.** above the buttons. Both purchase buttons reference this text through `aria-describedby`. The explanation disappears when the customer chooses paper, and follows the selected item through live price, preorder and availability changes. A failed refresh retains the last confirmed selection and its explanation.
 
-The paragraph uses the existing muted text color, a .875rem (14px at the default root size) font and wrapping at narrow widths. Its top margin is 4px, reduced from 10px; it stays close to the selected option and above the purchase buttons. The exact selected item continues to determine the effective price, purchase eligibility, notes and cart identity. Product specifications, cart/checkout copy, edition preferences, navigation and dialog behavior are preserved. There are no delivery-time or reader-compatibility promises, API changes or backend changes. Completed preorder guidance from ZVY-66 is preserved; initial ebook fallback remains ZVY-63's scope.
+The paragraph uses the existing muted text color, a .875rem (14px at the default root size) font and wrapping at narrow widths. Its top margin is 4px, reduced from 10px, with a 4px left inset; it stays close to the selected option and above the purchase buttons. The exact selected item continues to determine the effective price, purchase eligibility, notes and cart identity. Product specifications, cart/checkout copy, edition preferences, navigation and dialog behavior are preserved. There are no delivery-time or reader-compatibility promises, API changes or backend changes. Completed preorder guidance from ZVY-66 is preserved; initial ebook fallback remains ZVY-63's scope.
 
 Changed-file inventory:
 
@@ -59,6 +59,7 @@ Local validation:
 - The initial implementation passed standalone `npm run build:ci` with the deterministic local API. The refined version's browser-suite setup also built and ran the production application successfully.
 - Initial implementation: `npm run test:e2e -- ebook-delivery preorder-labels accessibility keyboard-navigation book-excerpt mobile-purchase purchase-flow`: **63 passed**, including all 12 new checks.
 - Owner-requested refinement: `npm run test:e2e -- ebook-delivery accessibility keyboard-navigation`: **26 passed**. Added assertions verify that the note stays close to the selected option and its text is smaller than body copy; item/amount, wrapping and keyboard checks remain intact.
+- Left-padding follow-up: `npm run test:e2e -- ebook-delivery`: **12 passed**, including all three viewport capture scenarios; production-suite setup built the padded layout successfully. The final screenshots include the 4px inset.
 - Regression control on the unchanged base: the selected-ebook test fails at the missing delivery paragraph at all three widths. The same assertion passes after implementation.
 - `git diff --check`: pass.
 
