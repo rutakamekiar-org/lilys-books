@@ -8,6 +8,8 @@ function initialState() {
   return {
     products: structuredClone(productFixtures),
     failingSlugs: new Set(),
+    catalog: "ready",
+    catalogRequests: 0,
     invoiceRequests: 0,
     lastInvoiceRequest: null,
   };
@@ -50,6 +52,12 @@ const server = createServer(async (request, response) => {
     return sendJson(response, 200, product);
   }
 
+  if (request.method === "POST" && url.pathname === "/__control/catalog") {
+    const body = await readJson(request);
+    state.catalog = body.state ?? "ready";
+    return sendJson(response, 200, { state: state.catalog });
+  }
+
   if (request.method === "POST" && url.pathname === "/__control/failures") {
     const body = await readJson(request);
     state.failingSlugs = new Set(body.slugs ?? []);
@@ -59,6 +67,8 @@ const server = createServer(async (request, response) => {
   if (request.method === "GET" && url.pathname === "/__control/state") {
     return sendJson(response, 200, {
       products: state.products,
+      catalog: state.catalog,
+      catalogRequests: state.catalogRequests,
       failingSlugs: [...state.failingSlugs],
       invoiceRequests: state.invoiceRequests,
       lastInvoiceRequest: state.lastInvoiceRequest,
@@ -66,7 +76,10 @@ const server = createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && url.pathname === "/api/products") {
-    return sendJson(response, 200, state.products.filter(product => product.isActive !== false));
+    state.catalogRequests += 1;
+    if (state.catalog === "error") return sendJson(response, 503, { title: "Simulated catalog API failure: internal service unavailable." });
+    if (state.catalog === "malformed") return sendJson(response, 200, { products: "invalid internal payload" });
+    return sendJson(response, 200, state.catalog === "empty" ? [] : state.products.filter(product => product.isActive !== false));
   }
 
   if (request.method === "GET" && url.pathname.startsWith("/api/products/")) {

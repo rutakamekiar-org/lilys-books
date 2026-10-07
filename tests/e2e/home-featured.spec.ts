@@ -160,7 +160,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         const refresh = page.waitForResponse(response => response.url().endsWith("/api/products"));
         await page.goto("/");
         await refresh;
-        await expect(page.getByRole("heading", { level: 1 })).toHaveCount(0);
+        await expect(page.getByRole("heading", { level: 1, name: "Книги незабаром з’являться" })).toBeVisible();
+        await expect(page.getByText("Поки що немає книг для відображення.", { exact: true })).toBeVisible();
+        await expect(page.getByRole("button", { name: "Спробувати ще раз" })).toHaveCount(0);
         await expect(page.getByRole("link", { name: "Детальніше", exact: true })).toHaveCount(0);
         await expect(page.getByText(/^Від .* грн$/)).toHaveCount(0);
         await expect(page.getByRole("navigation").first()).toBeVisible();

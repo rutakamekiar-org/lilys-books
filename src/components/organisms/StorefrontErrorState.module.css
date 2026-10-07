@@ -96,6 +96,11 @@
   color: #2c1a05;
 }
 
+.primaryAction:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .secondaryAction {
   border: 1px solid var(--border, #e9e6e1);
   background: var(--surface, #fff);

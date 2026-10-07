@@ -94,5 +94,13 @@ export async function getProductsForStatic(options: { required?: boolean } = {})
 }
 
 export const getProducts = fetchProducts;
-export const getProductsLive = () => fetchProducts({ fresh: true });
+export const getProductsLive = () => fetchProducts({ fresh: true, throwOnError: true });
+
+export async function getProductsForStorefront(): Promise<{ products: Product[]; hasError: boolean }> {
+    try {
+        return { products: await fetchProducts({ throwOnError: true }), hasError: false };
+    } catch {
+        return { products: [], hasError: true };
+    }
+}
 

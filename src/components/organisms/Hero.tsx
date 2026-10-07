@@ -6,6 +6,7 @@ import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import type { Product } from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";
 import { useProducts } from "@/components/molecules/ProductsProvider";
+import ProductsDataState from "./ProductsDataState";
 
 export default function Hero({ initialProduct }: { initialProduct?: Product }) {
   const { products } = useProducts();
@@ -13,13 +14,13 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
   // Find the live version of the product to get real-time prices
   const liveProduct = initialProduct 
     ? products.find(p => p.id === initialProduct.id) 
-    : products[0];
+    : products.find(p => p.isHero) ?? products[0];
 
   const product = initialProduct 
     ? liveProduct ?? initialProduct
     : liveProduct;
 
-  if (!product) return null;
+  if (!product) return <ProductsDataState />;
   const minPrice = getMinPrice(product.items);
   const description = product.description && (
     <div className={styles.featuredDescription}>{product.description}</div>
