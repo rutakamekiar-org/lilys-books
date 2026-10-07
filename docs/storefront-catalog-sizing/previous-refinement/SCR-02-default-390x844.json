@@ -3,7 +3,7 @@
     "width": 390,
     "height": 844
   },
-  "pageHeight": 1761,
+  "pageHeight": 1765,
   "cards": [
     {
       "title": "Брунатні історії: збірка осінніх оповідань",
@@ -44,11 +44,11 @@
       "x": 12,
       "y": 601.421875,
       "width": 178,
-      "height": 484.15625,
+      "height": 488.15625,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 134.59375,
+      "formatsHeight": 138.59375,
       "buttonSizes": [
         {
           "width": 44,
@@ -65,11 +65,11 @@
       "x": 200,
       "y": 601.421875,
       "width": 178,
-      "height": 484.15625,
+      "height": 488.15625,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 134.59375,
+      "formatsHeight": 138.59375,
       "buttonSizes": [
         {
           "width": 44,
@@ -84,7 +84,7 @@
     {
       "title": "Листівки-ілюстрації до 'Інакшої'",
       "x": 12,
-      "y": 1095.578125,
+      "y": 1099.578125,
       "width": 178,
       "height": 431.953125,
       "titleSize": "13.76px",
@@ -101,7 +101,7 @@
     {
       "title": "Під шепіт снігу: збірка різдвяної прози",
       "x": 200,
-      "y": 1095.578125,
+      "y": 1099.578125,
       "width": 178,
       "height": 431.953125,
       "titleSize": "13.76px",

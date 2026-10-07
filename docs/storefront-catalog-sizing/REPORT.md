@@ -6,17 +6,19 @@ Verified on 2026-10-07 (Europe/Kyiv). [ZVY-73](https://linear.app/zvychajna/issu
 
 Within the existing `max-width: 520px` breakpoint, format labels remain above their bold prices, with each price centered beside a circular quick-add button. Format and price text is 14 CSS px (previously 11.2px); buttons retain their 44 × 44 CSS px tap target (previously 26 × 26). Long format labels and amounts can wrap instead of clipping. Preorder disclosure remains below the price/action row.
 
-After reviewing the initial After design, the owner requested tighter spacing between each format and price, slightly more separation between editions, less unused height for single-option cards, prominent bold prices, and a less dominant button background. This explicit refinement preserves the stacked format/price arrangement rather than restoring the original inline row. The label occupies the price column and uses spare space beside the button; price padding protects wrapped text. Option-to-option margin/padding increases from 3/5px to 6/7px. The pale button background mixes 45% of the original accent surface with the white card surface; its circle and tap target remain 44px.
+After reviewing the initial After design, the owner requested tighter spacing between each format and price, slightly more separation between editions, less unused height for single-option cards, prominent bold prices, and a less dominant button background. This explicit refinement preserves the stacked format/price arrangement rather than restoring the original inline row. The label occupies the price column and uses spare space beside the button; price padding protects wrapped text. The pale button background mixes 45% of the original accent surface with the white card surface; its circle and tap target remain 44px.
+
+The owner then requested moving the button inward by 4–6px and removing approximately 4px between the first button and the next separator. Each mobile purchase row now reserves 5px at its right edge, moving the button inward without shifting the price's left edge or using a transform that could overlap text. The margin before subsequent separators decreases from 6px to 2px; padding below the separator remains 7px. These two adjustments remain within the existing mobile breakpoint.
 
 The two-column phone grid, covers, title arrangement, two-line title clamp, ratings, separator appearance, price/label colors, focus treatment, and edition-selection behavior are preserved. All application changes are in `src/components/molecules/BookCard.module.css`. The existing non-semantic format wrappers use `display: contents` on mobile so their children participate in the row grid. No component markup, cart rules, API contracts or backend code changed.
 
-Created files: `tests/e2e/catalog-mobile-sizing.spec.ts`, this report, full-page screenshots and measurement JSONs under `before`, `initial-after` and `after`, original-to-refined comparisons `comparison-360.jpg`/`comparison-390.jpg`, initial-After-to-refined comparisons `refinement-360.jpg`/`refinement-390.jpg`, and the cropped purchase-area comparison `refinement-details-390.jpg`. Initial comparisons are retained under `initial-after`. Comparisons use actual screenshots without rescaling.
+Created files: `tests/e2e/catalog-mobile-sizing.spec.ts`, this report, full-page screenshots and measurement JSONs under `before`, `initial-after`, `previous-refinement` and `after`, original-to-current comparisons `comparison-360.jpg`/`comparison-390.jpg`, initial-After-to-current comparisons `refinement-360.jpg`/`refinement-390.jpg`, previous-refinement-to-current comparisons `adjustment-360.jpg`/`adjustment-390.jpg`, and purchase-area comparisons `refinement-details-390.jpg`/`adjustment-details-390.jpg`. Initial comparisons are retained under `initial-after`. Comparisons use actual screenshots without rescaling.
 
 ## Environment and evidence provenance
 
 Branch `codex/zvy-73-mobile-catalog-sizing`, based on updated frontend `main` at `34a608fa2dc8db4761ce13290bd09016621844fe`. Next.js 16.3.4 production build, Node.js 24.11.1, Playwright 1.63.0 and bundled Chromium. Local application: `http://127.0.0.1:3100`; deterministic API double: `http://127.0.0.1:4100`. Phone contexts emulate touch. Tested route: `/books`.
 
-Matching captures use all six products from the approved historical [catalog snapshot](../storefront-baseline/catalog-snapshot.json), supplied through a browser route double after the normal provider refresh. Image URLs are normalized to repository assets. The local build uses the standard deterministic test API; browser requests to non-local hosts are blocked. All three phases use the same snapshot, viewport, fonts and image readiness checks, empty cart and scroll position. Before captures use the original base stylesheet. The initial After at `9a71d97879acaa7cddd6ac6e963f6bda4ec0d510` is preserved under `initial-after`; current `after` captures use the owner-requested refinement. This is controlled local evidence, not a fresh production inspection.
+Matching captures use all six products from the approved historical [catalog snapshot](../storefront-baseline/catalog-snapshot.json), supplied through a browser route double after the normal provider refresh. Image URLs are normalized to repository assets. The local build uses the standard deterministic test API; browser requests to non-local hosts are blocked. All phases use the same snapshot, viewport, fonts and image readiness checks, empty cart and scroll position. Before captures use the original base stylesheet. The initial After at `9a71d97879acaa7cddd6ac6e963f6bda4ec0d510` is preserved under `initial-after`; the first refinement at `66736743005fefdaa997d38514782813e509e42b` is preserved under `previous-refinement`; current `after` captures include the latest button inset and separator spacing. This is controlled local evidence, not a fresh production inspection.
 
 | Viewport | Before | After | Comparison |
 | --- | --- | --- | --- |
@@ -26,15 +28,15 @@ Matching captures use all six products from the approved historical [catalog sna
 
 ## Browsing tradeoff
 
-In this six-product snapshot, the refined one-edition format block measures approximately 66.8px, compared with 75.8px in the initial After and 36px in the original Before. A two-edition block measures approximately 138.6px, compared with 151.6px and 72px respectively. The preorder block measures approximately 82.4px, compared with 96.4px and 43px. Thus the refinement removes 9px from a one-option block, 13px from a two-option block and 14px from the preorder block. Grid widths and title size, line height and clamp match both earlier versions.
+In this six-product snapshot, the current one-edition format block measures approximately 66.8px, compared with 75.8px in the initial After and 36px in the original Before. A two-edition block measures approximately 134.6px, compared with 138.6px in the previous refinement, 151.6px in the initial After and 72px in the original Before. The preorder block measures approximately 82.4px, compared with 96.4px and 43px. The current design removes 9px from a one-option block, 17px from a two-option block and 14px from the preorder block compared with the initial After. Grid widths and title size, line height and clamp match the earlier versions.
 
-| Width | Original Before | Initial After | Refined After | Change from initial After |
-| --- | ---: | ---: | ---: | ---: |
-| 360px | 1561px | 1733px | 1697px | −36px |
-| 390px | 1628px | 1801px | 1765px | −36px |
-| 1440px | 1553px | 1553px | 1553px | 0px |
+| Width | Original Before | Initial After | Previous refinement | Current After | Change from initial After |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 360px | 1561px | 1733px | 1697px | 1693px | −40px |
+| 390px | 1628px | 1801px | 1765px | 1761px | −40px |
+| 1440px | 1553px | 1553px | 1553px | 1553px | 0px |
 
-Initial After versus refined: [390px full page](refinement-390.jpg), [360px full page](refinement-360.jpg), [390px purchase details](refinement-details-390.jpg). At 390px the refined page is 36px shorter than the initial After and remains 137px (8.4%) taller than the original Before. At 360px it remains 136px (8.7%) taller. The first product row is 9px shorter and the two-edition row is 13px shorter than the initial After; their covers and title/rating blocks are unchanged.
+Initial After versus current: [390px full page](refinement-390.jpg), [360px full page](refinement-360.jpg), [390px purchase details](refinement-details-390.jpg). Latest adjustment versus previous refinement: [390px full page](adjustment-390.jpg), [360px full page](adjustment-360.jpg), [390px purchase details](adjustment-details-390.jpg). At 390px the current page is 40px shorter than the initial After and remains 133px (8.2%) taller than the original Before. At 360px it remains 132px (8.5%) taller. The latest adjustment removes another 4px from the two-edition product row; covers and title/rating blocks are unchanged.
 
 Larger text and targets require more scrolling to browse the same products. The initial phone viewport exposes less of the next product row. These measurements describe this snapshot only; no conversion improvement or real-phone comfort improvement is assumed.
 
@@ -61,7 +63,7 @@ To repeat after captures, set `ZVY73_EVIDENCE_PHASE=after` and run `npm run test
 
 | Acceptance criterion | Result |
 | --- | --- |
-| Two columns, current titles, stacked format/price, minimum sizing, owner-requested spacing and background refinement | Implemented; 320/360/390/520px layout tests and matching captures pass; 390px catalog is 36px shorter than initial After |
+| Two columns, current titles, stacked format/price, minimum sizing, owner-requested spacing and background refinement | Implemented; 320/360/390/520px layout tests and matching captures pass; 390px catalog is 40px shorter than initial After, with buttons inset 5px and 4px less space before subsequent separators |
 | Full format/amount/currency, intended touch/keyboard edition, non-overlapping targets | Implemented and tested with ordinary, long-label, discounted, preorder, digital, unavailable and in-cart states |
 | Existing mobile breakpoint only; desktop and intermediate/reflow checks | Implemented; 521/640/768/1440px checks pass and desktop screenshot is identical |
 | Baseline comparison, increased-scroll tradeoff, final owner review | Evidence and tradeoff recorded; implemented result presented for owner review, acceptance remains pending |
