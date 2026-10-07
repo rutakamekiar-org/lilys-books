@@ -60,7 +60,8 @@ Omit the variable for ordinary regression runs. The six screenshot-only tests th
 - Lint, TypeScript typecheck and deterministic product fixture validation passed.
 - Initial production-build browser run: 21 checks passed, including the six screenshot scenarios and ZVY-22 regressions.
 - Expanded production-build browser run: 43 checks passed, including 20 new behavior regressions, six evidence checks and the existing accessibility, keyboard and ZVY-22 checks.
-- GitHub CI: pending final recording.
+- GitHub CI: the required `verify` result for the current branch is recorded in [PR #43 checks](https://github.com/rutakamekiar-org/lilys-books/pull/43/checks). Treat the current PR head's result as authoritative.
+- Self-review covered the API/provider boundary, initial server HTML, retries, schema failures, warm-cache exclusions, heading structure and the complete implementation/test diff; no outstanding implementation defects were found.
 - Visual review checked Ukrainian wrapping, recovery buttons, empty/loading feedback and preserved navigation at the required widths.
 - No backend changes; backend validation is not required for this frontend-only change.
 
