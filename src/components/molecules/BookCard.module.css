@@ -189,12 +189,12 @@
   }
   .formatRow {
     grid-template-columns: minmax(0, 1fr) 44px;
-    gap: 5px;
+    gap: 0 5px;
     padding: 1px 0;
   }
   .formatRow + .formatRow {
-    margin-top: 3px;
-    padding-top: 5px;
+    margin-top: 6px;
+    padding-top: 7px;
   }
   .formatInfo,
   .formatText {
@@ -210,11 +210,14 @@
     overflow-wrap: anywhere;
   }
   .formatName {
-    grid-column: 1 / -1;
+    grid-column: 1;
+    /* Use spare space beside the button without moving its price alignment. */
+    margin-bottom: -4px;
   }
   .formatPrice {
     grid-column: 1;
     grid-row: 2;
+    padding: 8px 0;
   }
   .formatInfo > :not(.formatText) {
     grid-column: 1 / -1;
@@ -225,5 +228,6 @@
     width: 44px;
     height: 44px;
     font-size: 1rem;
+    background: color-mix(in srgb, var(--accent-weak) 45%, var(--surface));
   }
 }

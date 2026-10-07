@@ -66,6 +66,7 @@ for (const width of [320, 360, 390, 520, 521, 640, 768, 1440]) {
       for (const book of await checkedCards.all()) {
         const rows = book.locator('[class*="formatRow"]');
         let previousButtonBottom = 0;
+        let previousPriceBottom: number | null = null;
         for (const row of await rows.all()) {
           const label = row.locator('[class*="formatName"]');
           const price = row.locator('[class*="formatPrice"]');
@@ -77,11 +78,28 @@ for (const width of [320, 360, 390, 520, 521, 640, 768, 1440]) {
           if (width <= 520) {
             await contained(label, row);
             await contained(price, row);
-            const labelBox = (await label.boundingBox())!;
-            const priceBox = (await price.boundingBox())!;
-            expect(labelBox.y + labelBox.height).toBeLessThanOrEqual(priceBox.y);
-            expect(labelBox.y + labelBox.height).toBeLessThanOrEqual(buttonBox.y);
+            const textBounds = (element: Element) => {
+              const range = document.createRange();
+              range.selectNodeContents(element);
+              const { x, y, width, height } = range.getBoundingClientRect();
+              return { x, y, width, height };
+            };
+            const labelBox = await label.evaluate(textBounds);
+            const priceBox = await price.evaluate(textBounds);
+            expect(priceBox.y - (labelBox.y + labelBox.height),
+              `Label ${await label.textContent()} and price ${await price.textContent()} must not overlap: ${JSON.stringify({ labelBox, priceBox, buttonBox })}`)
+              .toBeGreaterThanOrEqual(0);
+            expect(labelBox.x + labelBox.width).toBeLessThanOrEqual(buttonBox.x);
             expect(priceBox.x + priceBox.width).toBeLessThanOrEqual(buttonBox.x);
+            expect(Math.abs(priceBox.y + priceBox.height / 2 - (buttonBox.y + buttonBox.height / 2))).toBeLessThanOrEqual(1);
+            const withinOptionGap = priceBox.y - (labelBox.y + labelBox.height);
+            expect(withinOptionGap).toBeLessThanOrEqual(10);
+            expect(await price.evaluate(element => parseFloat(getComputedStyle(element).fontWeight)))
+              .toBeGreaterThan(await label.evaluate(element => parseFloat(getComputedStyle(element).fontWeight)));
+            if (previousPriceBottom !== null) {
+              expect(labelBox.y - previousPriceBottom).toBeGreaterThan(withinOptionGap);
+            }
+            previousPriceBottom = priceBox.y + priceBox.height;
             for (const text of [label, price]) {
               expect(await text.evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(14);
             }
@@ -195,6 +213,13 @@ for (const width of [360, 390, 1440]) {
           expect(metrics.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })))
             .toEqual(before.cards.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }: typeof metrics[number]) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })));
           expect(metrics[2].y).toBeGreaterThan(before.cards[2].y);
+          const initial = JSON.parse(await readFile(path.join(directory, "..", "initial-after", `${stem}.json`), "utf8"));
+          expect(metrics.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })))
+            .toEqual(initial.cards.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }: typeof metrics[number]) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })));
+          for (let index = 0; index < metrics.length; index++) {
+            expect(metrics[index].formatsHeight).toBeLessThan(initial.cards[index].formatsHeight);
+          }
+          expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBeLessThan(initial.pageHeight);
         }
       }
     });
