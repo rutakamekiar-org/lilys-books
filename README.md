@@ -107,10 +107,11 @@ To inspect a failure, open the failed run in GitHub's **Actions** tab and downlo
 the diagnostics from **Artifacts**. Open a `trace.zip` locally with
 `npx playwright show-trace <path-to-trace.zip>` before the artifact expires.
 
-### Skipping unnecessary Netlify deployments
+### Netlify deployment approval (frontend only)
 
-When an automatic Netlify deploy is not required, such as for CI, test-only or
-documentation-only changes, append `[skip netlify]` to the commit subject:
+These rules apply to the `lilys-books` frontend repository only, not to the
+`BookPreorder` backend. By default, append `[skip netlify]` to frontend commit
+subjects and pull-request titles:
 
 ```text
 ci: complete frontend PR validation for ZVY-30 [skip netlify]
@@ -122,9 +123,16 @@ deploy. If several commits are pushed together, the latest commit must have the
 tag. Use the Netlify-specific tag instead of `[skip ci]`, which can prevent the
 required GitHub validation from running.
 
-Omit the tag when the acceptance criteria require a provider preview or production
-deployment. The next untagged commit triggers a deployment that includes the
-accumulated skipped changes. See Netlify's [skip-deploy documentation](https://docs.netlify.com/deploy/manage-deploys/manage-deploys-overview/#skip-a-deploy).
+Obtain the user's explicit approval for a Netlify deployment before creating a
+frontend pull request without the tag, pushing an untagged frontend commit,
+removing the tag, or otherwise triggering a deployment, unless that deployment
+is already authorized in the conversation. Approval to implement work or create
+a pull request does not by itself authorize a Deploy Preview or production
+deployment. Acceptance criteria requiring a provider preview or production
+deployment do not waive this approval requirement.
+
+After explicit deployment approval, the next untagged commit triggers a deployment
+that includes the accumulated skipped changes. See Netlify's [skip-deploy documentation](https://docs.netlify.com/deploy/manage-deploys/manage-deploys-overview/#skip-a-deploy).
 
 Product pages are resolved from the BookPreorder API by slug and cached for up to 60 seconds. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
 
