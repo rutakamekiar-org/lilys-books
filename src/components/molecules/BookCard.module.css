@@ -185,16 +185,16 @@
   .ageBadge { font-size: 11px; padding: 2px 5px; }
   .formats {
     margin-top: 8px;
-    padding-top: 7px;
+    padding-top: 4px;
   }
   .formatRow {
     grid-template-columns: minmax(0, 1fr) 44px;
     gap: 0 5px;
-    padding: 1px 5px 1px 0;
+    padding: 0 5px 0 0;
   }
   .formatRow + .formatRow {
-    margin-top: 2px;
-    padding-top: 7px;
+    margin-top: 1px;
+    padding-top: 6px;
   }
   .formatInfo,
   .formatText {
@@ -212,12 +212,12 @@
   .formatName {
     grid-column: 1;
     /* Use spare space beside the button without moving its price alignment. */
-    margin-bottom: -4px;
+    margin-bottom: -6px;
   }
   .formatPrice {
     grid-column: 1;
     grid-row: 2;
-    padding: 8px 0;
+    padding: 10px 0;
   }
   .formatInfo > :not(.formatText) {
     grid-column: 1 / -1;

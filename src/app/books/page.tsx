@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import BooksGrid from "./BooksGrid";
+import styles from "./books.module.css";
 import { absoluteUrl } from "@/lib/site.server";
 
 const BOOKS_TITLE = "Книги Лілії Кухарець";
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
 export default async function BooksPage() {
   return (
     <section>
-      <h1>Книги та мерч</h1>
+      <h1 className={styles.title}>Книги та мерч</h1>
       <BooksGrid />
     </section>
   );

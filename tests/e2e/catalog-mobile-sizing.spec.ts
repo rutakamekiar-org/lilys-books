@@ -47,6 +47,19 @@ for (const width of [320, 360, 390, 520, 521, 640, 768, 1440]) {
       await expect(card(page, merchandise.name)).toBeVisible();
       await page.evaluate(() => document.fonts.ready);
 
+      const pageTitle = page.getByRole("heading", { name: "Книги та мерч", exact: true });
+      const headingStyle = await pageTitle.evaluate(element => ({
+        size: parseFloat(getComputedStyle(element).fontSize),
+        weight: parseFloat(getComputedStyle(element).fontWeight),
+      }));
+      expect(headingStyle.weight).toBeGreaterThanOrEqual(700);
+      if (width <= 520) {
+        expect(headingStyle.size).toBeGreaterThanOrEqual(28);
+        expect(headingStyle.size).toBeLessThanOrEqual(30);
+        expect(headingStyle.size).toBeGreaterThan(await page.getByRole("heading", { level: 2 }).first()
+          .evaluate(element => parseFloat(getComputedStyle(element).fontSize)));
+      } else expect(headingStyle.size).toBe(32);
+
       const cards = page.getByRole("article");
       const first = await cards.nth(0).boundingBox();
       const second = await cards.nth(1).boundingBox();
@@ -199,13 +212,18 @@ for (const width of [360, 390, 1440]) {
         };
       }));
       const directory = path.join(process.cwd(), "docs/storefront-catalog-sizing", phase);
+      const heading = await page.getByRole("heading", { level: 1 }).evaluate(element => {
+        const box = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return { y: box.y, height: box.height, size: style.fontSize, weight: style.fontWeight };
+      });
       await mkdir(directory, { recursive: true });
       const stem = `SCR-02-default-${width}x${width === 1440 ? 900 : 844}`;
       const filename = path.join(directory, `${stem}.jpg`);
       await page.screenshot({ path: filename, type: "jpeg", quality: 90, fullPage: true, animations: "disabled", caret: "hide" });
       await writeFile(path.join(directory, `${stem}.json`), JSON.stringify({
         viewport: { width, height: width === 1440 ? 900 : 844 },
-        pageHeight: await page.evaluate(() => document.documentElement.scrollHeight), cards: metrics,
+        pageHeight: await page.evaluate(() => document.documentElement.scrollHeight), heading, cards: metrics,
       }, null, 2));
       await info.attach(`catalog ${phase}`, { path: filename, contentType: "image/jpeg" });
       if (phase === "after") {
@@ -214,7 +232,13 @@ for (const width of [360, 390, 1440]) {
         else {
           expect(metrics.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })))
             .toEqual(before.cards.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }: typeof metrics[number]) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })));
-          expect(metrics[2].y).toBeGreaterThan(before.cards[2].y);
+          const previous = JSON.parse(await readFile(path.join(directory, "..", "density-before", `${stem}.json`), "utf8"));
+          expect(metrics[0].y).toBeLessThan(previous.cards[0].y - 20);
+          for (let index = 0; index < metrics.length; index++) {
+            const reduction = 1 - metrics[index].formatsHeight / previous.cards[index].formatsHeight;
+            expect(reduction).toBeGreaterThanOrEqual(0.08);
+            expect(reduction).toBeLessThanOrEqual(0.12);
+          }
           const initial = JSON.parse(await readFile(path.join(directory, "..", "initial-after", `${stem}.json`), "utf8"));
           expect(metrics.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })))
             .toEqual(initial.cards.map(({ title, x, width, titleSize, titleLineHeight, titleClamp }: typeof metrics[number]) => ({ title, x, width, titleSize, titleLineHeight, titleClamp })));

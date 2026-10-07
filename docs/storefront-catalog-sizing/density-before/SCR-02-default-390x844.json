@@ -3,24 +3,18 @@
     "width": 390,
     "height": 844
   },
-  "pageHeight": 1711,
-  "heading": {
-    "y": 92,
-    "height": 46.390625,
-    "size": "29px",
-    "weight": "700"
-  },
+  "pageHeight": 1761,
   "cards": [
     {
       "title": "Брунатні історії: збірка осінніх оповідань",
       "x": 12,
-      "y": 151.390625,
+      "y": 175.0625,
       "width": 178,
-      "height": 409.359375,
+      "height": 416.359375,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 59.796875,
+      "formatsHeight": 66.796875,
       "buttonSizes": [
         {
           "width": 44,
@@ -31,13 +25,13 @@
     {
       "title": "Звичайна та Інакша. Дилогія повністю",
       "x": 200,
-      "y": 151.390625,
+      "y": 175.0625,
       "width": 178,
-      "height": 409.359375,
+      "height": 416.359375,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 59.796875,
+      "formatsHeight": 66.796875,
       "buttonSizes": [
         {
           "width": 44,
@@ -48,13 +42,13 @@
     {
       "title": "Звичайна. Перша частина дилогії",
       "x": 12,
-      "y": 570.75,
+      "y": 601.421875,
       "width": 178,
-      "height": 472.15625,
+      "height": 484.15625,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 122.59375,
+      "formatsHeight": 134.59375,
       "buttonSizes": [
         {
           "width": 44,
@@ -69,13 +63,13 @@
     {
       "title": "Інакша. Друга частина дилогії",
       "x": 200,
-      "y": 570.75,
+      "y": 601.421875,
       "width": 178,
-      "height": 472.15625,
+      "height": 484.15625,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 122.59375,
+      "formatsHeight": 134.59375,
       "buttonSizes": [
         {
           "width": 44,
@@ -90,13 +84,13 @@
     {
       "title": "Листівки-ілюстрації до 'Інакшої'",
       "x": 12,
-      "y": 1052.90625,
+      "y": 1095.578125,
       "width": 178,
-      "height": 424.953125,
+      "height": 431.953125,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 59.796875,
+      "formatsHeight": 66.796875,
       "buttonSizes": [
         {
           "width": 44,
@@ -107,13 +101,13 @@
     {
       "title": "Під шепіт снігу: збірка різдвяної прози",
       "x": 200,
-      "y": 1052.90625,
+      "y": 1095.578125,
       "width": 178,
-      "height": 424.953125,
+      "height": 431.953125,
       "titleSize": "13.76px",
       "titleLineHeight": "16.7872px",
       "titleClamp": "2",
-      "formatsHeight": 75.390625,
+      "formatsHeight": 82.390625,
       "buttonSizes": [
         {
           "width": 44,
