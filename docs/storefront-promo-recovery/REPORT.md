@@ -6,6 +6,8 @@
 
 HTTP 400, 404 and 422 responses show persistent correction feedback beside the promo input. Network failures and other HTTP failures, including 503, 500, 429 and 401, show a temporary-failure explanation and a **Повторити** (Retry) button. The entered code is retained. Retry uses the same provider/API path and unchanged cart selection; a recovered service can apply the unchanged valid code.
 
+The promo row and feedback have a 6 px gap. Retry uses a neutral outline button while checkout retains its orange primary treatment. Retry keeps that secondary appearance during loading.
+
 The API error includes the actual response status even for non-JSON failure bodies. Promo requests propagate their errors to the cart, which owns the persistent feedback, avoiding a second generic network toast. Other API notification paths retain their existing behavior.
 
 During validation, the button is disabled, the input is read-only, and a synchronous request guard also prevents repeated Enter events from sending duplicate requests. The loading action has an accessible name. Failure feedback uses `role="alert"`, is associated with the input through `aria-describedby`, and marks only rejected codes as `aria-invalid`. It remains until the customer edits the code, retries, or succeeds, including when the cart is closed and reopened in the same page session.
@@ -21,7 +23,7 @@ CartProvider updates the applied promo only after a successful request. No cart 
 - `src/components/organisms/ShoppingCart.module.css`: wrapping and spacing for inline feedback.
 - `tests/e2e/cart-promo-layout.spec.ts`: replace the former outage-as-invalid/toast-expiry assertions with the new persistent feedback expectations.
 - `tests/e2e/promo-recovery.spec.ts`: controlled rejection, outage, recovery, loading, persistence, amounts and evidence coverage.
-- This report and 24 before/after JPG captures.
+- This report and 27 JPG captures: 12 before, 12 matching after, and three additional after-only retry-loading captures.
 
 ## Environment and reproducibility
 
@@ -64,6 +66,8 @@ These are matching local controlled captures of the recorded base and implementa
 | Outage | 360 | [Before](before/SCR-04-promo-outage-360x844.jpg) | [After](after/SCR-04-promo-outage-360x844.jpg) |
 | Applied | 360 | [Before](before/SCR-04-promo-applied-360x844.jpg) | [After](after/SCR-04-promo-applied-360x844.jpg) |
 
+The updated secondary Retry loading state is also captured at [1440×900](after/SCR-04-promo-retry-loading-1440x900.jpg), [390×844](after/SCR-04-promo-retry-loading-390x844.jpg), and [360×844](after/SCR-04-promo-retry-loading-360x844.jpg).
+
 ## Acceptance criteria and handoff
 
 | Criterion | Result |
@@ -88,5 +92,13 @@ Netlify deployment is skipped at the owner's explicit request. Keep `[skip netli
 - Regression control: the new desktop `503 retains code and amounts` test was run against application sources built from the recorded base revision. It failed at the expected temporary-failure feedback assertion because the cart had no inline alert. The same scenario passed after the implementation. This deliberate baseline failure is evidence that the regression catches the defect, not an outstanding implementation failure.
 - Visual review checked the misleading baseline toast, persistent after feedback, Ukrainian wrapping, Retry and preserved cart navigation at the required widths. No horizontal overflow was found; quantities and undiscounted/recovered totals match the fixture.
 - Self-review covered the complete application/test diff, actual HTTP status handling for non-JSON bodies, duplicate request locking, async failure recovery, field/error associations, applied-promo persistence, unchanged allocation logic and documentation links. No outstanding implementation defects were found.
+
+### Owner refinements
+
+The owner requested tighter feedback spacing and a less dominant Retry action. The gap was reduced from 10 px to 6 px, and Retry now has a neutral outline treatment. A loading action distinguishes apply from retry so that the spinner remains secondary during retry. Invalid-code correction and temporary-failure Retry messages remain distinct.
+
+Lint, typecheck and the deterministic production build passed after these refinements. The updated promo-recovery and cart-layout run passed all 39 checks. The 503 scenarios hold the retry request open and assert a visible spinner, disabled action, readonly code, preserved secondary hierarchy, unchanged cart/total, and exactly one retry despite repeated mouse clicks and Enter. Error-state accessibility checks continue to pass at all three widths. The after captures were refreshed and three retry-loading captures added; the original before captures remain unchanged.
+
+Visual review confirmed the tighter grouping, secondary idle/loading Retry and primary checkout hierarchy on desktop and narrow mobile. Current-head CI remains authoritative through the linked PR/branch checks above.
 
 The implementation is ready for code review once the current-head required CI check passes. Deployment/merge and final ZVY-58 journey verification remain the handoffs described above.

@@ -431,7 +431,7 @@
   padding: 0 0 4px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   background: var(--surface);
 }
 
@@ -490,6 +490,19 @@
   opacity: 0.5;
   cursor: not-allowed;
   filter: grayscale(0.5);
+}
+
+.promoRetryBtn {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.promoRetryBtn:hover:not(:disabled) {
+  background: var(--accent-weak);
+  transform: none;
+  box-shadow: none;
 }
 
 .appliedPromo {

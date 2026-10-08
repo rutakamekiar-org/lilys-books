@@ -91,16 +91,21 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     });
 
     for (const failure of ["invalid", "expired", "400", "422", "network", "503", "500", "429", "401"] as const) {
-      test(`${failure} retains code and amounts, then recovers with unchanged code`, async ({ page }) => {
+      test(`${failure} retains code and amounts, then recovers with unchanged code`, async ({ page }, info) => {
         const selection = await page.evaluate(() => JSON.parse(localStorage.getItem("cart") ?? "[]"));
         let calls = 0;
         let recover = false;
+        let releaseRetry: () => void = () => {};
+        const pendingRetry = new Promise<void>(resolve => { releaseRetry = resolve; });
         await page.route("**/api/PromoCode/validate?**", async route => {
           calls += 1;
           const url = new URL(route.request().url());
           expect(url.searchParams.get("code")).toBe("AUDIT10");
           expect(url.searchParams.getAll("productItemIds")).toEqual([itemId]);
-          if (recover) return route.fulfill({ json: promo });
+          if (recover) {
+            if (failure === "503") await pendingRetry;
+            return route.fulfill({ json: promo });
+          }
           if (failure === "network") return route.abort("failed");
           const status = failure === "invalid" || failure === "expired" ? 404 : Number(failure);
           // HTML failure bodies must retain the actual transport status too.
@@ -130,7 +135,29 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         await page.getByRole("button", { name: /^Кошик, / }).click();
         await expect(feedback).toBeVisible();
         recover = true;
+        const action = input(page).locator("..").getByRole("button");
+        const checkout = cart(page).getByRole("button", { name: "Оформити замовлення", exact: true });
+        const checkoutBackground = await checkout.evaluate(node => getComputedStyle(node).backgroundColor);
+        if (failure === "503") {
+          expect(await action.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(checkoutBackground);
+        }
         await button.click();
+        if (failure === "503") {
+          try {
+            await expect(action).toBeDisabled();
+            await expect(action).toHaveAccessibleName("Перевіряємо промокод");
+            await expect(action.locator("svg")).toBeVisible();
+            await expect(input(page)).toHaveAttribute("readonly", "");
+            expect(await action.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(checkoutBackground);
+            const bounds = (await action.boundingBox())!;
+            await page.mouse.click(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+            await page.mouse.click(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+            await input(page).press("Enter");
+            await expect.poll(() => calls).toBe(2);
+            await unchanged(page, selection);
+            if (process.env.ZVY71_EVIDENCE_PHASE === "after") await capture(page, info, "retry-loading", viewport.width);
+          } finally { releaseRetry(); }
+        }
         await expect(cart(page).getByText("AUDIT10", { exact: true })).toBeVisible();
         await expect(feedback).toHaveCount(0);
         await expect(cart(page).getByText("Всього:", { exact: true }).locator("..")).toHaveText("Всього:718 грн");
