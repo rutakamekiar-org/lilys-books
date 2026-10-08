@@ -2,6 +2,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import styles from "./NovaPoshtaWidget.module.css";
 import { useDialogA11y } from "@/lib/dialog-a11y";
+import { useSheetDismiss } from "@/lib/sheet-dismiss";
 
 interface NovaPoshtaWidgetProps {
   onSelect: (data: NovaPoshtaDepartment) => void;
@@ -82,6 +83,7 @@ export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describe
   };
 
   useDialogA11y({ open: isOpen, onClose: closeWidget, dialogRef: modalRef });
+  const { dragHandleProps, dragStyle } = useSheetDismiss(closeWidget);
 
   useEffect(() => {
     if (isOpen && iframeRef.current) {
@@ -163,8 +165,8 @@ export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describe
             if (e.target === e.currentTarget) closeWidget();
           }}
         >
-          <div className={styles.modal} ref={modalRef}>
-            <div className={styles.header}>
+          <div className={styles.modal} ref={modalRef} style={dragStyle}>
+            <div className={styles.header} {...dragHandleProps}>
               <h2 id={modalTitleId}>Вибрати відділення</h2>
               <button type="button" className={styles.closeBtn} onClick={closeWidget} aria-label="Закрити">×</button>
             </div>
