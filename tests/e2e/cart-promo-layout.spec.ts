@@ -119,15 +119,16 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await expect(apply).toBeEnabled();
       await expectPromoFits(cart, viewport.width);
       await capture(page, testInfo, "invalid", viewport.width);
-      await expect(feedback).toBeHidden({ timeout: 8_000 });
+      await expect(feedback).toBeVisible();
 
       status = 503;
       await apply.click();
-      await expect(feedback).toBeVisible();
-      await expectFits(page.locator("body"), [feedback]);
+      const temporaryFeedback = cart.getByRole("alert");
+      await expect(temporaryFeedback).toContainText("Не вдалося перевірити промокод через тимчасову помилку");
+      await expectFits(cart, [temporaryFeedback]);
       await expectPromoFits(cart, viewport.width);
       await capture(page, testInfo, "outage", viewport.width);
-      await expect(feedback).toBeHidden({ timeout: 8_000 });
+      await expect(temporaryFeedback).toBeVisible();
 
       status = 200;
       await input.press("Enter");

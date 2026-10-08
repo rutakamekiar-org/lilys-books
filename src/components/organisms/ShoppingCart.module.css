@@ -431,13 +431,21 @@
   padding: 0 0 4px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   background: var(--surface);
 }
 
 .promoForm {
   display: flex;
   gap: 8px;
+}
+
+.promoFeedback {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .promoInput {
@@ -459,23 +467,17 @@
 
 .promoApplyBtn {
   padding: 0 20px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  transition: background 0.15s ease;
 }
 
 .promoApplyBtn:hover:not(:disabled) {
-  background: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(240, 155, 48, 0.25);
-}
-
-.promoApplyBtn:active:not(:disabled) {
-  transform: translateY(0);
+  background: var(--accent-weak);
 }
 
 .promoApplyBtn:disabled {

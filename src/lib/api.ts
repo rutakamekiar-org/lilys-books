@@ -15,9 +15,6 @@ export async function validatePromocode(code: string, productItemIds: string[]):
     const res = await fetch(`${API_URL}/api/PromoCode/validate?${params.toString()}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-    }).catch((err) => {
-        notifyApiError(err);
-        throw err;
     });
     return handleApi<PromoCodeResponse>(res);
 }
