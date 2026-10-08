@@ -36,6 +36,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submittingRef = useRef(false);
   const [mounted, setMounted] = useState(false);
   const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const { appliedPromocode, discountAmount, getItemDiscount } = useCart();
@@ -75,15 +76,10 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
 
   const hasPhysical = items.some((item) => item.format === "paper");
 
-  // Start every checkout from a clean form.
+  // Keep the in-memory draft while this mounted storefront is loaded.
+  // Reopening only resets validation feedback; submission always validates again.
   useEffect(() => {
     if (!open) return;
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPhone("");
-    setDepartment(undefined);
-    setOrderNote("");
     setErrors({});
     setTouched({});
   }, [open]);
@@ -109,6 +105,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submittingRef.current) return;
 
     // Mark all as touched
     setTouched({
@@ -120,6 +117,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
     });
 
     if (validate()) {
+      submittingRef.current = true;
       setIsSubmitting(true);
       try {
         await onSubmit({
@@ -131,6 +129,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
           orderNote: orderNote.trim() || undefined,
         });
       } finally {
+        submittingRef.current = false;
         setIsSubmitting(false);
       }
     }
