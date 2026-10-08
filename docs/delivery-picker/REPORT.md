@@ -6,7 +6,7 @@
 
 The mobile picker previously hid its entire host header below 768px, including Close. A pending or failed provider could therefore leave a blank screen with no visible host exit. The owner requested reuse of the cart/excerpt sheet in the implementation conversation on 2026-10-08.
 
-At widths up to 640px the picker now uses their existing `useSheetDismiss` hook and matching sheet layout: a 56px backdrop area, rounded top corners, cream header, drag handle, 44px minimum Close target, downward header swipe, backdrop dismissal, and reduced-motion behavior. The iframe occupies the remaining height below the header. Header gestures do not attach to provider content. Between 641px and 767px the existing full-screen presentation retains a compact visible header. Desktop keeps its centered 80% dialog and visible exit.
+At widths up to 640px the picker now uses their existing `useSheetDismiss` hook and matching sheet layout: a 56px backdrop area, rounded top corners, white header, drag handle, 44px minimum Close target, downward header swipe, backdrop dismissal, and reduced-motion behavior. The owner requested the white header, matching the cart, in a subsequent review on 2026-10-08. The iframe occupies the remaining height below the header. Header gestures do not attach to provider content. Between 641px and 767px the existing full-screen presentation retains a compact visible header. Desktop keeps its centered 80% dialog and visible exit.
 
 The picker inherits checkout's existing visual-viewport height variable. This supports the host layout when checkout updates its available height; it is not evidence that a real software keyboard or the live provider works correctly.
 
@@ -41,7 +41,7 @@ All 24 screenshots were visually inspected. Desktop layout remains visually cons
 
 ## Verification
 
-Lint, typecheck and deterministic fixture validation passed. The standard Playwright server setup successfully built and ran the production application. The final regression run passed **92 checks**, including **47 picker checks** with evidence capture enabled, checkout draft/order-note/money, purchase validation, accessibility, keyboard and cart/excerpt sheet behavior. Three picker screenshot tests are explicitly skipped in ordinary CI unless evidence capture is requested; the other 44 picker scenarios remain active.
+Lint, typecheck and deterministic fixture validation passed. The standard Playwright server setup successfully built and ran the production application. The implementation regression run passed **92 checks**, including **47 picker checks** with evidence capture enabled, checkout draft/order-note/money, purchase validation, accessibility, keyboard and cart/excerpt sheet behavior. Following the owner's white-header adjustment, lint, typecheck, the production build and all **47 picker checks** passed again; all eight mobile after screenshots were refreshed and visually inspected. Three picker screenshot tests are explicitly skipped in ordinary CI unless evidence capture is requested; the other 44 picker scenarios remain active.
 
 The initial accessibility scan identified heading-order and duplicate-main-landmark problems in the controlled provider fixture; correcting its semantics resolved them with no additional axe exceptions. An initial concurrent lint attempt hit Playwright's test-output-directory cleanup; the sequential rerun passed. The application diff was self-reviewed and `git diff --check` passed.
 
