@@ -26,7 +26,7 @@ Verified on 2026-10-08 using Node 24.11.1, Next.js 16.3.4 production builds and 
 
 The application runs at `http://127.0.0.1:3100` with the existing deterministic API at `http://127.0.0.1:4100`. Non-loopback browser traffic is blocked, except for explicitly fulfilled local doubles for the Nova Post iframe and `example.invalid` payment handoff. No production API, carrier service or payment was contacted. The sample customer, phone and branch are test values. Mobile sizes emulate touch; they are not real-phone evidence.
 
-The matching cart contains the Test Book paper edition at 350 UAH, changed from quantity 1 to 2, with `NEAR-TOTAL` (498.95 UAH fixed discount). Tests assert quantity 2, subtotal 700 UAH and total 201.05 UAH, then verify exactly one local invoice with the current item ID/quantity, promo and retained customer/branch/note. The note is retained verbatim while editing and trimmed in the submitted payload.
+The matching cart contains the Test Book paper edition at 350 UAH, changed from quantity 1 to 2, with `NEAR-TOTAL` (498.95 UAH fixed discount), giving a 700 UAH subtotal and 201.05 UAH total. Tests assert quantity 2 and total 201.05 UAH, then verify exactly one local invoice with the current item ID/quantity, promo and retained customer/branch/note. The note is retained verbatim while editing and trimmed in the submitted payload.
 
 The corrected baseline run failed at all three widths on the expected assertion: the first name became empty after reopening. Screenshots were saved before that assertion. An initial test-harness attempt had an incorrectly encoded fake iframe; that setup failure was corrected before recording the baseline. In the original UI, the branch button continued displaying its child component's stale local selection even though the parent checkout's department value was cleared. A visible old branch label therefore did not prove that the submitted branch survived; the new invoice-payload assertion checks the actual retained department.
 
@@ -39,6 +39,10 @@ All 12 before/after screenshots were visually inspected. Customer and branch/not
 | 360×844 | [Before](before/SCR-05-reopened-customer-360x844.jpg) · [After](after/SCR-05-reopened-customer-360x844.jpg) | [Before](before/SCR-05-reopened-branch-note-360x844.jpg) · [After](after/SCR-05-reopened-branch-note-360x844.jpg) |
 
 ## Verification
+
+Local lint, typecheck and fixture validation passed. The production application was successfully built by the standard Playwright server setup. The expanded regression run passed **82 checks**, including all **18 new checkout-draft scenarios**; three existing promo screenshot cases were skipped because they require an explicit evidence run. Checkout/order-note/money, promo allocation, purchase validation, accessibility, keyboard, mobile purchase and sheet-dismissal regressions passed. The final diff was self-reviewed and passed `git diff --check`.
+
+[Pull request #45](https://github.com/rutakamekiar-org/lilys-books/pull/45) records the required remote CI result for the latest head. This report does not treat local success as a substitute for that gate.
 
 Run:
 
