@@ -440,6 +440,14 @@
   gap: 8px;
 }
 
+.promoFeedback {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
 .promoInput {
   flex: 1;
   padding: 10px 14px;

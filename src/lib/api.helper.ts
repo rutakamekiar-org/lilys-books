@@ -53,6 +53,7 @@ export async function handleApi<T = CheckoutResponse>(res: Response): Promise<T>
       ? data.title
       : `Request failed with ${res.status}`;
     const err: ApiError = new Error(title);
+    err.status = res.status;
     err.details = isRecord(data) ? (data as ApiErrorDetails) : undefined;
     throw err;
   }

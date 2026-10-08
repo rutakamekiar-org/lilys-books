@@ -12,6 +12,7 @@ import { useSheetDismiss } from "@/lib/sheet-dismiss";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
+import type { ApiError } from "@/models/ApiError";
 
 export interface CartItem {
   product: Product;
@@ -42,6 +43,9 @@ export default function ShoppingCart({
   const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode } = useCart();
   const [promoInput, setPromoInput] = useState("");
   const [isApplying, setIsApplying] = useState(false);
+  const [promoFailure, setPromoFailure] = useState<"invalid" | "temporary" | null>(null);
+  const applyingRef = useRef(false);
+  const promoFeedbackId = useId();
   const [mounted, setMounted] = useState(false);
   const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -88,16 +92,19 @@ export default function ShoppingCart({
   }, [open, mounted, targetItemId]);
 
   const handleApplyPromo = async () => {
-    if (!promoInput.trim()) return;
+    if (applyingRef.current || !promoInput.trim()) return;
+    applyingRef.current = true;
     setIsApplying(true);
+    setPromoFailure(null);
     try {
       await applyPromocode(promoInput.trim());
       setPromoInput("");
       notify.success("Промокод застосовано!");
     } catch (e: unknown) {
-      console.error("Promo apply failed:", e);
-      notify.error("Невірний або недійсний промокод");
+      const status = (e as ApiError | null)?.status;
+      setPromoFailure(status === 400 || status === 404 || status === 422 ? "invalid" : "temporary");
     } finally {
+      applyingRef.current = false;
       setIsApplying(false);
     }
   };
@@ -250,13 +257,19 @@ export default function ShoppingCart({
                   </button>
                 </div>
               ) : (
-                <div className={styles.promoForm}>
+                <div className={styles.promoForm} aria-busy={isApplying}>
                   <input
                     type="text"
                     value={promoInput}
-                    onChange={(e) => setPromoInput(e.target.value)}
+                    onChange={(e) => {
+                      setPromoInput(e.target.value);
+                      setPromoFailure(null);
+                    }}
+                    readOnly={isApplying}
                     placeholder="Введіть промокод"
                     aria-label="Промокод"
+                    aria-invalid={promoFailure === "invalid"}
+                    aria-describedby={promoFailure ? promoFeedbackId : undefined}
                     className={styles.promoInput}
                     onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
                   />
@@ -264,10 +277,18 @@ export default function ShoppingCart({
                     onClick={handleApplyPromo}
                     disabled={isApplying || !promoInput.trim()}
                     className={styles.promoApplyBtn}
+                    aria-label={isApplying ? "Перевіряємо промокод" : undefined}
                   >
-                    {isApplying ? <Icon name="spinner" spin /> : 'Застосувати'}
+                    {isApplying ? <Icon name="spinner" spin /> : promoFailure === "temporary" ? "Повторити" : "Застосувати"}
                   </button>
                 </div>
+              )}
+              {!appliedPromocode && promoFailure && (
+                <p id={promoFeedbackId} role="alert" className={styles.promoFeedback}>
+                  {promoFailure === "invalid"
+                    ? "Невірний або недійсний промокод. Перевірте код або введіть інший."
+                    : "Не вдалося перевірити промокод через тимчасову помилку. Спробуйте ще раз."}
+                </p>
               )}
             </div>
             {discountAmount > 0 && (
