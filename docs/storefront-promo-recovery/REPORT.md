@@ -6,7 +6,7 @@
 
 HTTP 400, 404 and 422 responses show persistent correction feedback beside the promo input. Network failures and other HTTP failures, including 503, 500, 429 and 401, show a temporary-failure explanation and a **Повторити** (Retry) button. The entered code is retained. Retry uses the same provider/API path and unchanged cart selection; a recovered service can apply the unchanged valid code.
 
-The promo row and feedback have a 6 px gap. Retry uses a neutral outline button while checkout retains its orange primary treatment. Retry keeps that secondary appearance during loading.
+The promo row and feedback have a 6 px gap. Apply and Retry share a neutral outline button in idle, invalid-code, temporary-failure and loading states while checkout retains its orange primary treatment. The applied-promo badge and removal action retain their existing appearance.
 
 The API error includes the actual response status even for non-JSON failure bodies. Promo requests propagate their errors to the cart, which owns the persistent feedback, avoiding a second generic network toast. Other API notification paths retain their existing behavior.
 
@@ -23,7 +23,7 @@ CartProvider updates the applied promo only after a successful request. No cart 
 - `src/components/organisms/ShoppingCart.module.css`: wrapping and spacing for inline feedback.
 - `tests/e2e/cart-promo-layout.spec.ts`: replace the former outage-as-invalid/toast-expiry assertions with the new persistent feedback expectations.
 - `tests/e2e/promo-recovery.spec.ts`: controlled rejection, outage, recovery, loading, persistence, amounts and evidence coverage.
-- This report and 27 JPG captures: 12 before, 12 matching after, and three additional after-only retry-loading captures.
+- This report and 30 JPG captures: 12 before, 12 matching after, and six additional after-only entry and retry-loading captures.
 
 ## Environment and reproducibility
 
@@ -68,6 +68,8 @@ These are matching local controlled captures of the recorded base and implementa
 
 The updated secondary Retry loading state is also captured at [1440×900](after/SCR-04-promo-retry-loading-1440x900.jpg), [390×844](after/SCR-04-promo-retry-loading-390x844.jpg), and [360×844](after/SCR-04-promo-retry-loading-360x844.jpg).
 
+The secondary Apply entry state is captured at [1440×900](after/SCR-04-promo-entry-1440x900.jpg), [390×844](after/SCR-04-promo-entry-390x844.jpg), and [360×844](after/SCR-04-promo-entry-360x844.jpg).
+
 ## Acceptance criteria and handoff
 
 | Criterion | Result |
@@ -95,10 +97,10 @@ Netlify deployment is skipped at the owner's explicit request. Keep `[skip netli
 
 ### Owner refinements
 
-The owner requested tighter feedback spacing and a less dominant Retry action. The gap was reduced from 10 px to 6 px, and Retry now has a neutral outline treatment. A loading action distinguishes apply from retry so that the spinner remains secondary during retry. Invalid-code correction and temporary-failure Retry messages remain distinct.
+The owner requested tighter feedback spacing and a less dominant Retry action, then consistent hierarchy across the other promo states. The gap was reduced from 10 px to 6 px. Apply and Retry now share the same neutral outline treatment, including disabled loading states. Invalid-code correction and temporary-failure Retry messages remain distinct.
 
-Lint, typecheck and the deterministic production build passed after these refinements. The updated promo-recovery and cart-layout run passed all 39 checks. The 503 scenarios hold the retry request open and assert a visible spinner, disabled action, readonly code, preserved secondary hierarchy, unchanged cart/total, and exactly one retry despite repeated mouse clicks and Enter. Error-state accessibility checks continue to pass at all three widths. The after captures were refreshed and three retry-loading captures added; the original before captures remain unchanged.
+Lint, typecheck and the deterministic production build passed after the final all-state refinements. The updated promo-recovery and cart-layout run passed all 39 checks. Tests assert secondary hierarchy for idle Apply, initial loading, rejected codes and temporary failures. The 503 scenarios hold the retry request open and assert a visible spinner, disabled action, readonly code, preserved secondary hierarchy, unchanged cart/total, and exactly one retry despite repeated mouse clicks and Enter. Error-state accessibility checks continue to pass at all three widths. The after captures were refreshed with three entry and three retry-loading captures; the original before captures remain unchanged.
 
-Visual review confirmed the tighter grouping, secondary idle/loading Retry and primary checkout hierarchy on desktop and narrow mobile. Current-head CI remains authoritative through the linked PR/branch checks above.
+Visual review confirmed the tighter grouping, secondary Apply/Retry throughout entry, error and loading states, and primary checkout hierarchy on desktop and narrow mobile. Current-head CI remains authoritative through the linked PR/branch checks above.
 
 The implementation is ready for code review once the current-head required CI check passes. Deployment/merge and final ZVY-58 journey verification remain the handoffs described above.

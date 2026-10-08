@@ -64,6 +64,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         await route.fulfill({ status, json: status === 200 ? promo : { message: "Controlled promo failure" } });
       });
       await input(page).fill("AUDIT10");
+      if (process.env.ZVY71_EVIDENCE_PHASE === "after") await capture(page, info, "entry", viewport.width);
       await cart(page).getByRole("button", { name: "Застосувати", exact: true }).click();
       try {
         await expect(input(page).locator("..").getByRole("button")).toBeDisabled();
@@ -138,9 +139,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         const action = input(page).locator("..").getByRole("button");
         const checkout = cart(page).getByRole("button", { name: "Оформити замовлення", exact: true });
         const checkoutBackground = await checkout.evaluate(node => getComputedStyle(node).backgroundColor);
-        if (failure === "503") {
-          expect(await action.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(checkoutBackground);
-        }
+        expect(await action.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(checkoutBackground);
         await button.click();
         if (failure === "503") {
           try {
@@ -182,7 +181,10 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         return route.fulfill({ status: 404, json: { message: "Invalid code" } });
       });
       const apply = input(page).locator("..").getByRole("button");
+      const checkoutBackground = await cart(page).getByRole("button", { name: "Оформити замовлення", exact: true })
+        .evaluate(node => getComputedStyle(node).backgroundColor);
       await expect(apply).toBeDisabled();
+      expect(await apply.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(checkoutBackground);
       await input(page).fill("   ");
       await input(page).press("Enter");
       expect(calls).toBe(0);
@@ -191,6 +193,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       try {
         await expect(apply).toBeDisabled();
         await expect(apply).toHaveAccessibleName("Перевіряємо промокод");
+        expect(await apply.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(checkoutBackground);
         await expect(input(page)).toHaveAttribute("readonly", "");
         await input(page).press("x");
         await expect(input(page)).toHaveValue("AUDIT10");
@@ -200,6 +203,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         await unchanged(page, selection);
       } finally { release(); }
       await expect(cart(page).getByRole("alert")).toBeVisible();
+      expect(await apply.evaluate(node => getComputedStyle(node).backgroundColor)).not.toBe(checkoutBackground);
       await input(page).fill("CORRECTED");
       await expect(cart(page).getByRole("alert")).toHaveCount(0);
       await expect(apply).toBeEnabled();

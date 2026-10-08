@@ -467,42 +467,23 @@
 
 .promoApplyBtn {
   padding: 0 20px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  transition: background 0.15s ease;
 }
 
 .promoApplyBtn:hover:not(:disabled) {
-  background: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(240, 155, 48, 0.25);
-}
-
-.promoApplyBtn:active:not(:disabled) {
-  transform: translateY(0);
+  background: var(--accent-weak);
 }
 
 .promoApplyBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   filter: grayscale(0.5);
-}
-
-.promoRetryBtn {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  font-weight: 600;
-}
-
-.promoRetryBtn:hover:not(:disabled) {
-  background: var(--accent-weak);
-  transform: none;
-  box-shadow: none;
 }
 
 .appliedPromo {

@@ -42,8 +42,7 @@ export default function ShoppingCart({
 }: ShoppingCartProps) {
   const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode } = useCart();
   const [promoInput, setPromoInput] = useState("");
-  const [applyingAction, setApplyingAction] = useState<"apply" | "retry" | null>(null);
-  const isApplying = applyingAction !== null;
+  const [isApplying, setIsApplying] = useState(false);
   const [promoFailure, setPromoFailure] = useState<"invalid" | "temporary" | null>(null);
   const applyingRef = useRef(false);
   const promoFeedbackId = useId();
@@ -95,7 +94,7 @@ export default function ShoppingCart({
   const handleApplyPromo = async () => {
     if (applyingRef.current || !promoInput.trim()) return;
     applyingRef.current = true;
-    setApplyingAction(promoFailure === "temporary" ? "retry" : "apply");
+    setIsApplying(true);
     setPromoFailure(null);
     try {
       await applyPromocode(promoInput.trim());
@@ -106,7 +105,7 @@ export default function ShoppingCart({
       setPromoFailure(status === 400 || status === 404 || status === 422 ? "invalid" : "temporary");
     } finally {
       applyingRef.current = false;
-      setApplyingAction(null);
+      setIsApplying(false);
     }
   };
 
@@ -277,7 +276,7 @@ export default function ShoppingCart({
                   <button
                     onClick={handleApplyPromo}
                     disabled={isApplying || !promoInput.trim()}
-                    className={`${styles.promoApplyBtn} ${promoFailure === "temporary" || applyingAction === "retry" ? styles.promoRetryBtn : ""}`}
+                    className={styles.promoApplyBtn}
                     aria-label={isApplying ? "Перевіряємо промокод" : undefined}
                   >
                     {isApplying ? <Icon name="spinner" spin /> : promoFailure === "temporary" ? "Повторити" : "Застосувати"}
