@@ -40,7 +40,7 @@ The rejection summary receives focus and uses `role="alert"`; inline errors use 
 | Rejection focus, programmatic association and announcement; subsequent corrected submission proceeds | Implemented and covered by focus, accessible-description, alert, axe and exact-submission assertions. Actual screen-reader speech remains separate evidence. |
 | Correcting and leaving a failed field removes stale message/aria-invalid; invalid fields retain feedback; untouched fields are not invalid on opening | Implemented. Includes unchanged server-rejected values, invalid corrections, and supported name/email length boundaries. |
 | Feedback updates do not send invoices or clear values; later submission still validates | Implemented. Correction asserts zero additional invoice calls; invalid requests remain blocked; subsequent valid submissions proceed through local payment fixtures. |
-| Required lint, typecheck, production build, relevant Playwright checks and green CI | Local verification is recorded below. GitHub access is authorized; the required remote CI result remains pending. |
+| Required lint, typecheck, production build, relevant Playwright checks and green CI | Local verification is recorded below. The required `verify` result is tracked on [PR #49's latest head](https://github.com/rutakamekiar-org/lilys-books/pull/49/checks) and must be green before handoff. |
 | Reviewed implementation available in the recorded environment before ZVY-58 | Local production verification is available. Independent review, merge and availability in the agreed final journey environment remain handoff requirements. Netlify is skipped at the owner's request. |
 
 ## Verification
@@ -50,7 +50,7 @@ The rejection summary receives focus and uses `role="alert"`; inline errors use 
 - Isolated production build with deterministic API: passed, exit 0.
 - Relevant Playwright suite: **156 passed, six skipped, exit 0** (5.3 minutes). All 30 ZVY-67 checks passed. The six skipped checks are opt-in screenshot-only scenarios for ZVY-68 and ZVY-62; their behavior and accessibility checks ran successfully.
 - Diff whitespace and complete source/test self-review: passed. All confirmed findings were corrected before final verification.
-- Remote CI: not run or retrieved. No green remote pipeline is claimed.
+- Remote CI: the required GitHub `verify` job runs on [PR #49](https://github.com/rutakamekiar-org/lilys-books/pull/49/checks). Check the current head revision and result there; local success is not a substitute. The final handoff reports the retrieved result for that exact head.
 
 PR integration verification: [PR #49](https://github.com/rutakamekiar-org/lilys-books/pull/49) initially conflicted with the newly merged ZVY-70 delivery-cost update. Frontend `main` at `ea87f1a` was merged into this feature branch; the only manual conflict was adjacent imports in `CheckoutForm.tsx`, resolved by retaining both the checkout-error helper and delivery icon imports. The merged delivery disclosure and goods-total label remain intact. Lint and typecheck passed, and the reconciled production build passed **121 Playwright checks, three optional capture-only checks skipped, exit 0** (5.2 minutes), covering checkout errors, retained drafts, delivery costs, picker focus, accessibility and keyboard behavior. The original screenshot evidence remains tied to the earlier implementation/base documented above. Remote CI is being checked on the updated PR head.
 
