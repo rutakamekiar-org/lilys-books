@@ -135,7 +135,13 @@ export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describe
       <button
         type="button"
         className={styles.button}
-        onClick={openWidget}
+        // Open before moving focus: clearing a preceding field's error on blur
+        // can otherwise move this button between mouse-down and click.
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={(event) => {
+          event.currentTarget.focus();
+          openWidget();
+        }}
         aria-labelledby={labelledBy}
         aria-describedby={describedBy}
       >

@@ -8,7 +8,6 @@ import { useCart } from "@/components/molecules/CartProvider";
 import ShoppingCart from "@/components/organisms/ShoppingCart";
 import dynamic from "next/dynamic";
 import type { CheckoutFormData } from "@/components/organisms/CheckoutForm";
-import notify from "@/lib/toast";
 import {createInvoice} from "@/lib/api";
 
 const CheckoutForm = dynamic(() => import("@/components/organisms/CheckoutForm"), { ssr: false });
@@ -43,16 +42,13 @@ export default function NavBar() {
   };
 
   const handleCheckoutSubmit = async (data: CheckoutFormData) => {
-    try {
-      // Simulate API request
-        const res = await createInvoice(data, items, cart.appliedPromocode?.code || undefined)
-        setCheckoutOpen(false);
-        clearCart();
-        window.location.href = res.redirectUrl;
-    } catch (error) {
-      console.error("Order submission failed:", error);
-      notify.error("Помилка при оформленні замовлення. Спробуйте ще раз.");
+    const res = await createInvoice(data, items, cart.appliedPromocode?.code || undefined);
+    if (!res || typeof res.redirectUrl !== "string" || !res.redirectUrl.trim()) {
+      throw new Error("Invalid invoice response");
     }
+    setCheckoutOpen(false);
+    clearCart();
+    window.location.href = res.redirectUrl;
   };
 
   return (
@@ -85,6 +81,10 @@ export default function NavBar() {
         onClose={() => setCheckoutOpen(false)}
         items={items}
         onSubmit={handleCheckoutSubmit}
+        onEditCart={(itemId) => {
+          setCheckoutOpen(false);
+          showCart(itemId);
+        }}
       />}
     </>
   );
