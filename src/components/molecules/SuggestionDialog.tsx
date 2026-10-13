@@ -9,6 +9,7 @@ import notify from "@/lib/toast";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { canPurchase, getPrice } from "@/lib/product-item.helper";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
+import Icon from "@/components/atoms/Icon";
 
 interface SuggestionDialogProps {
   open: boolean;
@@ -63,7 +64,7 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
           <button aria-label="Закрити" className={styles.close} onClick={onClose}>×</button>
         </div>
         <div className={styles.body}>
-          <p className={styles.message}>До Вашої книги ідеально підійдуть ці ілюстрації:</p>
+          <p className={styles.message}>Доповніть книгу ілюстраціями:</p>
           <div className={styles.product}>
             <Link href={productUrl} prefetch={false} className={styles.image} onClick={onClose}>
                 <Image src={suggestedProduct.imageUrl} alt={suggestedProduct.name} width={120} height={180} sizes="120px" />
@@ -88,7 +89,10 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
             </div>
           </div>
           <div className={styles.continuation}>
-            <p id={selectedId} className={styles.selectedNote}>Книгу вже додано до кошика</p>
+            <p id={selectedId} className={styles.selectedNote}>
+              <span className={styles.confirmationIcon} aria-hidden="true"><Icon name="check" /></span>
+              <span>Книгу додано до кошика</span>
+            </p>
             <button className={styles.continueButton} aria-describedby={selectedId}
                     onClick={handleContinue}>Перейти до кошика</button>
           </div>

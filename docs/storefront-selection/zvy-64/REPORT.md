@@ -1,5 +1,7 @@
 # ZVY-64: explicit continuation from the Buy suggestion
 
+Latest presentation follow-up: [minor dialog UX polish and short/enlarged-text verification](polish/REPORT.md). The report below records the initial implementation and its original copy/screenshots; the follow-up contains the current confirmation copy and updated comparisons.
+
 Verification date: 2026-10-13 (Europe/Kyiv). Issue: [ZVY-64](https://linear.app/zvychajna/issue/ZVY-64). Approved finding: F-BOOK-004 in [ZVY-57](https://linear.app/zvychajna/issue/ZVY-57) and the [decision log](../../storefront-review/DECISIONS.md#f-book-004-continue-without-an-add-on). Final journey handoff: [ZVY-58](https://linear.app/zvychajna/issue/ZVY-58).
 
 ## Agreed behavior

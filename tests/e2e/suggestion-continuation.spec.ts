@@ -22,7 +22,7 @@ const art = makeProduct({
   imageUrls: ["/images/products/inaksha-art/inaksha-art1.webp"],
   items: [{ ...paper, id: artId, name: "Ілюстрації", price: 150, discountPrice: 125 }],
 });
-const viewports = [{ width: 1440, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 844 }];
+const viewports = [{ width: 1440, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 844 }, { width: 360, height: 640 }];
 
 async function put(request: APIRequestContext, product: Record<string, unknown>) {
   expect((await request.post(`${mockApiUrl}/__control/products`, { data: product })).ok()).toBe(true);
@@ -67,8 +67,10 @@ async function rapidClicks(button: Locator) {
 }
 
 async function capture(page: Page, info: TestInfo, state: string) {
-  const phase = process.env.ZVY64_EVIDENCE_PHASE;
+  const polishPhase = process.env.ZVY64_POLISH_PHASE;
+  const phase = polishPhase ?? process.env.ZVY64_EVIDENCE_PHASE;
   if (!phase) return;
+  if (polishPhase && !state.startsWith("SCR-03-")) return;
   if (!["before", "after"].includes(phase)) throw new Error("Unknown evidence phase");
   const viewport = page.viewportSize()!;
   await page.evaluate(() => document.fonts.ready);
@@ -77,7 +79,7 @@ async function capture(page: Page, info: TestInfo, state: string) {
   // Capture the settled cart total after the existing success notification expires.
   await expect(page.locator(".Toastify__toast")).toHaveCount(0, { timeout: 10_000 });
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
-  const directory = path.join(process.cwd(), "docs/storefront-selection/zvy-64", phase);
+  const directory = path.join(process.cwd(), "docs/storefront-selection/zvy-64", ...(polishPhase ? ["polish"] : []), phase);
   await mkdir(directory, { recursive: true });
   const filename = path.join(directory, `${state}-${viewport.width}x${viewport.height}.jpg`);
   await page.screenshot({ path: filename, type: "jpeg", quality: 85, animations: "disabled", caret: "hide" });
@@ -85,7 +87,7 @@ async function capture(page: Page, info: TestInfo, state: string) {
 }
 
 for (const viewport of viewports) {
-  test.describe(`suggestion continuation at ${viewport.width}px`, () => {
+  test.describe(`suggestion continuation at ${viewport.width}x${viewport.height}`, () => {
     test.use({ viewport, hasTouch: viewport.width < 640 });
     test.beforeEach(async ({ page, request }) => {
       await resetMockApi(request);
@@ -106,7 +108,7 @@ for (const viewport of viewports) {
 
       test(`${book.slug}: keyboard continuation keeps the selected edition, quantity and price`, async ({ page }, info) => {
         const dialog = await openSuggestion(page, book, viewport, 3);
-        const note = dialog.getByText("Книгу вже додано до кошика", { exact: true });
+        const note = dialog.locator("p").filter({ hasText: /^Книгу додано до кошика$/ });
         const proceed = dialog.getByRole("button", { name: "Перейти до кошика", exact: true });
         await expect(note).toBeVisible();
         await expect(proceed).toHaveAttribute("aria-describedby", (await note.getAttribute("id"))!);
@@ -234,5 +236,61 @@ for (const viewport of viewports) {
       await expect(page.getByRole("dialog")).toHaveCount(0);
       await selectedItems(page, [{ itemId: paperId, quantity: 1, format: "paper" }]);
     });
+
+    if (viewport.width < 640) for (const accept of [true, false]) {
+      test(`200% text keeps Close and both CTAs reachable: ${accept ? "accept" : "continue"}`, async ({ page }, info) => {
+        const dialog = await openSuggestion(page, books[0], viewport);
+        await page.addStyleTag({ content: "html { font-size: 200%; } body { font-size: inherit; } [role=dialog] button:not([aria-label]) { font-size: inherit; }" });
+        if (accept) await capture(page, info, "SCR-03-inaksha-suggestion-large-text");
+        const close = dialog.getByRole("button", { name: "Закрити", exact: true });
+        const add = dialog.getByRole("button", { name: "Додати до кошика", exact: true });
+        const proceed = dialog.getByRole("button", { name: "Перейти до кошика", exact: true });
+        expect(await dialog.locator("div").first().evaluate(node => {
+          const box = node.getBoundingClientRect();
+          return box.left >= 0 && box.right <= innerWidth && box.top >= 0 && box.bottom <= innerHeight;
+        })).toBe(true);
+        expect(await dialog.evaluate(node => Array.from(node.querySelectorAll<HTMLElement>("div, p, button, h2, h3"))
+          .every(element => element.scrollWidth <= element.clientWidth + 1))).toBe(true);
+        const image = dialog.locator("img");
+        await expect.poll(() => image.evaluate(node => {
+          const box = node.getBoundingClientRect();
+          return Math.abs(box.width - 120) < 1 && Math.abs(box.height - 180) < 1;
+        })).toBe(true);
+        await expectNoA11yViolations(page, "suggestion with enlarged text");
+        await close.focus();
+        // Forward Tab reaches Add; Shift+Tab wraps from Close to the secondary CTA.
+        for (let index = 0; index < 10 && !(await add.evaluate(node => node === document.activeElement)); index++) {
+          await page.keyboard.press("Tab");
+          expect(await dialog.evaluate(node => node.contains(document.activeElement))).toBe(true);
+        }
+        await expect(add).toBeFocused();
+        expect(await add.evaluate(node => {
+          const box = node.getBoundingClientRect();
+          return box.top >= 0 && box.bottom <= innerHeight;
+        })).toBe(true);
+        await close.focus();
+        await page.keyboard.press("Shift+Tab");
+        await expect(proceed).toBeFocused();
+        expect(await proceed.evaluate(node => {
+          const box = node.getBoundingClientRect();
+          return box.top >= 0 && box.bottom <= innerHeight;
+        })).toBe(true);
+        expect(await close.evaluate(node => {
+          const box = node.getBoundingClientRect();
+          return box.top >= 0 && box.bottom <= innerHeight;
+        })).toBe(true);
+        // Returning to the top does not move the panel or header horizontally.
+        const headerPosition = await close.boundingBox();
+        await close.focus();
+        expect(await close.boundingBox()).toEqual(headerPosition);
+        const action = accept ? add : proceed;
+        await action.focus();
+        await page.keyboard.press("Enter");
+        await expect(dialog).toBeHidden();
+        await cartWithFocus(page);
+        await selectedItems(page, [{ itemId: paperId, quantity: 1, format: "paper" },
+          ...(accept ? [{ itemId: artId, quantity: 1, format: "paper" }] : [])]);
+      });
+    }
   });
 }
