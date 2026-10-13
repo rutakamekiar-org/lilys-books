@@ -94,7 +94,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await cart(page).getByRole("button", { name: "Застосувати", exact: true }).click();
       await expect(cart(page).getByText("NEAR-TOTAL", { exact: true })).toBeVisible();
       await openCheckout(page);
-      await expect(checkout(page).getByText("Всього до сплати:").locator("..")).toHaveText("Всього до сплати:201.05 грн");
+      await expect(checkout(page).getByText("До сплати за товари:").locator("..")).toHaveText("До сплати за товари:201.05 грн");
       await expect(checkout(page).getByText("x2", { exact: true })).toBeVisible();
       await capture(page, info, viewport.width);
       await expectDetails(checkout(page));
@@ -141,7 +141,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await openCheckout(page);
       await expectDetails(checkout(page), false);
       await expect(checkout(page).getByLabel("Телефон *")).toHaveCount(0);
-      await expect(checkout(page).getByText("Всього до сплати:").locator("..")).toHaveText("Всього до сплати:180 грн");
+      await expect(checkout(page).getByText("До сплати за товари:").locator("..")).toHaveText("До сплати за товари:180 грн");
       let payload: Record<string, unknown> | undefined;
       await page.route("**/api/invoice", async route => {
         payload = route.request().postDataJSON();
@@ -159,7 +159,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await page.getByRole("button", { name: /Купити|Додати до кошика/ }).click();
       await openCheckout(page);
       await expectDetails(checkout(page));
-      await expect(checkout(page).getByText("Всього до сплати:").locator("..")).toHaveText("Всього до сплати:530 грн");
+      await expect(checkout(page).getByText("До сплати за товари:").locator("..")).toHaveText("До сплати за товари:530 грн");
     });
 
     test("keeps the in-flight guard across close and reopen, then allows retry after failure", async ({ page }) => {

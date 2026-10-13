@@ -7,6 +7,7 @@ import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/N
 import { getPrice } from "@/lib/product-item.helper";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
+import Icon from "@/components/atoms/Icon";
 
 const MAX_ORDER_NOTE_LENGTH = 500;
 
@@ -261,11 +262,11 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
               </>
             )}
 
-            <small className={styles.note}>
-              {hasPhysical
-                ? "Доставка здійснюється Новою Поштою."
-                : "Електронна версія буде надіслана на вказаний email"}
-            </small>
+            {!hasPhysical && (
+              <small className={styles.note}>
+                Електронна версія буде надіслана на вказаний email
+              </small>
+            )}
 
             <div className={styles.field}>
               <label htmlFor={orderNoteId} className={styles.label}>Коментар до замовлення (необов’язково)</label>
@@ -323,9 +324,15 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                 </div>
               )}
               <div className={styles.totalRow}>
-                <span>Всього до сплати:</span>
-                <span>{formatMoney(total)} грн</span>
+                <span>До сплати за товари:</span>
+                <span className={styles.totalAmount}>{formatMoney(total)} грн</span>
               </div>
+              {hasPhysical && (
+                <p className={styles.deliveryDisclosure}>
+                  <Icon name="circle-info" className={styles.deliveryIcon} />
+                  <span>Доставка оплачується окремо за тарифами Нової пошти. Її вартість визначається перевізником.</span>
+                </p>
+              )}
             </div>
           </div>
 
