@@ -68,7 +68,7 @@ async function expectDetails(page: Page, branch?: typeof branches[number]) {
   await expect(checkout(page).getByLabel("Email *")).toHaveValue("lesya@example.com");
   await expect(checkout(page).getByLabel("Телефон *")).toHaveValue("+380501234567");
   await expect(checkout(page).getByLabel(noteLabel)).toHaveValue(note);
-  await expect(checkout(page).getByText("Всього до сплати:").locator("..")).toHaveText("Всього до сплати:350 грн");
+  await expect(checkout(page).getByText("До сплати за товари:").locator("..")).toHaveText("До сплати за товари:350 грн");
   await expect(opener(page)).toContainText(branch?.shortName ?? "Обрати відділення або поштомат");
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem("cart") ?? "[]").map((item: { itemId: string; quantity: number }) =>
     ({ itemId: item.itemId, quantity: item.quantity })))).toEqual([{ itemId: "11000000-0000-4000-8000-000000000001", quantity: 1 }]);

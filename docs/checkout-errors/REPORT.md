@@ -52,6 +52,8 @@ The rejection summary receives focus and uses `role="alert"`; inline errors use 
 - Diff whitespace and complete source/test self-review: passed. All confirmed findings were corrected before final verification.
 - Remote CI: not run or retrieved. No green remote pipeline is claimed.
 
+PR integration verification: [PR #49](https://github.com/rutakamekiar-org/lilys-books/pull/49) initially conflicted with the newly merged ZVY-70 delivery-cost update. Frontend `main` at `ea87f1a` was merged into this feature branch; the only manual conflict was adjacent imports in `CheckoutForm.tsx`, resolved by retaining both the checkout-error helper and delivery icon imports. The merged delivery disclosure and goods-total label remain intact. Lint and typecheck passed, and the reconciled production build passed **121 Playwright checks, three optional capture-only checks skipped, exit 0** (5.2 minutes), covering checkout errors, retained drafts, delivery costs, picker focus, accessibility and keyboard behavior. The original screenshot evidence remains tied to the earlier implementation/base documented above. Remote CI is being checked on the updated PR head.
+
 Commands:
 
 ```powershell
