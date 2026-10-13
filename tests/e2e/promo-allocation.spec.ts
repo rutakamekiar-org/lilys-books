@@ -102,7 +102,7 @@ async function expectCheckoutAmounts(checkout: Locator, expected: { paper: numbe
     await expect(line.locator("span").last()).toHaveText(`${amount} грн`);
     await expect(line.getByText(`x${quantity}`, { exact: true })).toBeVisible();
   }
-  await expect(checkout.getByText("Всього до сплати:", { exact: true }).locator("..")).toContainText(`${expected.total} грн`);
+  await expect(checkout.getByText("До сплати за товари:", { exact: true }).locator("..")).toContainText(`${expected.total} грн`);
   if (expected.discount > 0) await expect(checkout.getByText(/^Знижка /).locator("..")).toContainText(`-${expected.discount} грн`);
   else await expect(checkout.getByText(/^Знижка /)).toHaveCount(0);
 }
@@ -197,7 +197,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await cartDialog(page).getByRole("button", { name: "Оформити замовлення" }).click();
       const checkout = page.getByRole("dialog", { name: "Оформлення замовлення", exact: true });
       await expectCheckoutAmounts(checkout, expected);
-      await checkout.getByText("Всього до сплати:", { exact: true }).scrollIntoViewIfNeeded();
+      await checkout.getByText("До сплати за товари:", { exact: true }).scrollIntoViewIfNeeded();
       await capture(page, info, "SCR-05-promo-one10", viewport.width);
     });
   });
