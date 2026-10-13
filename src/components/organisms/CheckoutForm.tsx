@@ -7,6 +7,7 @@ import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/N
 import { getPrice } from "@/lib/product-item.helper";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
+import { checkoutFieldLabels, getCheckoutFailure, type CheckoutFailure, type CheckoutField } from "@/lib/checkout-errors";
 
 const MAX_ORDER_NOTE_LENGTH = 500;
 
@@ -15,6 +16,7 @@ interface CheckoutFormProps {
   onClose: () => void;
   items: CartItem[];
   onSubmit: (data: CheckoutFormData) => Promise<void>;
+  onEditCart: (itemId?: string) => void;
 }
 
 export interface CheckoutFormData {
@@ -26,7 +28,7 @@ export interface CheckoutFormData {
   orderNote?: string;
 }
 
-export default function CheckoutForm({ open, onClose, items, onSubmit }: CheckoutFormProps) {
+export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCart }: CheckoutFormProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,6 +37,9 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const [orderNote, setOrderNote] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [failure, setFailure] = useState<CheckoutFailure | null>(null);
+  const rejectedValuesRef = useRef<Partial<Record<CheckoutField, string>>>({});
+  const [feedbackVersion, setFeedbackVersion] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submittingRef = useRef(false);
   const [mounted, setMounted] = useState(false);
@@ -46,6 +51,17 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   const departmentLabelId = useId();
   const orderNoteId = useId();
   const orderNoteDescriptionId = useId();
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  const feedbackTitleId = useId();
+  const fieldId = (field: CheckoutField) => field === "orderNote" ? orderNoteId : `${titleId}-${field}`;
+  const itemId = (id: string) => `${titleId}-item-${id}`;
+
+  useEffect(() => {
+    if (!feedbackVersion) return;
+    const target = feedbackRef.current ?? dialogRef.current?.querySelector<HTMLElement>('[aria-invalid="true"], [data-checkout-department-error="true"] button');
+    target?.focus();
+    target?.scrollIntoView({ block: "nearest" });
+  }, [feedbackVersion]);
 
   // The dialog only exists once mounted, so focus management waits for the portal.
   useDialogA11y({ open: open && mounted, onClose, dialogRef });
@@ -82,15 +98,21 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
     if (!open) return;
     setErrors({});
     setTouched({});
+    setFailure(null);
+    rejectedValuesRef.current = {};
   }, [open]);
 
   // Validation
-  const validate = () => {
+  const validationErrors = () => {
     const newErrors: Record<string, string> = {};
 
     if (!firstName.trim()) newErrors.firstName = "Введіть ім'я";
+    else if (firstName.trim().length > 100) newErrors.firstName = "Ім’я має містити до 100 символів";
     if (!lastName.trim()) newErrors.lastName = "Введіть прізвище";
+    else if (lastName.trim().length > 100) newErrors.lastName = "Прізвище має містити до 100 символів";
     if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email)) newErrors.email = "Введіть дійсний email";
+    else if (email.trim().length > 320) newErrors.email = "Email має містити до 320 символів";
+    if (orderNote.trim().length > MAX_ORDER_NOTE_LENGTH) newErrors.orderNote = "Коментар має містити до 500 символів";
 
     if (hasPhysical) {
       if (!phone.trim() || !/^\+?\d{10,14}$/.test(phone)) {
@@ -99,8 +121,36 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
       if (!department) newErrors.department = "Оберіть відділення Нової Пошти";
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return newErrors;
+  };
+
+  const correctField = (field: CheckoutField, value: string, localError = validationErrors()[field]) => {
+    setTouched(previous => ({ ...previous, [field]: true }));
+    if (!errors[field]) return;
+    // A locally valid but unchanged value must not dismiss a server rejection.
+    if (!localError && rejectedValuesRef.current[field] === value) return;
+    setErrors(previous => {
+      const next = { ...previous };
+      if (localError) next[field] = localError;
+      else delete next[field];
+      return next;
+    });
+    if (!localError) {
+      delete rejectedValuesRef.current[field];
+      setFailure(previous => {
+        if (!previous) return previous;
+        const fields = { ...previous.fields };
+        delete fields[field];
+        return Object.keys(fields).length || Object.keys(previous.items).length || previous.cart || previous.promo || previous.unknown
+          ? { ...previous, fields } : null;
+      });
+    }
+  };
+
+  const focusLocation = (id: string) => {
+    const target = document.getElementById(id);
+    (target?.getAttribute("role") === "group" ? target : target?.querySelector<HTMLElement>("button") ?? target)?.focus();
+    target?.scrollIntoView({ block: "nearest" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -114,9 +164,16 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
       email: true,
       phone: true,
       department: true,
+      orderNote: true,
     });
 
-    if (validate()) {
+    const newErrors = validationErrors();
+    setErrors(newErrors);
+    setFailure(null);
+    rejectedValuesRef.current = {};
+    if (Object.keys(newErrors).length === 0) {
+      const submittedItems = [...items];
+      const submittedValues = { firstName: firstName.trim(), lastName: lastName.trim(), email: email.trim(), phone: phone.trim(), department: JSON.stringify(department), orderNote: orderNote.trim() };
       submittingRef.current = true;
       setIsSubmitting(true);
       try {
@@ -128,10 +185,18 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
           department: hasPhysical ? department : undefined,
           orderNote: orderNote.trim() || undefined,
         });
+      } catch (error) {
+        const nextFailure = getCheckoutFailure(error, submittedItems);
+        rejectedValuesRef.current = submittedValues;
+        setErrors(nextFailure.fields);
+        setFailure(nextFailure);
+        setFeedbackVersion(version => version + 1);
       } finally {
         submittingRef.current = false;
         setIsSubmitting(false);
       }
+    } else {
+      setFeedbackVersion(version => version + 1);
     }
   };
 
@@ -144,6 +209,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
   }));
 
   const total = subtractMoney(subtotal, discountAmount);
+  const hasMissingRejectedItem = failure && Object.keys(failure.items).some(id => !items.some(item => item.itemId === id));
   const overlayStyle = viewportHeight
     ? ({ ["--checkout-viewport-height"]: `${viewportHeight}px` } as { [key: string]: string })
     : undefined;
@@ -169,13 +235,37 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.content}>
+            {failure && (
+              <div ref={feedbackRef} role="alert" tabIndex={-1} aria-labelledby={feedbackTitleId} className={styles.rejection}>
+                <h3 id={feedbackTitleId}>{failure.kind === "temporary" ? "Не вдалося оформити замовлення" : "Замовлення не прийнято"}</h3>
+                <p>{failure.kind === "temporary"
+                  ? "З’єднання або сервіс тимчасово недоступні. Ваші дані та кошик збережено. Спробуйте ще раз."
+                  : "Перевірте дані та кошик, потім підтвердьте замовлення ще раз."}</p>
+                {failure.unknown && <p>Не вдалося визначити, що потрібно виправити. Перевірте кошик і введені дані. Якщо помилка повторюється, зверніться до нас через контакти внизу сторінки.</p>}
+                <ul>
+                  {(Object.keys(failure.fields) as CheckoutField[]).map(field => (
+                    <li key={field}><a href={`#${fieldId(field)}`} onClick={event => { event.preventDefault(); focusLocation(fieldId(field)); }}>{checkoutFieldLabels[field]}</a></li>
+                  ))}
+                  {items.filter(item => failure.items[item.itemId]).map(item => (
+                    <li key={item.itemId}><a href={`#${itemId(item.itemId)}`} onClick={event => { event.preventDefault(); focusLocation(itemId(item.itemId)); }}>{item.product.name} — {item.format === "paper" ? "Паперова" : "Електронна"}</a></li>
+                  ))}
+                </ul>
+                {(failure.cart || failure.promo || hasMissingRejectedItem) && <p>{failure.cart || failure.promo || "Склад кошика змінився. Перевірте товари перед повторним підтвердженням."}</p>}
+                {failure.kind === "temporary" ? (
+                  <button type="submit" className={styles.correctionButton} disabled={isSubmitting}>Спробувати ще раз</button>
+                ) : (failure.unknown || failure.cart || failure.promo || hasMissingRejectedItem) && (
+                  <button type="button" className={styles.correctionButton} onClick={() => onEditCart()}>Перевірити кошик</button>
+                )}
+              </div>
+            )}
             <label className={styles.field}>
               <span className={styles.label}>Ім&#39;я *</span>
               <input
                 type="text"
+                id={fieldId("firstName")}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                onBlur={() => setTouched((t) => ({ ...t, firstName: true }))}
+                onBlur={() => correctField("firstName", firstName.trim())}
                 autoComplete="given-name"
                 aria-invalid={touched.firstName && !!errors.firstName}
                 aria-describedby={touched.firstName && errors.firstName ? "err-firstName" : undefined}
@@ -190,9 +280,10 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
               <span className={styles.label}>Прізвище *</span>
               <input
                 type="text"
+                id={fieldId("lastName")}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                onBlur={() => setTouched((t) => ({ ...t, lastName: true }))}
+                onBlur={() => correctField("lastName", lastName.trim())}
                 autoComplete="family-name"
                 aria-invalid={touched.lastName && !!errors.lastName}
                 aria-describedby={touched.lastName && errors.lastName ? "err-lastName" : undefined}
@@ -207,10 +298,11 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
               <span className={styles.label}>Email *</span>
               <input
                 type="email"
+                id={fieldId("email")}
                 inputMode="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                onBlur={() => setTouched((t) => ({ ...t, email: true }))}
+                onBlur={() => correctField("email", email.trim())}
                 autoComplete="email"
                 aria-invalid={touched.email && !!errors.email}
                 aria-describedby={touched.email && errors.email ? "err-email" : undefined}
@@ -227,10 +319,11 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                   <span className={styles.label}>Телефон *</span>
                   <input
                     type="tel"
+                    id={fieldId("phone")}
                     inputMode="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    onBlur={() => setTouched((t) => ({ ...t, phone: true }))}
+                    onBlur={() => correctField("phone", phone.trim())}
                     autoComplete="tel"
                     placeholder="+380XXXXXXXXX"
                     aria-invalid={touched.phone && !!errors.phone}
@@ -243,13 +336,13 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                 </label>
 
                 {/* A <label> cannot name a <button>, so this field is wired up with aria-labelledby. */}
-                <div className={styles.field}>
+                <div id={fieldId("department")} data-checkout-department-error={touched.department && !!errors.department} className={styles.field}>
                   <span id={departmentLabelId} className={styles.label}>Відділення Нової Пошти *</span>
                   <NovaPoshtaWidget
                     value={department}
                     onSelect={(dept) => {
                       setDepartment(dept);
-                      setTouched((t) => ({ ...t, department: true }));
+                      correctField("department", JSON.stringify(dept), "");
                     }}
                     labelledBy={departmentLabelId}
                     describedBy={touched.department && errors.department ? "err-department" : undefined}
@@ -273,11 +366,14 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                 id={orderNoteId}
                 value={orderNote}
                 onChange={(e) => setOrderNote(e.target.value)}
+                onBlur={() => correctField("orderNote", orderNote.trim())}
                 maxLength={MAX_ORDER_NOTE_LENGTH}
                 rows={4}
-                aria-describedby={orderNoteDescriptionId}
+                aria-invalid={touched.orderNote && !!errors.orderNote}
+                aria-describedby={`${orderNoteDescriptionId}${touched.orderNote && errors.orderNote ? " err-orderNote" : ""}`}
                 className={styles.textarea}
               />
+              {touched.orderNote && errors.orderNote && <small id="err-orderNote" role="alert" className={styles.error}>{errors.orderNote}</small>}
               <span id={orderNoteDescriptionId} className={styles.fieldMeta}>
                 <small className={styles.helper}>
                   Наприклад, побажання щодо доставки.
@@ -298,7 +394,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                   const itemTotal = multiplyMoney(price, item.quantity);
                   
                   return (
-                    <div key={item.itemId} className={styles.summaryItem}>
+                    <div key={item.itemId} id={itemId(item.itemId)} role="group" tabIndex={-1} aria-label={`${item.product.name} — ${item.format === "paper" ? "Паперова" : "Електронна"}`} aria-describedby={failure?.items[item.itemId] ? `${itemId(item.itemId)}-error` : undefined} className={styles.summaryItem}>
                       <span className={styles.summaryItemName}>{productItem?.name || item.product.name}</span>
                       <span className={styles.summaryItemQty}>x{item.quantity}</span>
                       <div className={styles.summaryItemPrice}>
@@ -307,6 +403,12 @@ export default function CheckoutForm({ open, onClose, items, onSubmit }: Checkou
                         )}
                         <span>{formatMoney(subtractMoney(itemTotal, itemDiscount))} грн</span>
                       </div>
+                      {failure?.items[item.itemId] && (
+                        <div className={styles.itemRejection}>
+                          <small id={`${itemId(item.itemId)}-error`} role="alert" className={styles.error}>{failure.items[item.itemId]}</small>
+                          <button type="button" className={styles.correctionButton} onClick={() => onEditCart(item.itemId)}>Змінити або видалити товар у кошику</button>
+                        </div>
+                      )}
                     </div>
                   );
                 })}

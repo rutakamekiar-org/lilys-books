@@ -1,5 +1,5 @@
 import type { CheckoutResponse } from "./types";
-import {notifyApiError, handleApi} from "@/lib/api.helper";
+import {handleApi} from "@/lib/api.helper";
 import {parseProduct, parseProducts, Product} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
 import {CartItem} from "@/components/molecules/CartProvider";
@@ -32,10 +32,7 @@ export async function createInvoice(data: CheckoutFormData, items: CartItem[], p
             promoCode,
             orderNote,
         }),
-    }).catch((err) => {
-        notifyApiError(err);
-        throw err;
-    })
+    });
     return handleApi<CheckoutResponse>(res);
 }
 async function fetchProducts(options: { throwOnError?: boolean; fresh?: boolean } = {}): Promise<Product[]> {

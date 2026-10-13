@@ -86,7 +86,10 @@ export default function ShoppingCart({
       const target = targetItemId && Array.from(dialogRef.current?.querySelectorAll<HTMLElement>("[data-cart-item-id]") ?? [])
         .find(node => node.dataset.cartItemId === targetItemId);
       if (content instanceof HTMLElement) content.scrollTop = 0;
-      if (target) target.scrollIntoView({ block: "nearest" });
+      if (target) {
+        target.scrollIntoView({ block: "nearest" });
+        target.querySelector<HTMLButtonElement>('button[aria-label="Видалити з кошика"]')?.focus({ preventScroll: true });
+      }
     });
     return () => cancelAnimationFrame(frame);
   }, [open, mounted, targetItemId]);
