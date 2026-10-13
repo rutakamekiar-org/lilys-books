@@ -161,6 +161,33 @@
   color: var(--text);
 }
 
+.continuation {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.selectedNote {
+  margin: 0 0 8px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.continueButton {
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.continueButton:hover {
+  background: var(--surface);
+}
+
 @media (max-width: 480px) {
   .product {
     flex-direction: column;

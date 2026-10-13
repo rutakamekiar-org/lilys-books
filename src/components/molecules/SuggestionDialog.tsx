@@ -1,5 +1,5 @@
 "use client";
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./SuggestionDialog.module.css";
@@ -22,6 +22,12 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
   const panelRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const unavailableId = useId();
+  const selectedId = useId();
+  const actionHandled = useRef(false);
+
+  useEffect(() => {
+    if (open) actionHandled.current = false;
+  }, [open]);
 
   useDialogA11y({ open, onClose, dialogRef: panelRef });
 
@@ -31,12 +37,20 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
   const eligible = item?.type === 1 && canPurchase(item);
 
   const handleAddSuggested = () => {
-    if (item && eligible) {
+    if (item && eligible && !actionHandled.current) {
+      actionHandled.current = true;
       addItem(suggestedProduct, item.id, "paper", 1);
       notify.success(`"${suggestedProduct.name}" додано до кошика`);
       onClose();
       openCart();
     }
+  };
+
+  const handleContinue = () => {
+    if (actionHandled.current) return;
+    actionHandled.current = true;
+    onClose();
+    openCart();
   };
 
   const productUrl = `/books/${suggestedProduct.slug}`;
@@ -72,6 +86,11 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
                     Детальніше
                 </Link>
             </div>
+          </div>
+          <div className={styles.continuation}>
+            <p id={selectedId} className={styles.selectedNote}>Книгу вже додано до кошика</p>
+            <button className={styles.continueButton} aria-describedby={selectedId}
+                    onClick={handleContinue}>Перейти до кошика</button>
           </div>
         </div>
       </div>
