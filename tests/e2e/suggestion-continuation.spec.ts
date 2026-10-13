@@ -241,6 +241,9 @@ for (const viewport of viewports) {
       test(`200% text keeps Close and both CTAs reachable: ${accept ? "accept" : "continue"}`, async ({ page }, info) => {
         const dialog = await openSuggestion(page, books[0], viewport);
         await page.addStyleTag({ content: "html { font-size: 200%; } body { font-size: inherit; } [role=dialog] button:not([aria-label]) { font-size: inherit; }" });
+        // Measure settled layout rather than the existing slide-in transform.
+        await expect.poll(() => dialog.locator("div").first().evaluate(node =>
+          node.getAnimations().every(animation => animation.playState === "finished"))).toBe(true);
         if (accept) await capture(page, info, "SCR-03-inaksha-suggestion-large-text");
         const close = dialog.getByRole("button", { name: "Закрити", exact: true });
         const add = dialog.getByRole("button", { name: "Додати до кошика", exact: true });
