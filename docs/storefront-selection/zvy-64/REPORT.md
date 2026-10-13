@@ -40,7 +40,7 @@ Every new scenario blocks non-local hosts and asserts zero invoice requests. Exi
 | Bundle continuation, original quantity three | [After](after/SCR-04-zvychajna-and-inaksha-original-only-1440x900.jpg) | [After](after/SCR-04-zvychajna-and-inaksha-original-only-390x844.jpg) | [After](after/SCR-04-zvychajna-and-inaksha-original-only-360x844.jpg) |
 | Accepted suggestion, original three plus one illustration edition | [After](after/SCR-04-accepted-suggestion-1440x900.jpg) | [After](after/SCR-04-accepted-suggestion-390x844.jpg) | [After](after/SCR-04-accepted-suggestion-360x844.jpg) |
 
-The new continuation has no before cart capture because that action did not exist. Before/after suggestion captures use identical viewports and controlled fixtures with fonts/images loaded and animations disabled. Visual inspection confirms that the Add action remains prominent and the note/cart action fit the required viewports.
+The new continuation has no before cart capture because that action did not exist. Before/after suggestion captures use identical viewports and controlled fixtures with fonts/images loaded and animations disabled. Cart captures wait for the existing success notification to expire so it does not obscure totals. Visual inspection confirms that the Add action remains prominent and the note/cart action fit the required viewports.
 
 ## Acceptance and validation
 
@@ -60,6 +60,7 @@ Local validation:
 - Fixture contracts: four fixtures pass. The sandbox's Windows account lookup caused an infrastructure error on the first fixture run; the normal-host rerun passed.
 - Production build: standalone `npm run build:ci` passed after restoring the final implementation. The browser suite's `test-app.mjs` setup also built and ran the implementation with `next build` followed by `next start` against the API double.
 - Relevant Playwright suite: **82 passed**, including all **34** new scenarios plus **48** existing product-selection, accessibility, keyboard-navigation, mobile-purchase and purchase-flow checks.
+- The final evidence-timing adjustment was followed by another green **34-scenario** run and regenerated after screenshots; lint/typecheck also passed again.
 - Baseline regression control: **12 intentionally failed, six capture scenarios passed** against `13b8ad5`, followed by automatic restoration of the implementation. Both routes fail the missing explanation/action check at all three widths. Five queued Buy clicks produce quantity five instead of one; five queued suggestion Add clicks produce five add-ons and 1,972 UAH instead of one add-on and 1,472 UAH. The same assertions pass in the implementation's 82-check run.
 
 Reproduce with `npm run test:e2e -- suggestion-continuation product-selection accessibility keyboard-navigation mobile-purchase purchase-flow`. Set `ZVY64_EVIDENCE_PHASE=after` to regenerate the 15 after images. For before captures/controls, run the same spec with the three changed application files from `13b8ad5` and `ZVY64_EVIDENCE_PHASE=before`; use `--grep 'capture settled|rapid acceptance|rapid Buy|inaksha: keyboard continuation'`. Restore the implementation afterward. Screenshot scenarios are separate from the intentionally failing regression assertions.

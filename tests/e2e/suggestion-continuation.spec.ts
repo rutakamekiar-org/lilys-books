@@ -74,6 +74,8 @@ async function capture(page: Page, info: TestInfo, state: string) {
   await page.evaluate(() => document.fonts.ready);
   await expect.poll(() => page.locator("[role=dialog] img").evaluateAll(images => images.every(image =>
     (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0))).toBe(true);
+  // Capture the settled cart total after the existing success notification expires.
+  await expect(page.locator(".Toastify__toast")).toHaveCount(0, { timeout: 10_000 });
   await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
   const directory = path.join(process.cwd(), "docs/storefront-selection/zvy-64", phase);
   await mkdir(directory, { recursive: true });
