@@ -84,6 +84,19 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const ebookDeliveryId = selected && getFormat(selected) === "digital"
     ? `ebook-delivery-${product.slug}` : undefined;
   const itemInCart = selected ? isInCart(selected.id) : false;
+  const pendingCartItemId = useRef<string | null>(null);
+
+  useEffect(() => {
+    pendingCartItemId.current = null;
+  }, [itemInCart, selected?.id]);
+
+  const addSelectedItem = () => {
+    if (!selected || isInCart(selected.id) || pendingCartItemId.current === selected.id) return false;
+    // Cart state commits after the event; queued clicks must not add this item again.
+    pendingCartItemId.current = selected.id;
+    return addItem(product, selected.id, format, 1);
+  };
+
   const handleBuyNow = () => {
     if (!selected || !canPurchase(selected)) return;
     hasChosenFormat.current = true;
@@ -92,9 +105,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
       openCart(selected.id);
       return;
     }
-    if (!isInCart(selected.id)) {
-      addItem(product, selected.id, format, 1);
-    }
+    addSelectedItem();
     if (isMobilePurchase || !checkSuggestion(product, format)) {
       openCart(selected.id);
     }
@@ -104,7 +115,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     if (!selected || !canPurchase(selected)) return;
     hasChosenFormat.current = true;
     if (!isInCart(selected.id)) {
-      const wasAdded = addItem(product, selected.id, format, 1);
+      const wasAdded = addSelectedItem();
       if (wasAdded) {
         notify.success(`"${product.name}" додано до кошика`);
       }

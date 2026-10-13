@@ -15,6 +15,10 @@
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
   border: 1px solid var(--border);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
   animation: slideUp 0.3s ease-out;
 }
 
@@ -28,6 +32,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
   border-bottom: 1px solid var(--border);
   background: var(--surface);
 }
@@ -47,10 +53,14 @@
   padding: 4px;
   color: var(--muted);
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .body {
   padding: 24px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .message {
@@ -96,6 +106,8 @@
   flex-direction: column;
   justify-content: center;
   flex: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .productTitle {
@@ -161,13 +173,77 @@
   color: var(--text);
 }
 
+.continuation {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.selectedNote {
+  margin: 0 0 8px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.confirmationIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.125em;
+  height: 1.125em;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.confirmationIcon svg {
+  width: 0.65em;
+  height: 0.65em;
+}
+
+.continueButton {
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.continueButton:hover {
+  background: var(--surface);
+}
+
 @media (max-width: 480px) {
+  .body {
+    padding: 16px;
+  }
+  .message {
+    margin-bottom: 12px;
+  }
   .product {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 12px;
+    padding: 12px;
   }
   .info {
     align-items: center;
+  }
+  .price {
+    margin-bottom: 12px;
+  }
+  .detailsLink {
+    margin-top: 8px;
+  }
+  .continuation {
+    margin-top: 16px;
   }
 }
