@@ -45,7 +45,7 @@ Tests assert exact totals and selected item IDs/quantities, one physical disclos
 - Focused regression suite: **126 passed, 6 skipped, 0 failed, 0 flaky**, clean exit (3.5 minutes). The six skips are existing opt-in screenshot capture cases in the delivery-picker and promo-allocation suites; the 15 delivery-cost scenarios ran and passed.
 - Final after evidence: refreshed; **15 passed, 0 failed, 0 skipped, 0 flaky**, clean exit (50.8 seconds). This final rerun includes the confirmation-button obstruction check. All 15 after screenshots are available alongside the 15 before screenshots.
 - Self-review: complete. Only presentation, decorative icon artwork and test label references change; delivery detection, state, price arithmetic, validation, submission and footer layout are preserved. Physical, mixed/promo, zero-total and digital screenshots were inspected across the requested widths.
-- Required GitHub `verify` CI: pending explicit permission to push source and screenshots to the configured GitHub repository. Automatic approval review rejected the attempted push because explicit payload/destination authorization and repository trust were not established. No branch was pushed and no pull request or Netlify deployment was created.
+- Required GitHub `verify` CI: pending the review PR. The owner explicitly authorized pushing the source and screenshot evidence to `rutakamekiar-org/lilys-books` and creating a PR on 2026-10-13. Netlify remains skipped.
 
 The Windows temporary Playwright cache initially denied access to a previously existing file. The retry uses `PWTEST_CACHE_DIR=node_modules/.cache/zvy70-playwright` inside the workspace; no test assertions or application behavior are changed for this workaround.
 
@@ -63,6 +63,6 @@ The unrestricted retry completed test-server cleanup successfully. Final lint, t
 | Readable at 1440×900, 390×844 and 360×844 before submission | Passed; wrapping, compact placement, overflow and viewport checks, with matched screenshots. |
 | Confirmation remains visible and keyboard/dialog behavior is preserved | Passed in focused regression; final screenshots additionally wait for transient promo notifications to clear the button. |
 | Existing totals, validation and payment logic | Preserved; relevant money, promo, validation, draft, delivery, mock submission, keyboard and accessibility tests passed. |
-| Required green CI and independent review | Pending permission to push and create a review PR. |
+| Required green CI and independent review | Review PR authorized; remote verification and independent review pending. |
 
 Netlify deployment is skipped as requested. Independent code review and owner acceptance remain handoff requirements for [ZVY-58](https://linear.app/zvychajna/issue/ZVY-58). Real phones, provider integration, actual payment and assistive-technology manual checks are outside this deterministic evidence; the existing axe color-contrast exception remains in force.
