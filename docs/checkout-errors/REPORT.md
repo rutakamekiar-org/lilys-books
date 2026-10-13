@@ -40,7 +40,7 @@ The rejection summary receives focus and uses `role="alert"`; inline errors use 
 | Rejection focus, programmatic association and announcement; subsequent corrected submission proceeds | Implemented and covered by focus, accessible-description, alert, axe and exact-submission assertions. Actual screen-reader speech remains separate evidence. |
 | Correcting and leaving a failed field removes stale message/aria-invalid; invalid fields retain feedback; untouched fields are not invalid on opening | Implemented. Includes unchanged server-rejected values, invalid corrections, and supported name/email length boundaries. |
 | Feedback updates do not send invoices or clear values; later submission still validates | Implemented. Correction asserts zero additional invoice calls; invalid requests remain blocked; subsequent valid submissions proceed through local payment fixtures. |
-| Required lint, typecheck, production build, relevant Playwright checks and green CI | Local verification is recorded below. Remote CI is pending authorization for GitHub access. |
+| Required lint, typecheck, production build, relevant Playwright checks and green CI | Local verification is recorded below. GitHub access is authorized; the required remote CI result remains pending. |
 | Reviewed implementation available in the recorded environment before ZVY-58 | Local production verification is available. Independent review, merge and availability in the agreed final journey environment remain handoff requirements. Netlify is skipped at the owner's request. |
 
 ## Verification
@@ -83,6 +83,6 @@ After evidence can be reproduced by setting `ZVY67_EVIDENCE_PHASE=after` before 
 
 Self-review covers the complete source/test diff, safe error interpretation, submission/side-effect ordering, snapshot-based item association, local correction rules, focus restoration and failure/retry paths. The backend is unchanged, so no backend contract migration, build or test result is claimed.
 
-Automatic approval review rejected the attempted GitHub authentication check because extracting and reusing the existing credential-helper token had not been explicitly authorized. The rejected command did not execute. Publishing a review PR and obtaining the required green CI result remain pending user authorization. Commit/PR subjects must retain `[skip netlify]`; no Netlify action is authorized here.
+The owner explicitly authorized using the existing GitHub credentials to push this branch, open a `[skip netlify]` review PR and verify CI on 2026-10-13. An earlier authentication check was rejected by automatic approval review before that authorization; the rejected command did not execute. Commit/PR subjects must retain `[skip netlify]`; no Netlify action is authorized here.
 
 Independent code review, merge and final availability remain required before ZVY-58. Real-phone, live carrier/provider/payment outcomes, screen-reader speech and software-keyboard obstruction remain explicit verification gaps. Existing accepted brand contrast treatment remains unchanged. The issue is not declared fully done while these required handoffs and remote CI are pending.
