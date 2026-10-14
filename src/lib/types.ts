@@ -12,9 +12,6 @@ export interface CheckoutResponse {
   reference?: string;
 }
 
-export interface InvoiceStatusResponse {
-  invoiceId: string;
-  status: string;
-  amount: number;
-  ccy: number;
+export interface PaymentConfirmationResponse {
+  confirmed: boolean;
 }

@@ -5,91 +5,133 @@ import { mockApiUrl, resetMockApi } from "./helpers";
 import { expectNoA11yViolations } from "./a11y";
 
 const reference = "40000000-0000-4000-8000-000000000040";
-const receiptUrl = `/payment#reference=${reference}`;
+const successUrl = `/payment/success#reference=${reference}`;
 
 for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 844 }]) {
-    test.describe(`payment result at ${viewport.width}px`, () => {
+    test.describe(`separate payment returns at ${viewport.width}px`, () => {
         test.use({ viewport });
         test.beforeEach(async ({ page, request }) => {
             await resetMockApi(request);
             await page.route("**/*", route => ["127.0.0.1", "localhost"].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
         });
 
-        for (const [status, title] of [
-            ["success", "Оплата успішна"], ["hold", "Оплату підтверджено"],
-            ["delivered", "Оплата успішна"], ["init", "Оплата ще очікується"],
-            ["failure", "Оплата не завершена"], ["reversed", "Оплату скасовано"],
-            ["expired", "Оплата не завершена"], ["unknown", "Оплату не підтверджено"],
-        ]) {
-            test(`shows trusted ${status} without repeating invoice creation`, async ({ page, request }, info) => {
+        for (const status of ["hold", "success", "delivered"]) {
+            test(`confirms saved ${status} without exposing invoice details or status controls`, async ({ page, request }, info) => {
                 await request.post(`${mockApiUrl}/__control/payment`, { data: { status } });
-                await page.goto(receiptUrl);
-                await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
-                await expect(page.getByText("TEST-ORDER-40", { exact: true })).toBeVisible();
-                await expect(page.getByText("180 грн", { exact: true })).toBeVisible();
-                await expectNoA11yViolations(page, `payment ${status}`);
+                const forbiddenRequests: string[] = [];
+                page.on("request", req => { if (req.url().includes("/invoice/status") || /monobank|mono\.bank|mbnk\.biz/.test(req.url())) forbiddenRequests.push(req.url()); });
+                await page.goto(successUrl);
+                await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
+                await expect(page.getByText("Номер замовлення")).toHaveCount(0);
+                await expect(page.getByText("TEST-ORDER-40")).toHaveCount(0);
+                await expect(page.getByRole("button", { name: /статус|Продовжити оплату|повторити/ })).toHaveCount(0);
+                await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+                await expect(page.locator('meta[name="referrer"]')).toHaveAttribute("content", "no-referrer");
+                await expectNoA11yViolations(page, `success ${status}`);
                 expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-                if (process.env.ZVY40_EVIDENCE === "after" && ["success", "init", "failure", "reversed", "unknown"].includes(status)) {
-                    const directory = path.join(process.cwd(), "docs/payment-recovery/after");
-                    await mkdir(directory, { recursive: true });
+                if (process.env.ZVY40_EVIDENCE === "after" && status === "hold") {
+                    const dir = path.join(process.cwd(), "docs/payment-recovery/separate-redirects");
+                    await mkdir(dir, { recursive: true });
                     await page.evaluate(() => document.fonts.ready);
-                    const filename = path.join(directory, `${status}-${viewport.width}x${viewport.height}.png`);
+                    const filename = path.join(dir, `success-${viewport.width}x${viewport.height}.png`);
                     await page.screenshot({ path: filename, animations: "disabled", caret: "hide" });
-                    await info.attach(status, { path: filename, contentType: "image/png" });
+                    await info.attach("success", { path: filename, contentType: "image/png" });
                 }
                 await page.reload();
-                await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
-                expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).invoiceRequests).toBe(0);
+                await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
+                const state = await (await request.get(`${mockApiUrl}/__control/state`)).json();
+                expect(state.invoiceRequests).toBe(0);
+                expect(forbiddenRequests).toEqual([]);
             });
         }
 
-        test("ignores asserted success in the URL and missing or unknown references", async ({ page, request }) => {
-            await page.goto("/payment?status=success");
-            await expect(page.getByRole("heading", { name: "Оплату не підтверджено", exact: true })).toBeVisible();
-            expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).paymentStatusRequests).toBe(0);
-            await page.goto("/payment#reference=50000000-0000-4000-8000-000000000040&status=success");
-            await expect(page.getByRole("heading", { name: "Оплату не підтверджено", exact: true })).toBeVisible();
-            await expect(page.getByText("Номер замовлення")).toHaveCount(0);
-        });
-
-        test("allows keyboard status recheck when the trusted callback arrives later", async ({ page, request }) => {
-            await page.goto(receiptUrl);
-            await expect(page.getByRole("heading", { name: "Оплата ще очікується", exact: true })).toBeVisible();
-            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "success" } });
-            const button = page.getByRole("button", { name: "Перевірити статус", exact: true });
+        test("failure return needs no payment confirmation request", async ({ page, request }, info) => {
+            await page.goto("/payment/failure?status=success");
+            await expect(page.getByRole("heading", { name: "Оплату не завершено", exact: true })).toBeVisible();
+            await expectNoA11yViolations(page, "failure");
+            expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).paymentConfirmationRequests).toBe(0);
+            if (process.env.ZVY40_EVIDENCE === "after") {
+                const dir = path.join(process.cwd(), "docs/payment-recovery/separate-redirects");
+                await mkdir(dir, { recursive: true });
+                await page.evaluate(() => document.fonts.ready);
+                const filename = path.join(dir, `failure-${viewport.width}x${viewport.height}.png`);
+                await page.screenshot({ path: filename, animations: "disabled", caret: "hide" });
+                await info.attach("failure", { path: filename, contentType: "image/png" });
+            }
+            const button = page.getByRole("button", { name: "Переглянути кошик", exact: true });
             await button.focus();
             await page.keyboard.press("Enter");
-            await expect(page.getByRole("heading", { name: "Оплата успішна", exact: true })).toBeVisible();
-            await expect(page.getByRole("heading", { name: "Оплата успішна", exact: true })).toBeFocused();
-            expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).invoiceRequests).toBe(0);
+            await expect(page.getByRole("dialog", { name: "Кошик", exact: true })).toBeVisible();
+            await page.keyboard.press("Escape");
+            await expect(button).toBeFocused();
         });
 
-        test("never shows a previous receipt for a replacement reference", async ({ page, request }) => {
-            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "success" } });
-            await page.goto(receiptUrl);
-            await expect(page.getByRole("heading", { name: "Оплата успішна", exact: true })).toBeVisible();
+        test("a direct success URL cannot assert payment", async ({ page, request }, info) => {
+            await page.goto("/payment/success?status=success");
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible();
+            expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).paymentConfirmationRequests).toBe(0);
+            await page.goto("/payment/success#reference=50000000-0000-4000-8000-000000000040&status=success");
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible();
+            await expectNoA11yViolations(page, "unconfirmed");
+            if (process.env.ZVY40_EVIDENCE === "after") {
+                const dir = path.join(process.cwd(), "docs/payment-recovery/separate-redirects");
+                await mkdir(dir, { recursive: true });
+                await page.evaluate(() => document.fonts.ready);
+                const filename = path.join(dir, `unconfirmed-${viewport.width}x${viewport.height}.png`);
+                await page.screenshot({ path: filename, animations: "disabled", caret: "hide" });
+                await info.attach("unconfirmed", { path: filename, contentType: "image/png" });
+            }
+        });
+
+        test("a delayed saved confirmation succeeds automatically without stealing focus", async ({ page, request }) => {
+            await page.goto(successUrl);
+            await expect(page.getByRole("heading", { name: "Завершуємо оплату", exact: true })).toBeVisible();
+            const link = page.getByRole("link", { name: "Повернутися до магазину", exact: true });
+            await link.focus();
+            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "hold" } });
+            await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
+            await expect(link).toBeFocused();
+        });
+
+        test("missing confirmation never becomes failure and stops automatic reads", async ({ page, request }) => {
+            await page.goto(successUrl);
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible({ timeout: 20000 });
+            await expect(page.getByRole("heading", { name: "Оплату не завершено", exact: true })).toHaveCount(0);
+            const state = await (await request.get(`${mockApiUrl}/__control/state`)).json();
+            expect(state.paymentConfirmationRequests).toBe(5);
+            expect(state.invoiceRequests).toBe(0);
+            await expect(page.getByRole("button", { name: /статус/ })).toHaveCount(0);
+        });
+
+        test("replacement reference cannot reuse a previous successful result", async ({ page, request }) => {
+            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "hold" } });
+            await page.goto(successUrl);
+            await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
             await page.evaluate(() => { location.hash = "reference=50000000-0000-4000-8000-000000000040"; });
-            await expect(page.getByRole("heading", { name: "Оплату не підтверджено", exact: true })).toBeVisible();
-            await expect(page.getByText("TEST-ORDER-40", { exact: true })).toHaveCount(0);
-            await page.evaluate(() => { location.hash = "reference=invalid"; });
-            await expect(page.getByRole("heading", { name: "Оплату не підтверджено", exact: true })).toBeVisible();
-            await expect(page.getByText("Номер замовлення")).toHaveCount(0);
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible();
         });
 
-        test("does not steal focus when an automatic poll succeeds after a pending manual check", async ({ page, request }) => {
-            await page.goto(receiptUrl);
-            const button = page.getByRole("button", { name: "Перевірити статус", exact: true });
-            await expect(button).toBeEnabled();
-            await button.focus();
-            const checked = page.waitForResponse(response => response.url().includes(`/api/invoice/status/${reference}`));
-            await page.keyboard.press("Enter");
-            await checked;
-            await expect(button).toBeEnabled();
-            const storeLink = page.getByRole("link", { name: "Повернутися до магазину", exact: true });
-            await storeLink.focus();
-            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "success" } });
-            await expect(page.getByRole("heading", { name: "Оплата успішна", exact: true })).toBeVisible();
-            await expect(storeLink).toBeFocused();
+        test("revisiting the same reference cannot reuse a cached successful confirmation", async ({ page, request }) => {
+            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "hold" } });
+            await page.goto(successUrl);
+            await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
+            await page.evaluate(() => { location.hash = "reference=invalid"; });
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible();
+            await page.route("**/api/invoice/confirmation/**", async route => {
+                await new Promise(resolve => setTimeout(resolve, 250));
+                await route.fulfill({ status: 503, json: {} });
+            });
+            await page.evaluate(value => { location.hash = `reference=${value}`; }, reference);
+            await expect(page.getByRole("heading", { name: "Завершуємо оплату", exact: true })).toBeVisible();
+            await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toHaveCount(0);
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible();
+            await expect(page.getByRole("link", { name: "Зв’язатися з нами", exact: true })).toHaveAttribute("href", "mailto:lillykukharets0325@gmail.com");
+        });
+
+        test("malformed confirmation is neutral", async ({ page }) => {
+            await page.route("**/api/invoice/confirmation/**", route => route.fulfill({ contentType: "application/json", body: '{"confirmed":"true"}' }));
+            await page.goto(successUrl);
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible();
         });
     });
 }

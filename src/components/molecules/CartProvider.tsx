@@ -4,9 +4,9 @@ import { Product, ProductSchema } from "@/models/Product";
 import { useProducts } from "./ProductsProvider";
 import { PromoCodeResponse } from "@/models/PromoCode";
 import { calculateCartDiscount, calculateItemDiscount, getDiscountedUnitsPerItem } from "@/lib/promocode.helper";
-import { getInvoiceStatus, validatePromocode } from "@/lib/api";
+import { validatePromocode } from "@/lib/api";
 import { canPurchase, getPrice } from "@/lib/product-item.helper";
-import { getPaymentOutcome, matchesPaymentSelection, parsePaymentAttempts, selectionKey, PAYMENT_STORAGE_KEY, type PaymentAttempt, type PaymentSelection } from "@/lib/payment";
+import { parsePaymentSelections, selectionKey, PAYMENT_STORAGE_KEY, type PaymentSelectionSnapshot, type PaymentSelection } from "@/lib/payment";
 import type { ApiError } from "@/models/ApiError";
 
 export interface CartItem {
@@ -33,16 +33,13 @@ interface CartContextType {
   applyPromocode: (code: string) => Promise<void>;
   removePromocode: () => void;
   hydrated: boolean;
-  paymentAttempts: PaymentAttempt[];
-  recordPayment: (attempt: PaymentAttempt) => void;
+  recordPayment: (attempt: PaymentSelectionSnapshot) => void;
   finalizePayment: (reference: string) => void;
-  reviewPayment: (reference: string) => Promise<{ ready: boolean; feedback?: string }>;
-  findPayment: (items: readonly CartItem[], promoCode?: string) => PaymentAttempt | undefined;
   snapshotSelection: () => PaymentSelection[];
-  prepareRetry: () => Promise<{ ready: boolean; feedback?: string }>;
+  prepareCheckout: () => Promise<{ ready: boolean; feedback?: string }>;
   isCurrentSelection: (selection: readonly PaymentSelection[], promoCode?: string) => boolean;
-  recoveryFeedback: string | null;
-  setRecoveryFeedback: (feedback: string | null) => void;
+  checkoutFeedback: string | null;
+  setCheckoutFeedback: (feedback: string | null) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -66,12 +63,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { products, refreshForCheckout } = useProducts();
   const [items, setItems] = useState<CartItem[]>([]);
   const [appliedPromocode, setAppliedPromocode] = useState<PromoCodeResponse | null>(null);
-  const [paymentAttempts, setPaymentAttempts] = useState<PaymentAttempt[]>([]);
   const [hydrated, setHydrated] = useState(false);
-  const [recoveryFeedback, setRecoveryFeedback] = useState<string | null>(null);
+  const [checkoutFeedback, setCheckoutFeedback] = useState<string | null>(null);
   const itemsRef = useRef<CartItem[]>([]);
   const promoRef = useRef<PromoCodeResponse | null>(null);
-  const attemptsRef = useRef<PaymentAttempt[]>([]);
+  const selectionsRef = useRef<PaymentSelectionSnapshot[]>([]);
   const readyRef = useRef(false);
   const cartOpenCallbackRef = useRef<((itemId?: string) => void) | null>(null);
 
@@ -88,9 +84,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
       else localStorage.removeItem("appliedPromocode");
     } catch { /* Storage may be disabled. */ }
   }, []);
-  const saveAttempts = useCallback((next: PaymentAttempt[]) => {
-    attemptsRef.current = next;
-    setPaymentAttempts(next);
+  const saveSelections = useCallback((next: PaymentSelectionSnapshot[]) => {
+    selectionsRef.current = next;
     try {
       if (next.length) sessionStorage.setItem(PAYMENT_STORAGE_KEY, JSON.stringify(next));
       else sessionStorage.removeItem(PAYMENT_STORAGE_KEY);
@@ -105,7 +100,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const stored = localStorage.getItem("appliedPromocode");
       if (stored) savePromo(JSON.parse(stored));
     } catch { savePromo(null); }
-    try { saveAttempts(parsePaymentAttempts(sessionStorage.getItem(PAYMENT_STORAGE_KEY))); } catch { saveAttempts([]); }
+    try {
+      sessionStorage.removeItem("paymentAttempts");
+      saveSelections(parsePaymentSelections(sessionStorage.getItem(PAYMENT_STORAGE_KEY)));
+    } catch { saveSelections([]); }
     readyRef.current = true;
     setHydrated(true);
     // Cross-tab edits retain their newer selection identities.
@@ -125,7 +123,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
     window.addEventListener("storage", syncCart);
     return () => window.removeEventListener("storage", syncCart);
-  }, [saveItems, savePromo, saveAttempts]);
+  }, [saveItems, savePromo, saveSelections]);
 
   useEffect(() => {
     if (!readyRef.current || !products.length) return;
@@ -166,67 +164,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
   const removePromocode = () => savePromo(null);
 
-  const recordPayment = useCallback((attempt: PaymentAttempt) => {
+  const recordPayment = useCallback((attempt: PaymentSelectionSnapshot) => {
     if (!readyRef.current) return;
-    const parsed = parsePaymentAttempts(JSON.stringify([attempt]));
-    if (parsed.length) saveAttempts([...attemptsRef.current.filter(candidate => candidate.reference !== attempt.reference), parsed[0]]);
-    setRecoveryFeedback(null);
-  }, [saveAttempts]);
+    const parsed = parsePaymentSelections(JSON.stringify([attempt]));
+    if (parsed.length) saveSelections([...selectionsRef.current.filter(candidate => candidate.reference !== attempt.reference), parsed[0]]);
+    setCheckoutFeedback(null);
+  }, [saveSelections]);
   const finalizePayment = useCallback((reference: string) => {
     if (!readyRef.current) return;
-    const attempt = attemptsRef.current.find(candidate => candidate.reference === reference);
+    const attempt = selectionsRef.current.find(candidate => candidate.reference === reference);
     if (!attempt) return;
     // Persist the safe transition before consuming the snapshot. Replays are harmless.
     const next = itemsRef.current.filter(item => !attempt.items.some(purchased =>
       purchased.itemId === item.itemId && purchased.selectionId === item.selectionId && purchased.quantity === item.quantity));
     saveItems(next);
     if (!next.length) savePromo(null);
-    saveAttempts(attemptsRef.current.filter(candidate => candidate.reference !== reference));
-  }, [saveItems, savePromo, saveAttempts]);
+    saveSelections(selectionsRef.current.filter(candidate => candidate.reference !== reference));
+  }, [saveItems, savePromo, saveSelections]);
 
-  const reviewPayment = useCallback(async (reference: string): Promise<{ ready: boolean; feedback?: string }> => {
-    const attempt = attemptsRef.current.find(candidate => candidate.reference === reference);
-    if (!attempt) return { ready: false, feedback: "Дані для відновлення доступні лише у вкладці, де було створено замовлення. Перегляньте поточний кошик." };
-    const status = await getInvoiceStatus(reference);
-    const outcome = getPaymentOutcome(status.status);
-    if (outcome === "success" || outcome === "authorized") { finalizePayment(reference); return { ready: false, feedback: "Оплату вже підтверджено. Оновіть статус замовлення." }; }
+  const prepareCheckout = async (): Promise<{ ready: boolean; feedback?: string }> => {
     const current = itemsRef.current;
     const currentPromo = promoRef.current;
-    const latestProducts = await refreshForCheckout();
-    if (!attemptsRef.current.includes(attempt)) return { ready: false, feedback: "Стан оплати змінився. Перевірте статус замовлення." };
-    if (selectionKey(itemsRef.current) !== selectionKey(current) || promoRef.current !== currentPromo) return { ready: false, feedback: "Кошик змінився під час перевірки. Перегляньте його ще раз." };
-    const requested = [...current, ...attempt.items.filter(purchased => !current.some(item => item.itemId === purchased.itemId))];
-    const resolved = requested.map(selected => {
-      const product = latestProducts.find(candidate => candidate.isActive !== false && candidate.items.some(item => item.id === selected.itemId));
-      return { selected, product, productItem: product?.items.find(item => item.id === selected.itemId) };
-    });
-    if (resolved.some(item => !item.product || !canPurchase(item.productItem))) return { ready: false, feedback: "Деякі товари більше недоступні. Змініть або видаліть їх у кошику перед повторною оплатою." };
-    const next: CartItem[] = resolved.map(({ selected, product }) => ({ product: product!, itemId: selected.itemId,
-      quantity: selected.quantity, format: selected.format,
-      selectionId: selected.selectionId }));
-    // A newer basket/promo is authoritative; restore the old promo only with its basket.
-    const promoCode = current.length ? currentPromo?.code : attempt.promoCode;
-    let promo: PromoCodeResponse | null = null;
-    let feedback: string | null = null;
-    if (promoCode) {
-      try { promo = await validatePromocode(promoCode, next.map(item => item.itemId)); }
-      catch (error) {
-        const status = (error as ApiError).status;
-        if (status !== 400 && status !== 404 && status !== 422) throw error;
-        feedback = "Промокод більше не діє. Кошик оновлено без знижки — перевірте нову суму перед оплатою.";
-      }
-    }
-    if (selectionKey(itemsRef.current) !== selectionKey(current) || promoRef.current !== currentPromo) return { ready: false, feedback: "Кошик змінився під час перевірки. Перегляньте його ще раз." };
-    if (!attemptsRef.current.includes(attempt)) return { ready: false, feedback: "Стан оплати змінився. Перевірте статус замовлення." };
-    saveItems(next);
-    savePromo(promo);
-    return { ready: true, feedback: feedback ?? undefined };
-  }, [refreshForCheckout, finalizePayment, saveItems, savePromo]);
-
-  const prepareRetry = async (): Promise<{ ready: boolean; feedback?: string }> => {
-    const current = itemsRef.current;
-    const currentPromo = promoRef.current;
-    const activeAttempts = attemptsRef.current;
     const latest = await refreshForCheckout();
     const next = current.map(selected => {
       const product = latest.find(candidate => candidate.isActive !== false && candidate.items.some(item => item.id === selected.itemId));
@@ -245,8 +203,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         invalidPromo = true;
       }
     }
-    if (selectionKey(itemsRef.current) !== selectionKey(current) || promoRef.current !== currentPromo || activeAttempts !== attemptsRef.current) {
-      return { ready: false, feedback: "Кошик або стан оплати змінився. Перегляньте його ще раз." };
+    if (selectionKey(itemsRef.current) !== selectionKey(current) || promoRef.current !== currentPromo) {
+      return { ready: false, feedback: "Кошик змінився. Перегляньте його ще раз." };
     }
     const resolved = next as CartItem[];
     const priceChanged = current.some((item, index) => getPrice(item.product.items.find(candidate => candidate.id === item.itemId)!) !==
@@ -259,7 +217,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
       : { ready: true };
   };
 
-  const findPayment = (selected: readonly CartItem[], promoCode?: string) => attemptsRef.current.findLast(attempt => matchesPaymentSelection(attempt, selected, promoCode));
   const snapshotSelection = () => itemsRef.current.map(item => ({ itemId: item.itemId, quantity: item.quantity, format: item.format, selectionId: item.selectionId! }));
   const isCurrentSelection = (selection: readonly PaymentSelection[], promoCode?: string) =>
     selectionKey(selection) === selectionKey(itemsRef.current) && (promoRef.current?.code ?? "") === (promoCode ?? "");
@@ -269,8 +226,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   return <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, itemCount, isInCart, openCart,
     registerOpenCallback, appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode, hydrated,
-    paymentAttempts, recordPayment, finalizePayment, reviewPayment, findPayment, snapshotSelection, prepareRetry, isCurrentSelection,
-    recoveryFeedback, setRecoveryFeedback }}>{children}</CartContext.Provider>;
+    recordPayment, finalizePayment, snapshotSelection, prepareCheckout, isCurrentSelection,
+    checkoutFeedback, setCheckoutFeedback }}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {

@@ -1,63 +1,51 @@
-# Payment confirmation and unpaid recovery — ZVY-40
+# Payment return evidence — ZVY-40
 
-Implemented against the approved ZVY-57 handoff. The owner selected **tab-only recovery** on 2026-10-14 after discussing security. [Issue](https://linear.app/zvychajna/issue/ZVY-40/confirm-payment-outcomes-and-recover-unpaid-orders).
+## Owner-approved revision
 
-## Behavior and retention
+On 2026-10-14 the owner deferred order-status and unpaid-order recovery UI, requested simple successful/unsuccessful returns, and chose separate bank success/failure redirects. The owner will arrange activation with Monobank. This supersedes the earlier acceptance mapping for detailed pending/canceled/unverified status views, invoice identifiers and recovery controls.
 
-- Invoice creation retains the cart and captures the submitted item/quantity/format/selection identities before awaiting the response.
-- Recovery stores only invoice ID, opaque reference, provider URL, item IDs, quantities, formats, selection identities and promo code in `sessionStorage`. Contact, address and order-note data stay in the existing in-memory checkout draft.
-- Existing cart and promo browser persistence remains intact. Recovery records belong to the browser's tab session, survive same-tab reload/provider handoff, and are consumed on trusted success. Browser tab duplication/session restoration may copy or restore session data; this is browser-managed session storage, not a server-enforced token expiry.
-- New paid/free invoices return to `/payment#reference=...`. Receipt reads are no-store and disclose only order ID, verified status, amount and currency.
-- Signed stored `hold` is confirmed authorization/received; `success`/`delivered` are successful. Pending, failure/expiry, cancellation and unverified outcomes have separate copy. Redirects, URL status claims and saved snapshots cannot prove payment.
-- Monobank omits expiry webhooks. The backend reconciles only overdue pending invoices through a bounded, authenticated provider read; failures are unverified, and a newer signed stored callback wins. Reconciliation performs no persistence, fulfillment or notifications.
-- Trusted success removes only purchased lines whose selection identities and quantities remain unchanged. Quantity edits, removed/re-added lines and unrelated new items survive. Successful snapshots are consumed once, so a revisited receipt cannot remove subsequently added books.
-- Non-success review explicitly restores absent snapshot items with their original selection identity, without overwriting newer quantities. Manual remove/re-add creates a new identity. Review retrieves a fresh catalogue and revalidates promo eligibility. Unavailable/missing items and service failures block recovery. Expired promo is removed with visible feedback and current prices are shown before another invoice can be submitted.
-- The ordinary cart/checkout path also validates fresh data for recovery attempts. A changed price or discount returns the customer to the updated cart before any new invoice POST. Edits during new pre-invoice checks cannot post an older captured selection. The excluded late-response behavior after invoice POST has already started is preserved.
-- An unchanged pending/unverified selection returns to its original receipt instead of creating another invoice. Original invoice amount is visible before continuing to the stored provider URL. Changing the selection or promo intentionally creates a distinct order after fresh validation; the original payment is not silently canceled.
-- Malformed session records fail closed; provider URLs accept only known Monobank HTTPS destinations or the same-origin receipt route (loopback tests additionally allow `example.invalid`). Storage failures keep the in-memory/cart and receipt usable without unsafe cart clearing; recovery snapshots cannot survive handoff when session storage is unavailable.
+## Current customer flow
 
-## Security and accessibility
+1. Checkout keeps the cart when creating an invoice and navigates to the existing bank payment page.
+2. Monobank redirects successful payment to `/payment/success#reference=<UUID>`. The page reads only the backend's saved confirmation flag, never Monobank's status API. Saved hold/success/delivered (or free-order success) displays confirmation and removes unchanged purchased selections.
+3. Monobank redirects unsuccessful payment to `/payment/failure`. This static page retains the cart and offers return to store/current cart. It does not query or modify an invoice.
+4. If the signed webhook has not arrived, the success route briefly waits using at most five local reads, three seconds apart, with five-second request bounds. Missing/unreachable confirmation displays a neutral explanation and a contact link; it does not label a paid order failed or clear the cart. Direct success URLs and fabricated query parameters cannot confirm a payment.
+5. Cart changes made after checkout survive older confirmations. Reload/revisit performs no fulfillment, notifications or delivery. Ordinary checkout refreshes catalogue and promo eligibility; changed prices/discounts require reviewing the total before submitting again.
 
-The reference is a read-only bearer capability for basic status/amount. Session storage reduces persistence but is readable by same-origin JavaScript and does not revoke a copied URL. The backend documents token/logging limits in `PAYMENT_CONFIRMATION.md`; server expiry/authenticated cross-session recovery is separate work.
+No order ID, amount, raw status, previous-payment panel, check-status button, resume-payment button or explicit recovery/restoration UI remains. The promo message shown during a fresh checkout is ordinary total validation, separate from the removed previous-order flow.
 
-The reference is kept in the URL fragment rather than query analytics. GA explicitly receives a fragment-free page location, and Clarity initialization skips the receipt page. Cart recovery uses buttons without token-bearing href attributes. Receipt metadata disables indexing and referrers.
+## Release instructions
 
-Status copy uses a polite live region. Manual recheck → success preserves focus on the receipt heading; later background polls do not steal focus. Existing navigation, dialog keyboard behavior and brand focus treatment are retained. Retry feedback appears inside the cart instead of covering its total/actions with a toast. Recovery controls remain visible on desktop as well as mobile.
+**Ask Monobank support to activate successUrl/failUrl redirects for the merchant.** The backend sends successUrl `<Mono:ReturnUrl>/payment/success#reference=<UUID>` and failUrl `<Mono:ReturnUrl>/payment/failure`, with no common redirectUrl. Activation is unavailable by default according to [Monobank invoice documentation](https://monobank.ua/api-docs/acquiring/methods/ia/post--api--merchant--invoice--create). Verify successful hold and unsuccessful returns with Monobank after activation. Stopping payment or closing the bank tab does not itself guarantee a redirect.
 
-## Acceptance mapping
+Review the backend/frontend PRs together and coordinate release so both new routes exist before customers receive their URLs. Preserve [skip netlify] in frontend commit/PR/merge messages. No Netlify deployment is authorized. Real-provider/payment, real-phone and manual screen-reader verification are separate evidence gaps and belong in ZVY-58.
 
-| Criterion | Implementation/evidence |
+## Storage and security
+
+The hidden sessionStorage key `paymentSelections` contains reference plus item ID/quantity/format/selection revision only. It excludes invoice ID, payment URL, promo and customer name/email/phone/address/order note. The former paymentAttempts key is discarded. The regular cart remains in localStorage; contacts remain in memory. Snapshots are consumed after saved confirmation. Browser tab duplication/session restoration can copy or restore sessionStorage; it is not server-side token expiry.
+
+The backend confirmation endpoint exposes only a boolean and cannot invoke Monobank or invoice side effects. Unknown references return 404. A copied reference may reveal that boolean while the invoice remains stored. Payment metadata is noindex/no-referrer; GA location excludes fragments, and Clarity initialization is excluded for the complete payment route subtree. Signed callback validation, stale-update protection and fulfillment idempotency are unchanged.
+
+## Acceptance and verification
+
+| Agreed behavior | Evidence |
 | --- | --- |
-| Successful payment opens confirmation | Paid/free return URLs, `PaymentResult`, backend redirect tests, controlled successful handoff |
-| Success distinct from pending/failed/canceled/unverified | Trusted status mapping; forged URL, unknown reference and provider failure tests |
-| Refresh/revisit has no payment side effects | Read-only receipt endpoint; existing signed webhook/fulfillment guards; consumed snapshot and repeated-read tests |
-| Non-success retains review/retry context | Tab-only snapshot + retained cart; pending/failed/canceled/unknown return tests |
-| Retry rechecks current price/availability/promo | Fresh provider result and checkout guard; changed price, expired promo, unavailable/empty catalogue and outage tests |
-| New cart edits survive later outcomes | Line selection identities; remove/re-add, newer quantity, consumed receipt and async precheck/review race tests |
-| Desktop/mobile/narrow and accessibility | 1440×900, 390×844, 360×844 screenshots; keyboard and axe checks |
-| Reviewed and green build/test pipeline | Subagent plan/source/screenshot review with suggestions applied; local results below; final remote checks on companion PRs |
+| Separate success/failure URLs | Backend MonoInvoiceServiceTests paid payload assertions and free-order controller test |
+| Trusted success, no provider status calls | Backend confirmation theories include overdue states and assert zero bank requests; frontend forged/missing/malformed/delayed confirmation tests |
+| Simple failure keeps cart | Static failure and cart tests assert zero confirmation requests, retained selections and no previous-order panel |
+| Safe cleanup and refresh | Session snapshot consumption/revisit/newer-item/re-add tests; backend repeated reads assert no queues/promo/delivery effects |
+| Fresh total before a new invoice | Ordinary checkout promo-invalid test blocks another POST until the changed total is reviewed |
+| Responsive/accessibility | Deterministic axe scans, keyboard cart/focus checks, layout overflow checks at 1440x900, 390x844, 360x844 |
+| Reviewed/green pipeline | Subagent source/screenshot review and checks recorded on final PR heads |
 
-## Verification and evidence
+Current screenshots are in `separate-redirects/`: success, failure, neutral unconfirmed return, failure with ordinary cart, and changed-promo checkout at all three viewports. Screens are captured from deterministic local fixtures (Test Book), not production, a real phone, or a real payment. `before/` remains the historical approved audit baseline. `after/` contains screenshots of the superseded implementation; they are retained only as historical evidence and do not describe the current UI.
 
-Local verification environment: production Next.js application at `http://127.0.0.1:3100`, deterministic API double at `http://127.0.0.1:4100`. Production, real provider payments and external delivery systems were not used.
+Run the focused deterministic suite with ZVY40_EVIDENCE=after and `npx playwright test payment-recovery unpaid-recovery --project=desktop-chromium` to recapture the current screenshots. The test harness builds a production Next.js app against its local API double. Run lint separately from Playwright because Playwright replaces its output directory while starting. Backend contract details: [backend PR #41](https://github.com/Rutakamekiar/BookPreorder/pull/41), including PAYMENT_CONFIRMATION.md.
 
-- Backend: Release restore/build, **300 tests**, publish passed. Existing compiler/analyzer warnings remain; local NuGet vulnerability lookup was unavailable.
-- Frontend: lint, typecheck and four deterministic fixture checks passed; production build ran as part of Playwright.
-- Local full frontend run: 536 passed, 18 intentional opt-in evidence skips, one gallery loading failure. That failure exposed initial slide loading priority changing during navigation; the immutable initial-index fix and settled-scroll assertion passed the 33 gallery/performance checks. Twelve final restoration/edit/race checks also passed. Final full regression is required in the frontend PR's `verify` CI job.
-- Remote CI results belong to the final PR heads. Backend companion: [BookPreorder PR #41](https://github.com/Rutakamekiar/BookPreorder/pull/41). The final delivery links both PRs and reports only retrieved check results.
+## Local verification
 
-`after/` contains receipt, recovery and fresh retry screenshots for all required viewports. `before/` contains copies of the previously approved historical unverified-return screenshots, originally captured by the storefront audit; they are labeled as historical baseline, not a new production or before-run check.
+The final local run passed all 48 focused browser tests with a fresh production build and recaptured all 15 screenshots. Lint, TypeScript and all 4 fixture contracts passed. The subagent reviewed source and screenshots; all suggestions were applied, with no remaining source/visual blockers. Full remote checks are recorded on the final PR heads. An initial Windows test-helper shutdown needed cleanup; the final 48-test run completed normally.
 
-The requested subagent reviewed the plan, backend/frontend source, and desktop/mobile/narrow screenshots. Applied findings include reference-safe finalization, stale receipt reset, truthful hold/amount copy, focus preservation, active-attempt checks after awaits, fresh retry enforcement at the submission boundary, visible desktop recovery controls and feedback inside the cart.
+## Changed files
 
-## Release and handoff
-
-Both repositories use `codex/zvy-40-payment-outcomes`. Backend is based on updated `develop`; frontend is based on updated `main` under its own instructions. Frontend commits/PR title carry `[skip netlify]` and retain normal GitHub verification.
-
-**No Netlify deployment is authorized or performed.** `/payment` redirects require the frontend route, so coordinate backend/frontend release rather than releasing either independently to customer traffic. After code review, merge and coordinated release, run the recorded journey verification for ZVY-58 in the agreed environment. Real-phone, actual-provider/payment and manual screen-reader checks remain explicit evidence gaps; browser emulation and axe do not claim those passes.
-
-## Files
-
-Backend: `Models/Common/RedirectResponse.cs`; new `Models/Invoices/InvoiceStatusResponse.cs`, `Models/MonoInvoice/MonoInvoiceStatus.cs`, `Services/PaymentReturnUrl.cs`; `Services/MonoInvoiceService.cs`, `Infrastructure/InvoiceRepository.cs`, `Controllers/InvoiceController.cs`; controller/service tests; new `PAYMENT_CONFIRMATION.md`.
-
-Frontend: `src/lib/types.ts`, `api.ts`, new `payment.ts`; `CartProvider.tsx`, `ProductsProvider.tsx`; `NavBar.tsx`, `ShoppingCart.tsx` and CSS; new `PaymentResult.tsx` and CSS, `src/app/payment/page.tsx`; analytics/layout/Clarity; mock API; new payment/unpaid recovery specs; realistic long-cart UUID fixtures in `mobile-purchase.spec.ts`; narrow initial-loading fix in `ImageCarousel.tsx` and its settled-navigation regression in `performance.spec.ts`; `ACCESSIBILITY.md`; this document and before/after screenshots.
+Frontend routes: src/app/payment/layout.tsx, payment/page.tsx (neutral old route), payment/success/page.tsx, payment/failure/page.tsx. UI/state: PaymentResult.tsx/CSS, CartProvider.tsx, NavBar.tsx, ShoppingCart.tsx/CSS. API/types/storage: src/lib/api.ts, types.ts, payment.ts. Privacy: ClarityInit.tsx (existing fragment-free analytics remains). Tests: payment-recovery.spec.ts, unpaid-recovery.spec.ts, mock-api.mjs. Documentation: this README, ACCESSIBILITY.md and current screenshots. Backend: invoice controller/repository, PaymentConfirmationResponse, Monobank invoice service/return URL helper, associated tests and PAYMENT_CONFIRMATION.md; old invoice/provider status models removed.

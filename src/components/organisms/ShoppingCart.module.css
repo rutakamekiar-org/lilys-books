@@ -586,7 +586,7 @@
 
 @media (max-width: 640px) { .cart { transition: transform 180ms ease-out; } }
 @media (prefers-reduced-motion: reduce) { .cart { transition: none; } }
-.paymentAttempts {
+.checkoutFeedback {
   margin-bottom: 16px;
   padding: 12px;
   border: 1px solid var(--border);
@@ -594,16 +594,3 @@
   background: var(--accent-weak);
   overflow-wrap: anywhere;
 }
-.paymentAttempts p { margin: 0 0 8px; }
-.paymentLink {
-  display: block;
-  width: 100%;
-  padding: 6px 0;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  color: var(--text);
-  text-decoration: underline;
-  cursor: pointer;
-}
-.paymentLink:focus-visible { outline: 3px solid rgba(240, 155, 48, 0.55); outline-offset: 2px; }

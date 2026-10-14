@@ -1,4 +1,4 @@
-import type { CheckoutResponse, InvoiceStatusResponse } from "./types";
+import type { CheckoutResponse, PaymentConfirmationResponse } from "./types";
 import {handleApi} from "@/lib/api.helper";
 import {parseProduct, parseProducts, Product} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
@@ -7,17 +7,14 @@ import {PromoCodeResponse} from "@/models/PromoCode";
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.zvychajna.pp.ua").replace(/\/$/, "");
 
-export async function getInvoiceStatus(reference: string, signal?: AbortSignal): Promise<InvoiceStatusResponse> {
-    const res = await fetch(`${API_URL}/api/invoice/status/${encodeURIComponent(reference)}`, {
+export async function getPaymentConfirmation(reference: string, signal?: AbortSignal): Promise<boolean> {
+    const res = await fetch(`${API_URL}/api/invoice/confirmation/${encodeURIComponent(reference)}`, {
         cache: "no-store",
-        signal,
+        signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(5000)]) : AbortSignal.timeout(5000),
     });
-    const receipt = await handleApi<InvoiceStatusResponse>(res);
-    if (!receipt || typeof receipt.invoiceId !== "string" || typeof receipt.status !== "string" ||
-        !Number.isSafeInteger(receipt.amount) || receipt.amount < 0 || receipt.ccy !== 980) {
-        throw new Error("Invalid payment status response");
-    }
-    return receipt;
+    const result = await handleApi<PaymentConfirmationResponse>(res);
+    if (!result || typeof result.confirmed !== "boolean") throw new Error("Invalid payment confirmation response");
+    return result.confirmed;
 }
 
 export async function validatePromocode(code: string, productItemIds: string[]): Promise<PromoCodeResponse> {

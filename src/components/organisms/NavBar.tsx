@@ -8,8 +8,8 @@ import { useCart } from "@/components/molecules/CartProvider";
 import ShoppingCart from "@/components/organisms/ShoppingCart";
 import dynamic from "next/dynamic";
 import type { CheckoutFormData } from "@/components/organisms/CheckoutForm";
-import {createInvoice, getInvoiceStatus} from "@/lib/api";
-import { getPaymentOutcome, isPaymentReference, paymentReceiptUrl } from "@/lib/payment";
+import {createInvoice} from "@/lib/api";
+import { isPaymentReference, isSafePaymentUrl } from "@/lib/payment";
 
 const CheckoutForm = dynamic(() => import("@/components/organisms/CheckoutForm"), { ssr: false });
 
@@ -43,51 +43,30 @@ export default function NavBar() {
   };
 
   const handleCheckoutSubmit = async (data: CheckoutFormData) => {
-    cart.setRecoveryFeedback(null);
+    cart.setCheckoutFeedback(null);
     const submittedItems = items;
     const submittedSelection = cart.snapshotSelection();
     const promoCode = cart.appliedPromocode?.code || undefined;
-    const existing = cart.findPayment(submittedItems, promoCode);
-    if (existing) {
-      let outcome;
-      try { outcome = getPaymentOutcome((await getInvoiceStatus(existing.reference)).status); }
-      catch { outcome = "unverified"; }
-      if (!cart.isCurrentSelection(submittedSelection, promoCode)) {
-        setCheckoutOpen(false);
-        showCart();
-        cart.setRecoveryFeedback("Кошик змінився під час перевірки. Перегляньте його ще раз.");
-        return;
-      }
-      if (outcome !== "failed" && outcome !== "canceled") {
-        // Show the original invoice amount before resuming or rechecking payment.
-        setCheckoutOpen(false);
-        window.location.href = paymentReceiptUrl(existing.reference);
-        return;
-      }
-    }
-    if (cart.paymentAttempts.length) {
-      const review = await cart.prepareRetry();
-      if (!review.ready) {
-        setCheckoutOpen(false);
-        showCart();
-        cart.setRecoveryFeedback(review.feedback ?? null);
-        return;
-      }
+    const review = await cart.prepareCheckout();
+    if (!review.ready) {
+      setCheckoutOpen(false);
+      showCart();
+      cart.setCheckoutFeedback(review.feedback ?? null);
+      return;
     }
     if (!cart.isCurrentSelection(submittedSelection, promoCode)) {
       setCheckoutOpen(false);
       showCart();
-      cart.setRecoveryFeedback("Кошик змінився під час перевірки. Перегляньте його ще раз.");
+      cart.setCheckoutFeedback("Кошик змінився під час перевірки. Перегляньте його ще раз.");
       return;
     }
     const res = await createInvoice(data, submittedItems, promoCode);
-    if (!res || typeof res.redirectUrl !== "string" || !res.redirectUrl.trim()) {
+    if (!res || typeof res.redirectUrl !== "string" || !isSafePaymentUrl(res.redirectUrl)) {
       throw new Error("Invalid invoice response");
     }
     setCheckoutOpen(false);
-    if (res.reference && res.invoiceId && isPaymentReference(res.reference)) {
-      cart.recordPayment({ reference: res.reference, invoiceId: res.invoiceId, paymentUrl: res.redirectUrl,
-        items: submittedSelection, promoCode });
+    if (res.reference && isPaymentReference(res.reference)) {
+      cart.recordPayment({ reference: res.reference, items: submittedSelection });
     }
     window.location.href = res.redirectUrl;
   };

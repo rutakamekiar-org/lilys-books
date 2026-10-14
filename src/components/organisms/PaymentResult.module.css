@@ -21,11 +21,6 @@
 }
 .title { margin: 0 0 16px; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.25; }
 .description { color: var(--muted); margin: 0 0 24px; }
-.receipt { margin: 0; padding: 16px 0; border-block: 1px solid var(--border); }
-.receipt div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; }
-.receipt div + div { margin-top: 12px; }
-.receipt dt { color: var(--muted); }
-.receipt dd { margin: 0; overflow-wrap: anywhere; font-weight: 600; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 .primary, .secondary {
     min-height: 44px;
@@ -42,7 +37,6 @@
 .primary:hover, .secondary:hover { text-decoration: none; box-shadow: 0 0 0 2px var(--accent-weak); }
 .primary:focus-visible, .secondary:focus-visible { outline: 3px solid rgba(240, 155, 48, 0.55); outline-offset: 2px; }
 .secondary:disabled, .primary:disabled { opacity: 0.6; cursor: wait; }
-.feedback { margin: 20px 0 0; color: var(--muted); }
 @media (max-width: 640px) {
     .actions { flex-direction: column; }
     .primary, .secondary { width: 100%; }
