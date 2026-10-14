@@ -22,7 +22,6 @@ interface CartContextType {
   addItem: (product: Product, itemId: string, format: "paper" | "digital", quantity?: number) => boolean;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
-  clearCart: () => void;
   itemCount: number;
   isInCart: (itemId: string) => boolean;
   openCart: (itemId?: string) => void;
@@ -89,7 +88,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       if (next.length) sessionStorage.setItem(PAYMENT_STORAGE_KEY, JSON.stringify(next));
       else sessionStorage.removeItem(PAYMENT_STORAGE_KEY);
-    } catch { /* The receipt can still verify its URL reference without a snapshot. */ }
+    } catch { /* The success page can still confirm payment without a cleanup snapshot. */ }
   }, []);
 
   useEffect(() => {
@@ -101,7 +100,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
       if (stored) savePromo(JSON.parse(stored));
     } catch { savePromo(null); }
     try {
-      sessionStorage.removeItem("paymentAttempts");
       saveSelections(parsePaymentSelections(sessionStorage.getItem(PAYMENT_STORAGE_KEY)));
     } catch { saveSelections([]); }
     readyRef.current = true;
@@ -156,7 +154,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     saveItems(itemsRef.current.map(item => item.itemId === itemId && item.format !== "digital" && item.quantity !== quantity
       ? { ...item, quantity, selectionId: crypto.randomUUID() } : item));
   };
-  const clearCart = () => { saveItems([]); savePromo(null); };
   const applyPromocode = async (code: string) => {
     const selected = itemsRef.current;
     const promo = await validatePromocode(code, selected.map(item => item.itemId));
@@ -217,14 +214,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
       : { ready: true };
   };
 
-  const snapshotSelection = () => itemsRef.current.map(item => ({ itemId: item.itemId, quantity: item.quantity, format: item.format, selectionId: item.selectionId! }));
+  const snapshotSelection = () => itemsRef.current.map(item => ({ itemId: item.itemId, quantity: item.quantity, selectionId: item.selectionId! }));
   const isCurrentSelection = (selection: readonly PaymentSelection[], promoCode?: string) =>
     selectionKey(selection) === selectionKey(itemsRef.current) && (promoRef.current?.code ?? "") === (promoCode ?? "");
   const isInCart = (itemId: string) => items.some(item => item.itemId === itemId);
   const openCart = useCallback((itemId?: string) => cartOpenCallbackRef.current?.(itemId), []);
   const registerOpenCallback = (callback: (itemId?: string) => void) => { cartOpenCallbackRef.current = callback; };
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  return <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, itemCount, isInCart, openCart,
+  return <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, itemCount, isInCart, openCart,
     registerOpenCallback, appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode, hydrated,
     recordPayment, finalizePayment, snapshotSelection, prepareCheckout, isCurrentSelection,
     checkoutFeedback, setCheckoutFeedback }}>{children}</CartContext.Provider>;

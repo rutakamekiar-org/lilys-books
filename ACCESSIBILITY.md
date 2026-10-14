@@ -15,7 +15,7 @@ API in `tests/support/mock-api.mjs`.
 | `tests/e2e/keyboard-navigation.spec.ts` | keyboard-only catalog → checkout journey, visible focus, dialog focus trapping/restoration, error announcement, skip link |
 | `tests/e2e/book-excerpt.spec.ts` | desktop/mobile excerpt placement, keyboard scrolling of long excerpt text, focus restoration, edition/price preservation and excerpt failures |
 | `tests/e2e/payment-recovery.spec.ts` | separate success/failure return axe scans at 1440, 390 and 360px; live confirmation announcements; keyboard cart action and focus restoration; automatic confirmation does not steal focus |
-| `tests/e2e/unpaid-recovery.spec.ts` | retained non-success recovery at 1440, 390 and 360px; fresh retry data; safe finalization; desktop recovery controls and feedback inside the cart |
+| `tests/e2e/unpaid-recovery.spec.ts` | ordinary failure-cart retention at 1440, 390 and 360px; safe purchased-selection cleanup and fresh checkout promo validation |
 
 Run them locally:
 

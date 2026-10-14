@@ -8,7 +8,6 @@ export type AgeRating = "0+" | "6+" | "12+" | "16+" | "18+";
 
 export interface CheckoutResponse {
   redirectUrl: string;
-  invoiceId?: string;
   reference?: string;
 }
 

@@ -15,7 +15,6 @@ function initialState() {
     paymentStatus: "init",
     paymentConfirmationRequests: 0,
     promoState: "ready",
-    promoRequests: 0,
   };
 }
 
@@ -89,7 +88,6 @@ const server = createServer(async (request, response) => {
       invoiceRequests: state.invoiceRequests,
       lastInvoiceRequest: state.lastInvoiceRequest,
       paymentConfirmationRequests: state.paymentConfirmationRequests,
-      promoRequests: state.promoRequests,
     });
   }
 
@@ -108,8 +106,6 @@ const server = createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && url.pathname === "/api/PromoCode/validate") {
-    state.promoRequests += 1;
-    if (state.promoState === "error") return sendJson(response, 503, {});
     if (state.promoState === "invalid") return sendJson(response, 404, {});
     const code = url.searchParams.get("code")?.toUpperCase();
     const promos = {
@@ -123,7 +119,7 @@ const server = createServer(async (request, response) => {
   if (request.method === "POST" && url.pathname === "/api/invoice") {
     state.lastInvoiceRequest = await readJson(request);
     state.invoiceRequests += 1;
-    return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment", invoiceId: "TEST-ORDER-40", reference: "40000000-0000-4000-8000-000000000040" });
+    return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment", reference: "40000000-0000-4000-8000-000000000040" });
   }
 
   if (request.method === "GET" && url.pathname.startsWith("/api/invoice/confirmation/")) {

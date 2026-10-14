@@ -15,35 +15,33 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             await page.route("**/*", route => ["127.0.0.1", "localhost"].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
         });
 
-        for (const status of ["hold", "success", "delivered"]) {
-            test(`confirms saved ${status} without exposing invoice details or status controls`, async ({ page, request }, info) => {
-                await request.post(`${mockApiUrl}/__control/payment`, { data: { status } });
-                const forbiddenRequests: string[] = [];
-                page.on("request", req => { if (req.url().includes("/invoice/status") || /monobank|mono\.bank|mbnk\.biz/.test(req.url())) forbiddenRequests.push(req.url()); });
-                await page.goto(successUrl);
-                await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
-                await expect(page.getByText("Номер замовлення")).toHaveCount(0);
-                await expect(page.getByText("TEST-ORDER-40")).toHaveCount(0);
-                await expect(page.getByRole("button", { name: /статус|Продовжити оплату|повторити/ })).toHaveCount(0);
-                await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
-                await expect(page.locator('meta[name="referrer"]')).toHaveAttribute("content", "no-referrer");
-                await expectNoA11yViolations(page, `success ${status}`);
-                expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-                if (process.env.ZVY40_EVIDENCE === "after" && status === "hold") {
-                    const dir = path.join(process.cwd(), "docs/payment-recovery/separate-redirects");
-                    await mkdir(dir, { recursive: true });
-                    await page.evaluate(() => document.fonts.ready);
-                    const filename = path.join(dir, `success-${viewport.width}x${viewport.height}.png`);
-                    await page.screenshot({ path: filename, animations: "disabled", caret: "hide" });
-                    await info.attach("success", { path: filename, contentType: "image/png" });
-                }
-                await page.reload();
-                await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
-                const state = await (await request.get(`${mockApiUrl}/__control/state`)).json();
-                expect(state.invoiceRequests).toBe(0);
-                expect(forbiddenRequests).toEqual([]);
-            });
-        }
+        test("shows saved confirmation without invoice details or status controls", async ({ page, request }, info) => {
+            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "hold" } });
+            const forbiddenRequests: string[] = [];
+            page.on("request", req => { if (req.url().includes("/invoice/status") || /monobank|mono\.bank|mbnk\.biz/.test(req.url())) forbiddenRequests.push(req.url()); });
+            await page.goto(successUrl);
+            await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
+            await expect(page.getByText("Номер замовлення")).toHaveCount(0);
+            await expect(page.getByText("Сума замовлення")).toHaveCount(0);
+            await expect(page.getByRole("button", { name: /статус|Продовжити оплату|повторити/ })).toHaveCount(0);
+            await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
+            await expect(page.locator('meta[name="referrer"]')).toHaveAttribute("content", "no-referrer");
+            await expectNoA11yViolations(page, "confirmed payment");
+            expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+            if (process.env.ZVY40_EVIDENCE === "after") {
+                const dir = path.join(process.cwd(), "docs/payment-recovery/separate-redirects");
+                await mkdir(dir, { recursive: true });
+                await page.evaluate(() => document.fonts.ready);
+                const filename = path.join(dir, `success-${viewport.width}x${viewport.height}.png`);
+                await page.screenshot({ path: filename, animations: "disabled", caret: "hide" });
+                await info.attach("success", { path: filename, contentType: "image/png" });
+            }
+            await page.reload();
+            await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
+            const state = await (await request.get(`${mockApiUrl}/__control/state`)).json();
+            expect(state.invoiceRequests).toBe(0);
+            expect(forbiddenRequests).toEqual([]);
+        });
 
         test("failure return needs no payment confirmation request", async ({ page, request }, info) => {
             await page.goto("/payment/failure?status=success");

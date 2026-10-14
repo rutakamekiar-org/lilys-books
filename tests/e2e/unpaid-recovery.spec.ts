@@ -39,7 +39,7 @@ async function selections(page: Page) {
 }
 
 async function capture(page: Page, info: TestInfo, state: string, viewport: { width: number; height: number }) {
-    if (process.env.ZVY40_EVIDENCE !== "after") return;
+    if (process.env.ZVY40_EVIDENCE !== "after" || viewport.width !== 390) return;
     const directory = path.join(process.cwd(), "docs/payment-recovery/separate-redirects");
     await mkdir(directory, { recursive: true });
     await page.evaluate(() => document.fonts.ready);
@@ -64,7 +64,8 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             const storage = await page.evaluate(() => ({ local: JSON.stringify({ ...localStorage }), session: JSON.stringify({ ...sessionStorage }), snapshots: JSON.parse(sessionStorage.getItem("paymentSelections") ?? "[]") }));
             expect(storage.local).not.toContain(reference);
             expect(Object.keys(storage.snapshots[0]).sort()).toEqual(["items", "reference"]);
-            for (const detail of ["Леся", "Українка", "lesya@example.com", "Особистий коментар", "TEST-ORDER-40", "example.invalid"]) expect(storage.local + storage.session).not.toContain(detail);
+            expect(Object.keys(storage.snapshots[0].items[0]).sort()).toEqual(["itemId", "quantity", "selectionId"]);
+            for (const detail of ["Леся", "Українка", "lesya@example.com", "Особистий коментар", "example.invalid"]) expect(storage.local + storage.session).not.toContain(detail);
             await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "hold" } });
             await page.goto(successUrl);
             await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible();
@@ -84,7 +85,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             await page.goto("/payment/failure");
             await page.getByRole("button", { name: "Переглянути кошик", exact: true }).click();
             await expect(cart(page).getByText("Test Book", { exact: true })).toBeVisible();
-            await expect(cart(page).getByText(/Перевірте попередню оплату|TEST-ORDER-40/)).toHaveCount(0);
+            await expect(cart(page).getByText(/Перевірте попередню оплату/)).toHaveCount(0);
             expect(await selections(page)).toEqual([{ itemId: digitalId, quantity: 1 }]);
             expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).paymentConfirmationRequests).toBe(0);
             await expectNoA11yViolations(page, "failure cart");
@@ -126,7 +127,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             expect(await selections(page)).toEqual([{ itemId: digitalId, quantity: 1 }]);
         });
 
-        test("ordinary checkout revalidates the promo before another invoice is created", async ({ page, request }, info) => {
+        test("ordinary checkout revalidates the promo before another invoice is created", async ({ page, request }) => {
             await handoff(page, true);
             await request.post(`${mockApiUrl}/__control/promo`, { data: { state: "invalid" } });
             await page.goto("/payment/failure");
@@ -135,9 +136,8 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             await fillCustomer(page);
             await submit(page).click();
             await expect(cart(page).getByText("Промокод більше не діє. Перевірте оновлену суму без знижки.", { exact: true })).toBeVisible();
-            await expect(cart(page).getByText(/TEST-ORDER-40|Перевірте попередню оплату/)).toHaveCount(0);
+            await expect(cart(page).getByText(/Перевірте попередню оплату/)).toHaveCount(0);
             expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).invoiceRequests).toBe(1);
-            await capture(page, info, "checkout-promo", viewport);
             await cart(page).getByRole("button", { name: "Оформити замовлення", exact: true }).click();
             await submit(page).click();
             await expect(page).toHaveURL("https://example.invalid/test-payment");

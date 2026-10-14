@@ -36,7 +36,6 @@
 .secondary { background: var(--surface); color: var(--text); }
 .primary:hover, .secondary:hover { text-decoration: none; box-shadow: 0 0 0 2px var(--accent-weak); }
 .primary:focus-visible, .secondary:focus-visible { outline: 3px solid rgba(240, 155, 48, 0.55); outline-offset: 2px; }
-.secondary:disabled, .primary:disabled { opacity: 0.6; cursor: wait; }
 @media (max-width: 640px) {
     .actions { flex-direction: column; }
     .primary, .secondary { width: 100%; }

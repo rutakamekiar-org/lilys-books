@@ -7,9 +7,8 @@ export const isPaymentReference = (value: string): boolean =>
 const selectionSchema = z.object({
     itemId: z.string().uuid(),
     quantity: z.number().int().positive().safe(),
-    format: z.enum(["paper", "digital"]),
     selectionId: z.string().uuid(),
-}).refine(item => item.format !== "digital" || item.quantity === 1);
+});
 
 const snapshotSchema = z.object({
     reference: z.string().uuid(),
@@ -27,8 +26,8 @@ export function parsePaymentSelections(value: string | null): PaymentSelectionSn
     } catch { return []; }
 }
 
-export function selectionKey(items: readonly { itemId: string; quantity: number; format: string; selectionId?: string }[]): string {
-    return JSON.stringify(items.map(item => [item.itemId, item.quantity, item.format, item.selectionId]).sort());
+export function selectionKey(items: readonly { itemId: string; quantity: number; selectionId?: string }[]): string {
+    return JSON.stringify(items.map(item => [item.itemId, item.quantity, item.selectionId]).sort());
 }
 
 export function isSafePaymentUrl(value: string): boolean {

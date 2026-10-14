@@ -15,7 +15,7 @@ const messages: Record<Result, { title: string; description: string; mark: strin
     unconfirmed: { title: "Не вдалося підтвердити оплату", description: "Підтвердження ще не отримано. Це не означає, що оплата не відбулася. Кошик збережено. Якщо кошти зарезервовано або списано, не оплачуйте замовлення повторно та зв’яжіться з нами.", mark: "?" },
 };
 
-export default function PaymentResult({ returnType = "unknown" }: { returnType?: "success" | "failure" | "unknown" }) {
+export default function PaymentResult({ returnType }: { returnType: "success" | "failure" }) {
     const [reference, setReference] = useState<string | null>(null);
     const [revision, setRevision] = useState(0);
     const [confirmation, setConfirmation] = useState<{ reference: string; revision: number; result: Result } | null>(null);
@@ -53,7 +53,7 @@ export default function PaymentResult({ returnType = "unknown" }: { returnType?:
         return () => { controller.abort(); clearTimeout(timer); };
     }, [reference, revision, returnType]);
 
-    const result: Result = returnType === "failure" ? "failure" : returnType === "unknown" ? "unconfirmed"
+    const result: Result = returnType === "failure" ? "failure"
         : reference === null ? "finishing" : !isPaymentReference(reference) ? "unconfirmed"
         : confirmation?.reference === reference && confirmation.revision === revision ? confirmation.result : "finishing";
     const message = messages[result];
