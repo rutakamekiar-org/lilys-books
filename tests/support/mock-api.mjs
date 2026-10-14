@@ -12,6 +12,10 @@ function initialState() {
     catalogRequests: 0,
     invoiceRequests: 0,
     lastInvoiceRequest: null,
+    paymentStatus: "init",
+    paymentStatusRequests: 0,
+    promoState: "ready",
+    promoRequests: 0,
   };
 }
 
@@ -58,6 +62,18 @@ const server = createServer(async (request, response) => {
     return sendJson(response, 200, { state: state.catalog });
   }
 
+  if (request.method === "POST" && url.pathname === "/__control/payment") {
+    const body = await readJson(request);
+    state.paymentStatus = body.status;
+    return sendJson(response, 200, { status: state.paymentStatus });
+  }
+
+  if (request.method === "POST" && url.pathname === "/__control/promo") {
+    const body = await readJson(request);
+    state.promoState = body.state;
+    return sendJson(response, 200, { state: state.promoState });
+  }
+
   if (request.method === "POST" && url.pathname === "/__control/failures") {
     const body = await readJson(request);
     state.failingSlugs = new Set(body.slugs ?? []);
@@ -72,6 +88,8 @@ const server = createServer(async (request, response) => {
       failingSlugs: [...state.failingSlugs],
       invoiceRequests: state.invoiceRequests,
       lastInvoiceRequest: state.lastInvoiceRequest,
+      paymentStatusRequests: state.paymentStatusRequests,
+      promoRequests: state.promoRequests,
     });
   }
 
@@ -90,6 +108,9 @@ const server = createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && url.pathname === "/api/PromoCode/validate") {
+    state.promoRequests += 1;
+    if (state.promoState === "error") return sendJson(response, 503, {});
+    if (state.promoState === "invalid") return sendJson(response, 404, {});
     const code = url.searchParams.get("code")?.toUpperCase();
     const promos = {
       "NEAR-TOTAL": { code: "NEAR-TOTAL", type: 0, value: 498.95, applicableProductItemIds: null, remainingUsages: null },
@@ -102,7 +123,13 @@ const server = createServer(async (request, response) => {
   if (request.method === "POST" && url.pathname === "/api/invoice") {
     state.lastInvoiceRequest = await readJson(request);
     state.invoiceRequests += 1;
-    return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment" });
+    return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment", invoiceId: "TEST-ORDER-40", reference: "40000000-0000-4000-8000-000000000040" });
+  }
+
+  if (request.method === "GET" && url.pathname.startsWith("/api/invoice/status/")) {
+    state.paymentStatusRequests += 1;
+    if (!url.pathname.endsWith("/40000000-0000-4000-8000-000000000040")) return sendJson(response, 404, {});
+    return sendJson(response, 200, { invoiceId: "TEST-ORDER-40", status: state.paymentStatus, amount: 18000, ccy: 980 });
   }
 
   return sendJson(response, 404, { error: "Unknown mock endpoint." });

@@ -1,4 +1,4 @@
-import type { CheckoutResponse } from "./types";
+import type { CheckoutResponse, InvoiceStatusResponse } from "./types";
 import {handleApi} from "@/lib/api.helper";
 import {parseProduct, parseProducts, Product} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
@@ -6,6 +6,19 @@ import {CartItem} from "@/components/molecules/CartProvider";
 import {PromoCodeResponse} from "@/models/PromoCode";
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.zvychajna.pp.ua").replace(/\/$/, "");
+
+export async function getInvoiceStatus(reference: string, signal?: AbortSignal): Promise<InvoiceStatusResponse> {
+    const res = await fetch(`${API_URL}/api/invoice/status/${encodeURIComponent(reference)}`, {
+        cache: "no-store",
+        signal,
+    });
+    const receipt = await handleApi<InvoiceStatusResponse>(res);
+    if (!receipt || typeof receipt.invoiceId !== "string" || typeof receipt.status !== "string" ||
+        !Number.isSafeInteger(receipt.amount) || receipt.amount < 0 || receipt.ccy !== 980) {
+        throw new Error("Invalid payment status response");
+    }
+    return receipt;
+}
 
 export async function validatePromocode(code: string, productItemIds: string[]): Promise<PromoCodeResponse> {
     const params = new URLSearchParams();

@@ -13,6 +13,7 @@ import { useDialogA11y } from "@/lib/dialog-a11y";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
 import type { ApiError } from "@/models/ApiError";
+import { paymentReceiptUrl } from "@/lib/payment";
 
 export interface CartItem {
   product: Product;
@@ -40,7 +41,7 @@ export default function ShoppingCart({
   onRemoveItem,
   onCheckout,
 }: ShoppingCartProps) {
-  const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode } = useCart();
+  const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode, paymentAttempts, recoveryFeedback } = useCart();
   const [promoInput, setPromoInput] = useState("");
   const [isApplying, setIsApplying] = useState(false);
   const [promoFailure, setPromoFailure] = useState<"invalid" | "temporary" | null>(null);
@@ -151,6 +152,14 @@ export default function ShoppingCart({
         </div>
 
         <div className={styles.content}>
+          {recoveryFeedback && <p role="status" className={styles.paymentAttempts}>{recoveryFeedback}</p>}
+          {paymentAttempts.length > 0 && <div className={styles.paymentAttempts}>
+            <p>Перевірте попередню оплату перед повторною спробою:</p>
+            {paymentAttempts.map(attempt => <button key={attempt.reference} className={styles.paymentLink}
+              onClick={() => { window.location.href = paymentReceiptUrl(attempt.reference); }}>
+              Замовлення {attempt.invoiceId}
+            </button>)}
+          </div>}
           {isEmpty ? (
             <div className={styles.empty}>
               <p>Ваш кошик порожній</p>

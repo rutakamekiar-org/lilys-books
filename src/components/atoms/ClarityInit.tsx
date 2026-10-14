@@ -9,6 +9,7 @@ export default function ClarityInit() {
   useEffect(() => {
     const id = 'te9lhzi6aj';
     const timeout = setTimeout(() => {
+      if (window.location.pathname === "/payment") return;
       try {
         Clarity.init(id);
       } catch {
