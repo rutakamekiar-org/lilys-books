@@ -90,6 +90,10 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Before creating a frontend pull request without `[skip netlify]`, pushing an untagged frontend commit, removing the tag, or otherwise triggering a Netlify deployment, obtain the user's explicit approval for that deployment unless it is already authorized in the conversation. Approval to implement work or create a pull request does not by itself authorize a Deploy Preview or production deployment. Acceptance criteria requiring a provider preview or production deployment do not waive this approval requirement.
 - Use `[skip netlify]` rather than `[skip ci]`: GitHub's required `verify` check must still run. An approved untagged commit deploys the accumulated skipped changes; see README for the convention.
 
+## Commits and pull requests
+
+- No AI attribution: no `Co-authored-by` trailers and no "Generated with ..." lines in commit
+  messages or PR descriptions.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
