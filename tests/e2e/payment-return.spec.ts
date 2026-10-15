@@ -45,6 +45,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             await page.goto("/payment/success");
             await expect(page.getByRole("heading", { name: "Дякуємо за покупку!", exact: true })).toBeVisible();
             await expect.poll(() => selections(page)).toEqual([]);
+            await expect(page.getByRole("link", { name: "lillykukharets0325@gmail.com" })).toHaveAttribute("href", "mailto:lillykukharets0325@gmail.com");
             await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow");
             await expect(page.locator('meta[name="referrer"]')).toHaveAttribute("content", "no-referrer");
             await expectNoA11yViolations(page, "payment success");
@@ -61,7 +62,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             expect(await selections(page)).toEqual([{ itemId: digitalId, quantity: 1 }]);
             await expectNoA11yViolations(page, "payment failure");
             expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-            const button = page.getByRole("button", { name: "Переглянути кошик", exact: true });
+            const button = page.getByRole("button", { name: "Спробувати ще раз", exact: true });
             await button.focus();
             await page.keyboard.press("Enter");
             await expect(cart(page).getByText("Test Book", { exact: true })).toBeVisible();

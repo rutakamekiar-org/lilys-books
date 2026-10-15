@@ -2,34 +2,45 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
+import Icon from "@/components/atoms/Icon";
 import { useCart } from "@/components/molecules/CartProvider";
 import styles from "./PaymentResult.module.css";
 
-const messages = {
-    success: { title: "Дякуємо за покупку!", description: "Оплату отримано. Підтвердження замовлення надійде на вашу електронну пошту.", mark: "✓" },
-    failure: { title: "Оплату не завершено", description: "Не вдалося завершити оплату. Товари залишилися у вашому кошику.", mark: "!" },
-};
+const CONTACT_EMAIL = "lillykukharets0325@gmail.com";
+const contactLink = <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
 
 // Monobank only sends customers to the success URL after a successful payment. Fulfillment never
 // depends on this page: it is driven by the signed webhook, so the page just thanks and clears the cart.
 export default function PaymentResult({ returnType }: { returnType: "success" | "failure" }) {
     const { hydrated, clearCart, openCart } = useCart();
-    const message = messages[returnType];
+    const success = returnType === "success";
 
     useEffect(() => {
         // Wait for the stored cart to load, otherwise loading it would undo the clear.
-        if (returnType === "success" && hydrated) clearCart();
-    }, [returnType, hydrated, clearCart]);
+        if (success && hydrated) clearCart();
+    }, [success, hydrated, clearCart]);
 
     return <section className={styles.page} aria-labelledby="payment-title">
         <div className={styles.card}>
-            <div className={styles.mark} aria-hidden="true">{message.mark}</div>
-            <h1 id="payment-title" className={styles.title}>{message.title}</h1>
-            <p className={styles.description}>{message.description}</p>
-            <div className={styles.actions}>
-                <Link href="/books" className={styles.primary}>Повернутися до магазину</Link>
-                {returnType === "failure" && <button className={styles.secondary} onClick={() => openCart()}>Переглянути кошик</button>}
+            <div className={`${styles.mark} ${success ? styles.markSuccess : styles.markFailure}`} aria-hidden="true">
+                <Icon name={success ? "check" : "exclamation"} />
             </div>
+            {success ? <>
+                <h1 id="payment-title" className={styles.title}>Дякуємо за покупку!</h1>
+                <p className={styles.description}>Оплату отримано. Підтвердження замовлення надійде на вашу електронну пошту.</p>
+                <p className={styles.hint}>Якщо лист не прийшов протягом кількох хвилин, перевірте папку «Спам» або напишіть нам на {contactLink}.</p>
+                <div className={styles.actions}>
+                    <Link href="/books" className={styles.primary}>Повернутися до магазину</Link>
+                </div>
+            </> : <>
+                <h1 id="payment-title" className={styles.title}>Оплату не завершено</h1>
+                <p className={styles.description}>Не вдалося завершити оплату. Товари залишилися у вашому кошику.</p>
+                <p className={styles.hint}>Якщо кошти все ж були списані, напишіть нам на {contactLink}, і ми все перевіримо.</p>
+                <div className={styles.actions}>
+                    <button type="button" className={styles.primary} onClick={() => openCart()}>Спробувати ще раз</button>
+                    <Link href="/books" className={styles.secondary}>Повернутися до магазину</Link>
+                </div>
+            </>}
         </div>
     </section>;
 }

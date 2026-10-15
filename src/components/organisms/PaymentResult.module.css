@@ -15,12 +15,14 @@
     height: 52px;
     margin-bottom: 20px;
     border-radius: 50%;
-    background: var(--accent-weak);
-    color: var(--text);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
+.markSuccess { background: #e6f4ea; color: #1e7a3c; }
+.markFailure { background: #fdecea; color: #b42318; }
 .title { margin: 0 0 16px; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.25; }
-.description { color: var(--muted); margin: 0 0 24px; }
+.description { color: var(--muted); margin: 0 0 12px; }
+.hint { color: var(--muted); margin: 0 0 24px; font-size: 0.95rem; }
+.hint a { color: var(--text); text-decoration: underline; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 .primary, .secondary {
     min-height: 44px;

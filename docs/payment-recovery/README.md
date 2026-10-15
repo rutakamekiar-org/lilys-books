@@ -7,8 +7,8 @@ Monobank redirects customers to separate success and failure pages. The pages tr
 ## Customer flow
 
 1. Checkout creates the invoice and navigates to the bank payment page. The cart is kept. The redirect must be https (plain http only on localhost).
-2. Successful payment → `/payment/success`: "Дякуємо за покупку!", the order email is the receipt, and the cart and applied promo are cleared. Other open tabs of the store pick up the cleared cart.
-3. Unsuccessful payment → `/payment/failure`: "Оплату не завершено", the cart is kept, with links back to the store and to the cart. No request is made and no invoice is changed.
+2. Successful payment → `/payment/success`: "Дякуємо за покупку!" with a green check, the order email is the receipt (with a spam-folder/contact hint), and the cart and applied promo are cleared. Other open tabs of the store pick up the cleared cart.
+3. Unsuccessful payment → `/payment/failure`: "Оплату не завершено" with a red exclamation mark, the cart is kept; the primary "Спробувати ще раз" opens the cart, the secondary link returns to the store, and a contact hint covers money that was charged anyway. No request is made and no invoice is changed.
 4. Free orders (total 0) go straight to the success page.
 
 Payment pages are noindex and send no referrer.
