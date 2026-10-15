@@ -9,7 +9,7 @@ import ShoppingCart from "@/components/organisms/ShoppingCart";
 import dynamic from "next/dynamic";
 import type { CheckoutFormData } from "@/components/organisms/CheckoutForm";
 import {createInvoice} from "@/lib/api";
-import { isPaymentReference, isSafePaymentUrl } from "@/lib/payment";
+import { isPaymentRedirectUrl, isPaymentReference } from "@/lib/payment";
 
 const CheckoutForm = dynamic(() => import("@/components/organisms/CheckoutForm"), { ssr: false });
 
@@ -43,31 +43,13 @@ export default function NavBar() {
   };
 
   const handleCheckoutSubmit = async (data: CheckoutFormData) => {
-    cart.setCheckoutFeedback(null);
-    const submittedItems = items;
-    const submittedSelection = cart.snapshotSelection();
-    const promoCode = cart.appliedPromocode?.code || undefined;
-    const review = await cart.prepareCheckout();
-    if (!review.ready) {
-      setCheckoutOpen(false);
-      showCart();
-      cart.setCheckoutFeedback(review.feedback ?? null);
-      return;
-    }
-    if (!cart.isCurrentSelection(submittedSelection, promoCode)) {
-      setCheckoutOpen(false);
-      showCart();
-      cart.setCheckoutFeedback("Кошик змінився під час перевірки. Перегляньте його ще раз.");
-      return;
-    }
-    const res = await createInvoice(data, submittedItems, promoCode);
-    if (!res || typeof res.redirectUrl !== "string" || !isSafePaymentUrl(res.redirectUrl)) {
+    const res = await createInvoice(data, items, cart.appliedPromocode?.code || undefined);
+    if (!res || typeof res.redirectUrl !== "string" || !isPaymentRedirectUrl(res.redirectUrl)) {
       throw new Error("Invalid invoice response");
     }
     setCheckoutOpen(false);
-    if (res.reference && isPaymentReference(res.reference)) {
-      cart.recordPayment({ reference: res.reference, items: submittedSelection });
-    }
+    // The cart is cleaned on the success page only after the backend confirms the payment.
+    if (typeof res.reference === "string" && isPaymentReference(res.reference)) cart.recordPayment(res.reference);
     window.location.href = res.redirectUrl;
   };
 

@@ -71,8 +71,8 @@ for (const width of [360, 390]) {
 
     test("a new item in a long cart is visible above the fixed checkout actions", async ({ page }) => {
       const seeded = Array.from({ length: 6 }, (_, index) => {
-        const itemId = `93000000-0000-4000-8000-${String(index).padStart(12, "0")}`;
-        const product = makeProduct({ id: `94000000-0000-4000-8000-${String(index).padStart(12, "0")}`, name: `Existing book ${index}`, items: [{ ...existingProduct.items[0], id: itemId }] });
+        const itemId = `long-cart-item-${index}`;
+        const product = makeProduct({ id: `long-cart-product-${index}`, name: `Existing book ${index}`, items: [{ ...existingProduct.items[0], id: itemId }] });
         return { product, itemId, format: "paper", quantity: 1 };
       });
       await page.addInitScript(items => localStorage.setItem("cart", JSON.stringify(items)), seeded);

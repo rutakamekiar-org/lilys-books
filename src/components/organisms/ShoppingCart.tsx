@@ -40,7 +40,7 @@ export default function ShoppingCart({
   onRemoveItem,
   onCheckout,
 }: ShoppingCartProps) {
-  const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode, checkoutFeedback } = useCart();
+  const { appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode } = useCart();
   const [promoInput, setPromoInput] = useState("");
   const [isApplying, setIsApplying] = useState(false);
   const [promoFailure, setPromoFailure] = useState<"invalid" | "temporary" | null>(null);
@@ -151,7 +151,6 @@ export default function ShoppingCart({
         </div>
 
         <div className={styles.content}>
-          {checkoutFeedback && <p role="status" className={styles.checkoutFeedback}>{checkoutFeedback}</p>}
           {isEmpty ? (
             <div className={styles.empty}>
               <p>Ваш кошик порожній</p>

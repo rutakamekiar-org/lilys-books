@@ -73,7 +73,7 @@ function CarouselImage({ src, index, alt, sizes, slideClassName, railRef, object
 
 export default function ImageCarousel({ images, alt, sizes, className, slideClassName, navInside = true, ariaLabel, priorityFirstImage = false, imageFit, navigationAlwaysVisible = false, initialIndex = 0, onIndexChange }: ImageCarouselProps){
   const railRef = useRef<HTMLDivElement>(null);
-  const [startingIndex] = useState(() => Math.max(0, Math.min(initialIndex, images.length - 1)));
+  const startingIndex = useRef(Math.max(0, Math.min(initialIndex, images.length - 1)));
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
   const [containerIsLandscape, setContainerIsLandscape] = useState(true);
@@ -92,8 +92,8 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
 
   useLayoutEffect(() => {
     const rail = railRef.current;
-    if (rail) rail.scrollTo({ left: startingIndex * rail.clientWidth, behavior: "instant" });
-  }, [startingIndex]);
+    if (rail) rail.scrollTo({ left: startingIndex.current * rail.clientWidth, behavior: "instant" });
+  }, []);
 
   useEffect(() => {
     const rail = railRef.current;
@@ -153,7 +153,7 @@ export default function ImageCarousel({ images, alt, sizes, className, slideClas
             railRef={railRef}
             objectFit={imageFit ?? fitForIndex(i)}
             priority={priorityFirstImage && i === 0}
-            initiallyVisible={startingIndex > 0 && i === startingIndex}
+            initiallyVisible={initialIndex > 0 && i === initialIndex}
           />
         ))}
       </div>

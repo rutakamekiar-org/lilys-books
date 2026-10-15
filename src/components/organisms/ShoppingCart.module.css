@@ -586,11 +586,3 @@
 
 @media (max-width: 640px) { .cart { transition: transform 180ms ease-out; } }
 @media (prefers-reduced-motion: reduce) { .cart { transition: none; } }
-.checkoutFeedback {
-  margin-bottom: 16px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--accent-weak);
-  overflow-wrap: anywhere;
-}

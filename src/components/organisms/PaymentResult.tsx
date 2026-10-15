@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getPaymentConfirmation } from "@/lib/api";
 import { isPaymentReference } from "@/lib/payment";
+import type { ApiError } from "@/models/ApiError";
 import { useCart } from "@/components/molecules/CartProvider";
 import styles from "./PaymentResult.module.css";
 
@@ -14,6 +15,13 @@ const messages: Record<Result, { title: string; description: string; mark: strin
     failure: { title: "Оплату не завершено", description: "Не вдалося завершити оплату. Товари залишилися у вашому кошику.", mark: "!" },
     unconfirmed: { title: "Не вдалося підтвердити оплату", description: "Підтвердження ще не отримано. Це не означає, що оплата не відбулася. Кошик збережено. Якщо кошти зарезервовано або списано, не оплачуйте замовлення повторно та зв’яжіться з нами.", mark: "?" },
 };
+
+// Network failures, timeouts and server errors may clear up on the next read; 404s and malformed answers will not.
+function isTransient(error: unknown): boolean {
+    const status = (error as ApiError | undefined)?.status;
+    if (typeof status === "number") return status === 408 || status === 429 || status >= 500;
+    return error instanceof TypeError || (error instanceof DOMException && error.name === "TimeoutError");
+}
 
 export default function PaymentResult({ returnType }: { returnType: "success" | "failure" }) {
     const [reference, setReference] = useState<string | null>(null);
@@ -38,16 +46,19 @@ export default function PaymentResult({ returnType }: { returnType: "success" | 
         let timer: ReturnType<typeof setTimeout>;
         let remaining = 5;
         const confirm = async () => {
+            let retry: boolean;
             try {
                 // Only saved webhook confirmation is read; this never queries bank status.
                 const confirmed = await getPaymentConfirmation(reference, controller.signal);
                 if (controller.signal.aborted) return;
-                if (confirmed) setConfirmation({ reference, revision, result: "success" });
-                else if (--remaining > 0) timer = setTimeout(confirm, 3000);
-                else setConfirmation({ reference, revision, result: "unconfirmed" });
-            } catch {
-                if (!controller.signal.aborted) setConfirmation({ reference, revision, result: "unconfirmed" });
+                if (confirmed) return setConfirmation({ reference, revision, result: "success" });
+                retry = true;
+            } catch (error) {
+                if (controller.signal.aborted) return;
+                retry = isTransient(error);
             }
+            if (retry && --remaining > 0) timer = setTimeout(confirm, 3000);
+            else setConfirmation({ reference, revision, result: "unconfirmed" });
         };
         void confirm();
         return () => { controller.abort(); clearTimeout(timer); };

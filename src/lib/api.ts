@@ -7,10 +7,17 @@ import {PromoCodeResponse} from "@/models/PromoCode";
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.zvychajna.pp.ua").replace(/\/$/, "");
 
+// AbortSignal.any is missing in older Safari; there the caller's signal still cancels, just without the 5s bound.
+function withTimeout(signal?: AbortSignal): AbortSignal | undefined {
+    const timeout = typeof AbortSignal.timeout === "function" ? AbortSignal.timeout(5000) : undefined;
+    if (!signal || !timeout) return signal ?? timeout;
+    return typeof AbortSignal.any === "function" ? AbortSignal.any([signal, timeout]) : signal;
+}
+
 export async function getPaymentConfirmation(reference: string, signal?: AbortSignal): Promise<boolean> {
     const res = await fetch(`${API_URL}/api/invoice/confirmation/${encodeURIComponent(reference)}`, {
         cache: "no-store",
-        signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(5000)]) : AbortSignal.timeout(5000),
+        signal: withTimeout(signal),
     });
     const result = await handleApi<PaymentConfirmationResponse>(res);
     if (!result || typeof result.confirmed !== "boolean") throw new Error("Invalid payment confirmation response");

@@ -14,7 +14,6 @@ function initialState() {
     lastInvoiceRequest: null,
     paymentStatus: "init",
     paymentConfirmationRequests: 0,
-    promoState: "ready",
   };
 }
 
@@ -67,12 +66,6 @@ const server = createServer(async (request, response) => {
     return sendJson(response, 200, { status: state.paymentStatus });
   }
 
-  if (request.method === "POST" && url.pathname === "/__control/promo") {
-    const body = await readJson(request);
-    state.promoState = body.state;
-    return sendJson(response, 200, { state: state.promoState });
-  }
-
   if (request.method === "POST" && url.pathname === "/__control/failures") {
     const body = await readJson(request);
     state.failingSlugs = new Set(body.slugs ?? []);
@@ -106,7 +99,6 @@ const server = createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && url.pathname === "/api/PromoCode/validate") {
-    if (state.promoState === "invalid") return sendJson(response, 404, {});
     const code = url.searchParams.get("code")?.toUpperCase();
     const promos = {
       "NEAR-TOTAL": { code: "NEAR-TOTAL", type: 0, value: 498.95, applicableProductItemIds: null, remainingUsages: null },

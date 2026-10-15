@@ -1,41 +1,65 @@
 import { z } from "zod";
 
-export const PAYMENT_STORAGE_KEY = "paymentSelections";
+// One localStorage entry per payment attempt so a return in another tab (e.g. after the bank app) can still clean the cart.
+const PAYMENT_STORAGE_PREFIX = "paymentSelection:";
+const PAYMENT_SNAPSHOT_TTL_MS = 24 * 60 * 60 * 1000;
+
 export const isPaymentReference = (value: string): boolean =>
     /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 
-const selectionSchema = z.object({
-    itemId: z.string().uuid(),
-    quantity: z.number().int().positive().safe(),
-    selectionId: z.string().uuid(),
-});
-
 const snapshotSchema = z.object({
-    reference: z.string().uuid(),
-    items: z.array(selectionSchema).min(1),
+    createdAt: z.number().int().nonnegative(),
+    items: z.array(z.object({
+        itemId: z.string().min(1),
+        quantity: z.number().int().positive().safe(),
+    })).min(1),
 });
 
-export type PaymentSelection = z.infer<typeof selectionSchema>;
-export type PaymentSelectionSnapshot = z.infer<typeof snapshotSchema>;
+export type PaymentSnapshot = z.infer<typeof snapshotSchema>;
+export type PaymentSelection = PaymentSnapshot["items"][number];
 
-export function parsePaymentSelections(value: string | null): PaymentSelectionSnapshot[] {
-    if (!value) return [];
-    try {
-        const result = z.array(snapshotSchema).safeParse(JSON.parse(value));
-        return result.success ? result.data : [];
-    } catch { return []; }
+const storageKey = (reference: string) => PAYMENT_STORAGE_PREFIX + reference.toLowerCase();
+
+function removeExpiredSnapshots(now: number) {
+    for (let index = localStorage.length - 1; index >= 0; index--) {
+        const key = localStorage.key(index);
+        if (!key?.startsWith(PAYMENT_STORAGE_PREFIX)) continue;
+        const snapshot = parseSnapshot(localStorage.getItem(key));
+        if (!snapshot || now - snapshot.createdAt > PAYMENT_SNAPSHOT_TTL_MS) localStorage.removeItem(key);
+    }
 }
 
-export function selectionKey(items: readonly { itemId: string; quantity: number; selectionId?: string }[]): string {
-    return JSON.stringify(items.map(item => [item.itemId, item.quantity, item.selectionId]).sort());
+function parseSnapshot(value: string | null): PaymentSnapshot | null {
+    if (!value) return null;
+    try {
+        const result = snapshotSchema.safeParse(JSON.parse(value));
+        return result.success ? result.data : null;
+    } catch { return null; }
 }
 
-export function isSafePaymentUrl(value: string): boolean {
+export function savePaymentSnapshot(reference: string, items: PaymentSelection[]) {
+    if (!isPaymentReference(reference) || !items.length) return;
     try {
-        const url = new URL(value);
-        if (url.username || url.password) return false;
-        if (typeof window !== "undefined" && url.origin === window.location.origin && url.pathname === "/payment/success") return true;
-        const localTests = /^http:\/\/(127\.0\.0\.1|localhost)(:|\/)/.test(process.env.NEXT_PUBLIC_API_URL ?? "");
-        return url.protocol === "https:" && (["pay.monobank.ua", "pay.mono.bank", "pay.mbnk.biz"].includes(url.hostname) || (localTests && url.hostname === "example.invalid"));
+        const now = Date.now();
+        removeExpiredSnapshots(now);
+        localStorage.setItem(storageKey(reference), JSON.stringify({ createdAt: now, items } satisfies PaymentSnapshot));
+    } catch { /* Without a snapshot the cart simply stays as it is after payment. */ }
+}
+
+// Reads and removes the snapshot so a confirmation can only clean the cart once.
+export function takePaymentSnapshot(reference: string): PaymentSnapshot | null {
+    try {
+        const key = storageKey(reference);
+        const snapshot = parseSnapshot(localStorage.getItem(key));
+        localStorage.removeItem(key);
+        return snapshot && Date.now() - snapshot.createdAt <= PAYMENT_SNAPSHOT_TTL_MS ? snapshot : null;
+    } catch { return null; }
+}
+
+// Payment and free-order returns must use https; plain http is only allowed for local development and tests.
+export function isPaymentRedirectUrl(value: string): boolean {
+    try {
+        const { protocol, hostname } = new URL(value);
+        return protocol === "https:" || (protocol === "http:" && (hostname === "localhost" || hostname === "127.0.0.1"));
     } catch { return false; }
 }

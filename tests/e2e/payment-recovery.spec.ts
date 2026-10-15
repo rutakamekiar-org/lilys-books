@@ -122,8 +122,17 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
             await page.evaluate(value => { location.hash = `reference=${value}`; }, reference);
             await expect(page.getByRole("heading", { name: "Завершуємо оплату", exact: true })).toBeVisible();
             await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toHaveCount(0);
-            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible();
+            await expect(page.getByRole("heading", { name: "Не вдалося підтвердити оплату", exact: true })).toBeVisible({ timeout: 20000 });
             await expect(page.getByRole("link", { name: "Зв’язатися з нами", exact: true })).toHaveAttribute("href", "mailto:lillykukharets0325@gmail.com");
+        });
+
+        test("a temporary confirmation error is retried instead of ending the wait", async ({ page, request }) => {
+            await request.post(`${mockApiUrl}/__control/payment`, { data: { status: "hold" } });
+            let reads = 0;
+            await page.route("**/api/invoice/confirmation/**", route => reads++ === 0 ? route.fulfill({ status: 503, json: {} }) : route.continue());
+            await page.goto(successUrl);
+            await expect(page.getByRole("heading", { name: "Оплату підтверджено", exact: true })).toBeVisible({ timeout: 10000 });
+            expect(reads).toBe(2);
         });
 
         test("malformed confirmation is neutral", async ({ page }) => {

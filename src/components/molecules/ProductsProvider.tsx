@@ -9,7 +9,6 @@ interface ProductsContextType {
   hasError: boolean;
   refresh: () => Promise<void>;
   refreshProduct: (slug: string) => Promise<Product | null>;
-  refreshForCheckout: () => Promise<Product[]>;
 }
 
 const ProductsContext = createContext<ProductsContextType | undefined>(undefined);
@@ -69,13 +68,6 @@ export function ProductsProvider({
     }
   }, []);
 
-  // Checkout needs the actual fresh result, including empty catalogues and errors.
-  const refreshForCheckout = useCallback(async (): Promise<Product[]> => {
-    const latest = await getProductsLive();
-    setProducts(latest);
-    return latest;
-  }, []);
-
   // Fetch on first load and whenever the customer returns to this tab.
   useEffect(() => {
     refresh();
@@ -91,7 +83,7 @@ export function ProductsProvider({
   }, [refresh]);
 
   return (
-    <ProductsContext.Provider value={{ products, isLoading, hasError, refresh, refreshProduct, refreshForCheckout }}>
+    <ProductsContext.Provider value={{ products, isLoading, hasError, refresh, refreshProduct }}>
       {children}
     </ProductsContext.Provider>
   );
