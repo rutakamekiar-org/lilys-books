@@ -5,7 +5,6 @@ import { useProducts } from "./ProductsProvider";
 import { PromoCodeResponse } from "@/models/PromoCode";
 import { calculateCartDiscount, calculateItemDiscount, getDiscountedUnitsPerItem } from "@/lib/promocode.helper";
 import { validatePromocode } from "@/lib/api";
-import { savePaymentSnapshot, takePaymentSnapshot } from "@/lib/payment";
 
 export interface CartItem {
   product: Product;
@@ -29,8 +28,7 @@ interface CartContextType {
   applyPromocode: (code: string) => Promise<void>;
   removePromocode: () => void;
   hydrated: boolean;
-  recordPayment: (reference: string) => void;
-  finalizePayment: (reference: string) => void;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -95,7 +93,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
     setHydrated(true);
 
-    // Keep other open tabs in sync, e.g. when a payment return in a new tab removes purchased items.
+    // Keep other open tabs in sync, e.g. when a payment return in a new tab clears the cart.
     const syncFromOtherTab = (event: StorageEvent) => {
       try {
         if (event.key === "cart") setItems(event.newValue ? JSON.parse(event.newValue) : []);
@@ -157,23 +155,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   };
 
-  // Remembers what is being paid for; the cart itself stays intact until the payment is confirmed.
-  const recordPayment = (reference: string) => {
-    savePaymentSnapshot(reference, items.map(({ itemId, quantity }) => ({ itemId, quantity })));
-  };
-
-  // Subtracts the purchased quantities once; items added or increased after checkout stay in the cart.
-  const finalizePayment = useCallback((reference: string) => {
-    const snapshot = takePaymentSnapshot(reference);
-    if (!snapshot) return;
-    const purchased = new Map(snapshot.items.map(item => [item.itemId, item.quantity]));
-    const next = items.flatMap(item => {
-      const quantity = item.quantity - (purchased.get(item.itemId) ?? 0);
-      return quantity > 0 ? [{ ...item, quantity }] : [];
-    });
-    setItems(next);
-    if (next.length === 0) setAppliedPromocode(null);
-  }, [items]);
+  // Used by the payment success page; stable so it can be an effect dependency.
+  const clearCart = useCallback(() => {
+    setItems([]);
+    setAppliedPromocode(null);
+  }, []);
 
   const applyPromocode = async (code: string) => {
     const productItemIds = items.map(item => item.itemId);
@@ -204,7 +190,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, itemCount, isInCart, openCart, registerOpenCallback, appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode, hydrated, recordPayment, finalizePayment }}
+      value={{ items, addItem, removeItem, updateQuantity, itemCount, isInCart, openCart, registerOpenCallback, appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode, hydrated, clearCart }}
     >
       {children}
     </CartContext.Provider>

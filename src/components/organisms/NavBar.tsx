@@ -9,7 +9,7 @@ import ShoppingCart from "@/components/organisms/ShoppingCart";
 import dynamic from "next/dynamic";
 import type { CheckoutFormData } from "@/components/organisms/CheckoutForm";
 import {createInvoice} from "@/lib/api";
-import { isPaymentRedirectUrl, isPaymentReference } from "@/lib/payment";
+import { isPaymentRedirectUrl } from "@/lib/payment";
 
 const CheckoutForm = dynamic(() => import("@/components/organisms/CheckoutForm"), { ssr: false });
 
@@ -48,8 +48,7 @@ export default function NavBar() {
       throw new Error("Invalid invoice response");
     }
     setCheckoutOpen(false);
-    // The cart is cleaned on the success page only after the backend confirms the payment.
-    if (typeof res.reference === "string" && isPaymentReference(res.reference)) cart.recordPayment(res.reference);
+    // The cart is kept until the bank returns the customer to the success page.
     window.location.href = res.redirectUrl;
   };
 

@@ -12,8 +12,6 @@ function initialState() {
     catalogRequests: 0,
     invoiceRequests: 0,
     lastInvoiceRequest: null,
-    paymentStatus: "init",
-    paymentConfirmationRequests: 0,
   };
 }
 
@@ -60,12 +58,6 @@ const server = createServer(async (request, response) => {
     return sendJson(response, 200, { state: state.catalog });
   }
 
-  if (request.method === "POST" && url.pathname === "/__control/payment") {
-    const body = await readJson(request);
-    state.paymentStatus = body.status;
-    return sendJson(response, 200, { status: state.paymentStatus });
-  }
-
   if (request.method === "POST" && url.pathname === "/__control/failures") {
     const body = await readJson(request);
     state.failingSlugs = new Set(body.slugs ?? []);
@@ -80,7 +72,6 @@ const server = createServer(async (request, response) => {
       failingSlugs: [...state.failingSlugs],
       invoiceRequests: state.invoiceRequests,
       lastInvoiceRequest: state.lastInvoiceRequest,
-      paymentConfirmationRequests: state.paymentConfirmationRequests,
     });
   }
 
@@ -111,13 +102,7 @@ const server = createServer(async (request, response) => {
   if (request.method === "POST" && url.pathname === "/api/invoice") {
     state.lastInvoiceRequest = await readJson(request);
     state.invoiceRequests += 1;
-    return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment", reference: "40000000-0000-4000-8000-000000000040" });
-  }
-
-  if (request.method === "GET" && url.pathname.startsWith("/api/invoice/confirmation/")) {
-    state.paymentConfirmationRequests += 1;
-    if (!url.pathname.endsWith("/40000000-0000-4000-8000-000000000040")) return sendJson(response, 404, {});
-    return sendJson(response, 200, { confirmed: ["hold", "success", "delivered"].includes(state.paymentStatus) });
+    return sendJson(response, 200, { redirectUrl: "https://example.invalid/test-payment" });
   }
 
   return sendJson(response, 404, { error: "Unknown mock endpoint." });

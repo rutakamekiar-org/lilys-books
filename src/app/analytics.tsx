@@ -23,7 +23,6 @@ export default function Analytics() {
     // Send a pageview to Google Analytics
     window.gtag?.("config", GA_MEASUREMENT_ID, {
       page_path: url,
-      page_location: window.location.origin + url,
     });
   }, [pathname, searchParams]);
 
