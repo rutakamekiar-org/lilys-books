@@ -14,6 +14,7 @@ API in `tests/support/mock-api.mjs`.
 | `tests/e2e/accessibility.spec.ts` | axe-core scans of home, catalog, product details, excerpt dialog, cart, checkout, and checkout in its error state; meaningful image alternatives |
 | `tests/e2e/keyboard-navigation.spec.ts` | keyboard-only catalog → checkout journey, visible focus, dialog focus trapping/restoration, error announcement, skip link |
 | `tests/e2e/book-excerpt.spec.ts` | desktop/mobile excerpt placement, keyboard scrolling of long excerpt text, focus restoration, edition/price preservation and excerpt failures |
+| `tests/e2e/payment-return.spec.ts` | payment success/failure return axe scans and overflow checks at 1440, 390 and 360px; keyboard cart action and focus restoration; cart cleared on success (including a new tab) and kept on failure |
 
 Run them locally:
 

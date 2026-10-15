@@ -9,13 +9,14 @@ import ShoppingCart from "@/components/organisms/ShoppingCart";
 import dynamic from "next/dynamic";
 import type { CheckoutFormData } from "@/components/organisms/CheckoutForm";
 import {createInvoice} from "@/lib/api";
+import { isPaymentRedirectUrl } from "@/lib/payment";
 
 const CheckoutForm = dynamic(() => import("@/components/organisms/CheckoutForm"), { ssr: false });
 
 export default function NavBar() {
   const pathname = usePathname() || "/";
   const cart = useCart();
-  const { items, itemCount, updateQuantity, removeItem, clearCart } = cart;
+  const { items, itemCount, updateQuantity, removeItem } = cart;
   const [cartTargetItemId, setCartTargetItemId] = useState<string>();
   const [cartOpen, setCartOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -43,11 +44,11 @@ export default function NavBar() {
 
   const handleCheckoutSubmit = async (data: CheckoutFormData) => {
     const res = await createInvoice(data, items, cart.appliedPromocode?.code || undefined);
-    if (!res || typeof res.redirectUrl !== "string" || !res.redirectUrl.trim()) {
+    if (!res || typeof res.redirectUrl !== "string" || !isPaymentRedirectUrl(res.redirectUrl)) {
       throw new Error("Invalid invoice response");
     }
     setCheckoutOpen(false);
-    clearCart();
+    // The cart is kept until the bank returns the customer to the success page.
     window.location.href = res.redirectUrl;
   };
 

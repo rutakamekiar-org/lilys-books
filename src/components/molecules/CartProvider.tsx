@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useEffect, ReactNode, useRef, useMemo } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode, useRef, useMemo, useCallback } from "react";
 import { Product } from "@/models/Product";
 import { useProducts } from "./ProductsProvider";
 import { PromoCodeResponse } from "@/models/PromoCode";
@@ -18,7 +18,6 @@ interface CartContextType {
   addItem: (product: Product, itemId: string, format: "paper" | "digital", quantity?: number) => boolean;
   removeItem: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
-  clearCart: () => void;
   itemCount: number;
   isInCart: (itemId: string) => boolean;
   openCart: (itemId?: string) => void;
@@ -28,6 +27,8 @@ interface CartContextType {
   getItemDiscount: (itemId: string) => number;
   applyPromocode: (code: string) => Promise<void>;
   removePromocode: () => void;
+  hydrated: boolean;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -36,6 +37,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { products } = useProducts();
   const [items, setItems] = useState<CartItem[]>([]);
   const [appliedPromocode, setAppliedPromocode] = useState<PromoCodeResponse | null>(null);
+  const [hydrated, setHydrated] = useState(false);
   const cartOpenCallbackRef = useRef<((itemId?: string) => void) | null>(null);
 
   const discountAmount = useMemo(() =>
@@ -89,17 +91,31 @@ export function CartProvider({ children }: { children: ReactNode }) {
         console.error("Failed to parse appliedPromocode from localStorage", e);
       }
     }
+    setHydrated(true);
+
+    // Keep other open tabs in sync, e.g. when a payment return in a new tab clears the cart.
+    const syncFromOtherTab = (event: StorageEvent) => {
+      try {
+        if (event.key === "cart") setItems(event.newValue ? JSON.parse(event.newValue) : []);
+        if (event.key === "appliedPromocode") setAppliedPromocode(event.newValue ? JSON.parse(event.newValue) : null);
+      } catch (e) {
+        console.error("Failed to sync cart from another tab", e);
+      }
+    };
+    window.addEventListener("storage", syncFromOtherTab);
+    return () => window.removeEventListener("storage", syncFromOtherTab);
   }, []);
 
-  // Save cart and promocode to localStorage whenever they change
+  // Save cart and promocode to localStorage whenever they change (after the stored cart was loaded)
   useEffect(() => {
+    if (!hydrated) return;
     localStorage.setItem("cart", JSON.stringify(items));
     if (appliedPromocode) {
       localStorage.setItem("appliedPromocode", JSON.stringify(appliedPromocode));
     } else {
       localStorage.removeItem("appliedPromocode");
     }
-  }, [items, appliedPromocode]);
+  }, [items, appliedPromocode, hydrated]);
 
   const addItem = (product: Product, itemId: string, format: "paper" | "digital", quantity: number = 1): boolean => {
     let wasAdded = false;
@@ -139,10 +155,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   };
 
-  const clearCart = () => {
+  // Used by the payment success page; stable so it can be an effect dependency.
+  const clearCart = useCallback(() => {
     setItems([]);
     setAppliedPromocode(null);
-  };
+  }, []);
 
   const applyPromocode = async (code: string) => {
     const productItemIds = items.map(item => item.itemId);
@@ -173,7 +190,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addItem, removeItem, updateQuantity, clearCart, itemCount, isInCart, openCart, registerOpenCallback, appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode }}
+      value={{ items, addItem, removeItem, updateQuantity, itemCount, isInCart, openCart, registerOpenCallback, appliedPromocode, discountAmount, getItemDiscount, applyPromocode, removePromocode, hydrated, clearCart }}
     >
       {children}
     </CartContext.Provider>
