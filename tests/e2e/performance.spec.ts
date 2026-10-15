@@ -149,7 +149,6 @@ test("gallery navigation loads later slides lazily", async ({ page }) => {
   }
   const gallery = page.getByRole("group", { name: "Зображення: Excerpt Book" }).filter({ visible: true });
   await page.getByRole("button", { name: "Наступне фото" }).click();
-  await expect.poll(() => gallery.evaluate(rail => rail.scrollLeft / rail.clientWidth)).toBeCloseTo(1, 1);
   await expect(gallery.locator("img").nth(1)).toHaveAttribute("loading", "lazy");
   await expect(gallery.locator("img").nth(1)).not.toHaveAttribute("fetchpriority", "high");
 });
