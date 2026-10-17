@@ -128,3 +128,47 @@ for (const sheet of ["cart", "checkout"] as const) {
     expect(await averageBrightness(page, { x: 0, y: 770, width: 390, height: 60 })).toBeLessThan(80);
   });
 }
+
+/** Dispatches a one-finger drag on `target` and reports whether the page cancelled it. */
+async function dragIsBlocked(target: Locator, dy: number) {
+  return target.evaluate((node, distance) => {
+    const rect = node.getBoundingClientRect();
+    const x = rect.left + Math.min(rect.width / 2, 40);
+    const y = rect.top + rect.height / 2;
+    const at = (clientY: number) => new Touch({ identifier: 1, target: node, clientX: x, clientY });
+    node.dispatchEvent(new TouchEvent("touchstart", { bubbles: true, cancelable: true, touches: [at(y)] }));
+    const move = new TouchEvent("touchmove", { bubbles: true, cancelable: true, touches: [at(y + distance)] });
+    node.dispatchEvent(move);
+    node.dispatchEvent(new TouchEvent("touchend", { bubbles: true, cancelable: true, touches: [] }));
+    return move.defaultPrevented;
+  }, dy);
+}
+
+test("drags on cart chrome cannot pan iOS's viewport, while the promo field keeps native touch", async ({ page }) => {
+  const cart = await openCart(page);
+  await simulateKeyboard(page, 300, 450);
+  await expect(cart.getByRole("heading", { name: "Кошик" })).toBeInViewport();
+  // iOS pans the visual viewport for unconsumed drags, which slid the page and sheet in 2.mp4.
+  expect(await dragIsBlocked(cart, 60)).toBe(true); // the dimmed backdrop
+  expect(await dragIsBlocked(cart.getByText("Всього:"), -60)).toBe(true);
+  expect(await dragIsBlocked(cart.getByRole("textbox", { name: "Промокод", exact: true }), -60)).toBe(false);
+});
+
+test("checkout form still scrolls by touch, but drags past its edge cannot pan the viewport", async ({ page }) => {
+  const checkout = await openCheckout(page);
+  const label = checkout.locator("label").filter({ hasText: /^Email/ }).first();
+  const scroller = label.locator("xpath=ancestor::*[contains(@class, 'content')][1]");
+  expect(await scroller.evaluate(node => node.scrollHeight > node.clientHeight && node.scrollTop === 0)).toBe(true);
+  expect(await dragIsBlocked(label, -60)).toBe(false); // finger up: the form scrolls down
+  expect(await dragIsBlocked(label, 60)).toBe(true); // finger down at the top: nothing to scroll
+  await scroller.evaluate(node => { node.scrollTop = node.scrollHeight; });
+  expect(await dragIsBlocked(label, 60)).toBe(false);
+  expect(await dragIsBlocked(checkout.getByRole("heading", { name: "Оформлення замовлення" }), 60)).toBe(true);
+});
+
+test("closing the last sheet restores normal touch handling on the page", async ({ page }) => {
+  const cart = await openCart(page);
+  await cart.getByRole("button", { name: "Закрити" }).first().click();
+  await expect(cart).toBeHidden();
+  expect(await dragIsBlocked(page.getByRole("heading", { level: 1 }).first(), -60)).toBe(false);
+});
