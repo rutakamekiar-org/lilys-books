@@ -1,13 +1,18 @@
 .overlay {
   position: fixed;
   inset: 0;
-  min-height: var(--checkout-viewport-height, 100dvh);
+  top: var(--checkout-viewport-top, 0px);
+  height: var(--checkout-viewport-height, 100dvh);
   background: rgba(0, 0, 0, 0.75);
+  /* The overlay is pinned to the visual viewport; the shadow keeps dimming the
+     page under iOS's translucent keyboard and autofill bars outside that box. */
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 500;
   padding: 20px;
+  overscroll-behavior: none;
 }
 
 .sheet {
@@ -256,7 +261,7 @@
     width: 100%;
     max-width: 100%;
     border-radius: 0;
-    max-height: 100vh;
+    max-height: var(--checkout-viewport-height, 100dvh);
   }
 
   .header {
