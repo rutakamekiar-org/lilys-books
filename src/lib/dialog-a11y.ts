@@ -24,6 +24,7 @@ export interface DialogA11yOptions {
 }
 
 let scrollLocks = 0;
+let lockedScrollY = 0;
 
 /**
  * Keyboard and focus behaviour shared by every storefront dialog: Escape closes,
@@ -95,13 +96,19 @@ export function useDialogA11y({ open, onClose, dialogRef, lockScroll = false }: 
     // Counted so handing over between dialogs (cart -> checkout) never unlocks early.
     if (scrollLocks++ === 0) {
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      lockedScrollY = window.scrollY;
       document.documentElement.style.overflow = "hidden";
       document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+      // overflow: hidden alone does not stop iOS Safari from scrolling the document to a focused
+      // field, so pin the body in place and leave nothing to scroll.
+      Object.assign(document.body.style, { position: "fixed", top: `-${lockedScrollY}px`, left: "0", right: "0" });
     }
     return () => {
       if (--scrollLocks > 0) return;
       document.documentElement.style.overflow = "";
       document.documentElement.style.paddingRight = "";
+      Object.assign(document.body.style, { position: "", top: "", left: "", right: "" });
+      window.scrollTo({ top: lockedScrollY, behavior: "instant" });
     };
   }, [open, lockScroll]);
 }

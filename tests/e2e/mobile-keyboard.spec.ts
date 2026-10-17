@@ -7,8 +7,12 @@ test.beforeEach(async ({ request }) => {
   await resetMockApi(request);
 });
 
-async function openCart(page: Page): Promise<Locator> {
+async function openCart(page: Page, scrollY = 0): Promise<Locator> {
   await page.goto("/books/test-book");
+  if (scrollY) {
+    await page.evaluate(y => window.scrollTo(0, y), scrollY);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(scrollY);
+  }
   await page.getByRole("radio", { name: /Електронна/ }).check();
   await page.getByRole("button", { name: /Купити/ }).click();
   const cart = page.getByRole("dialog", { name: "Кошик" });
@@ -16,8 +20,8 @@ async function openCart(page: Page): Promise<Locator> {
   return cart;
 }
 
-async function openCheckout(page: Page): Promise<Locator> {
-  const cart = await openCart(page);
+async function openCheckout(page: Page, scrollY = 0): Promise<Locator> {
+  const cart = await openCart(page, scrollY);
   await cart.getByRole("button", { name: "Оформити замовлення" }).click();
   const checkout = page.getByRole("dialog", { name: "Оформлення замовлення" });
   await expect(checkout).toBeVisible();
@@ -101,6 +105,21 @@ test("checkout keeps the page behind it scroll-locked after the cart hands over"
 });
 
 for (const sheet of ["cart", "checkout"] as const) {
+  test(`${sheet} keeps the page behind it still when iOS scrolls to the focused field`, async ({ page }) => {
+    const pageTop = () => page.evaluate(() => Math.round(document.querySelector("main")!.getBoundingClientRect().top));
+    const dialog = sheet === "cart" ? await openCart(page, 200) : await openCheckout(page, 200);
+    const before = await pageTop();
+
+    // overflow: hidden does not stop iOS Safari from scrolling the document to reveal a focused
+    // field behind the keyboard, which slides the page around under the sheet.
+    await page.evaluate(() => window.scrollTo(0, 500));
+    expect(await pageTop()).toBe(before);
+
+    await dialog.getByRole("button", { name: "Закрити" }).first().click();
+    await expect(dialog).toBeHidden();
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(200);
+  });
+
   test(`${sheet} backdrop still dims the page below the visual viewport while the keyboard is open`, async ({ page }) => {
     const dialog = sheet === "cart" ? await openCart(page) : await openCheckout(page);
     await simulateKeyboard(page, 300, 450);
