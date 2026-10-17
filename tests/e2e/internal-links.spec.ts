@@ -16,11 +16,6 @@ function renderedHrefs(html: string): string[] {
 
 test.beforeEach(async ({ request }) => {
   await resetMockApi(request);
-  const revalidation = await request.post("/api/revalidate", {
-    headers: { "x-revalidation-secret": "zvy11-test-secret" },
-    data: { slug: "test-book" },
-  });
-  expect(revalidation.status()).toBe(200);
 });
 
 test("essential navigation is present in initial rendered HTML", async ({ request }) => {

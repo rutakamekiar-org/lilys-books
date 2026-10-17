@@ -1,15 +1,12 @@
 import { expect, test, type APIRequestContext, type Page } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
-import { mockApiUrl, resetMockApi } from "./helpers";
+import { mockApiUrl, resetMockApi, revalidateCatalog } from "./helpers";
 import { expectNoA11yViolations } from "./a11y";
 
 async function catalog(request: APIRequestContext, state: string) {
   expect((await request.post(`${mockApiUrl}/__control/catalog`, { data: { state } })).ok()).toBe(true);
-  expect((await request.post("/api/revalidate", {
-    headers: { "x-revalidation-secret": "zvy11-test-secret" },
-    data: { slug: "zvychajna" },
-  })).ok()).toBe(true);
+  await revalidateCatalog(request, "zvychajna");
 }
 
 async function screenshot(page: Page, stem: string) {

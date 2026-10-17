@@ -35,11 +35,15 @@ export async function createInvoice(data: CheckoutFormData, items: CartItem[], p
     });
     return handleApi<CheckoutResponse>(res);
 }
+// E2E runs pin this high so cached pages change only through explicit
+// revalidation, never on a timer that would capture another test's mock data.
+const CATALOG_REVALIDATE_SECONDS = Number(process.env.CATALOG_REVALIDATE_SECONDS) || 60;
+
 async function fetchProducts(options: { throwOnError?: boolean; fresh?: boolean } = {}): Promise<Product[]> {
     try {
         const res = await fetch(
             `${API_URL}/api/products`,
-            options.fresh ? { cache: "no-store" } : { next: { revalidate: 60 } },
+            options.fresh ? { cache: "no-store" } : { next: { revalidate: CATALOG_REVALIDATE_SECONDS } },
         );
         const data = await handleApi<unknown>(res);
         return parseProducts(data);
@@ -54,7 +58,7 @@ async function fetchProducts(options: { throwOnError?: boolean; fresh?: boolean 
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
     const res = await fetch(`${API_URL}/api/products/${encodeURIComponent(slug)}`, {
-        next: { revalidate: 60 },
+        next: { revalidate: CATALOG_REVALIDATE_SECONDS },
     });
 
     if (res.status === 404) {

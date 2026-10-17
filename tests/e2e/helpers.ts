@@ -1,10 +1,25 @@
 import type { APIRequestContext } from "@playwright/test";
 
 export const mockApiUrl = "http://127.0.0.1:4100";
+export const revalidationSecret = "zvy11-test-secret";
 
+/** Drops the app's cached home, catalog, sitemap and `/books/<slug>` pages. */
+export async function revalidateCatalog(request: APIRequestContext, slug = "test-book") {
+  const response = await request.post("/api/revalidate", {
+    headers: { "x-revalidation-secret": revalidationSecret },
+    data: { slug },
+  });
+  if (!response.ok()) throw new Error(`App revalidation failed with ${response.status()}.`);
+}
+
+/**
+ * Resets the mock API and the app pages cached from it, so no test inherits
+ * catalog data that an earlier test configured and revalidated.
+ */
 export async function resetMockApi(request: APIRequestContext) {
   const response = await request.post(`${mockApiUrl}/__control/reset`);
   if (!response.ok()) throw new Error(`Mock API reset failed with ${response.status()}.`);
+  await revalidateCatalog(request);
 }
 
 export function makeProduct(overrides: Record<string, unknown> = {}) {
