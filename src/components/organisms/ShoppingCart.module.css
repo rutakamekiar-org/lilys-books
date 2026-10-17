@@ -1,6 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
+  top: var(--cart-viewport-top, 0px);
   height: var(--cart-viewport-height, 100dvh);
   min-height: var(--cart-viewport-height, 100dvh);
   background: rgba(0, 0, 0, 0.75);
@@ -569,7 +570,8 @@
   .quantityLabel { font-size: .75rem; }
   .removeBtn { position: absolute; bottom: 12px; right: 12px; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; }
   .item:not(:has(.quantityRow)) .itemDetails { padding-bottom: 44px; }
-  .promoInput { min-width: 0; padding: 10px 12px; min-height: 44px; box-sizing: border-box; }
+  /* 16px keeps iOS Safari from auto-zooming the page when the field is focused. */
+  .promoInput { min-width: 0; padding: 10px 12px; min-height: 44px; box-sizing: border-box; font-size: 16px; }
   .promoApplyBtn { flex-shrink: 0; padding: 0 12px; min-height: 44px; }
   .close { min-width: 44px; min-height: 44px; }
   .continueShopping { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; border: 0; background: transparent; color: var(--muted, #666); text-decoration: underline; cursor: pointer; font: inherit; }

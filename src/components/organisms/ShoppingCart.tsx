@@ -10,6 +10,7 @@ import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 import { useSheetDismiss } from "@/lib/sheet-dismiss";
 import { useDialogA11y } from "@/lib/dialog-a11y";
+import { useVisualViewport } from "@/lib/visual-viewport";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
 import type { ApiError } from "@/models/ApiError";
@@ -47,7 +48,7 @@ export default function ShoppingCart({
   const applyingRef = useRef(false);
   const promoFeedbackId = useId();
   const [mounted, setMounted] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
+  const viewport = useVisualViewport(open);
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const { dragHandleProps, dragStyle } = useSheetDismiss(onClose);
@@ -59,25 +60,6 @@ export default function ShoppingCart({
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!open) return;
-
-    const updateViewportHeight = () => {
-      const nextHeight = window.visualViewport?.height ?? window.innerHeight;
-      setViewportHeight(Math.round(nextHeight));
-    };
-
-    updateViewportHeight();
-    window.visualViewport?.addEventListener("resize", updateViewportHeight);
-    window.visualViewport?.addEventListener("scroll", updateViewportHeight);
-    window.addEventListener("resize", updateViewportHeight);
-
-    return () => {
-      window.visualViewport?.removeEventListener("resize", updateViewportHeight);
-      window.visualViewport?.removeEventListener("scroll", updateViewportHeight);
-      window.removeEventListener("resize", updateViewportHeight);
-    };
-  }, [open]);
 
   useEffect(() => {
     if (!open || !mounted) return;
@@ -123,8 +105,11 @@ export default function ShoppingCart({
   const total = subtractMoney(subtotal, discountAmount);
 
   const isEmpty = items.length === 0;
-  const overlayStyle = viewportHeight
-    ? ({ ["--cart-viewport-height"]: `${viewportHeight}px` } as { [key: string]: string })
+  const overlayStyle = viewport
+    ? ({
+        ["--cart-viewport-height"]: `${viewport.height}px`,
+        ["--cart-viewport-top"]: `${viewport.top}px`,
+      } as { [key: string]: string })
     : undefined;
 
   return createPortal(
