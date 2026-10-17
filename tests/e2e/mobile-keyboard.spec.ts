@@ -72,3 +72,40 @@ test("checkout sheet stays pinned to the visible viewport when the keyboard open
   await expectPinnedToVisualViewport(checkout, 300, 450);
   await expect(checkout.getByRole("heading", { name: "Оформлення замовлення" })).toBeInViewport();
 });
+
+async function averageBrightness(page: Page, clip: { x: number; y: number; width: number; height: number }) {
+  const png = (await page.screenshot({ clip })).toString("base64");
+  return page.evaluate(async (data) => {
+    const image = new Image();
+    image.src = `data:image/png;base64,${data}`;
+    await image.decode();
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+    const context = canvas.getContext("2d")!;
+    context.drawImage(image, 0, 0);
+    const pixels = context.getImageData(0, 0, image.width, image.height).data;
+    let total = 0;
+    for (let i = 0; i < pixels.length; i += 4) total += (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+    return total / (pixels.length / 4);
+  }, png);
+}
+
+test("checkout keeps the page behind it scroll-locked after the cart hands over", async ({ page }) => {
+  const overflow = () => page.evaluate(() => getComputedStyle(document.documentElement).overflow);
+  const checkout = await openCheckout(page);
+  await expect.poll(overflow).toBe("hidden");
+  await checkout.getByRole("button", { name: "Закрити" }).first().click();
+  await expect(checkout).toBeHidden();
+  await expect.poll(overflow).not.toBe("hidden");
+});
+
+for (const sheet of ["cart", "checkout"] as const) {
+  test(`${sheet} backdrop still dims the page below the visual viewport while the keyboard is open`, async ({ page }) => {
+    const dialog = sheet === "cart" ? await openCart(page) : await openCheckout(page);
+    await simulateKeyboard(page, 300, 450);
+    await expectPinnedToVisualViewport(dialog, 300, 450);
+    // iOS draws translucent keyboard and autofill bars over this strip; the page must not show through undimmed.
+    expect(await averageBrightness(page, { x: 0, y: 770, width: 390, height: 60 })).toBeLessThan(80);
+  });
+}

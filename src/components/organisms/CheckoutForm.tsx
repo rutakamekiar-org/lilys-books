@@ -66,7 +66,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
   }, [feedbackVersion]);
 
   // The dialog only exists once mounted, so focus management waits for the portal.
-  useDialogA11y({ open: open && mounted, onClose, dialogRef });
+  useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: true });
 
   useEffect(() => {
     setMounted(true);
