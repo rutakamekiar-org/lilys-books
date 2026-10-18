@@ -1,7 +1,8 @@
 import { defineConfig } from "@playwright/test";
 
-const appPort = 3100;
-const apiPort = 4100;
+// tools/test-e2e-parallel.mjs runs isolated shards side by side, each on its own ports.
+const appPort = Number(process.env.E2E_APP_PORT ?? 3100);
+const apiPort = Number(process.env.E2E_API_PORT ?? 4100);
 const appUrl = `http://127.0.0.1:${appPort}`;
 const apiUrl = `http://127.0.0.1:${apiPort}`;
 
