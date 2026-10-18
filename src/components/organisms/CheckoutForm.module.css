@@ -250,8 +250,8 @@
   /* Phones show checkout as the page itself (src/lib/sheet-page.ts): in document
      flow, so iOS scrolls to a focused field natively instead of the sheet jumping. */
   .overlay {
-    position: absolute;
-    inset: 0 0 auto 0;
+    position: relative;
+    inset: auto;
     height: auto;
     min-height: 100dvh;
     padding: 0;

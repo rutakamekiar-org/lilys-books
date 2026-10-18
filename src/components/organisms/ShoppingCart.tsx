@@ -71,11 +71,15 @@ export default function ShoppingCart({
       if (content instanceof HTMLElement) content.scrollTop = 0;
       if (target) {
         target.scrollIntoView({ block: "nearest" });
+        // On phones the cart is the page and its footer sticks over the document; lift the item clear of it.
+        const footer = dialogRef.current?.querySelector(`.${styles.footer}`);
+        const hidden = footer ? target.getBoundingClientRect().bottom - footer.getBoundingClientRect().top : 0;
+        if (pageMode && hidden > 0) window.scrollBy({ top: hidden + 12, behavior: "instant" });
         target.querySelector<HTMLButtonElement>('button[aria-label="Видалити з кошика"]')?.focus({ preventScroll: true });
       }
     });
     return () => cancelAnimationFrame(frame);
-  }, [open, mounted, targetItemId]);
+  }, [open, mounted, targetItemId, pageMode]);
 
   const handleApplyPromo = async () => {
     if (applyingRef.current || !promoInput.trim()) return;

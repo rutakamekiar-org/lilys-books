@@ -124,7 +124,8 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
         expect((await refreshed).status()).toBe(200);
         const action = status.isAvailable ? /Купити — .*349 грн/ : status.canPreorder ? /Передзамовити — .*349 грн/ : "Немає в наявності";
-        const button = page.getByRole("button", { name: viewport.width < 640 ? "Переглянути кошик" : action });
+        // On phones the open cart replaces the page, so the product's own action is hidden behind it.
+        const button = page.getByRole("button", { name: viewport.width < 640 ? "Переглянути кошик" : action, includeHidden: viewport.width < 640 });
         if (status.isAvailable || status.canPreorder) await expect(button).toBeEnabled();
         else await expect(button).toBeDisabled();
         if (!status.isAvailable && status.canPreorder) await expect(line.getByText(label, { exact: true })).toBeVisible();

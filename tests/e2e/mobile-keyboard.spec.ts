@@ -66,12 +66,18 @@ test.describe("phone sheets", () => {
   test("the cart replaces the page in document flow and closing restores the page and scroll", async ({ page }) => {
     const cart = await openCart(page, 200);
     // A fixed overlay had to chase iOS's keyboard viewport with JavaScript and jumped (1.mp4–3.mp4).
-    expect(await position(cart)).toBe("absolute");
+    expect(await position(cart)).toBe("relative");
     await expect(page.locator("main")).toBeHidden();
     await expect.poll(() => scrollY(page)).toBe(0);
     expect(await htmlOverflow(page)).not.toBe("hidden"); // the document itself scrolls to the focused field
     await expectFieldsInDocumentFlow(cart);
     await expect(cart.getByRole("button", { name: "Оформити замовлення" })).toBeInViewport();
+    // The sticky footer must sit below the heading and the item, not over them (4.MP4).
+    const footerTop = (await cart.getByRole("textbox", { name: "Промокод", exact: true }).boundingBox())!.y;
+    const item = cart.getByRole("group").first();
+    const itemBox = (await item.boundingBox())!;
+    expect(itemBox.y + itemBox.height).toBeLessThanOrEqual(footerTop);
+    expect((await cart.getByRole("heading", { name: "Кошик" }).boundingBox())!.y).toBeLessThan(itemBox.y);
 
     await cart.getByRole("button", { name: "Закрити" }).first().click();
     await expect(cart).toBeHidden();
@@ -81,7 +87,7 @@ test.describe("phone sheets", () => {
 
   test("checkout keeps page mode across the cart handover, with header and submit always reachable", async ({ page }) => {
     const checkout = await openCheckout(page, 200);
-    expect(await position(checkout)).toBe("absolute");
+    expect(await position(checkout)).toBe("relative");
     await expect(page.locator("main")).toBeHidden();
     await expectFieldsInDocumentFlow(checkout);
     const heading = checkout.getByRole("heading", { name: "Оформлення замовлення" });

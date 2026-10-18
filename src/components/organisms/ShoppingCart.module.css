@@ -553,7 +553,7 @@
 @media (max-width: 640px) {
   /* Phones show the cart as the page itself (src/lib/sheet-page.ts): in document
      flow, so iOS scrolls to a focused field natively instead of the sheet jumping. */
-  .overlay { position: absolute; inset: 0 0 auto 0; height: auto; min-height: 100dvh; display: block; padding-top: 56px; overflow: visible; }
+  .overlay { position: relative; inset: auto; height: auto; min-height: 100dvh; display: block; padding-top: 56px; overflow: visible; }
   .cart { height: auto; min-height: calc(100dvh - 56px); border-radius: 18px 18px 0 0; }
   .content { flex: none; overflow: visible; }
   .item { display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; position: relative; padding: 12px; }
