@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
-import type { CartItem } from "../../src/components/molecules/CartProvider";
+import type { CartItem } from "../../src/components/providers/CartProvider";
 import { calculateCartDiscount, calculateItemDiscount, getDiscountedUnitsPerItem } from "../../src/lib/promocode.helper";
 import { toMinorUnits } from "../../src/lib/money";
 import { parseProduct } from "../../src/models/Product";

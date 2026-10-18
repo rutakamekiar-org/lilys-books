@@ -17,6 +17,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 
 - Routing/pages: `src/app/`
 - UI layers: `src/components/atoms`, `src/components/molecules`, `src/components/organisms`
+- App-wide React context (cart, products, toasts): `src/components/providers`; keep non-visual state there, not in the UI layers
 - API boundary: `src/lib/api.ts`
 - Generated image dimensions: `src/generated/image-metadata.json`
 - Event definitions: `src/data/events.ts`
@@ -61,7 +62,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
   - `tests/e2e/accessibility.spec.ts` runs axe-core over home, catalog, product details, the excerpt dialog, cart and checkout; `tests/e2e/keyboard-navigation.spec.ts` covers the keyboard journey and dialog focus behaviour. Both run inside `npm run test:e2e`.
   - The scan must report zero violations apart from the rules listed in `SKIPPED_RULES` in `tests/e2e/a11y.ts`. `color-contrast` is skipped there as an accepted brand exception; do not add others without recording the reason in `ACCESSIBILITY.md`.
   - Do not change `--accent` (`#f09b30`) to satisfy a contrast tool. It is sampled from the cover art of «Звичайна» and the exception is deliberate.
-  - Build new dialogs on `useDialogA11y` from `src/lib/dialog-a11y.ts` instead of re-implementing Escape, focus trapping and focus restoration.
+  - Build new dialogs on `Dialog` (`src/components/molecules/Dialog.tsx`). It provides the overlay, labelled header with `CloseButton`, and `useDialogA11y` (Escape, focus trap, focus restoration); `dismissible` adds the phone swipe-down and `sheetPage` the phone page mode. Keep each dialog's look in its own CSS module via `classNames`.
   - Add an axe scan whenever you add a storefront page or dialog.
 
 ## Deployment Notes

@@ -11,14 +11,14 @@ import GoodreadsButton from "@/components/molecules/GoodreadsButton";
 import Button from "@/components/atoms/Button";
 import BookGallery from "@/components/molecules/BookGallery";
 import ExcerptDialog from "@/components/molecules/ExcerptDialog";
-import { useCart } from "@/components/molecules/CartProvider";
+import { useCart } from "@/components/providers/CartProvider";
 import notify from "@/lib/toast";
 import { getProductGalleryImages } from "@/lib/product-gallery";
 
 import type { Product } from "@/models/Product";
 import {canPurchase, getInitialBookFormat, getPrice, getProductItemDisplayLabel, isPreorder} from "@/lib/product-item.helper";
 import PriceText from "@/components/atoms/PriceText";
-import { useProducts } from "@/components/molecules/ProductsProvider";
+import { useProducts } from "@/components/providers/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
 const COVER_SIZES = "(max-width: 640px) 112px, (max-width: 960px) clamp(220px, 48vw, 280px), 340px";

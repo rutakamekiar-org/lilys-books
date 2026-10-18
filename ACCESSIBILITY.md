@@ -119,8 +119,8 @@ information. The rail itself is a named `group`, which is what assistive technol
 ## When adding a page or dialog
 
 - Add an axe scan for it in `tests/e2e/accessibility.spec.ts`.
-- Use `useDialogA11y` from `src/lib/dialog-a11y.ts` for any new dialog rather than
-  re-implementing Escape, focus trapping and focus restoration.
+- Build any new dialog on `Dialog` from `src/components/molecules/Dialog.tsx`, which applies
+  `useDialogA11y` (Escape, focus trapping and focus restoration), rather than re-implementing it.
 - Never silence a rule inline. If something genuinely cannot be fixed, add it to
   `SKIPPED_RULES` and explain it here.
 

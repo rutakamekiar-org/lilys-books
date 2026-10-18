@@ -1,7 +1,7 @@
-import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
+import { expect, test, type Page, type TestInfo } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
-import { appUrl, mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, mockApiUrl, resetMockApi, swipe } from "./helpers";
 import { expectNoA11yViolations } from "./a11y";
 
 const widgetUrl = "https://widget.novapost.com/division/index.html";
@@ -107,20 +107,6 @@ async function capture(page: Page, info: TestInfo, state: ProviderState) {
   const filename = path.join(directory, `SCR-05-delivery-picker-${state}-${viewport.width}x${viewport.height}.jpg`);
   await page.screenshot({ path: filename, type: "jpeg", quality: 85, animations: "disabled", caret: "hide" });
   await info.attach(state, { path: filename, contentType: "image/jpeg" });
-}
-
-async function swipe(page: Page, header: Locator, distance: number, duration = 0, cancel = false) {
-  const box = (await header.boundingBox())!;
-  const session = await page.context().newCDPSession(page);
-  const x = box.x + box.width / 2;
-  const y = box.y + 12;
-  await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
-  for (let step = 1; step <= 5; step++) {
-    if (duration) await new Promise(resolve => setTimeout(resolve, duration / 5));
-    await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x, y: y + distance * step / 5 }] });
-  }
-  await session.send("Input.dispatchTouchEvent", { type: cancel ? "touchCancel" : "touchEnd", touchPoints: [] });
-  await session.detach();
 }
 
 for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 844 }]) {
@@ -230,12 +216,12 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         const panel = header.locator("..");
         await swipe(page, header, 30);
         await expect(picker(page)).toBeVisible();
-        await swipe(page, header, 110, 600);
+        await swipe(page, header, 110, { duration: 600 });
         await expect(picker(page)).toBeVisible();
-        await swipe(page, header, 120, 400, true);
+        await swipe(page, header, 120, { duration: 400, cancel: true });
         await expect(picker(page)).toBeVisible();
         await expect.poll(async () => Math.abs((await panel.boundingBox())!.y - 56)).toBeLessThan(1);
-        await swipe(page, header, (await panel.boundingBox())!.height * .3, 700);
+        await swipe(page, header, (await panel.boundingBox())!.height * .3, { duration: 700 });
         await expect(picker(page)).toHaveCount(0);
         await expect(opener(page)).toBeFocused();
         await expectDetails(page, branches[0]);

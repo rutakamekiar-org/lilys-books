@@ -1,4 +1,4 @@
-import type { CartItem } from "@/components/molecules/CartProvider";
+import type { CartItem } from "@/components/providers/CartProvider";
 import { multiplyMoney, roundMoney, sumMoney } from "@/lib/money";
 import { getPrice } from "@/lib/product-item.helper";
 import { PromoCodeResponse, PromoCodeType } from "@/models/PromoCode";

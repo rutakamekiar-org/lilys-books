@@ -2,7 +2,7 @@
 import React from "react";
 import styles from "./books.module.css";
 import BookCard from "@/components/molecules/BookCard";
-import { useProducts } from "@/components/molecules/ProductsProvider";
+import { useProducts } from "@/components/providers/ProductsProvider";
 import ProductsDataState from "@/components/organisms/ProductsDataState";
 
 export default function BooksGrid() {
