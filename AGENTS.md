@@ -65,7 +65,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 ## Deployment Notes
 
 - CI workflow: `.github/workflows/ci.yml`
-- Pull-request verification uses Node.js 24, read-only permissions and the deterministic local API. Keep the `verify` job name stable because the `Protect main` ruleset requires it. Superseded runs are cancelled; failed Playwright traces and screenshots are uploaded for three days without production secrets.
+- Pull-request verification uses Node.js 24, read-only permissions and the deterministic local API. Keep the `verify` job name stable because the `Protect main` ruleset requires it; it aggregates the `checks` job and the four sharded `e2e` jobs. Superseded runs are cancelled; failed Playwright traces and screenshots are uploaded for three days without production secrets.
 - Netlify is the selected runtime host; production traffic moves only after the migration acceptance checks pass.
 - Configure `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_BASE` per environment.
 - Follow `HOSTING_CUTOVER_RUNBOOK.md` for preview verification, DNS changes, TLS checks, and rollback.

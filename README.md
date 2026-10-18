@@ -87,19 +87,21 @@ Pull-request verification is also production-independent. `npm run test:fixtures
 ### Pull-request verification
 
 `.github/workflows/ci.yml` runs on every pull request and on pushes to `main`, using
-Node.js 24 and `npm ci` with `package-lock.json`. The `verify` job runs lint, type
-checking, fixture validation, a production build against the local mock API, and
-Playwright tests. Failed commands fail the check; Playwright reports failures as
-GitHub annotations.
+Node.js 24 and `npm ci` with `package-lock.json`. The `checks` job runs lint, type
+checking and fixture validation. In parallel, four `e2e` shards each build the
+production app against the local mock API and run a quarter of the Playwright tests
+(`--shard=N/4`). The `verify` job passes only when `checks` and every shard pass.
+Failed commands fail the check; Playwright reports failures as GitHub annotations.
 The `Protect main` ruleset requires `verify`, an up-to-date branch, a pull request
 and resolved review conversations before merging.
 
 Workflow permissions are limited to repository contents read access, and checkout
 does not retain Git credentials. npm downloads are cached using the lockfile;
-Playwright installs Chromium and its system dependencies on each runner. New
+Playwright's Chromium download is cached by lockfile, and its system dependencies
+are installed on each runner. New
 commits cancel superseded runs for the same pull request or branch. If Playwright
 fails, its `test-results/` screenshots, traces and error context are available as
-the `playwright-failure-<run-id>-<attempt>` artifact for three days. Tests use only
+the `playwright-failure-<run-id>-<attempt>-shard-<n>` artifact for three days. Tests use only
 the local mock API and synthetic test values; production credentials are not
 provided. CI itself contains no deployment steps.
 

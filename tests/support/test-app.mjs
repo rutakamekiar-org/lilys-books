@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { rm } from "node:fs/promises";
 import path from "node:path";
 
 const appPort = "3100";
@@ -35,6 +36,9 @@ function waitForExit(child) {
 }
 
 await waitForMockApi();
+// The fetch cache persists in .next across runs; start every run from the fresh
+// mock fixtures instead of responses an earlier run's tests configured.
+await rm(path.resolve(".next", "cache", "fetch-cache"), { recursive: true, force: true });
 await waitForExit(runNext(["build"]));
 
 const server = runNext(["start", "--hostname", appHost, "--port", appPort]);

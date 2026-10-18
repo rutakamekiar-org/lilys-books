@@ -1,6 +1,6 @@
 import { expect, test, type APIRequestContext } from "@playwright/test";
 import { existingProduct } from "../fixtures/products.mjs";
-import { makeProduct, mockApiUrl, resetMockApi } from "./helpers";
+import { makeProduct, mockApiUrl, resetMockApi, revalidateCatalog } from "./helpers";
 
 function productJsonLd(html: string) {
   const entities = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
@@ -175,10 +175,7 @@ test("long product names receive a bounded title without changing their visible 
 });
 
 test("every sitemap page has distinct concise metadata in the initial HTML", async ({ page, request }) => {
-  await request.post("/api/revalidate", {
-    headers: { "x-revalidation-secret": "zvy11-test-secret" },
-    data: { slug: "test-book" },
-  });
+  await revalidateCatalog(request);
   const sitemap = await (await request.get("/sitemap.xml")).text();
   const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
   expect(urls.length).toBeGreaterThan(5);

@@ -105,3 +105,18 @@ button{
   .socialLinks{ gap: 12px; }
   .socialLinks a{ padding: 10px 14px; }
 }
+
+/* Phone sheets (cart, checkout) render as the page itself; see src/lib/sheet-page.ts.
+   `clip` keeps horizontal overflow hidden without making html/body scroll containers,
+   so the sheets' sticky header and footer stick to the screen, not to body's box. */
+html[data-sheet-page],
+html[data-sheet-page] body {
+  overflow-x: clip;
+}
+
+html[data-sheet-page] body > .skip-link,
+html[data-sheet-page] body > header,
+html[data-sheet-page] body > main,
+html[data-sheet-page] body > footer {
+  display: none;
+}

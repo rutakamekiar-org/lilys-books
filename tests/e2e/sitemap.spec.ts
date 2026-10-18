@@ -15,11 +15,6 @@ const expectedPaths = [
 
 test.beforeEach(async ({ request }) => {
   await resetMockApi(request);
-  const revalidation = await request.post("/api/revalidate", {
-    headers: { "x-revalidation-secret": "zvy11-test-secret" },
-    data: { slug: "test-book" },
-  });
-  expect(revalidation.status()).toBe(200);
 });
 
 test("sitemap contains every canonical indexable page exactly once", async ({ page, request }) => {

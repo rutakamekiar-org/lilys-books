@@ -32,6 +32,8 @@ export default defineConfig({
         NEXT_PUBLIC_API_URL: apiUrl,
         NEXT_PUBLIC_SITE_BASE: appUrl,
         REVALIDATION_SECRET: "zvy11-test-secret",
+        // One year: cached pages change only when a test revalidates them explicitly.
+        CATALOG_REVALIDATE_SECONDS: "31536000",
         NEXT_TELEMETRY_DISABLED: "1",
       },
     },

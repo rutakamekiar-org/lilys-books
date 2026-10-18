@@ -23,6 +23,8 @@ export interface DialogA11yOptions {
   lockScroll?: boolean;
 }
 
+let scrollLocks = 0;
+
 /**
  * Keyboard and focus behaviour shared by every storefront dialog: Escape closes,
  * focus moves into the dialog on open, Tab stays inside, and focus returns to the
@@ -90,10 +92,14 @@ export function useDialogA11y({ open, onClose, dialogRef, lockScroll = false }: 
 
   useEffect(() => {
     if (!open || !lockScroll) return;
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    document.documentElement.style.overflow = "hidden";
-    document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+    // Counted so handing over between dialogs (cart -> checkout) never unlocks early.
+    if (scrollLocks++ === 0) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.overflow = "hidden";
+      document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
+    }
     return () => {
+      if (--scrollLocks > 0) return;
       document.documentElement.style.overflow = "";
       document.documentElement.style.paddingRight = "";
     };

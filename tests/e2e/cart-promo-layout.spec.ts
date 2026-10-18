@@ -43,6 +43,8 @@ async function expectPromoFits(cart: Locator, width: number) {
   if (width < 640) {
     expect(inputBox.height).toBeGreaterThanOrEqual(44);
     expect(buttonBox.height).toBeGreaterThanOrEqual(44);
+    // iOS Safari zooms into focused inputs smaller than 16px, which destabilises the sheet.
+    expect(parseFloat(await input.evaluate(node => getComputedStyle(node).fontSize))).toBeGreaterThanOrEqual(16);
     if (await button.isEnabled()) expect(buttonBox.width).toBeGreaterThanOrEqual(44);
   }
 }

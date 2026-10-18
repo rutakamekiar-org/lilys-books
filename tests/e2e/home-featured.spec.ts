@@ -1,7 +1,7 @@
 import { expect, test, type Locator } from "@playwright/test";
 import { existingProduct, unavailableProduct } from "../fixtures/products.mjs";
 import { expectNoA11yViolations } from "./a11y";
-import { mockApiUrl, resetMockApi } from "./helpers";
+import { mockApiUrl, resetMockApi, revalidateCatalog } from "./helpers";
 
 const description = Array.from({ length: 18 }, (_, index) =>
   `Розділ ${index + 1}. Повний опис рекомендованої книги залишається доступним після ціни й переходу до деталей.`,
@@ -144,13 +144,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     });
 
     test("an initially empty catalog has no invented offer and keeps navigation available", async ({ page, request }) => {
-      const revalidate = async () => {
-        const response = await request.post("/api/revalidate", {
-          headers: { "x-revalidation-secret": "zvy11-test-secret" },
-          data: { slug: "test-book" },
-        });
-        expect(response.ok()).toBe(true);
-      };
+      const revalidate = () => revalidateCatalog(request);
       try {
         const state = await (await request.get(`${mockApiUrl}/__control/state`)).json();
         for (const product of state.products) {
@@ -169,7 +163,6 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         expect((await (await request.get(`${mockApiUrl}/__control/state`)).json()).invoiceRequests).toBe(0);
       } finally {
         await resetMockApi(request);
-        await revalidate();
         // Restore the prerendered home offer for subsequent tests, including failures.
         expect((await request.get("/")).ok()).toBe(true);
       }

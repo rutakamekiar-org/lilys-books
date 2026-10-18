@@ -13,9 +13,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  verify:
+  checks:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -32,9 +32,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install browser
-        run: npx playwright install --with-deps chromium
-
       - name: Lint
         run: npm run lint
 
@@ -44,18 +41,68 @@ jobs:
       - name: Validate deterministic product fixtures
         run: npm run test:fixtures
 
-      - name: Build with deterministic API
-        run: npm run build:ci
+  e2e:
+    name: e2e (shard ${{ matrix.shard }}/4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - name: Install browser
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Install browser system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      # The Playwright web server builds the app against the local mock API, so
+      # each shard verifies the production build without a separate build step.
       - name: End-to-end regression tests
         id: playwright
-        run: npm run test:e2e
+        run: npm run test:e2e -- --shard=${{ matrix.shard }}/4
 
       - name: Upload failed Playwright diagnostics
         if: ${{ failure() && steps.playwright.outcome == 'failure' }}
         uses: actions/upload-artifact@v7
         with:
-          name: playwright-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          name: playwright-failure-${{ github.run_id }}-${{ github.run_attempt }}-shard-${{ matrix.shard }}
           path: test-results/
           retention-days: 3
           if-no-files-found: warn
+
+  # The `Protect main` ruleset requires a check named `verify`; keep this name.
+  verify:
+    if: ${{ always() }}
+    needs: [checks, e2e]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require all verification jobs to pass
+        run: |
+          [ "${{ needs.checks.result }}" = "success" ] && [ "${{ needs.e2e.result }}" = "success" ] \
+            || { echo "checks: ${{ needs.checks.result }}, e2e: ${{ needs.e2e.result }}"; exit 1; }

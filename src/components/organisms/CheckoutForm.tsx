@@ -6,6 +6,7 @@ import { CartItem, useCart } from "@/components/molecules/CartProvider";
 import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
 import { getPrice } from "@/lib/product-item.helper";
 import { useDialogA11y } from "@/lib/dialog-a11y";
+import { useSheetPage } from "@/lib/sheet-page";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import { checkoutFieldLabels, getCheckoutFailure, type CheckoutFailure, type CheckoutField } from "@/lib/checkout-errors";
 import Icon from "@/components/atoms/Icon";
@@ -44,7 +45,6 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submittingRef = useRef(false);
   const [mounted, setMounted] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState<number | null>(null);
   const { appliedPromocode, discountAmount, getItemDiscount } = useCart();
 
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -65,31 +65,14 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
   }, [feedbackVersion]);
 
   // The dialog only exists once mounted, so focus management waits for the portal.
-  useDialogA11y({ open: open && mounted, onClose, dialogRef });
+  // Phones show checkout as the page itself; the desktop dialog locks the page behind it.
+  const pageMode = useSheetPage(open && mounted);
+  useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: !pageMode });
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!open) return;
-
-    const updateViewportHeight = () => {
-      const nextHeight = window.visualViewport?.height ?? window.innerHeight;
-      setViewportHeight(Math.round(nextHeight));
-    };
-
-    updateViewportHeight();
-    window.visualViewport?.addEventListener("resize", updateViewportHeight);
-    window.visualViewport?.addEventListener("scroll", updateViewportHeight);
-    window.addEventListener("resize", updateViewportHeight);
-
-    return () => {
-      window.visualViewport?.removeEventListener("resize", updateViewportHeight);
-      window.visualViewport?.removeEventListener("scroll", updateViewportHeight);
-      window.removeEventListener("resize", updateViewportHeight);
-    };
-  }, [open]);
 
   const hasPhysical = items.some((item) => item.format === "paper");
 
@@ -211,14 +194,10 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
 
   const total = subtractMoney(subtotal, discountAmount);
   const hasMissingRejectedItem = failure && Object.keys(failure.items).some(id => !items.some(item => item.itemId === id));
-  const overlayStyle = viewportHeight
-    ? ({ ["--checkout-viewport-height"]: `${viewportHeight}px` } as { [key: string]: string })
-    : undefined;
 
   return createPortal(
     <div
       className={styles.overlay}
-      style={overlayStyle}
       aria-modal="true"
       role="dialog"
       aria-labelledby={titleId}
