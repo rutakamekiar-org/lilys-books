@@ -1,17 +1,22 @@
-import { z } from "zod";
+// zod/mini keeps this client-shipped schema tree-shakeable; the classic "zod" entry bundles every locale.
+import * as z from "zod/mini";
 
-const requiredText = z.string().trim().min(1);
-const optionalText = z.string().nullable().optional().transform(value => value ?? undefined);
-const optionalNumber = z.number().finite().nullable().optional().transform(value => value ?? undefined);
+const requiredText = z.string().check(z.trim(), z.minLength(1));
+const orUndefined = <T,>(value: T | null | undefined) => value ?? undefined;
+const optionalOf = <T extends z.core.SomeType>(schema: T) =>
+    z.pipe(z.optional(z.nullable(schema)), z.transform(orUndefined<z.output<T>>));
+const optionalText = optionalOf(z.string());
+const optionalNumber = optionalOf(z.number());
+const optionalCount = optionalOf(z.int().check(z.nonnegative()));
 
 const ProductItemSchema = z.object({
-    id: z.string().uuid(),
+    id: z.uuid(),
     name: requiredText,
-    type: z.number().int(),
-    format: z.number().int().optional(),
+    type: z.int(),
+    format: z.optional(z.int()),
     isAvailable: z.boolean(),
     canPreorder: z.boolean(),
-    price: z.number().finite().nonnegative(),
+    price: z.number().check(z.nonnegative()),
     discountPrice: optionalNumber,
     currency: requiredText,
     note: optionalText,
@@ -20,9 +25,9 @@ const ProductItemSchema = z.object({
 const PhysicalDetailsSchema = z.object({
     seriesName: optionalText,
     publisher: optionalText,
-    pages: z.number().int().nonnegative().nullable().optional().transform(value => value ?? undefined),
+    pages: optionalCount,
     coverType: optionalText,
-    publicationYear: z.number().int().nullable().optional().transform(value => value ?? undefined),
+    publicationYear: optionalOf(z.int()),
     size: optionalText,
     weight: optionalNumber,
     paperType: optionalText,
@@ -30,11 +35,11 @@ const PhysicalDetailsSchema = z.object({
 });
 
 const ExternalBookRatingSchema = z.object({
-    source: z.number().int(),
+    source: z.int(),
     externalId: requiredText,
-    averageRating: z.number().finite(),
-    ratingsCount: z.number().int().nonnegative().nullable().optional().transform(value => value ?? undefined),
-    reviewsCount: z.number().int().nonnegative().nullable().optional().transform(value => value ?? undefined),
+    averageRating: z.number(),
+    ratingsCount: optionalCount,
+    reviewsCount: optionalCount,
 });
 
 const ExternalLinkSchema = z.object({
@@ -43,29 +48,29 @@ const ExternalLinkSchema = z.object({
     url: requiredText,
 });
 
-export const ProductSchema = z.object({
-    id: z.string().uuid(),
+export const ProductSchema = z.pipe(z.object({
+    id: z.uuid(),
     name: requiredText,
     slug: requiredText,
-    type: z.number().int().optional(),
+    type: z.optional(z.int()),
     genre: optionalText,
     imageUrl: requiredText,
-    imageUrls: z.array(requiredText).nullable().optional(),
+    imageUrls: z.optional(z.nullable(z.array(requiredText))),
     items: z.array(ProductItemSchema),
-    externalBookRatings: z.array(ExternalBookRatingSchema).default([]),
-    externalLinks: z.array(ExternalLinkSchema).default([]),
-    physicalDetails: PhysicalDetailsSchema.nullable().optional().transform(value => value ?? undefined),
+    externalBookRatings: z._default(z.array(ExternalBookRatingSchema), []),
+    externalLinks: z._default(z.array(ExternalLinkSchema), []),
+    physicalDetails: optionalOf(PhysicalDetailsSchema),
     seoDescription: optionalText,
     description: optionalText,
-    hasExcerpt: z.boolean().optional().default(false),
+    hasExcerpt: z._default(z.optional(z.boolean()), false),
     author: optionalText,
     ageRating: optionalText,
-    isHero: z.boolean().optional(),
-    isActive: z.boolean().optional(),
-}).transform(product => ({
+    isHero: z.optional(z.boolean()),
+    isActive: z.optional(z.boolean()),
+}), z.transform(product => ({
     ...product,
     imageUrls: product.imageUrls?.length ? product.imageUrls : [product.imageUrl],
-}));
+})));
 
 export const ProductListSchema = z.array(ProductSchema);
 

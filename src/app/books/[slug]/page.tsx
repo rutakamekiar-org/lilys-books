@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getProductBySlug } from "@/lib/api";
+import { getProductBySlug, getProductsForStatic } from "@/lib/api";
 import BookDetail from "@/components/organisms/BookDetail";
 import type { Product } from "@/models/Product";
 import { buildMetaDescription, SITE_NAME } from "@/lib/site";
@@ -9,7 +9,15 @@ import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const revalidate = 60;
+// Must be a literal; keep in step with CATALOG_REVALIDATE_SECONDS in src/lib/api.ts.
+export const revalidate = 3600;
+
+// Prerender known books so visitors get a CDN-cached page instead of a per-request render.
+// Slugs missing here (new books, or an API outage at build time) still render on demand and are then cached.
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  const products = await getProductsForStatic();
+  return products.map(({ slug }) => ({ slug }));
+}
 
 function hasText(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;

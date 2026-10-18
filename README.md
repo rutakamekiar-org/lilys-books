@@ -136,7 +136,7 @@ deployment do not waive this approval requirement.
 After explicit deployment approval, the next untagged commit triggers a deployment
 that includes the accumulated skipped changes. See Netlify's [skip-deploy documentation](https://docs.netlify.com/deploy/manage-deploys/manage-deploys-overview/#skip-a-deploy).
 
-Product pages are resolved from the BookPreorder API by slug and cached for up to 60 seconds. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
+Product pages are resolved from the BookPreorder API by slug and prerendered at build time. Pages are cached for up to one hour; when a product changes, the backend calls `/api/revalidate`, which refreshes every cached page on its next visit because the root layout renders the catalog. New active backend products therefore receive a `/books/{slug}` page without a frontend rebuild or deployment; missing and inactive slugs return `404`.
 
 Product identity, descriptions, SEO text, gallery order, specifications, prices, availability, external links, ratings, and excerpt availability come from the BookPreorder API. Responses are validated before rendering. If a gallery is empty, the frontend falls back to the primary `imageUrl`; optional copy is simply omitted. Excerpt HTML and image files are still frontend-hosted assets during this migration, but product-specific TypeScript content files are not used.
 

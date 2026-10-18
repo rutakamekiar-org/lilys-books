@@ -13,7 +13,8 @@ The original plan required a complete billing cycle and no retirement before
 or October 17.** Review current-cycle usage and observed production state now;
 record this as partial-cycle evidence. At 17:23 UTC on the same date, the owner
 explicitly waived backend revalidation verification and accepted its unverified
-state as a remaining risk. Credit headroom, deploy rollback, GO/NO-GO, retirement
+state as a remaining risk. (Update 2026-10-18: the owner confirmed backend revalidation
+works in production.) Credit headroom, deploy rollback, GO/NO-GO, retirement
 and all other final-verification requirements remain.
 
 ## Endpoints

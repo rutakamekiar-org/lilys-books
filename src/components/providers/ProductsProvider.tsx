@@ -68,9 +68,13 @@ export function ProductsProvider({
     }
   }, []);
 
-  // Fetch on first load and whenever the customer returns to this tab.
+  // Fetch once the browser is idle after first load (the server already sent the catalog),
+  // and whenever the customer returns to this tab.
   useEffect(() => {
-    refresh();
+    const idle = "requestIdleCallback" in window
+      ? window.requestIdleCallback(() => refresh(), { timeout: 3000 })
+      : undefined;
+    const fallback = idle === undefined ? setTimeout(() => refresh(), 1000) : undefined;
 
     const refreshWhenVisible = () => {
       if (document.visibilityState === "visible") {
@@ -79,7 +83,11 @@ export function ProductsProvider({
     };
 
     document.addEventListener("visibilitychange", refreshWhenVisible);
-    return () => document.removeEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      if (idle !== undefined) window.cancelIdleCallback(idle);
+      clearTimeout(fallback);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
   }, [refresh]);
 
   return (
