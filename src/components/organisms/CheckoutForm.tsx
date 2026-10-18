@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect, useId } from "react";
 import styles from "./CheckoutForm.module.css";
-import { CartItem, useCart } from "@/components/molecules/CartProvider";
+import { CartItem, useCart } from "@/components/providers/CartProvider";
 import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
 import { getPrice } from "@/lib/product-item.helper";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";

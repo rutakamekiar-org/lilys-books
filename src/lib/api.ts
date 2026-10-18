@@ -2,7 +2,7 @@ import type { CheckoutResponse } from "./types";
 import {handleApi} from "@/lib/api.helper";
 import {parseProduct, parseProducts, Product} from "@/models/Product";
 import {CheckoutFormData} from "@/components/organisms/CheckoutForm";
-import {CartItem} from "@/components/molecules/CartProvider";
+import {CartItem} from "@/components/providers/CartProvider";
 import {PromoCodeResponse} from "@/models/PromoCode";
 
 const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "https://api.zvychajna.pp.ua").replace(/\/$/, "");

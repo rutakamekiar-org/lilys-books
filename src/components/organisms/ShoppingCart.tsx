@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "./ShoppingCart.module.css";
 import { Product } from "@/models/Product";
 import { getPrice, getProductItemDisplayLabel } from "@/lib/product-item.helper";
-import { useCart } from "@/components/molecules/CartProvider";
+import { useCart } from "@/components/providers/CartProvider";
 import notify from "@/lib/toast";
 import { SHEET_PAGE_QUERY } from "@/lib/sheet-page";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";

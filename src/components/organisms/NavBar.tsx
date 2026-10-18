@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import styles from "./NavBar.module.css";
-import { useCart } from "@/components/molecules/CartProvider";
+import { useCart } from "@/components/providers/CartProvider";
 import ShoppingCart from "@/components/organisms/ShoppingCart";
 import dynamic from "next/dynamic";
 import type { CheckoutFormData } from "@/components/organisms/CheckoutForm";

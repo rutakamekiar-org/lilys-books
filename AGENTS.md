@@ -17,6 +17,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 
 - Routing/pages: `src/app/`
 - UI layers: `src/components/atoms`, `src/components/molecules`, `src/components/organisms`
+- App-wide React context (cart, products, toasts): `src/components/providers`; keep non-visual state there, not in the UI layers
 - API boundary: `src/lib/api.ts`
 - Generated image dimensions: `src/generated/image-metadata.json`
 - Event definitions: `src/data/events.ts`

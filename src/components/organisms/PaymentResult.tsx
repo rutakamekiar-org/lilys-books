@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Icon from "@/components/atoms/Icon";
 import Button from "@/components/atoms/Button";
-import { useCart } from "@/components/molecules/CartProvider";
+import { useCart } from "@/components/providers/CartProvider";
 import styles from "./PaymentResult.module.css";
 
 const CONTACT_EMAIL = "lillykukharets0325@gmail.com";

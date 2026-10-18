@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./SuggestionDialog.module.css";
 import { Product } from "@/models/Product";
-import { useCart } from "@/components/molecules/CartProvider";
+import { useCart } from "@/components/providers/CartProvider";
 import notify from "@/lib/toast";
 import Button from "@/components/atoms/Button";
 import Dialog from "@/components/molecules/Dialog";

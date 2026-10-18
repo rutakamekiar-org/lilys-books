@@ -1,6 +1,6 @@
 "use client";
 
-import { useProducts } from "@/components/molecules/ProductsProvider";
+import { useProducts } from "@/components/providers/ProductsProvider";
 import Button from "@/components/atoms/Button";
 import StorefrontErrorState from "./StorefrontErrorState";
 import styles from "./StorefrontErrorState.module.css";

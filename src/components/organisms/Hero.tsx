@@ -5,7 +5,7 @@ import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import Button from "@/components/atoms/Button";
 import type { Product } from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";
-import { useProducts } from "@/components/molecules/ProductsProvider";
+import { useProducts } from "@/components/providers/ProductsProvider";
 import ProductsDataState from "./ProductsDataState";
 
 export default function Hero({ initialProduct }: { initialProduct?: Product }) {
