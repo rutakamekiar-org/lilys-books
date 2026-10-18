@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Button from "@/components/atoms/Button";
 import styles from "./StorefrontErrorState.module.css";
 
 type StorefrontErrorStateProps =
@@ -42,13 +43,13 @@ export default function StorefrontErrorState(props: StorefrontErrorStateProps) {
         <p className={styles.description}>{copy.description}</p>
         <div className={styles.actions}>
           {props.kind !== "not-found" && (
-            <button className={styles.primaryAction} type="button" onClick={props.onRetry}>
+            <Button className={styles.action} onClick={props.onRetry}>
               Спробувати ще раз
-            </button>
+            </Button>
           )}
-          <Link className={styles.secondaryAction} href="/books">
+          <Button variant="secondary" className={styles.action} href="/books">
             Повернутися до каталогу
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

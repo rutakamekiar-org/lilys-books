@@ -3,11 +3,17 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  box-sizing: border-box;
   border-radius: var(--radius-md);
   font: inherit;
-  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
   transition: transform 0.1s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.button:hover {
+  text-decoration: none;
 }
 
 .button:focus-visible {
@@ -24,6 +30,7 @@
   border: none;
   background: var(--accent);
   color: var(--accent-contrast);
+  font-weight: 800;
 }
 
 .primary:hover:not(:disabled) {
@@ -35,7 +42,19 @@
   transform: translateY(0);
 }
 
+.secondary {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.secondary:hover:not(:disabled) {
+  box-shadow: 0 0 0 3px var(--accent-weak);
+}
+
 .md {
+  min-height: 44px;
   padding: 10px 16px;
 }
 
