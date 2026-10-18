@@ -17,11 +17,15 @@ export function subscribeToToastRequests(listener: () => void) {
     return () => { listeners.delete(listener); };
 }
 
+/** Mounts the toast container (loading react-toastify) so later toasts appear without a delay. */
+export function requestToasts() {
+    if (requested) return;
+    requested = true;
+    listeners.forEach(listener => listener());
+}
+
 function show(level: "success" | "error" | "info" | "warn", msg: string, opts?: ToastOptions) {
-    if (!requested) {
-        requested = true;
-        listeners.forEach(listener => listener());
-    }
+    requestToasts();
     void import("react-toastify").then(({ toast }) => toast[level](msg, { ...base, ...opts }));
 }
 
