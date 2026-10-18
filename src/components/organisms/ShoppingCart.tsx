@@ -10,7 +10,7 @@ import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 import { useSheetDismiss } from "@/lib/sheet-dismiss";
 import { useDialogA11y } from "@/lib/dialog-a11y";
-import { useVisualViewport } from "@/lib/visual-viewport";
+import { useSheetPage } from "@/lib/sheet-page";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
 import type { ApiError } from "@/models/ApiError";
@@ -48,13 +48,14 @@ export default function ShoppingCart({
   const applyingRef = useRef(false);
   const promoFeedbackId = useId();
   const [mounted, setMounted] = useState(false);
-  const viewport = useVisualViewport(open);
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
   const { dragHandleProps, dragStyle } = useSheetDismiss(onClose);
 
+  // Phones show the cart as the page itself; the desktop drawer locks the page behind it.
+  const pageMode = useSheetPage(open && mounted);
   // The dialog only exists once mounted, so focus management waits for the portal.
-  useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: true });
+  useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: !pageMode });
 
   useEffect(() => {
     setMounted(true);
@@ -105,17 +106,10 @@ export default function ShoppingCart({
   const total = subtractMoney(subtotal, discountAmount);
 
   const isEmpty = items.length === 0;
-  const overlayStyle = viewport
-    ? ({
-        ["--cart-viewport-height"]: `${viewport.height}px`,
-        ["--cart-viewport-top"]: `${viewport.top}px`,
-      } as { [key: string]: string })
-    : undefined;
 
   return createPortal(
     <div
       className={styles.overlay}
-      style={overlayStyle}
       aria-modal="true"
       role="dialog"
       aria-labelledby={titleId}

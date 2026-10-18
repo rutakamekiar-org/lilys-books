@@ -105,3 +105,11 @@ button{
   .socialLinks{ gap: 12px; }
   .socialLinks a{ padding: 10px 14px; }
 }
+
+/* Phone sheets (cart, checkout) render as the page itself; see src/lib/sheet-page.ts. */
+html[data-sheet-page] body > .skip-link,
+html[data-sheet-page] body > header,
+html[data-sheet-page] body > main,
+html[data-sheet-page] body > footer {
+  display: none;
+}

@@ -1,18 +1,13 @@
 .overlay {
   position: fixed;
   inset: 0;
-  top: var(--checkout-viewport-top, 0px);
-  height: var(--checkout-viewport-height, 100dvh);
+  height: 100dvh;
   background: rgba(0, 0, 0, 0.75);
-  /* The overlay is pinned to the visual viewport; the shadow keeps dimming the
-     page under iOS's translucent keyboard and autofill bars outside that box. */
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 500;
   padding: 20px;
-  overscroll-behavior: none;
 }
 
 .sheet {
@@ -23,7 +18,7 @@
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
   border: 1px solid var(--border);
   position: relative;
-  max-height: min(90vh, calc(var(--checkout-viewport-height, 100dvh) - 40px));
+  max-height: min(90vh, calc(100dvh - 40px));
   display: flex;
   flex-direction: column;
 }
@@ -252,16 +247,43 @@
 
 /* Mobile responsive styles */
 @media (max-width: 640px) {
+  /* Phones show checkout as the page itself (src/lib/sheet-page.ts): in document
+     flow, so iOS scrolls to a focused field natively instead of the sheet jumping. */
   .overlay {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: auto;
+    min-height: 100dvh;
     padding: 0;
-    align-items: stretch;
+    display: block;
   }
 
   .sheet {
     width: 100%;
     max-width: 100%;
+    min-height: 100dvh;
     border-radius: 0;
-    max-height: var(--checkout-viewport-height, 100dvh);
+    border: 0;
+    max-height: none;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--surface);
+    border-radius: 0;
+  }
+
+  .form,
+  .content {
+    overflow: visible;
+  }
+
+  .footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
   }
 
   .header {

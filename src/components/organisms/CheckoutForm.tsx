@@ -6,7 +6,7 @@ import { CartItem, useCart } from "@/components/molecules/CartProvider";
 import NovaPoshtaWidget, { NovaPoshtaDepartment } from "@/components/organisms/NovaPoshtaWidget";
 import { getPrice } from "@/lib/product-item.helper";
 import { useDialogA11y } from "@/lib/dialog-a11y";
-import { useVisualViewport } from "@/lib/visual-viewport";
+import { useSheetPage } from "@/lib/sheet-page";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import { checkoutFieldLabels, getCheckoutFailure, type CheckoutFailure, type CheckoutField } from "@/lib/checkout-errors";
 import Icon from "@/components/atoms/Icon";
@@ -45,7 +45,6 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
   const [isSubmitting, setIsSubmitting] = useState(false);
   const submittingRef = useRef(false);
   const [mounted, setMounted] = useState(false);
-  const viewport = useVisualViewport(open);
   const { appliedPromocode, discountAmount, getItemDiscount } = useCart();
 
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -66,7 +65,9 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
   }, [feedbackVersion]);
 
   // The dialog only exists once mounted, so focus management waits for the portal.
-  useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: true });
+  // Phones show checkout as the page itself; the desktop dialog locks the page behind it.
+  const pageMode = useSheetPage(open && mounted);
+  useDialogA11y({ open: open && mounted, onClose, dialogRef, lockScroll: !pageMode });
 
   useEffect(() => {
     setMounted(true);
@@ -193,17 +194,10 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
 
   const total = subtractMoney(subtotal, discountAmount);
   const hasMissingRejectedItem = failure && Object.keys(failure.items).some(id => !items.some(item => item.itemId === id));
-  const overlayStyle = viewport
-    ? ({
-        ["--checkout-viewport-height"]: `${viewport.height}px`,
-        ["--checkout-viewport-top"]: `${viewport.top}px`,
-      } as { [key: string]: string })
-    : undefined;
 
   return createPortal(
     <div
       className={styles.overlay}
-      style={overlayStyle}
       aria-modal="true"
       role="dialog"
       aria-labelledby={titleId}

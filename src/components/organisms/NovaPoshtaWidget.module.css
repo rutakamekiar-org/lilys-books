@@ -72,12 +72,11 @@
 
 .overlay {
   position: fixed;
-  top: var(--checkout-viewport-top, 0px);
+  top: 0;
   left: 0;
   width: 100%;
-  height: var(--checkout-viewport-height, 100dvh);
+  height: 100dvh;
   background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -173,7 +172,6 @@
   .overlay {
     align-items: flex-end;
     background: rgba(0, 0, 0, 0.75);
-    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.75);
     overflow: hidden;
     overscroll-behavior: none;
   }
