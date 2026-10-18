@@ -1,6 +1,6 @@
 import { expect, test, type APIRequestContext } from "@playwright/test";
 import { existingProduct } from "../fixtures/products.mjs";
-import { makeProduct, mockApiUrl, resetMockApi, revalidateCatalog } from "./helpers";
+import { appUrl, makeProduct, mockApiUrl, resetMockApi, revalidateCatalog } from "./helpers";
 
 function productJsonLd(html: string) {
   const entities = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
@@ -28,7 +28,7 @@ test("one Product/Book entity has stable identity, current images, publisher and
   const response = await request.get("/books/test-book");
   expect(response.status()).toBe(200);
   const product = productJsonLd(await response.text());
-  const url = "http://127.0.0.1:3100/books/test-book";
+  const url = `${appUrl}/books/test-book`;
   expect(product).toMatchObject({
     "@context": "https://schema.org",
     "@type": ["Product", "Book"],
@@ -37,7 +37,7 @@ test("one Product/Book entity has stable identity, current images, publisher and
     name: existingProduct.name,
     url,
     mainEntityOfPage: url,
-    image: ["http://127.0.0.1:3100/images/products/zvychajna/book.webp"],
+    image: [`${appUrl}/images/products/zvychajna/book.webp`],
     description: existingProduct.seoDescription,
     author: { "@type": "Person", name: existingProduct.author },
     publisher: { "@type": "Organization", name: existingProduct.physicalDetails.publisher },

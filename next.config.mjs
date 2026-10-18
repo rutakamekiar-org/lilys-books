@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
 const config = {
+  // Local parallel e2e shards (tools/test-e2e-parallel.mjs) each build into their own directory.
+  // Their generated tsconfig already lists those directories' types, so tsconfig.json stays untouched.
+  ...(process.env.E2E_DIST_DIR && {
+    distDir: process.env.E2E_DIST_DIR,
+    typescript: { tsconfigPath: process.env.E2E_TSCONFIG_PATH },
+  }),
   images: {
     // Let small covers use an appropriate candidate at the device's pixel density.
     deviceSizes: [360, 480, 640, 750, 828, 1080, 1200, 1440, 1600, 1920, 2048, 3840],

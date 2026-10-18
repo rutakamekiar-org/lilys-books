@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect } from "react";
 import Icon from "@/components/atoms/Icon";
+import Button from "@/components/atoms/Button";
 import { useCart } from "@/components/molecules/CartProvider";
 import styles from "./PaymentResult.module.css";
 
@@ -30,15 +30,15 @@ export default function PaymentResult({ returnType }: { returnType: "success" | 
                 <p className={styles.description}>Оплату отримано. Підтвердження замовлення надійде на вашу електронну пошту.</p>
                 <p className={styles.hint}>Якщо лист не прийшов протягом кількох хвилин, перевірте папку «Спам» або напишіть нам на {contactLink}.</p>
                 <div className={styles.actions}>
-                    <Link href="/books" className={styles.primary}>Повернутися до магазину</Link>
+                    <Button href="/books" className={styles.action}>Повернутися до магазину</Button>
                 </div>
             </> : <>
                 <h1 id="payment-title" className={styles.title}>Оплату не завершено</h1>
                 <p className={styles.description}>Не вдалося завершити оплату. Товари залишилися у вашому кошику.</p>
                 <p className={styles.hint}>Якщо кошти все ж були списані, напишіть нам на {contactLink}, і ми все перевіримо.</p>
                 <div className={styles.actions}>
-                    <button type="button" className={styles.primary} onClick={() => openCart()}>Спробувати ще раз</button>
-                    <Link href="/books" className={styles.secondary}>Повернутися до магазину</Link>
+                    <Button className={styles.action} onClick={() => openCart()}>Спробувати ще раз</Button>
+                    <Button variant="secondary" href="/books" className={styles.action}>Повернутися до магазину</Button>
                 </div>
             </>}
         </div>

@@ -8,6 +8,7 @@ import styles from "./BookDetail.module.css";
 import ImageCarousel from "@/components/organisms/ImageCarousel";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
 import GoodreadsButton from "@/components/molecules/GoodreadsButton";
+import Button from "@/components/atoms/Button";
 import BookGallery from "@/components/molecules/BookGallery";
 import ExcerptDialog from "@/components/molecules/ExcerptDialog";
 import { useCart } from "@/components/molecules/CartProvider";
@@ -161,20 +162,20 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     }, [product.description]);
 
   const renderExcerptAction = () => (
-      <button type="button" className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
+      <Button variant="secondary" fullWidth className={styles.excerptBtn} onClick={() => setExcerptOpen(true)}>
           <Icon name="book-open" />
           <span>Читати уривок</span>
-      </button>
+      </Button>
   );
   const renderCoverActions = (className: string, keyPrefix: string, includeExcerpt = true) => (
       <div className={className}>
-          {product && <GoodreadsButton product={product}/>}
+          <GoodreadsButton product={product} fullWidth className={styles.goodreads} />
           {includeExcerpt && product.hasExcerpt && renderExcerptAction()}
           {externalLinks.map((link, idx) => (
-              <a key={`${keyPrefix}-${idx}`} className={styles.excerptBtn} target="_blank" rel="noopener" href={link.url}>
+              <Button key={`${keyPrefix}-${idx}`} variant="secondary" fullWidth target="_blank" rel="noopener" href={link.url}>
                   <ExternalLinkIcon icon={link.icon} />
                   <span>{link.label}</span>
-              </a>
+              </Button>
           ))}
       </div>
   );

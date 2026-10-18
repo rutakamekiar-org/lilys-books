@@ -1,7 +1,7 @@
 import { createServer } from "node:http";
 import { productFixtures } from "../fixtures/products.mjs";
 
-const port = 4100;
+const port = Number(process.env.E2E_API_PORT ?? 4100);
 const host = "127.0.0.1";
 
 function initialState() {

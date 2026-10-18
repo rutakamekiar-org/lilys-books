@@ -66,7 +66,9 @@ additional axe exception.
 **This is a decision by the site owner, not an oversight.**
 
 `--accent: #f09b30` carries white text on the home CTA, the buy button, the cart checkout
-button, the checkout submit button, the cart badge and the promo apply button, and is used as
+button, the checkout submit button, the suggestion «Додати до кошика» button, the retry and
+return buttons on the payment-result and storefront error pages, the cart badge and the promo
+apply button, and is used as
 a text colour on the cart total, «Додати в кошик» and the suggestion price. White on it is
 **2.23:1** against the 4.5:1 that WCAG 1.4.3 AA asks for.
 

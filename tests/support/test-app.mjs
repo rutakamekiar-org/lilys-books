@@ -2,9 +2,11 @@ import { spawn } from "node:child_process";
 import { rm } from "node:fs/promises";
 import path from "node:path";
 
-const appPort = "3100";
+const appPort = process.env.E2E_APP_PORT ?? "3100";
 const appHost = "127.0.0.1";
-const apiHealthUrl = "http://127.0.0.1:4100/__health";
+const apiHealthUrl = `http://127.0.0.1:${process.env.E2E_API_PORT ?? 4100}/__health`;
+// Parallel shards build into their own directory (see next.config.mjs).
+const distDir = process.env.E2E_DIST_DIR ?? ".next";
 const nextCli = path.resolve("node_modules", "next", "dist", "bin", "next");
 
 async function waitForMockApi() {
@@ -38,7 +40,7 @@ function waitForExit(child) {
 await waitForMockApi();
 // The fetch cache persists in .next across runs; start every run from the fresh
 // mock fixtures instead of responses an earlier run's tests configured.
-await rm(path.resolve(".next", "cache", "fetch-cache"), { recursive: true, force: true });
+await rm(path.resolve(distDir, "cache", "fetch-cache"), { recursive: true, force: true });
 await waitForExit(runNext(["build"]));
 
 const server = runNext(["start", "--hostname", appHost, "--port", appPort]);

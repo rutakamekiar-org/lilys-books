@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
-import { mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, mockApiUrl, resetMockApi } from "./helpers";
 import { expectNoA11yViolations } from "./a11y";
 import { getCheckoutFailure } from "../../src/lib/checkout-errors";
 
@@ -106,7 +106,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await resetMockApi(request);
       await page.route("**/*", route => ["127.0.0.1", "localhost"].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort());
       await page.route("https://widget.novapost.com/**", route => route.fulfill({ contentType: "text/html; charset=utf-8", body:
-        `<button onclick='parent.postMessage(${JSON.stringify(department)}, "http://127.0.0.1:3100")'>Обрати тестове відділення</button><button onclick='parent.postMessage(${JSON.stringify(replacementDepartment)}, "http://127.0.0.1:3100")'>Обрати інше відділення</button>` }));
+        `<button onclick='parent.postMessage(${JSON.stringify(department)}, "${appUrl}")'>Обрати тестове відділення</button><button onclick='parent.postMessage(${JSON.stringify(replacementDepartment)}, "${appUrl}")'>Обрати інше відділення</button>` }));
       await page.route("https://example.invalid/**", route => route.fulfill({ contentType: "text/html", body: "Mock payment handoff" }));
       await page.route("**/api/PromoCode/validate?**", route => route.fulfill({ json: { code: "SAVE30", type: 0, value: 30, applicableProductItemIds: null, remainingUsages: null } }));
     });

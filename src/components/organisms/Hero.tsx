@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
 import Image from "next/image";
 import styles from "@/app/page.module.css";
 import GoodreadsRating from "@/components/molecules/GoodreadsRating";
+import Button from "@/components/atoms/Button";
 import type { Product } from "@/models/Product";
 import {getMinPrice} from "@/lib/product-item.helper";
 import { useProducts } from "@/components/molecules/ProductsProvider";
@@ -49,9 +49,9 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
             )}
 
             <div className={styles.actions}>
-              <Link href={`/books/${product.slug}`} prefetch={false} className={styles.cta}>
+              <Button href={`/books/${product.slug}`} prefetch={false} className={styles.cta}>
                 Детальніше
-              </Link>
+              </Button>
             </div>
 
             <div className={styles.mobileSupporting}>

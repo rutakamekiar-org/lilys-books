@@ -7,6 +7,8 @@ import { Product } from "@/models/Product";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
 import { useDialogA11y } from "@/lib/dialog-a11y";
+import Button from "@/components/atoms/Button";
+import CloseButton from "@/components/atoms/CloseButton";
 import { canPurchase, getPrice } from "@/lib/product-item.helper";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
 import Icon from "@/components/atoms/Icon";
@@ -61,7 +63,7 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
       <div className={styles.panel} ref={panelRef}>
         <div className={styles.header}>
           <h2 id={titleId} className={styles.title}>Разом цікавіше?</h2>
-          <button aria-label="Закрити" className={styles.close} onClick={onClose}>×</button>
+          <CloseButton onClick={onClose} />
         </div>
         <div className={styles.body}>
           <p className={styles.message}>Доповніть книгу ілюстраціями:</p>
@@ -80,9 +82,9 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
                     Це видання більше не доступне для покупки або передзамовлення.
                   </p>
                 )}
-                <button className={styles.addButton} disabled={!eligible}
+                <Button fullWidth disabled={!eligible}
                         aria-describedby={!eligible ? unavailableId : undefined}
-                        onClick={handleAddSuggested}>Додати до кошика</button>
+                        onClick={handleAddSuggested}>Додати до кошика</Button>
                 <Link href={productUrl} prefetch={false} className={styles.detailsLink} onClick={onClose}>
                     Детальніше
                 </Link>

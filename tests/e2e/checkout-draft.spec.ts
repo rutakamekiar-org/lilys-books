@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
-import { mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, mockApiUrl, resetMockApi } from "./helpers";
 
 const paperId = "11000000-0000-4000-8000-000000000001";
 const digitalId = "11000000-0000-4000-8000-000000000002";
@@ -79,7 +79,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await page.route("**/*", route => ["127.0.0.1", "localhost"].includes(new URL(route.request().url()).hostname)
         ? route.continue() : route.abort());
       await page.route("https://widget.novapost.com/**", route => route.fulfill({
-        contentType: "text/html; charset=utf-8", body: `<button onclick='parent.postMessage(${JSON.stringify(department)}, "http://127.0.0.1:3100")'>Обрати тестове відділення</button>`,
+        contentType: "text/html; charset=utf-8", body: `<button onclick='parent.postMessage(${JSON.stringify(department)}, "${appUrl}")'>Обрати тестове відділення</button>`,
       }));
       await page.goto("/books/test-book");
       await page.getByRole("button", { name: /Купити/ }).click();
