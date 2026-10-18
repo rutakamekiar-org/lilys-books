@@ -3,6 +3,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import styles from "./NovaPoshtaWidget.module.css";
 import { useDialogA11y } from "@/lib/dialog-a11y";
 import { useSheetDismiss } from "@/lib/sheet-dismiss";
+import CloseButton from "@/components/atoms/CloseButton";
 
 interface NovaPoshtaWidgetProps {
   onSelect: (data: NovaPoshtaDepartment) => void;
@@ -174,7 +175,7 @@ export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describe
           <div className={styles.modal} ref={modalRef} style={dragStyle}>
             <div className={styles.header} {...dragHandleProps}>
               <h2 id={modalTitleId}>Вибрати відділення</h2>
-              <button type="button" className={styles.closeBtn} onClick={closeWidget} aria-label="Закрити">×</button>
+              <CloseButton onClick={closeWidget} />
             </div>
             <iframe
               ref={iframeRef}

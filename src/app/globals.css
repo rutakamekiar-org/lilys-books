@@ -7,6 +7,10 @@
   --border:#e9e6e1;
   --accent:#f09b30;          /* brand orange */
   --accent-weak:#fff3e2;     /* light accent surface */
+  --accent-contrast:#fff;    /* text on accent buttons */
+  --radius-sm:8px;
+  --radius-md:12px;
+  --focus-ring:3px solid rgba(240,155,48,0.35);
 }
 
 @media (prefers-color-scheme: dark) {

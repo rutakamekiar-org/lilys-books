@@ -1,0 +1,26 @@
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.close:hover {
+  background: var(--accent-weak);
+}
+
+.close:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}

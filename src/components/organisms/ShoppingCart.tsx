@@ -13,6 +13,8 @@ import { useDialogA11y } from "@/lib/dialog-a11y";
 import { useSheetPage } from "@/lib/sheet-page";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
+import Button from "@/components/atoms/Button";
+import CloseButton from "@/components/atoms/CloseButton";
 import type { ApiError } from "@/models/ApiError";
 
 export interface CartItem {
@@ -124,13 +126,7 @@ export default function ShoppingCart({
       <div className={styles.cart} ref={dialogRef} style={dragStyle}>
         <div className={styles.header} {...dragHandleProps}>
           <h2 id={titleId} className={styles.title}>Кошик</h2>
-          <button
-            onClick={onClose}
-            aria-label="Закрити"
-            className={styles.close}
-          >
-            ×
-          </button>
+          <CloseButton onClick={onClose} />
         </div>
 
         <div className={styles.content}>
@@ -293,9 +289,9 @@ export default function ShoppingCart({
               <span className={styles.totalLabel}>Всього:</span>
               <span className={styles.totalValue}>{formatMoney(total)} грн</span>
             </div>
-            <button onClick={onCheckout} className={styles.checkoutBtn}>
+            <Button size="lg" fullWidth onClick={onCheckout}>
               Оформити замовлення
-            </button>
+            </Button>
             <button className={styles.continueShopping} onClick={onClose}><Icon name="arrow-left" /> Продовжити покупки</button>
           </div>
         )}

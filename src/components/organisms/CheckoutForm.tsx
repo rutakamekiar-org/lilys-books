@@ -10,6 +10,8 @@ import { useSheetPage } from "@/lib/sheet-page";
 import { formatMoney, multiplyMoney, subtractMoney, sumMoney } from "@/lib/money";
 import { checkoutFieldLabels, getCheckoutFailure, type CheckoutFailure, type CheckoutField } from "@/lib/checkout-errors";
 import Icon from "@/components/atoms/Icon";
+import Button from "@/components/atoms/Button";
+import CloseButton from "@/components/atoms/CloseButton";
 
 const MAX_ORDER_NOTE_LENGTH = 500;
 
@@ -208,9 +210,7 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
       <div className={styles.sheet} ref={dialogRef}>
         <div className={styles.header}>
           <h2 id={titleId} className={styles.title}>Оформлення замовлення</h2>
-          <button onClick={onClose} aria-label="Закрити" className={styles.close}>
-            ×
-          </button>
+          <CloseButton onClick={onClose} />
         </div>
 
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -418,9 +418,9 @@ export default function CheckoutForm({ open, onClose, items, onSubmit, onEditCar
           </div>
 
           <div className={styles.footer}>
-            <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+            <Button type="submit" size="lg" fullWidth disabled={isSubmitting}>
               {isSubmitting ? "Обробка замовлення..." : "Підтвердити замовлення"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

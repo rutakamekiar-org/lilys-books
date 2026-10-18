@@ -45,17 +45,6 @@
   color: var(--text);
 }
 
-.close {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 4px;
-  color: var(--muted);
-  line-height: 1;
-  flex-shrink: 0;
-}
-
 .body {
   padding: 24px;
   min-height: 0;
@@ -130,27 +119,6 @@
   color: var(--accent);
   font-size: 1.2rem;
   margin: 0 0 16px;
-}
-
-.addButton {
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s;
-  width: 100%;
-}
-
-.addButton:hover:not(:disabled) {
-  background: #d88a2a;
-}
-
-.addButton:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
 }
 
 .unavailable {
