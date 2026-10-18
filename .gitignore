@@ -17,6 +17,9 @@
 
 # next.js
 /.next/
+# local parallel e2e shard builds (tools/test-e2e-parallel.mjs)
+/.next-e2e/
+/tsconfig.e2e.json
 /out/
 
 # production

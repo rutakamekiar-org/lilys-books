@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { resetMockApi } from "./helpers";
+import { appUrl, resetMockApi } from "./helpers";
 
-const siteBaseUrl = "http://127.0.0.1:3100";
+const siteBaseUrl = appUrl;
 const expectedPaths = [
   "/",
   "/about",

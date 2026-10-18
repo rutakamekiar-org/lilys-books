@@ -9,7 +9,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Dev: `npm run dev` (use `npm run dev:local` when `NEXT_PUBLIC_API_URL` points at a local backend over HTTPS, so Node trusts the OS certificate store)
 - Lint: `npm run lint`
 - Type check: `npm run typecheck`
-- Browser regression tests: `npm run test:e2e`
+- Browser regression tests: `npm run test:e2e:parallel` for the full suite (isolated shards side by side); `npm run test:e2e -- <spec or --grep>` for a focused run
 - Build runtime application: `npm run build` (outputs to `.next/`)
 - Local production preview: `npm run start` (after `npm run build`)
 
@@ -54,6 +54,8 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Regression tests:
   - Playwright specs live in `tests/e2e`; the local API double is `tests/support/mock-api.mjs`.
   - Keep tests deterministic and production-independent. Never point the suite at the real API or submit a payment.
+  - Run the full suite locally with `npm run test:e2e:parallel`, not a single serial `npm run test:e2e`. It mirrors CI's 4-way sharding: each shard (`tools/test-e2e-parallel.mjs`) gets its own mock API port, app port and `.next-e2e/shard-N` build, because tests reset shared mock-API and page-cache state and cannot share servers. Pass `--shards=N` to change the count; per-shard logs land in `test-results/shards/`.
+  - Never hardcode `127.0.0.1:3100` or `:4100` in specs; import `appUrl` and `mockApiUrl` from `tests/e2e/helpers.ts` so tests work on any shard's ports.
 
 - Accessibility:
   - `tests/e2e/accessibility.spec.ts` runs axe-core over home, catalog, product details, the excerpt dialog, cart and checkout; `tests/e2e/keyboard-navigation.spec.ts` covers the keyboard journey and dialog focus behaviour. Both run inside `npm run test:e2e`.

@@ -89,11 +89,6 @@
 .itemMeta{ color: var(--muted); font-size: 13px; }
 .itemBlurb{ font-size: 14px; }
 .itemActions{ margin-top: 2px; }
-.btn{
-  display:inline-flex; align-items:center; gap:8px;
-  padding: 8px 12px; border:1px solid var(--border); border-radius: 10px; background: var(--surface);
-}
-.btn:hover{ text-decoration:none; border-color: var(--accent); box-shadow:0 0 0 2px var(--accent-weak) inset; }
 
 
 /* HERO below section (moves details off the photo) */

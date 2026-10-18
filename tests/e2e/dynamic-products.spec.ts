@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { makeProduct, mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, makeProduct, mockApiUrl, resetMockApi } from "./helpers";
 
 function jsonLdFrom(html: string): Array<Record<string, unknown>> {
   return [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
@@ -17,14 +17,14 @@ test("existing product returns server-rendered SEO metadata and Product/Book JSO
 
   expect(html).toContain("<title>Test Book — Test Author | Lily&#x27;s Books</title>");
   expect(html).toContain('<meta name="description" content="SEO description for the test book."');
-  expect(html).toContain('<link rel="canonical" href="http://127.0.0.1:3100/books/test-book"');
+  expect(html).toContain(`<link rel="canonical" href="${appUrl}/books/test-book"`);
 
   const book = jsonLdFrom(html).find(value => Array.isArray(value["@type"]) && value["@type"].includes("Product"));
   expect(book).toMatchObject({
     "@context": "https://schema.org",
     "@type": ["Product", "Book"],
     name: "Test Book",
-    url: "http://127.0.0.1:3100/books/test-book",
+    url: `${appUrl}/books/test-book`,
     description: "SEO description for the test book.",
     isbn: "978-1-23456-789-0",
   });

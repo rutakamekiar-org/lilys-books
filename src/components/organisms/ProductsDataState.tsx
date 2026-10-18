@@ -1,6 +1,7 @@
 "use client";
 
 import { useProducts } from "@/components/molecules/ProductsProvider";
+import Button from "@/components/atoms/Button";
 import StorefrontErrorState from "./StorefrontErrorState";
 import styles from "./StorefrontErrorState.module.css";
 
@@ -22,7 +23,7 @@ export default function ProductsDataState({ headingLevel = 1 }: { headingLevel?:
           <>
             <p className={styles.description} role="status">Завантажуємо книги…</p>
             <div className={styles.actions}>
-              <button className={styles.primaryAction} type="button" disabled>Завантажуємо…</button>
+              <Button className={styles.action} disabled>Завантажуємо…</Button>
             </div>
           </>
         ) : (

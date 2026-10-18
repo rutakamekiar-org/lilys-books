@@ -1,6 +1,6 @@
 "use client";
-import Icon from "@/components/atoms/Icon";
 import styles from "./GoodreadsRating.module.css";
+import GoodreadsButton from "./GoodreadsButton";
 import { type CSSProperties } from "react";
 import {getExternalBookRatingType, Product} from "@/models/Product";
 
@@ -67,18 +67,7 @@ export default function GoodreadsRating({ product, compact, variant = "default",
           {ratingContent}
         </div>
       ))}
-      {part !== "rating" && url && !compact && (
-        <a
-          className={`${styles.btn} ${styles.btnGoodreads}`}
-          href={url}
-          target="_blank"
-          rel="noopener"
-          aria-label="Перейти на сторінку книги на Goodreads"
-        >
-          <Icon name="goodreads" />
-          <span>Відгуки на Goodreads</span>
-        </a>
-      )}
+      {part !== "rating" && !compact && <GoodreadsButton product={product} />}
     </div>
   );
 }

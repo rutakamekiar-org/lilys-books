@@ -1,7 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
-import { mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, mockApiUrl, resetMockApi } from "./helpers";
 import { expectNoA11yViolations } from "./a11y";
 
 const widgetUrl = "https://widget.novapost.com/division/index.html";
@@ -21,7 +21,7 @@ const close = (page: Page) => picker(page).getByRole("button", { name: "Закр
 
 function providerHtml(state: ProviderState) {
   const content = state === "empty" ? "<p>Відділень не знайдено</p>" : branches.map(branch =>
-    `<button onclick='parent.postMessage(${JSON.stringify(branch)}, "http://127.0.0.1:3100")'>Обрати ${branch.shortName}</button>`).join("");
+    `<button onclick='parent.postMessage(${JSON.stringify(branch)}, "${appUrl}")'>Обрати ${branch.shortName}</button>`).join("");
   return `<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Controlled provider</title>
     <style>body{margin:0;font:16px sans-serif;background:#fff}main{padding:16px}h2{font-size:2em;margin:.67em 0}button{display:block;padding:12px;margin:12px 0} .space{height:1200px}</style></head>
     <body><main aria-label="Тестовий провайдер"><h2>Тестовий вибір відділення</h2>${content}<div class="space"></div><p>Кінець тестових результатів</p></main></body></html>`;
