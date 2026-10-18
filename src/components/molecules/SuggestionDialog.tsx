@@ -6,9 +6,8 @@ import styles from "./SuggestionDialog.module.css";
 import { Product } from "@/models/Product";
 import { useCart } from "@/components/molecules/CartProvider";
 import notify from "@/lib/toast";
-import { useDialogA11y } from "@/lib/dialog-a11y";
 import Button from "@/components/atoms/Button";
-import CloseButton from "@/components/atoms/CloseButton";
+import Dialog from "@/components/molecules/Dialog";
 import { canPurchase, getPrice } from "@/lib/product-item.helper";
 import PreorderLabel from "@/components/atoms/PreorderLabel";
 import Icon from "@/components/atoms/Icon";
@@ -22,8 +21,6 @@ interface SuggestionDialogProps {
 
 export default function SuggestionDialog({ open, onClose, suggestedProduct, suggestedItemId }: SuggestionDialogProps) {
   const { addItem, openCart } = useCart();
-  const panelRef = useRef<HTMLDivElement>(null);
-  const titleId = useId();
   const unavailableId = useId();
   const selectedId = useId();
   const actionHandled = useRef(false);
@@ -31,8 +28,6 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
   useEffect(() => {
     if (open) actionHandled.current = false;
   }, [open]);
-
-  useDialogA11y({ open, onClose, dialogRef: panelRef });
 
   if (!open) return null;
 
@@ -59,47 +54,46 @@ export default function SuggestionDialog({ open, onClose, suggestedProduct, sugg
   const productUrl = `/books/${suggestedProduct.slug}`;
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-labelledby={titleId} onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className={styles.panel} ref={panelRef}>
-        <div className={styles.header}>
-          <h2 id={titleId} className={styles.title}>Разом цікавіше?</h2>
-          <CloseButton onClick={onClose} />
+    <Dialog
+      open={open}
+      onClose={onClose}
+      title="Разом цікавіше?"
+      classNames={{ overlay: styles.overlay, panel: styles.panel, header: styles.header, title: styles.title }}
+    >
+      <div className={styles.body}>
+        <p className={styles.message}>Доповніть книгу ілюстраціями:</p>
+        <div className={styles.product}>
+          <Link href={productUrl} prefetch={false} className={styles.image} onClick={onClose}>
+              <Image src={suggestedProduct.imageUrl} alt={suggestedProduct.name} width={120} height={180} sizes="120px" />
+          </Link>
+          <div className={styles.info}>
+              <Link href={productUrl} prefetch={false} className={styles.productTitle} onClick={onClose}>
+                  <h3>{suggestedProduct.name}</h3>
+              </Link>
+              {item && <p className={styles.price}>{getPrice(item)} грн</p>}
+              <PreorderLabel item={item} />
+              {!eligible && (
+                <p id={unavailableId} role="status" className={styles.unavailable}>
+                  Це видання більше не доступне для покупки або передзамовлення.
+                </p>
+              )}
+              <Button fullWidth disabled={!eligible}
+                      aria-describedby={!eligible ? unavailableId : undefined}
+                      onClick={handleAddSuggested}>Додати до кошика</Button>
+              <Link href={productUrl} prefetch={false} className={styles.detailsLink} onClick={onClose}>
+                  Детальніше
+              </Link>
+          </div>
         </div>
-        <div className={styles.body}>
-          <p className={styles.message}>Доповніть книгу ілюстраціями:</p>
-          <div className={styles.product}>
-            <Link href={productUrl} prefetch={false} className={styles.image} onClick={onClose}>
-                <Image src={suggestedProduct.imageUrl} alt={suggestedProduct.name} width={120} height={180} sizes="120px" />
-            </Link>
-            <div className={styles.info}>
-                <Link href={productUrl} prefetch={false} className={styles.productTitle} onClick={onClose}>
-                    <h3>{suggestedProduct.name}</h3>
-                </Link>
-                {item && <p className={styles.price}>{getPrice(item)} грн</p>}
-                <PreorderLabel item={item} />
-                {!eligible && (
-                  <p id={unavailableId} role="status" className={styles.unavailable}>
-                    Це видання більше не доступне для покупки або передзамовлення.
-                  </p>
-                )}
-                <Button fullWidth disabled={!eligible}
-                        aria-describedby={!eligible ? unavailableId : undefined}
-                        onClick={handleAddSuggested}>Додати до кошика</Button>
-                <Link href={productUrl} prefetch={false} className={styles.detailsLink} onClick={onClose}>
-                    Детальніше
-                </Link>
-            </div>
-          </div>
-          <div className={styles.continuation}>
-            <p id={selectedId} className={styles.selectedNote}>
-              <span className={styles.confirmationIcon} aria-hidden="true"><Icon name="check" /></span>
-              <span>Книгу додано до кошика</span>
-            </p>
-            <button className={styles.continueButton} aria-describedby={selectedId}
-                    onClick={handleContinue}>Перейти до кошика</button>
-          </div>
+        <div className={styles.continuation}>
+          <p id={selectedId} className={styles.selectedNote}>
+            <span className={styles.confirmationIcon} aria-hidden="true"><Icon name="check" /></span>
+            <span>Книгу додано до кошика</span>
+          </p>
+          <button className={styles.continueButton} aria-describedby={selectedId}
+                  onClick={handleContinue}>Перейти до кошика</button>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 }

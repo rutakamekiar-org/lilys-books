@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./NovaPoshtaWidget.module.css";
-import { useDialogA11y } from "@/lib/dialog-a11y";
-import { useSheetDismiss } from "@/lib/sheet-dismiss";
-import CloseButton from "@/components/atoms/CloseButton";
+import Dialog from "@/components/molecules/Dialog";
 
 interface NovaPoshtaWidgetProps {
   onSelect: (data: NovaPoshtaDepartment) => void;
@@ -30,8 +28,6 @@ export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describe
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState<NovaPoshtaDepartment | null>(value || null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
-  const modalTitleId = useId();
 
   useEffect(() => {
     if (value) {
@@ -82,9 +78,6 @@ export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describe
       iframeRef.current.src = '';
     }
   };
-
-  useDialogA11y({ open: isOpen, onClose: closeWidget, dialogRef: modalRef });
-  const { dragHandleProps, dragStyle } = useSheetDismiss(closeWidget);
 
   useEffect(() => {
     if (isOpen && iframeRef.current) {
@@ -162,30 +155,20 @@ export default function NovaPoshtaWidget({ onSelect, value, labelledBy, describe
         </div>
       </button>
 
-      {isOpen && (
-        <div
-          className={styles.overlay}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={modalTitleId}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) closeWidget();
-          }}
-        >
-          <div className={styles.modal} ref={modalRef} style={dragStyle}>
-            <div className={styles.header} {...dragHandleProps}>
-              <h2 id={modalTitleId}>Вибрати відділення</h2>
-              <CloseButton onClick={closeWidget} />
-            </div>
-            <iframe
-              ref={iframeRef}
-              className={styles.iframe}
-              allow="geolocation"
-              title="Nova Poshta Widget"
-            />
-          </div>
-        </div>
-      )}
+      <Dialog
+        open={isOpen}
+        onClose={closeWidget}
+        title="Вибрати відділення"
+        classNames={{ overlay: styles.overlay, panel: styles.modal, header: styles.header }}
+        dismissible
+      >
+        <iframe
+          ref={iframeRef}
+          className={styles.iframe}
+          allow="geolocation"
+          title="Nova Poshta Widget"
+        />
+      </Dialog>
     </>
   );
 }
