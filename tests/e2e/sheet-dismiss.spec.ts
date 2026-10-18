@@ -1,19 +1,5 @@
-import { expect, test, type Page, type Locator } from "@playwright/test";
-import { makeProduct, mockApiUrl, resetMockApi } from "./helpers";
-
-async function swipe(page: Page, header: Locator, distance: number, startOffset = 12, duration = 0, cancel = false) {
-  const box = (await header.boundingBox())!;
-  const session = await page.context().newCDPSession(page);
-  const x = box.x + box.width / 2;
-  const y = box.y + startOffset;
-  await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
-  for (let step = 1; step <= 5; step++) {
-    if (duration) await new Promise(resolve => setTimeout(resolve, duration / 5));
-    await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x, y: y + distance * step / 5 }] });
-  }
-  await session.send("Input.dispatchTouchEvent", { type: cancel ? "touchCancel" : "touchEnd", touchPoints: [] });
-  await session.detach();
-}
+import { expect, test } from "@playwright/test";
+import { makeProduct, mockApiUrl, resetMockApi, swipe } from "./helpers";
 
 test.beforeEach(async ({ request }) => { await resetMockApi(request); });
 
@@ -40,14 +26,14 @@ for (const width of [360, 390]) {
         const originalTop = (await panel.boundingBox())!.y;
         await swipe(page, header, 30);
         await expect(dialog).toBeVisible();
-        await swipe(page, header, 110, 12, 600);
+        await swipe(page, header, 110, { duration: 600 });
         await expect(dialog).toBeVisible();
         expect(await panel.evaluate(node => getComputedStyle(node).transitionDuration)).toBe("0.18s");
         await expect.poll(async () => Math.abs((await panel.boundingBox())!.y - originalTop)).toBeLessThan(1);
-        await swipe(page, header, 120, 12, 400, true);
+        await swipe(page, header, 120, { duration: 400, cancel: true });
         await expect(dialog).toBeVisible();
         await expect.poll(async () => Math.abs((await panel.boundingBox())!.y - originalTop)).toBeLessThan(1);
-        await swipe(page, header, (await panel.boundingBox())!.height * .3, 12, 700);
+        await swipe(page, header, (await panel.boundingBox())!.height * .3, { duration: 700 });
         await expect(dialog).toBeVisible();
         expect(await panel.evaluate(node => node.getAnimations().some(animation => animation.playState === "running"))).toBe(true);
         await expect(dialog).toBeHidden();
@@ -59,7 +45,7 @@ for (const width of [360, 390]) {
         await expect(returningOpener).toBeFocused();
         await page.emulateMedia({ reducedMotion: "reduce" });
         await returningOpener.click();
-        await swipe(page, header, 110, 12, 600);
+        await swipe(page, header, 110, { duration: 600 });
         await expect(dialog).toBeVisible();
         expect(await panel.evaluate(node => getComputedStyle(node).transitionDuration)).toBe("0s");
         await page.keyboard.press("Escape");
@@ -76,7 +62,7 @@ for (const width of [360, 390]) {
       const dialog = page.getByRole("dialog", { name: /Читати уривок/ });
       const text = dialog.getByRole("region", { name: "Текст уривку", exact: true });
       await expect(text.getByText("Завантаження...", { exact: true })).toBeHidden();
-      await swipe(page, text, -120, 200);
+      await swipe(page, text, -120, { startOffset: 200 });
       await expect.poll(() => text.evaluate(node => node.scrollTop)).toBeGreaterThan(0);
       await expect(dialog).toBeVisible();
     });
