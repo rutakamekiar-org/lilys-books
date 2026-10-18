@@ -30,6 +30,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
   - Use `next/image` for storefront images so the deployment provider can optimize them.
 
 - Product data flow:
+  - Cached pages refresh when the backend calls `/api/revalidate`, which revalidates the whole root layout because every page renders the catalog. The time-based window (`CATALOG_REVALIDATE_SECONDS`, default 3600, and the literal `revalidate` in `src/app/books/[slug]/page.tsx`) is only a safety net; keep the two in step.
   - Server/build time: `getProductsForStatic()` (used in `src/app/layout.tsx` and book pages until the dynamic product-route migration is complete).
   - Client reactivity: `ProductsProvider` + `useProducts()`.
   - Do not fetch product API directly from UI components.
@@ -72,7 +73,7 @@ Next.js App Router storefront deployed as a server-capable Next.js application. 
 - Netlify is the selected runtime host; production traffic moves only after the migration acceptance checks pass.
 - Configure `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_BASE` per environment.
 - Follow `HOSTING_CUTOVER_RUNBOOK.md` for preview verification, DNS changes, TLS checks, and rollback.
-- The root `CNAME` was removed after the custom-domain verification gate passed. ZVY-43 operational retirement completed on 2026-10-01: Pages unpublished, its workflow disabled, ownership TXT removal confirmed by the owner and post-cleanup production checks passed. The owner waived the original October 17 date, full-billing-cycle observation gates and backend revalidation verification. Revalidation remains unverified as an accepted risk; do not claim it passed or access secrets for this issue. Do not describe the partial-cycle billing review as completed-cycle evidence.
+- The root `CNAME` was removed after the custom-domain verification gate passed. ZVY-43 operational retirement completed on 2026-10-01: Pages unpublished, its workflow disabled, ownership TXT removal confirmed by the owner and post-cleanup production checks passed. The owner waived the original October 17 date, full-billing-cycle observation gates and backend revalidation verification. On 2026-10-18 the owner confirmed that backend-initiated revalidation works in production; storefront pages now rely on it and fall back to a one-hour timer. Do not access secrets to re-check it. Do not describe the partial-cycle billing review as completed-cycle evidence.
 - Follow the retirement and evidence checklist in `HOSTING_CUTOVER_RUNBOOK.md`. Preserve the old `main` snapshot, `api` CNAME, Google verification TXT, nameservers, and historical GitHub Pages DNS values.
 
 ## Working Guidance For Agents

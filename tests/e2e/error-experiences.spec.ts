@@ -42,6 +42,8 @@ test("temporary API failure for a not-yet-cached book is safe and recovers on re
 });
 
 test("a cached book stays available during a product API failure", async ({ page, request }) => {
+  // Cache the page while the API is healthy (setup revalidation expired it).
+  expect((await request.get("/books/brunette-stories")).status()).toBe(200);
   await request.post(`${mockApiUrl}/__control/failures`, { data: { slugs: ["brunette-stories"] } });
 
   const response = await page.goto("/books/brunette-stories");

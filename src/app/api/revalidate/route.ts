@@ -34,6 +34,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    // The root layout renders the catalog into every page, so every page re-renders on its next visit.
+    revalidatePath("/", "layout");
     paths.forEach((path) => revalidatePath(path));
     return NextResponse.json({ revalidated: true, paths: [...paths] });
   } catch (error) {

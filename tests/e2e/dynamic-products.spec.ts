@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { appUrl, makeProduct, mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, makeProduct, mockApiUrl, resetMockApi, revalidateCatalog } from "./helpers";
 
 function jsonLdFrom(html: string): Array<Record<string, unknown>> {
   return [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
@@ -62,6 +62,18 @@ test("unavailable product remains indexable but cannot be purchased", async ({ p
 test("inactive product remains unavailable to the storefront", async ({ request }) => {
   const response = await request.get("/books/inactive-book");
   expect(response.status()).toBe(404);
+});
+
+test("authorized revalidation refreshes the catalog on pages beyond the changed book", async ({ request }) => {
+  const name = `Layout Catalog Book ${Date.now()}`;
+  expect(await (await request.get("/about")).text()).not.toContain(name);
+
+  await request.post(`${mockApiUrl}/__control/products`, {
+    data: makeProduct({ id: "40000000-0000-4000-8000-000000000002", slug: `layout-book-${Date.now()}`, name }),
+  });
+  await revalidateCatalog(request, "unrelated-book");
+
+  expect(await (await request.get("/about")).text()).toContain(name);
 });
 
 test("authorized revalidation refreshes cached product metadata", async ({ request }) => {

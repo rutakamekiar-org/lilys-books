@@ -5,7 +5,7 @@ export const appUrl = `http://127.0.0.1:${process.env.E2E_APP_PORT ?? 3100}`;
 export const mockApiUrl = `http://127.0.0.1:${process.env.E2E_API_PORT ?? 4100}`;
 export const revalidationSecret = "zvy11-test-secret";
 
-/** Drops the app's cached home, catalog, sitemap and `/books/<slug>` pages. */
+/** Drops every cached app page (the root layout renders the catalog) and the sitemap. */
 export async function revalidateCatalog(request: APIRequestContext, slug = "test-book") {
   const response = await request.post("/api/revalidate", {
     headers: { "x-revalidation-secret": revalidationSecret },
