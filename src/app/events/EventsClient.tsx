@@ -97,8 +97,8 @@ function FeaturedHero({ event, priorityImage = false }: { event: EventWithImages
         )}
         {event.url && (
           <div className={styles.heroBelowActions}>
-            <a className={styles.heroBtn} href={event.url} target="_blank" rel="noopener noreferrer" aria-label="Відкрити посилання на подію">
-              Перейти <span aria-hidden>↗</span>
+            <a className={styles.heroBtn} href={event.url} target="_blank" rel="noopener noreferrer">
+              Перейти<span className="visuallyHidden"> до події: {event.title}</span> <span aria-hidden>↗</span>
             </a>
           </div>
         )}

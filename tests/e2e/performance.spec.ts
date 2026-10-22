@@ -106,7 +106,7 @@ test("seasonal animation still appears in winter", async ({ page }) => {
 
 test("initial catalog covers are eager and subsequent covers stay lazy", async ({ page }) => {
   await page.goto("/books");
-  const covers = page.getByRole("main").getByRole("img");
+  const covers = page.getByRole("main").getByRole("article").locator("img");
   await expect(covers).toHaveCount(3);
   for (let index = 0; index < 2; index += 1) {
     await expect(covers.nth(index)).toHaveAttribute("loading", "eager");

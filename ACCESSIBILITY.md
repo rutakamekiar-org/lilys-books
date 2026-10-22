@@ -11,7 +11,7 @@ API in `tests/support/mock-api.mjs`.
 
 | Spec | Covers |
 | --- | --- |
-| `tests/e2e/accessibility.spec.ts` | axe-core scans of home, catalog, product details, excerpt dialog, cart, checkout, and checkout in its error state; meaningful image alternatives |
+| `tests/e2e/accessibility.spec.ts` | axe-core scans of home, catalog, product details, excerpt dialog, cart, checkout, and checkout in its error state; meaningful image alternatives; catalog cards with production titles and the events page at 1440, 390 and 320px |
 | `tests/e2e/keyboard-navigation.spec.ts` | keyboard-only catalog → checkout journey, visible focus, dialog focus trapping/restoration, error announcement, skip link |
 | `tests/e2e/book-excerpt.spec.ts` | desktop/mobile excerpt placement, keyboard scrolling of long excerpt text, focus restoration, edition/price preservation and excerpt failures |
 | `tests/e2e/payment-return.spec.ts` | payment success/failure return axe scans and overflow checks at 1440, 390 and 360px; keyboard cart action and focus restoration; cart cleared on success (including a new tab) and kept on failure |
@@ -58,6 +58,26 @@ and the accessible name «Текст уривку». Tab reaches the text, arrow
 and the shared dialog trap still cycles through its controls. Close and Escape return
 focus to the visible opener and preserve the chosen edition. This is a fix, not an
 additional axe exception.
+
+## Catalog cover alternatives and event link names (ZVY-77)
+
+Production catalog cards for books without an age badge or Goodreads rating
+(«Брунатні історії», «Листівки-ілюстрації до 'Інакшої'», «Під шепіт снігу») made the
+product link's text exactly the book title, and the cover inside the same link carried that
+title as its `alt`. axe 4.13 reports this as `image-redundant-alt` (best practice, minor). The
+local fixtures always had a `12+` badge in the link, so the scan never matched. The catalog
+cover is now `alt=""`: the visible `<h2>` title names the link. Covers outside a combined
+title link (hero, product page, cart, suggestion dialog) keep the book title as their
+alternative. `productionTitleProducts` in `tests/fixtures/products.mjs` reproduces the
+production cards; reverting the fix fails the scan at every tested width.
+
+Every event link on `/events` was named «Відкрити посилання на подію» regardless of its
+destination. Google's report listed this as an unscored identical-link-purpose warning; axe
+does not flag it. The visible «Перейти» now continues with a visually hidden
+«до події: <назва>», so each link is named after its event and the visible text stays part
+of the accessible name.
+
+Both are fixes, not additional axe exceptions.
 
 ## Accepted exceptions
 
