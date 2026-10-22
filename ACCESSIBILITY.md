@@ -59,26 +59,6 @@ and the shared dialog trap still cycles through its controls. Close and Escape r
 focus to the visible opener and preserve the chosen edition. This is a fix, not an
 additional axe exception.
 
-## Catalog cover alternatives and event link names (ZVY-77)
-
-Production catalog cards for books without an age badge or Goodreads rating
-(«Брунатні історії», «Листівки-ілюстрації до 'Інакшої'», «Під шепіт снігу») made the
-product link's text exactly the book title, and the cover inside the same link carried that
-title as its `alt`. axe 4.13 reports this as `image-redundant-alt` (best practice, minor). The
-local fixtures always had a `12+` badge in the link, so the scan never matched. The catalog
-cover is now `alt=""`: the visible `<h2>` title names the link. Covers outside a combined
-title link (hero, product page, cart, suggestion dialog) keep the book title as their
-alternative. `productionTitleProducts` in `tests/fixtures/products.mjs` reproduces the
-production cards; reverting the fix fails the scan at every tested width.
-
-Every event link on `/events` was named «Відкрити посилання на подію» regardless of its
-destination. Google's report listed this as an unscored identical-link-purpose warning; axe
-does not flag it. The visible «Перейти» now continues with a visually hidden
-«до події: <назва>», so each link is named after its event and the visible text stays part
-of the accessible name.
-
-Both are fixes, not additional axe exceptions.
-
 ## Accepted exceptions
 
 ### `color-contrast` — brand colour, deliberate
@@ -135,6 +115,26 @@ to rediscover it.
 `ImageCarousel` gives the first slide the product name and marks the rest decorative. They are
 alternative views of the same cover, so repeating the title would add noise rather than
 information. The rail itself is a named `group`, which is what assistive technology announces.
+
+## Catalog cover alternatives and event link names (ZVY-77)
+
+Production catalog cards for books without an age badge or Goodreads rating
+(«Брунатні історії», «Листівки-ілюстрації до 'Інакшої'», «Під шепіт снігу») made the
+product link's text exactly the book title, and the cover inside the same link carried that
+title as its `alt`. axe 4.13 reports this as `image-redundant-alt` (best practice, minor). The
+local fixtures always had a `12+` badge in the link, so the scan never matched. The catalog
+cover is now `alt=""`: the visible `<h2>` title names the link. Covers outside a combined
+title link (hero, product page, cart, suggestion dialog) keep the book title as their
+alternative. `productionTitleProducts` in `tests/fixtures/products.mjs` reproduces the
+production cards; reverting the fix fails the scan at every tested width.
+
+Every event link on `/events` was named «Відкрити посилання на подію» regardless of its
+destination. Google's report listed this as an unscored identical-link-purpose warning; axe
+does not flag it. The visible «Перейти» now continues with a visually hidden
+«до події: <назва>», so each link is named after its event and the visible text stays part
+of the accessible name.
+
+Both are fixes, not additional axe exceptions.
 
 ## When adding a page or dialog
 

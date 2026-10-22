@@ -77,7 +77,7 @@ test("product imagery carries meaningful alternative text", async ({ page }) => 
   await page.goto("/books");
   for (const name of ["Test Book", "Excerpt Book"]) {
     const card = page.getByRole("article").filter({ has: page.getByRole("heading", { name, exact: true }) });
-    await expect(card.getByRole("link", { name: new RegExp(name) })).toBeVisible();
+    await expect(card.getByRole("link", { name })).toBeVisible();
     await expect(card.locator("img")).toHaveAttribute("alt", "");
   }
 
