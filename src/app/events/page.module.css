@@ -106,5 +106,9 @@
 .heroBelowActions{ margin-top: 10px; }
 @media (max-width: 700px){
   .heroBelow{ padding: 10px 10px 12px; }
-  .heroBelowDate{ display:inline; }
+  .heroBelowDate{
+    display:block;
+    min-height: 20px; line-height: 20px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
 }
