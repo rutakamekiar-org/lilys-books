@@ -456,3 +456,138 @@ Separate implementation issues:
 
 ZVY-51 remains open: neither its accessibility pass requirement nor its expanded preview check is waived.
 Review of this evidence can proceed independently of implementing those separate fixes.
+
+## ZVY-75 investigation: remaining LCP render delay and JavaScript costs — 2026-10-23
+
+[ZVY-75](https://linear.app/zvychajna/issue/ZVY-75/investigate-remaining-storefront-lcp-render-delays-and-javascript)
+re-examined the residual costs measured on 2026-10-05: product LCP of 5.2–7.4 s, a 1,930 ms cover render delay,
+a 1,640 ms home render delay with a priority/discovery opportunity, and 153–166 KiB of unused JavaScript.
+Nothing was deployed. Deployed before/after verification belongs to ZVY-79.
+
+### Method and provenance
+
+- 54 mobile runs with the Lighthouse 13.5.0 CLI (Moto G Power emulation), three per route and variant. Every
+  metric, LCP element and LCP breakdown is kept in [lab-samples.json](docs/performance/zvy-75/lab-samples.json).
+- Two throttling modes:
+  - **simulated:** Lantern Slow 4G, the PageSpeed headline method;
+  - **devtools:** real 4× CPU and network throttling in the browser, which makes render delays visible in the trace.
+- Production (`https://zvychajna.pp.ua`, read-only): `/`, `/books/inaksha` and `/books/brunette-stories`.
+  The GA `/g/collect` and Clarity `collect` beacons were blocked, so no pageviews were recorded; the scripts
+  still loaded and ran. Production served the same chunk set as `origin/main` 5440f05. PR #55 (zod/mini; lazy
+  GA, Clarity and toasts; the one-hour page cache) is therefore already live and is the real baseline.
+- For A/B comparison, local production builds ran against the deterministic mock API in three variants: `main`,
+  this change, and this change plus `experimental.inlineCss`.
+- The anonymous PageSpeed API returned HTTP 429, so no new Google reports were captured. Local numbers can be
+  compared with each other, not with Google's runner.
+
+### What changed since the 2026-10-05 evidence
+
+- **The product LCP element is now text, not the cover.** ZVY-60 (132025f, 2026-10-06) made the phone cover a
+  112 px thumbnail. Every production mobile product run reports the description block as LCP. The 1,930 ms
+  render delay was measured on a cover image in the earlier layout and cannot recur in that form.
+- **Unused JavaScript has nearly halved.** Production now reports 95–97 KiB unused: 74–76 KiB in Google Tag
+  Manager and 21–22 KiB in the React DOM framework chunk. The ~84–87 KiB of unused first-party code from
+  2026-10-05 is gone (zod/mini in PR #55).
+  - Initial JavaScript is about 180 KB gzipped. About 130 KB of it is the React/Next.js runtime; the app's own
+    chunks are each 1–17 KB.
+  - The 112 KB core-js chunk is `noModule`, so modern browsers do not download it.
+- GTM (about 188 KiB transferred, 250–290 ms simulated bootup) and Clarity (about 26 KiB, 100–200 ms) now start
+  after the load event. They add TBT but no longer compete with LCP.
+
+### Production baseline (median and range, ms)
+
+| Route | Mode | FCP | LCP | TBT | LCP element | LCP render delay |
+| --- | --- | --- | --- | --- | --- | --- |
+| `/` | simulated | 984 (982–1094) | 2217 (2215–2325) | 146 | hero cover | 40 |
+| `/books/inaksha` | simulated | 1090 (981–1101) | 1513 (1500–2052) | 267 | description text | 324 |
+| `/books/brunette-stories` | simulated | 1095 (1075–1100) | 1755 (1487–2080) | 263 | description text | 414 |
+| `/` | devtools | 2159 (2079–2186) | 2429 (2376–2537) | 956 | hero cover | 50 |
+| `/books/inaksha` | devtools | 2172 (2145–2204) | 2172 (2145–2204) | 1080 | description text | 1819 |
+| `/books/brunette-stories` | devtools | 2149 (2144–2791) | 2149 (2144–2791) | 1184 | description text | 1772 |
+
+### Causes identified
+
+1. **Product pages download the cover twice at high priority.** Both cover slots are in the HTML, and CSS shows
+   one per breakpoint. The phone thumbnail used the API's absolute `imageUrl` (`https://zvychajna.pp.ua/images/...`).
+   The desktop carousel used the root-relative `imageUrls[0]`, which is the same file. The optimizer URLs
+   therefore differed, and the browser fetched both (13–17 KB each) on every viewport in every production
+   product run. Five of the six live products have this shape. On slow connections the duplicate competes with
+   the render-blocking CSS and the LCP element.
+2. **The home hero's preload had no fetch priority.** `preload` produced a `<link rel=preload>` without
+   `fetchpriority=high`, which is the PageSpeed "LCP request discovery" failure. In local runs the request
+   sometimes started at Low priority.
+3. **Product text render delay comes from CSS and the first layout, not JavaScript.** Devtools traces show no
+   app or framework script running before the first paint; React DOM evaluates after FCP. Before that paint, the
+   browser waits for three render-blocking stylesheets (about 10 KB). It then runs one layout task of
+   283–308 ms (4× throttled) for only 95–134 layout objects.
+   - Inlining the CSS removes most of the stylesheet wait (see below).
+   - The cost of the first layout is unexplained and may be specific to Chrome's font fallback on Windows.
+4. **Document latency varies independently of the code.** Production HTML returns
+   `Cache-Control: public,max-age=0,must-revalidate`. Every request reports `"Netlify Edge"; fwd=miss` and is
+   served from the durable cache.
+   - HTML TTFB from this location was 0.38–0.66 s, against 0.21 s for an edge-cached static chunk.
+   - One of 18 Lighthouse runs saw a 2.1 s TTFB (a stale durable entry).
+   - In the 2026-10-05 Google samples, FCP split into groups of about 0.9 s and about 2.9 s within the same
+     capture minutes across unrelated routes. That pattern matches per-request document latency, not page code.
+
+### Changes
+
+- `BookDetail` normalizes both cover slots with `storefrontImageSource`, the existing gallery normalizer, now
+  exported from `src/lib/product-gallery.ts`. The thumbnail and the first carousel slide now share one optimizer
+  URL and one download. Images, sizes, alt text and priorities are unchanged, and images that really differ
+  still load as before.
+- `Hero` uses `loading="eager"` and `fetchPriority="high"` instead of `preload`, as the Next.js 16 image
+  documentation recommends. React still emits the preload link, now with `fetchPriority="high"`, and the
+  Lighthouse discovery check passes.
+- New regression tests in `tests/e2e/performance.spec.ts` run at desktop, 320 px and 390 px:
+  - the home hero is eager and high priority in the server HTML (JavaScript disabled);
+  - a product whose API data mixes absolute and relative URLs requests its cover exactly once. The tests answer
+    optimizer requests locally, so the absolute production URL is never fetched.
+
+  With the source changes reverted, both tests fail at all three viewports.
+
+Expected effect: every product landing makes one fewer high-priority request (13–17 KB), and the home hero is
+consistently high priority. Local A/B runs show no change to simulated or devtools LCP for the hero. The local
+fixtures use matching URLs, so they cannot reproduce the duplicate. The real effect needs the deployed recheck in
+ZVY-79.
+
+### Evaluated and rejected
+
+- **`experimental.inlineCss`.** Devtools-throttled LCP improved substantially:
+  - product LCP: 1.73–1.84 s → 1.31–1.37 s;
+  - home LCP: 1.80 s → 1.64 s;
+  - render delay: 300–500 ms → 37–92 ms.
+
+  Simulated (PageSpeed-style) LCP did not improve: home 2.65 s → 2.80 s, product 2.67–3.03 s → 2.86–3.19 s.
+  Product HTML grows from 9.5 KB to 34 KB gzipped, because the CSS is inlined in the `<style>` element and
+  again in the RSC payload. Returning visitors also lose stylesheet caching. The flag is experimental and the
+  evidence is mixed, so this is a follow-up decision rather than part of this change.
+- **Forcing AVIF on Netlify.** `next.config.mjs` prefers AVIF, but Netlify Image CDN serves WebP for
+  `/_next/image` even when the browser accepts AVIF. With an explicit `fm=avif`, the 640 px hero is 67.5 KB
+  against 42.4 KB as WebP, so forcing AVIF would make it larger. The AVIF preference only takes effect under
+  local `next start`.
+- **Lighthouse "image delivery" savings (29 KiB on the hero).** The audit compares the 640 px file with the
+  354 CSS px slot. At the emulated 1.75 DPR the slot needs 620 device px, so a smaller candidate would lower
+  pixel density. The estimate cannot be achieved without reducing quality.
+- **Deferring or removing GA and Clarity further.** Both already load after `onload`. Deferring them until
+  interaction would drop pageviews from visitors who leave without interacting, and replacing gtag.js would
+  change the analytics. Their cost is TBT, not LCP.
+- **Splitting more app code (cart drawer, providers).** App chunks are 1–17 KB gzipped, and most of the
+  remaining unused code is the React DOM runtime and GTM. The expected gain is tens of milliseconds in
+  simulation, not enough to justify reworking the ZVY-50 first-cart lazy loading.
+- **Legacy JavaScript (13 KiB).** It is inside the React DOM framework chunk, and no supported configuration
+  change removes it.
+- **Backend changes.** Product data is served from the one-hour page cache. Document latency comes from the
+  hosting cache layer, not the product API.
+
+### Proposed follow-ups
+
+- Evaluate inlined critical CSS (`experimental.inlineCss` or a smaller hand-split) on a Netlify preview. It cuts
+  throttled render delay by about 0.4 s, but adds about 25 KB of gzipped HTML and showed no simulated
+  (PageSpeed-style) gain.
+- Investigate Netlify edge caching for cached HTML. Every document request misses the edge, with 0.4–0.7 s
+  TTFB and occasional 2 s outliers, against 0.2 s for static assets.
+- Find the cause of the 280–310 ms (4× throttled) first layout before FCP. It occurs on every route with about
+  100 layout objects; confirm it on Linux/PageSpeed before acting.
+- Measure the TBT cost of GA4 and Clarity in field-like conditions, and agree an analytics loading policy with
+  the owner that balances main-thread cost against pageview accuracy.
