@@ -1,5 +1,9 @@
 import { expect, test } from "@playwright/test";
+import { events } from "../../src/data/events";
 import { resetMockApi } from "./helpers";
+
+// LocalDateTime fills dates in after hydration; any published event year shows it has.
+const eventYears = new RegExp([...new Set(events.filter(e => e.published !== false).map(e => new Date(e.date).getUTCFullYear()))].join("|"));
 
 // The default headless shell never reports layout-shift entries; the full Chromium build does.
 test.use({ channel: "chromium" });
@@ -50,7 +54,7 @@ test("event cards keep their layout while scripts and photos arrive late", async
     releaseScripts();
     // The gallery arrows enable only once the carousel has hydrated and measured its rail.
     await expect(page.getByRole("button", { name: "Наступне фото" }).first()).toBeEnabled();
-    await expect(cards.first().getByText(/2025/).filter({ visible: true })).toBeVisible();
+    await expect(cards.first().getByText(eventYears).filter({ visible: true })).toBeVisible();
 
     releaseImages();
     const covers = page.getByRole("group", { name: /Зображення події:/ }).locator("img[loading=eager]");
