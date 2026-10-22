@@ -77,7 +77,8 @@ export default function Hero({ initialProduct }: { initialProduct?: Product }) {
             width={360}
             height={540}
             sizes="(max-width: 560px) calc(100vw - 58px), (max-width: 640px) calc(100vw - 82px), (max-width: 980px) calc(100vw - 90px), 360px"
-            preload
+            loading="eager"
+            fetchPriority="high"
           />
         </div>
       </div>
