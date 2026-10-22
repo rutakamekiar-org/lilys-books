@@ -31,7 +31,7 @@ async function documentBounds(locator: Locator) {
   });
 }
 
-for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 844 }]) {
+for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }, { width: 360, height: 844 }, { width: 320, height: 720 }]) {
   test.describe(`excerpt at ${viewport.width}x${viewport.height}`, () => {
     test.use({ viewport });
     test.beforeEach(async ({ request, page }) => {
@@ -99,17 +99,22 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await expect(buy).toBeVisible();
       const opener = page.getByRole("button", { name: "Читати уривок", exact: true });
       await opener.focus();
+      // The real «Звичайна» excerpt, not a short fixture: axe only flags the text area once it overflows.
+      const excerptResponse = page.waitForResponse(response => new URL(response.url()).pathname === "/content/excerpts/zvychajna.html");
       await page.keyboard.press("Enter");
       const dialog = page.getByRole("dialog", { name: /Читати уривок/ });
       await expect(dialog).toBeVisible();
+      expect((await excerptResponse).ok()).toBe(true);
       await expect(dialog.getByText("Завантаження...", { exact: true })).toBeHidden();
       await expect(dialog.locator("p").first()).toBeVisible();
       const close = dialog.getByRole("button", { name: "Закрити", exact: true });
       await expect(close).toBeFocused();
+      await expectNoA11yViolations(page, `${viewport.width}px loaded excerpt`);
       const text = dialog.getByRole("region", { name: "Текст уривку", exact: true });
+      const { scrollHeight, clientHeight } = await text.evaluate(node => ({ scrollHeight: node.scrollHeight, clientHeight: node.clientHeight }));
+      expect(scrollHeight, "the loaded excerpt overflows its text area many times over").toBeGreaterThan(clientHeight * 10);
       await page.keyboard.press("Tab");
       await expect(text).toBeFocused();
-      expect(await text.evaluate(node => node.scrollHeight)).toBeGreaterThan(await text.evaluate(node => node.clientHeight));
       await page.keyboard.press("ArrowDown");
       await expect.poll(() => text.evaluate(node => node.scrollTop)).toBeGreaterThan(0);
       await page.keyboard.press("Tab");
@@ -118,7 +123,6 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await expect(text).toBeFocused();
       await page.keyboard.press("Shift+Tab");
       await expect(close).toBeFocused();
-      await expectNoA11yViolations(page, `${viewport.width}px excerpt`);
       await page.keyboard.press("Escape");
       await expect(dialog).toBeHidden();
       await expect(opener).toBeFocused();
