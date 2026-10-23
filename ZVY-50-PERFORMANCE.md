@@ -359,6 +359,14 @@ Events CLS is 0.085, 0, 0.085 (median 0.085 versus baseline 0.046). Google attri
 hero. Ranges overlap (before 0–0.092, after 0–0.085), so the median increase is recorded without claiming a
 proven new regression. Layout shifts remain unresolved and have a separate fix issue.
 
+ZVY-76 follow-up (not yet deployed): the shift is caused by hydration, not image loading or fonts. Event dates
+are formatted in the visitor's locale and time zone, so the server renders an empty date. On phones that date
+shared the meta line with the location; once filled in after hydration, the line wrapped, the card grew 22 px
+and the cards below moved. Locally, with first paint before hydration, Chromium records 0.0849 at 390 px with
+the next `hero` article as source, matching Google's figure. Phones now give the date its own reserved line.
+`tests/e2e/event-layout.spec.ts` holds scripts and photos, then requires zero layout shifts and unchanged card
+boxes at desktop/320/390 px. Deployed captures follow in ZVY-79.
+
 ### Image, font, layout and JavaScript diagnostics
 
 [diagnostics.json](docs/performance/zvy-51/diagnostics.json) retains detailed values and report links.
