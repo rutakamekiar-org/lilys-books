@@ -21,6 +21,11 @@ const routes = ["/", "/books", "/about", "/events", "/return-policy",
   "/books/pid_shepit_snihu", "/books/brunette-stories", "/books/inaksha-art"];
 const canonical = (process.env.CUTOVER_CANONICAL_BASE_URL ?? "https://zvychajna.pp.ua").replace(/\/$/, "");
 
+// Since ZVY-60 the product page switches to its phone layout at 640 px (BookDetail.module.css): one buy CTA that
+// reads "Переглянути кошик" once the selected format is in the cart, no "Додати в кошик" button, and a cover
+// thumbnail that opens the image viewer instead of the inline carousel.
+const isPhoneLayout = (page: Page) => page.viewportSize()!.width <= 640;
+
 async function trapFocus(page: Page, dialog: Locator) {
   await expect.poll(() => dialog.evaluate(node => node.contains(document.activeElement))).toBe(true);
   for (const key of ["Tab", "Shift+Tab"]) {
@@ -92,6 +97,7 @@ for (const format of ["Паперова", "Електронна"]) {
     await page.goto("/books/zvychajna");
     await page.getByRole("radio", { name: new RegExp(format) }).check();
     const opener = page.getByRole("button", { name: /Купити/ });
+    const openerHandle = await opener.elementHandle();
     await opener.click();
     const cart = page.getByRole("dialog", { name: "Кошик", exact: true });
     await expect(cart).toBeVisible();
@@ -121,7 +127,12 @@ for (const format of ["Паперова", "Електронна"]) {
     await expectNoA11yViolations(page, `deployed ${format} invalid checkout`);
     await page.keyboard.press("Escape");
     await expect(checkout).toBeHidden();
-    await expect(opener).toBeFocused();
+    const restoredOpener = isPhoneLayout(page)
+      ? page.getByRole("button", { name: "Переглянути кошик", exact: true })
+      : opener;
+    await expect(restoredOpener).toBeFocused();
+    expect(await page.evaluate(node => node === document.activeElement, openerHandle),
+      "focus returns to the CTA element that opened the cart").toBe(true);
   });
 }
 
@@ -132,11 +143,24 @@ test("deployed mixed-cart totals and quantity rules remain consistent", async ({
   const paper = await price("Паперова");
   const digital = await price("Електронна");
   expect(Number.isFinite(paper) && Number.isFinite(digital)).toBe(true);
-  await page.getByRole("button", { name: "Додати в кошик", exact: true }).click();
-  await page.getByRole("radio", { name: /Електронна/ }).check();
-  await page.getByRole("button", { name: "Додати в кошик", exact: true }).click();
-  await page.getByRole("navigation").getByRole("button", { name: /Кошик/ }).click();
   const cart = page.getByRole("dialog", { name: "Кошик", exact: true });
+  const addToCart = page.getByRole("button", { name: "Додати в кошик", exact: true });
+  for (const format of ["Паперова", "Електронна"]) {
+    await page.getByRole("radio", { name: new RegExp(format) }).check();
+    if (isPhoneLayout(page)) {
+      // Phones have no separate add button: the buy CTA adds the format and opens the cart.
+      await expect(addToCart).toBeHidden();
+      await page.getByRole("button", { name: /^Купити/ }).click();
+      await expect(cart).toBeVisible();
+      await page.keyboard.press("Escape");
+      await expect(cart).toBeHidden();
+      await expect(page.getByRole("button", { name: "Переглянути кошик", exact: true })).toBeVisible();
+    } else {
+      await addToCart.click();
+      await expect(page.getByRole("button", { name: "Вже в кошику", exact: true })).toBeVisible();
+    }
+  }
+  await page.getByRole("navigation").getByRole("button", { name: /Кошик/ }).click();
   const total = cart.locator('[class*="totalValue"]');
   await expect(total).toHaveText(`${paper + digital} грн`);
   await expect(cart.getByRole("button", { name: "Збільшити кількість" })).toHaveCount(1);
@@ -163,10 +187,20 @@ test("deployed checkout code loads on first cart use", async ({ page }) => {
 
 test("deployed gallery and excerpt retain lazy loading, keyboard focus and accessibility", async ({ page, request }, testInfo) => {
   const html = await (await request.get("/books/inaksha-art")).text();
-  expect((html.match(/<img\b[^>]*>/g) ?? []).filter(tag => tag.includes("inaksha-art"))).toHaveLength(1);
+  // Two cover slots share the first image: the phone thumbnail and the first desktop carousel slide.
+  // Later slides must stay out of the server HTML.
+  const coverTags = (html.match(/<img\b[^>]*>/g) ?? []).filter(tag => tag.includes("inaksha-art"));
+  expect(coverTags).toHaveLength(2);
+  const coverFiles = coverTags.map(tag => tag.match(/src="[^"]*?url=([^&"]+)/)?.[1]);
+  expect(coverFiles).toEqual([expect.stringContaining("inaksha-art"), expect.stringContaining("inaksha-art")]);
+  expect(new Set(coverFiles).size, "both cover slots use one image URL").toBe(1);
   await page.goto("/books/inaksha-art");
-  const gallery = page.getByRole("group", { name: /Зображення:/ });
-  await page.getByRole("button", { name: "Наступне фото", exact: true }).click();
+  // Phones show the cover thumbnail and browse the gallery in the image viewer; desktop browses it inline.
+  if (isPhoneLayout(page)) await page.getByRole("button", { name: /^Відкрити зображення книги: / }).click();
+  const viewer = isPhoneLayout(page) ? page.getByRole("dialog") : page.getByRole("main");
+  const gallery = viewer.getByRole("group", { name: /Зображення:/ });
+  await expect(gallery).toBeVisible();
+  await viewer.getByRole("button", { name: "Наступне фото", exact: true }).click();
   await expect(gallery.locator("img").nth(1)).toHaveAttribute("loading", "lazy");
   await expect.poll(() => gallery.locator("img").nth(1).evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   await page.goto("/books/zvychajna");
