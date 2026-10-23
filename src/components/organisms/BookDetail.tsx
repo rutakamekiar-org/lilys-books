@@ -22,6 +22,17 @@ import { useProducts } from "@/components/providers/ProductsProvider";
 import SuggestionDialog from "@/components/molecules/SuggestionDialog";
 
 const COVER_SIZES = "(max-width: 640px) 112px, (max-width: 960px) clamp(220px, 48vw, 280px), 340px";
+// Matches --desc-collapsed-lines in BookDetail.module.css.
+const DESCRIPTION_COLLAPSED_LINES = 6;
+// Fewer characters than a line holds in the narrowest (320px) layout, so the estimate errs towards overflowing.
+const DESCRIPTION_MIN_LINE_CHARS = 24;
+
+/** True when the text fits the collapsed lines at every width; decided from the text alone so the server agrees. */
+function descriptionSurelyFits(description: string | null | undefined) {
+  const lines = (description ?? "").split(/\r?\n/)
+    .reduce((total, line) => total + Math.max(1, Math.ceil(line.length / DESCRIPTION_MIN_LINE_CHARS)), 0);
+  return lines <= DESCRIPTION_COLLAPSED_LINES;
+}
 
 export default function BookDetail({ product: staticProduct }: { product: Product }) {
   const { products, refreshProduct } = useProducts();
@@ -33,7 +44,9 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const [excerptOpen, setExcerptOpen] = useState(false);
   const [suggestionItemId, setSuggestionItemId] = useState<string | null>(null);
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
-    const [isDescriptionOverflowing, setIsDescriptionOverflowing] = useState(false);
+    // Overflow is only measurable in the browser. Unless the text surely fits, the collapsed box reserves
+    // the toggle row either way, so the measurement decides whether the toggle and fade show, not the layout.
+    const [isDescriptionOverflowing, setIsDescriptionOverflowing] = useState(() => !descriptionSurelyFits(staticProduct.description));
     const descriptionRef = useRef<HTMLDivElement | null>(null);
   const [format, setFormat] = useState<BookFormat>(() => getInitialBookFormat(staticProduct.items));
   const hasChosenFormat = useRef(false);
@@ -127,6 +140,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
   const externalLinks = product?.externalLinks || []
   const descriptionId = `book-description-${product.slug}`;
   const descriptionTitleId = `${descriptionId}-title`;
+  const reservesDescriptionToggle = isDescriptionOverflowing || !descriptionSurelyFits(product.description);
 
     useEffect(() => {
         const node = descriptionRef.current;
@@ -146,7 +160,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
             }
 
             const collapsedHeight = lineHeight * collapsedLines;
-            setIsDescriptionOverflowing(node.scrollHeight > collapsedHeight + 2);
+            setIsDescriptionOverflowing(node.offsetHeight > collapsedHeight + 2);
         };
 
         measureOverflow();
@@ -314,24 +328,26 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                       {product.description && (
                           <section className={styles.descriptionPanel} aria-labelledby={descriptionTitleId}>
                               <h2 id={descriptionTitleId}>Опис</h2>
-                              <div
-                                  id={descriptionId}
-                                  ref={descriptionRef}
-                                  className={`${styles.desc} ${descriptionExpanded || !isDescriptionOverflowing ? styles.descExpanded : styles.descCollapsed}`}
-                              >
-                                  {product.description}
+                              <div className={`${styles.descBody} ${descriptionExpanded || !reservesDescriptionToggle ? styles.descExpanded : styles.descCollapsed} ${isDescriptionOverflowing ? styles.descOverflowing : ""}`}>
+                                  <div className={styles.descClamp}>
+                                      <div id={descriptionId} ref={descriptionRef} className={styles.desc}>
+                                          {product.description}
+                                      </div>
+                                      {/* Holds the toggle row in flow; long text pushes it out of the clamp, short text keeps it over the toggle. */}
+                                      <span className={styles.descToggleRow} aria-hidden="true" />
+                                  </div>
+                                  {isDescriptionOverflowing && (
+                                      <button
+                                          type="button"
+                                          className={styles.descriptionToggle}
+                                          aria-expanded={descriptionExpanded}
+                                          aria-controls={descriptionId}
+                                          onClick={() => setDescriptionExpanded(expanded => !expanded)}
+                                      >
+                                          {descriptionExpanded ? "Згорнути ↑" : "Читати далі ↓"}
+                                      </button>
+                                  )}
                               </div>
-                              {isDescriptionOverflowing && (
-                                  <button
-                                      type="button"
-                                      className={styles.descriptionToggle}
-                                      aria-expanded={descriptionExpanded}
-                                      aria-controls={descriptionId}
-                                      onClick={() => setDescriptionExpanded(expanded => !expanded)}
-                                  >
-                                      {descriptionExpanded ? "Згорнути ↑" : "Читати далі ↓"}
-                                  </button>
-                              )}
                           </section>
                       )}
 

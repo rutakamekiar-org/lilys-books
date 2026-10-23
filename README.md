@@ -68,6 +68,10 @@ retains 33 fresh mobile samples, deployment evidence, diagnostics and live smoke
 are tracked in ZVY-77/ZVY-78; the report does not claim an all-checks-pass or field Core Web Vitals result.
 The [ZVY-75 investigation](ZVY-50-PERFORMANCE.md#zvy-75-investigation-remaining-lcp-render-delay-and-javascript-costs--2026-10-23)
 records the remaining LCP render-delay and JavaScript causes, with its lab samples in [docs/performance/zvy-75](docs/performance/zvy-75).
+The [ZVY-79 deployed verification](ZVY-50-PERFORMANCE.md#zvy-79-deployed-verification-of-the-follow-up-fixes--2026-10-23)
+rechecks production after ZVY-75 to ZVY-78, with 33 fresh mobile samples, diagnostics and smoke results in
+[docs/performance/zvy-79](docs/performance/zvy-79). The existing deployed suite's phone and gallery tests predate the
+ZVY-60 layout. Until it is updated, use the phone-aware checks kept with that evidence.
 
 Run the separate read-only deployed suite explicitly:
 

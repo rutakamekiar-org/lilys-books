@@ -1,0 +1,203 @@
+import { expect, test as base, type Page } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+import { blockInvoiceWrites } from "../support/cutover-safety";
+
+// ZVY-79 ad-hoc deployed checks. Stored as .txt so lint/typecheck skip it; to repeat, copy it to
+// tests/deployment/zvy79-extra-checks.spec.ts, run once against production
+// (`npm run test:cutover -- zvy79-extra-checks`). Read-only: invoice writes are blocked and asserted absent.
+const test = base.extend<{ blockedInvoiceRequests: string[] }>({
+  blockedInvoiceRequests: [async ({ context }, use, testInfo) => {
+    const blocked = await blockInvoiceWrites(context);
+    await use(blocked);
+    await testInfo.attach("invoice-safety", { body: JSON.stringify({ blockedInvoiceRequests: blocked }), contentType: "application/json" });
+    expect(blocked).toEqual([]);
+  }, { auto: true }],
+});
+// Full Chromium reports layout-shift entries; the headless shell does not (see tests/e2e/event-layout.spec.ts).
+test.use({ serviceWorkers: "block", channel: "chromium" });
+test.setTimeout(90_000);
+
+type Shift = { value: number; t: number; sources: { node: string; prev: number[]; curr: number[] }[] };
+
+async function observeShifts(page: Page) {
+  await page.addInitScript(() => {
+    const shifts: unknown[] = [];
+    (window as unknown as { __shifts: unknown[] }).__shifts = shifts;
+    new PerformanceObserver(list => {
+      for (const e of list.getEntries() as unknown as { value: number; startTime: number; hadRecentInput: boolean; sources: { node?: Element; previousRect: DOMRectReadOnly; currentRect: DOMRectReadOnly }[] }[]) {
+        if (e.hadRecentInput) continue;
+        shifts.push({
+          value: +e.value.toFixed(4), t: Math.round(e.startTime),
+          sources: e.sources.map(s => ({
+            node: s.node ? `${s.node.nodeName}.${String(s.node.className).split(" ")[0]}` : "?",
+            prev: [s.previousRect.y, s.previousRect.height].map(Math.round),
+            curr: [s.currentRect.y, s.currentRect.height].map(Math.round),
+          })),
+        });
+      }
+    }).observe({ type: "layout-shift", buffered: true });
+  });
+}
+
+const shiftsOf = (page: Page) => page.evaluate(() => (window as unknown as { __shifts: Shift[] }).__shifts);
+
+test("event links are named per event and event cards do not shift on a normal load", async ({ page }, testInfo) => {
+  await observeShifts(page);
+  await page.goto("/events");
+  const links = page.getByRole("link", { name: /^Перейти до події: / });
+  await expect(links).toHaveCount(3);
+  const names = await links.evaluateAll(nodes => nodes.map(n => (n as HTMLElement).innerText.trim() + " | " + n.textContent?.trim()));
+  // Every visible label must be contained in the accessible name (label-in-name).
+  for (const name of await links.allTextContents()) expect(name).toMatch(/^Перейти до події: .+/);
+  await expect(page.getByRole("button", { name: "Наступне фото" }).first()).toBeEnabled();
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(1500);
+  const shifts = await shiftsOf(page);
+  const cls = shifts.reduce((t, s) => t + s.value, 0);
+  await testInfo.attach("events", { body: JSON.stringify({ names, shifts, cls }), contentType: "application/json" });
+  expect(cls).toBeLessThan(0.01);
+});
+
+for (const route of ["/books/zvychajna", "/books/pid_shepit_snihu", "/books/brunette-stories", "/books/zvychajna-and-inaksha"]) {
+  test(`diagnose product layout shifts on ${route}`, async ({ page }, testInfo) => {
+    await observeShifts(page);
+    await page.goto(route);
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(1500);
+    const shifts = await shiftsOf(page);
+    await testInfo.attach("product-shifts", {
+      body: JSON.stringify({ route, cls: +shifts.reduce((t, s) => t + s.value, 0).toFixed(4), shifts }), contentType: "application/json",
+    });
+    // Diagnostic only: product CLS is recorded, not asserted, because ZVY-79 does not fix it.
+  });
+}
+
+test("loaded excerpt text scrolls by keyboard and passes axe", async ({ page }, testInfo) => {
+  await page.goto("/books/zvychajna");
+  const opener = page.getByRole("button", { name: "Читати уривок", exact: true });
+  const response = page.waitForResponse(r => r.url().endsWith("/content/excerpts/zvychajna.html"));
+  await opener.click();
+  expect((await response).ok()).toBe(true);
+  const dialog = page.getByRole("dialog", { name: /Читати уривок/ });
+  const region = dialog.getByRole("region", { name: "Текст уривку" });
+  await expect(dialog.getByText("Завантаження...", { exact: true })).toBeHidden();
+  await expect(region.locator("p").first()).toBeVisible();
+  const before = await region.evaluate(n => ({ tabIndex: (n as HTMLElement).tabIndex, top: n.scrollTop, client: n.clientHeight, scroll: n.scrollHeight }));
+  expect(before.tabIndex).toBe(0);
+  expect(before.scroll).toBeGreaterThan(before.client * 2);
+  // Reach the region with Tab only, then scroll it with the keyboard.
+  let reached = false;
+  for (let i = 0; i < 12 && !reached; i += 1) {
+    reached = await region.evaluate(n => n === document.activeElement);
+    if (!reached) await page.keyboard.press("Tab");
+  }
+  expect(reached, "excerpt region reachable with Tab").toBe(true);
+  await page.keyboard.press("PageDown");
+  await page.keyboard.press("ArrowDown");
+  await expect.poll(() => region.evaluate(n => n.scrollTop)).toBeGreaterThan(before.top + 100);
+  const after = await region.evaluate(n => n.scrollTop);
+  const axe = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"])
+    .disableRules(["color-contrast"]).analyze();
+  await testInfo.attach("excerpt", {
+    body: JSON.stringify({ before, afterScrollTop: after, violations: axe.violations.map(v => v.id) }), contentType: "application/json",
+  });
+  expect(axe.violations.map(v => v.id)).toEqual([]);
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
+});
+
+// Since ZVY-60 the phone product page has one "Купити — <price>" CTA that becomes "Переглянути кошик" once
+// the selected format is in the cart. performance-verification.spec.ts still looks for the desktop names, so its
+// phone cart tests fail on locators. These phone-aware equivalents check the same behaviour.
+const buy = (page: Page) => page.getByRole("button", { name: /^(Купити|Додати в кошик)/ }).filter({ visible: true }).first();
+
+async function trapFocus(page: Page, dialog: ReturnType<Page["getByRole"]>) {
+  await expect.poll(() => dialog.evaluate(node => node.contains(document.activeElement))).toBe(true);
+  for (const key of ["Tab", "Shift+Tab"]) {
+    for (let count = 0; count < 18; count += 1) {
+      await page.keyboard.press(key);
+      expect(await dialog.evaluate(node => node.contains(document.activeElement)), key).toBe(true);
+    }
+  }
+}
+
+for (const format of ["Паперова", "Електронна"]) {
+  test(`phone-aware ${format} cart, invalid checkout, Escape and focus restoration`, async ({ page }, testInfo) => {
+    await page.goto("/books/zvychajna");
+    await page.getByRole("radio", { name: new RegExp(format) }).check();
+    const opener = buy(page);
+    const openerHandle = await opener.elementHandle();
+    await opener.click();
+    const cart = page.getByRole("dialog", { name: "Кошик", exact: true });
+    await expect(cart).toBeVisible();
+    await trapFocus(page, cart);
+    await expect(cart.getByRole("button", { name: "Збільшити кількість" })).toHaveCount(format === "Паперова" ? 1 : 0);
+    await cart.getByRole("button", { name: "Оформити замовлення" }).click();
+    const checkout = page.getByRole("dialog", { name: "Оформлення замовлення", exact: true });
+    await expect(checkout).toBeVisible();
+    await trapFocus(page, checkout);
+    await checkout.getByRole("button", { name: "Підтвердити замовлення", exact: true }).click();
+    for (const error of ["Введіть ім'я", "Введіть прізвище", "Введіть дійсний email"]) {
+      await expect(checkout.getByText(error, { exact: true })).toBeVisible();
+    }
+    const physical = format === "Паперова";
+    await expect(checkout.getByRole("textbox", { name: /Телефон/ })).toHaveCount(physical ? 1 : 0);
+    await expect(checkout.getByText("Оберіть відділення Нової Пошти", { exact: true })).toHaveCount(physical ? 1 : 0);
+    await page.keyboard.press("Escape");
+    await expect(checkout).toBeHidden();
+    const restored = await page.evaluate(el => el === document.activeElement, openerHandle);
+    const restoredName = await page.evaluate(() => (document.activeElement as HTMLElement | null)?.innerText?.trim());
+    await testInfo.attach("phone-cart", { body: JSON.stringify({ format, restoredToOpener: restored, restoredName }), contentType: "application/json" });
+    expect(restored, "focus returns to the CTA that opened the cart").toBe(true);
+  });
+}
+
+test("phone-aware mixed-cart totals and quantity rules", async ({ page }) => {
+  await page.goto("/books/zvychajna");
+  const price = async (format: string) => Number((await page.getByRole("radio", { name: new RegExp(format) })
+    .evaluate(node => node.closest("label")?.textContent))?.match(/([\d.]+)\s*грн/)?.[1]);
+  const paper = await price("Паперова");
+  const digital = await price("Електронна");
+  const cart = page.getByRole("dialog", { name: "Кошик", exact: true });
+  for (const format of ["Паперова", "Електронна"]) {
+    await page.getByRole("radio", { name: new RegExp(format) }).check();
+    await buy(page).click();
+    // Desktop "Додати в кошик" adds silently; the phone CTA opens the cart, which we close again.
+    if (await cart.isVisible()) { await page.keyboard.press("Escape"); await expect(cart).toBeHidden(); }
+  }
+  await page.getByRole("navigation").getByRole("button", { name: /Кошик/ }).click();
+  const total = cart.locator('[class*="totalValue"]');
+  await expect(total).toHaveText(`${paper + digital} грн`);
+  await expect(cart.getByRole("button", { name: "Збільшити кількість" })).toHaveCount(1);
+  await cart.getByRole("button", { name: "Збільшити кількість" }).click();
+  await expect(total).toHaveText(`${paper * 2 + digital} грн`);
+  await cart.getByRole("button", { name: "Зменшити кількість" }).click();
+  await cart.getByRole("button", { name: "Зменшити кількість" }).click();
+  await expect(total).toHaveText(`${paper + digital} грн`);
+});
+
+test("gallery HTML carries only the first image (two slots, one URL) and later slides load lazily", async ({ page, request }) => {
+  const html = await (await request.get("/books/inaksha-art")).text();
+  const tags = (html.match(/<img\b[^>]*>/g) ?? []).filter(tag => tag.includes("inaksha-art"));
+  const files = new Set(tags.map(tag => tag.match(/src="[^"]*?url=([^&"]+)/)?.[1]));
+  expect(files.size).toBe(1);
+  await page.goto("/books/inaksha-art");
+  // Phones show a single thumbnail that opens the image viewer; desktop shows the carousel inline.
+  const next = page.getByRole("button", { name: "Наступне фото", exact: true }).filter({ visible: true }).first();
+  if (!(await next.isVisible())) await page.getByRole("button", { name: /^Відкрити зображення книги/ }).click();
+  const gallery = page.getByRole("group", { name: /Зображення:/ }).filter({ visible: true }).first();
+  await next.click();
+  await expect(gallery.locator("img").nth(1)).toHaveAttribute("loading", "lazy");
+  await expect.poll(() => gallery.locator("img").nth(1).evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+});
+
+test("catalog has no redundant cover alternatives", async ({ page }, testInfo) => {
+  await page.goto("/books");
+  const axe = await new AxeBuilder({ page }).withRules(["image-redundant-alt", "image-alt", "link-name"]).analyze();
+  const coverAlts = await page.locator('main a[href^="/books/"] img').evaluateAll(n => n.map(i => (i as HTMLImageElement).alt));
+  await testInfo.attach("catalog", { body: JSON.stringify({ coverAlts, violations: axe.violations.map(v => v.id) }), contentType: "application/json" });
+  expect(axe.violations).toEqual([]);
+  expect(coverAlts.every(alt => alt === "")).toBe(true);
+});
