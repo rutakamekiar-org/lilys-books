@@ -32,29 +32,42 @@
     box-shadow: none;
     border-radius: 0;
 }
-.desc {
+/*
+ * Overflow is measured only after hydration, so the collapsed layout must not depend on it:
+ * the clamp always holds six lines plus the toggle row. Long text pushes the row spacer out of
+ * the clamp and the toggle shows in its place; short text keeps the spacer, which covers the
+ * toggle until hydration removes it. Hydration then changes paint only, never geometry.
+ * Text that surely fits at every width (BookDetail's descriptionSurelyFits) skips the clamp.
+ */
+.descBody {
   --desc-collapsed-lines: 6;
+  --desc-toggle-row: calc(10px + 1.6em);
+  position: relative;
+}
+.desc {
   color: var(--text);
   overflow-wrap: anywhere;
   word-break: break-word;
   white-space: pre-line;
-  position: relative;
   line-height: 1.6;
 }
 .descriptionPanel { margin-top: 18px; }
 .descriptionPanel h2 { font-size: 16px; margin: 0 0 10px; }
-.descCollapsed { max-height: calc(var(--desc-collapsed-lines) * 1em * 1.6); overflow: hidden; }
-.descCollapsed::after {
+.descCollapsed .descClamp { max-height: calc(var(--desc-collapsed-lines) * 1em * 1.6 + var(--desc-toggle-row)); overflow: hidden; }
+.descToggleRow { display: block; position: relative; z-index: 3; height: var(--desc-toggle-row); background: var(--bg); }
+.descExpanded .descToggleRow { display: none; }
+/* Fades the sixth line and hides the overflowing text behind the toggle row. */
+.descCollapsed.descOverflowing::after {
   content: "";
   position: absolute;
+  z-index: 1;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 3em;
-  background: linear-gradient(to bottom, rgba(250,249,247,0), var(--bg));
+  height: calc(3em + var(--desc-toggle-row));
+  background: linear-gradient(to bottom, rgba(250,249,247,0), var(--bg) calc(100% - var(--desc-toggle-row)));
   pointer-events: none;
 }
-.descExpanded { max-height: none; }
 .descriptionToggle {
   display: inline;
   align-items: center;
@@ -68,6 +81,7 @@
   text-underline-offset: 3px;
   cursor: pointer;
 }
+.descCollapsed .descriptionToggle { position: absolute; z-index: 2; left: 0; bottom: 0; margin: 0; }
 .descriptionToggle:hover { color: var(--text); }
 .descriptionToggle:focus-visible { outline: 3px solid rgba(240,155,48,0.35); outline-offset: 2px; }
 
