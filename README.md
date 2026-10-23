@@ -77,6 +77,8 @@ npm run test:cutover -- performance-verification
 ```
 
 It tests desktop, 320 px and 390 px, blocks invoice writes and stops at invalid checkout.
+At phone widths it follows the ZVY-60 product layout: the buy CTA adds to the cart and becomes «Переглянути кошик»,
+and the gallery is browsed in the image viewer opened from the cover thumbnail.
 It deliberately fails on unresolved deployed accessibility findings and is excluded from normal local/PR CI.
 Protected provider previews require an authorized browser session; keep their evidence separate and do not send Google to them.
 
