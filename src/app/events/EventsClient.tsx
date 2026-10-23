@@ -87,10 +87,11 @@ function FeaturedHero({ event, priorityImage = false }: { event: EventWithImages
       </div>
       <div className={styles.heroBelow}>
         <p className={styles.heroBelowMeta}>
+          {/* The viewer's local date only exists after hydration, so phones give it its own reserved line. */}
           <span className={styles.heroBelowDate}>
               <LocalDateTime iso={event.date} />
           </span>
-          {event.location ? ` · ${event.location}` : ""}
+          {event.location && <span>{event.location}</span>}
         </p>
         {event.blurb && (
           <p className={styles.heroBelowBlurb}>{event.blurb}</p>
