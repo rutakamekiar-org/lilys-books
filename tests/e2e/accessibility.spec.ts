@@ -1,7 +1,9 @@
 import { expect, test } from "@playwright/test";
 import type { Page } from "@playwright/test";
 import { expectNoA11yViolations } from "./a11y";
-import { resetMockApi } from "./helpers";
+import { productionTitleProducts } from "../fixtures/products.mjs";
+import { events } from "../../src/data/events";
+import { mockApiUrl, resetMockApi, revalidateCatalog } from "./helpers";
 
 async function openCart(page: Page) {
   await page.goto("/books/test-book");
@@ -70,9 +72,14 @@ test("checkout dialog has no accessibility violations while showing validation e
 });
 
 test("product imagery carries meaningful alternative text", async ({ page }) => {
+  // Catalog cards wrap the cover and the visible title in one link, so the title alone names it
+  // and the cover stays decorative instead of announcing the same title twice.
   await page.goto("/books");
-  await expect(page.getByRole("img", { name: "Test Book" })).toBeVisible();
-  await expect(page.getByRole("img", { name: "Excerpt Book" })).toBeVisible();
+  for (const name of ["Test Book", "Excerpt Book"]) {
+    const card = page.getByRole("article").filter({ has: page.getByRole("heading", { name, exact: true }) });
+    await expect(card.getByRole("link", { name })).toBeVisible();
+    await expect(card.locator("img")).toHaveAttribute("alt", "");
+  }
 
   // The carousel shows several views of one cover: the first carries the product name and
   // the rest are explicitly decorative, so a screen reader does not repeat the same title.
@@ -94,3 +101,44 @@ test("product imagery carries meaningful alternative text", async ({ page }) => 
   await expect(page.getByRole("button", { name: "Додати в кошик" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Додати в кошик" }).locator("svg")).toHaveAttribute("aria-hidden", "true");
 });
+
+const publishedEvents = events.filter(event => event.published !== false && event.url);
+
+for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }, { width: 320, height: 800 }]) {
+  test.describe(`catalog and event links at ${viewport.width}px`, () => {
+    test.use({ viewport });
+
+    // ZVY-77: production cards with no age badge or rating made the link text equal the cover's
+    // alt, which axe reports as image-redundant-alt. The local fixtures always had a badge.
+    test("catalog cards with title-only links have no accessibility violations", async ({ page, request }) => {
+      for (const product of productionTitleProducts) {
+        expect((await request.post(`${mockApiUrl}/__control/products`, { data: product })).ok()).toBe(true);
+      }
+      await revalidateCatalog(request);
+
+      await page.goto("/books");
+      const cards = productionTitleProducts.map(product => ({
+        product,
+        card: page.getByRole("article").filter({ has: page.getByRole("heading", { name: product.name, exact: true }) }),
+      }));
+      for (const { card } of cards) await expect(card).toBeVisible();
+      await expectNoA11yViolations(page, `the catalog with production titles at ${viewport.width}px`);
+      for (const { product, card } of cards) {
+        await expect(card.getByRole("link", { name: product.name, exact: true })).toBeVisible();
+        await expect(card.locator("img")).toHaveAttribute("alt", "");
+      }
+    });
+
+    // Google flagged identical names on links with different destinations (not an axe rule).
+    test("event links name the event they open", async ({ page }) => {
+      await page.goto("/events");
+      expect(publishedEvents.length).toBeGreaterThan(1);
+      for (const event of publishedEvents) {
+        const link = page.locator(`a[href="${event.url}"]`);
+        await expect(link).toHaveCount(1);
+        await expect(link).toHaveAccessibleName(`Перейти до події: ${event.title}`);
+      }
+      await expectNoA11yViolations(page, `the events page at ${viewport.width}px`);
+    });
+  });
+}

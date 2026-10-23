@@ -1,7 +1,7 @@
 import { ProductListSchema } from "../../src/models/Product";
-import { productFixtures } from "../fixtures/products.mjs";
+import { productFixtures, productionTitleProducts } from "../fixtures/products.mjs";
 
-const result = ProductListSchema.safeParse(productFixtures);
+const result = ProductListSchema.safeParse([...productFixtures, ...productionTitleProducts]);
 
 if (!result.success) {
   const details = result.error.issues

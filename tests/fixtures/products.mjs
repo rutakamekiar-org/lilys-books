@@ -64,4 +64,28 @@ export const excerptProduct = {
   items: [{ ...existingProduct.items[0], id: "71000000-0000-4000-8000-000000000001", name: "Паперова Excerpt Book" }],
 };
 
+// Production catalog cards (ZVY-77) whose link text is only the title: no age badge and no
+// Goodreads rating. A cover named after the title inside that link repeats it, which axe
+// reports as image-redundant-alt. Posted by the specs that need them, not served by default.
+function productionCard(id, name, slug, imageUrl) {
+  return {
+    ...existingProduct,
+    id: `${id}-0000-4000-8000-000000000001`,
+    name,
+    slug,
+    isHero: false,
+    ageRating: null,
+    externalBookRatings: [],
+    imageUrl,
+    imageUrls: [imageUrl],
+    items: [{ ...existingProduct.items[0], id: `${id}-0000-4000-8000-000000000002`, name: `Паперова ${name}` }],
+  };
+}
+
+export const productionTitleProducts = [
+  productionCard("77000001", "Брунатні історії: збірка осінніх оповідань", "brunette-stories", "/images/products/brunette-stories/brunette-stories.webp"),
+  productionCard("77000002", "Листівки-ілюстрації до 'Інакшої'", "inaksha-art", "/images/products/inaksha-art/inaksha-art1.webp"),
+  productionCard("77000003", "Під шепіт снігу: збірка різдвяної прози", "pid_shepit_snihu", "/images/products/pid_shepit_snihu/pid_shepit_snihu.jpg"),
+];
+
 export const productFixtures = [existingProduct, unavailableProduct, inactiveProduct, excerptProduct];

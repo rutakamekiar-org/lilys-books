@@ -44,9 +44,10 @@ export default function BookCard({ product: staticProduct, priorityImage = false
               {product.ageRating}
             </span>
           )}
+          {/* The visible title below names the link, so the cover is decorative here. */}
           <Image
             src={product.imageUrl}
-            alt={product.name}
+            alt=""
             width={240}
             height={360}
             sizes="(max-width: 520px) calc((100vw - 34px) / 2), (max-width: 640px) calc((100vw - 40px) / 2), (max-width: 723px) calc((100vw - 48px) / 2), (max-width: 959px) calc((100vw - 64px) / 3), (max-width: 1100px) calc((100vw - 80px) / 4), 255px"
