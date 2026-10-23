@@ -532,17 +532,21 @@ Nothing was deployed. Deployed before/after verification belongs to ZVY-79.
 
 ### Changes
 
-- `BookDetail` normalizes both cover slots with `storefrontImageSource`, the existing gallery normalizer, now
-  exported from `src/lib/product-gallery.ts`. The thumbnail and the first carousel slide now share one optimizer
-  URL and one download. Images, sizes, alt text and priorities are unchanged, and images that really differ
+- The product schema (`src/models/Product.ts`) normalizes `imageUrl` and `imageUrls` to root-relative paths
+  when API data is parsed, using `storefrontImageSource`, the existing gallery normalizer now exported from
+  `src/lib/product-gallery.ts`. Every consumer (product page, hero, catalog cards, cart, suggestion dialog,
+  gallery) therefore uses one optimizer URL per file, and the product thumbnail and first carousel slide share
+  one download. Open Graph and Product JSON-LD images stay absolute because they are built with `absoluteUrl`
+  from the site origin. Images, sizes, alt text and priorities are unchanged, and images that really differ
   still load as before.
 - `Hero` uses `loading="eager"` and `fetchPriority="high"` instead of `preload`, as the Next.js 16 image
   documentation recommends. React still emits the preload link, now with `fetchPriority="high"`, and the
   Lighthouse discovery check passes.
 - New regression tests in `tests/e2e/performance.spec.ts` run at desktop, 320 px and 390 px:
   - the home hero is eager and high priority in the server HTML (JavaScript disabled);
-  - a product whose API data mixes absolute and relative URLs requests its cover exactly once. The tests answer
-    optimizer requests locally, so the absolute production URL is never fetched.
+  - a product whose API data mixes absolute and relative URLs requests its cover exactly once, and its Open Graph
+    and JSON-LD images remain absolute. The tests answer optimizer requests locally, so the absolute production
+    URL is never fetched.
 
   With the source changes reverted, both tests fail at all three viewports.
 

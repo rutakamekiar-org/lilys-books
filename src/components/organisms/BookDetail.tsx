@@ -2,7 +2,7 @@
 import Icon, { ExternalLinkIcon } from "@/components/atoms/Icon";
 import Image from "next/image";
 
-import { useState, Fragment, useEffect, useMemo, useRef } from "react";
+import { useState, Fragment, useEffect, useRef } from "react";
 import {BookFormat, getFormat} from "@/lib/types";
 import styles from "./BookDetail.module.css";
 import ImageCarousel from "@/components/organisms/ImageCarousel";
@@ -13,7 +13,7 @@ import BookGallery from "@/components/molecules/BookGallery";
 import ExcerptDialog from "@/components/molecules/ExcerptDialog";
 import { useCart } from "@/components/providers/CartProvider";
 import notify from "@/lib/toast";
-import { getProductGalleryImages, storefrontImageSource } from "@/lib/product-gallery";
+import { getProductGalleryImages } from "@/lib/product-gallery";
 
 import type { Product } from "@/models/Product";
 import {canPurchase, getInitialBookFormat, getPrice, getProductItemDisplayLabel, isPreorder} from "@/lib/product-item.helper";
@@ -124,9 +124,6 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
     }
   };
   const galleryImages = getProductGalleryImages(product.imageUrl, product.imageUrls);
-  // Both cover slots are in the HTML (CSS shows one per breakpoint); matching sources share one download.
-  const coverSource = storefrontImageSource(product.imageUrl);
-  const coverImages = useMemo(() => product.imageUrls?.map(storefrontImageSource) ?? [], [product.imageUrls]);
   const externalLinks = product?.externalLinks || []
   const descriptionId = `book-description-${product.slug}`;
   const descriptionTitleId = `${descriptionId}-title`;
@@ -214,13 +211,13 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           </span>
                       )}
                       <button type="button" className={styles.mobileCoverPreview} aria-label={`Відкрити зображення книги: ${product.name}`} onClick={() => setGalleryOpen(true)}>
-                          <Image src={coverSource} alt={product.name} width={320} height={480} sizes={COVER_SIZES} loading="eager" fetchPriority="high" />
+                          <Image src={product.imageUrl} alt={product.name} width={320} height={480} sizes={COVER_SIZES} loading="eager" fetchPriority="high" />
                           <span className={styles.coverZoom} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="10" cy="10" r="6" /><path d="M14.5 14.5 21 21M10 7v6M7 10h6" /></svg></span>
                       </button>
                       <div className={styles.desktopCoverMedia}>
-                      {coverImages.length > 0 ? (
+                      {product.imageUrls && product.imageUrls.length > 0 ? (
                           <ImageCarousel
-                              images={coverImages}
+                              images={product.imageUrls}
                               alt={product.name}
                               sizes={COVER_SIZES}
                               className={styles.carousel}
@@ -229,7 +226,7 @@ export default function BookDetail({ product: staticProduct }: { product: Produc
                           />
                       ) : (
                           <Image
-                              src={coverSource}
+                              src={product.imageUrl}
                               alt={product.name}
                               width={320}
                               height={480}

@@ -1,5 +1,4 @@
-// The product API mixes absolute storefront URLs and root-relative paths for the same file.
-// Normalize them so each image has one optimizer URL and the browser downloads it once.
+// Turns absolute storefront image URLs into root-relative paths; other sources are returned unchanged.
 export function storefrontImageSource(source: string): string {
   try {
     const url = new URL(source);

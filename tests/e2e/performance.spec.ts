@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { makeProduct, mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, makeProduct, mockApiUrl, resetMockApi } from "./helpers";
 
 test.beforeEach(async ({ request }) => {
   await resetMockApi(request);
@@ -202,7 +202,14 @@ test("product cover downloads once when the API mixes absolute and relative imag
     await route.fulfill({ path: "public/images/products/inaksha/inaksha.webp", contentType: "image/webp" });
   });
   await page.goto(`/books/${product.slug}`);
-  await expect(page.getByRole("img", { name: product.name, exact: true }).filter({ visible: true })).toBeVisible();
-  await page.waitForLoadState("networkidle");
+  // Both cover slots are requested while the HTML is parsed, before the visible one finishes decoding.
+  const cover = page.getByRole("img", { name: product.name, exact: true }).filter({ visible: true });
+  await expect.poll(() => cover.evaluate(node => (node as HTMLImageElement).complete && (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   expect(coverRequests).toEqual(["/images/products/inaksha/inaksha.webp"]);
+  // Social and structured-data images stay absolute.
+  const absoluteCover = `${appUrl}/images/products/inaksha/inaksha.webp`;
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", absoluteCover);
+  const jsonLd = await page.locator('script[type="application/ld+json"]').evaluateAll(scripts =>
+    scripts.map(script => JSON.parse(script.textContent ?? "{}")).find(data => [data["@type"]].flat().includes("Product")));
+  expect(jsonLd?.image).toContain(absoluteCover);
 });
