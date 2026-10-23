@@ -66,6 +66,8 @@ Its [ZVY-51 deployed verification](ZVY-50-PERFORMANCE.md#zvy-51-deployed-verific
 retains 33 fresh mobile samples, deployment evidence, diagnostics and live smoke results in
 [docs/performance/zvy-51](docs/performance/zvy-51). Deployed catalog and loaded-excerpt accessibility failures
 are tracked in ZVY-77/ZVY-78; the report does not claim an all-checks-pass or field Core Web Vitals result.
+The [ZVY-75 investigation](ZVY-50-PERFORMANCE.md#zvy-75-investigation-remaining-lcp-render-delay-and-javascript-costs--2026-10-23)
+records the remaining LCP render-delay and JavaScript causes, with its lab samples in [docs/performance/zvy-75](docs/performance/zvy-75).
 
 Run the separate read-only deployed suite explicitly:
 

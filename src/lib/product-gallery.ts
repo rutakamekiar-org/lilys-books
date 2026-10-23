@@ -1,4 +1,5 @@
-function gallerySource(source: string): string {
+// Turns absolute storefront image URLs into root-relative paths; other sources are returned unchanged.
+export function storefrontImageSource(source: string): string {
   try {
     const url = new URL(source);
     if (url.hostname === "zvychajna.pp.ua" || url.hostname === "www.zvychajna.pp.ua") {
@@ -11,5 +12,5 @@ function gallerySource(source: string): string {
 }
 
 export function getProductGalleryImages(cover: string, images: string[] = []): string[] {
-  return [...new Set([cover, ...images].filter(Boolean).map(gallerySource))];
+  return [...new Set([cover, ...images].filter(Boolean).map(storefrontImageSource))];
 }

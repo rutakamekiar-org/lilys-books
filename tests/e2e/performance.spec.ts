@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { makeProduct, mockApiUrl, resetMockApi } from "./helpers";
+import { appUrl, makeProduct, mockApiUrl, resetMockApi } from "./helpers";
 
 test.beforeEach(async ({ request }) => {
   await resetMockApi(request);
@@ -171,4 +171,45 @@ test("API external links keep their labels and visible decorative SVG icons", as
     await expect(link.locator("svg")).toHaveAttribute("aria-hidden", "true");
     await expect(link).toHaveAttribute("target", "_blank");
   }
+});
+
+test("homepage hero cover is requested eagerly with high priority before hydration", async ({ browser, baseURL }, testInfo) => {
+  const context = await browser.newContext({ baseURL, javaScriptEnabled: false, viewport: testInfo.project.use.viewport });
+  try {
+    const page = await context.newPage();
+    await page.goto("/");
+    const cover = page.getByRole("main").getByRole("img");
+    await expect(cover).toHaveCount(1);
+    await expect(cover).toHaveAttribute("loading", "eager");
+    await expect(cover).toHaveAttribute("fetchpriority", "high");
+  } finally {
+    await context.close();
+  }
+});
+
+test("product cover downloads once when the API mixes absolute and relative image URLs", async ({ page, request }) => {
+  // Production returns the cover as an absolute storefront URL and the gallery as root-relative paths.
+  const product = makeProduct({
+    imageUrl: "https://zvychajna.pp.ua/images/products/inaksha/inaksha.webp",
+    imageUrls: ["/images/products/inaksha/inaksha.webp", "/images/products/inaksha/inaksha_stickers.webp"],
+  });
+  expect((await request.post(`${mockApiUrl}/__control/products`, { data: product })).ok()).toBe(true);
+  const coverRequests: string[] = [];
+  // Answer optimizer requests locally so the absolute URL is never fetched from production.
+  await page.route("**/_next/image?**", async route => {
+    const source = new URL(route.request().url()).searchParams.get("url") ?? "";
+    if (source.endsWith("/inaksha.webp")) coverRequests.push(source);
+    await route.fulfill({ path: "public/images/products/inaksha/inaksha.webp", contentType: "image/webp" });
+  });
+  await page.goto(`/books/${product.slug}`);
+  // Both cover slots are requested while the HTML is parsed, before the visible one finishes decoding.
+  const cover = page.getByRole("img", { name: product.name, exact: true }).filter({ visible: true });
+  await expect.poll(() => cover.evaluate(node => (node as HTMLImageElement).complete && (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  expect(coverRequests).toEqual(["/images/products/inaksha/inaksha.webp"]);
+  // Social and structured-data images stay absolute.
+  const absoluteCover = `${appUrl}/images/products/inaksha/inaksha.webp`;
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", absoluteCover);
+  const jsonLd = await page.locator('script[type="application/ld+json"]').evaluateAll(scripts =>
+    scripts.map(script => JSON.parse(script.textContent ?? "{}")).find(data => [data["@type"]].flat().includes("Product")));
+  expect(jsonLd?.image).toContain(absoluteCover);
 });

@@ -1,5 +1,6 @@
 // zod/mini keeps this client-shipped schema tree-shakeable; the classic "zod" entry bundles every locale.
 import * as z from "zod/mini";
+import { storefrontImageSource } from "@/lib/product-gallery";
 
 const requiredText = z.string().check(z.trim(), z.minLength(1));
 const orUndefined = <T,>(value: T | null | undefined) => value ?? undefined;
@@ -67,10 +68,16 @@ export const ProductSchema = z.pipe(z.object({
     ageRating: optionalText,
     isHero: z.optional(z.boolean()),
     isActive: z.optional(z.boolean()),
-}), z.transform(product => ({
-    ...product,
-    imageUrls: product.imageUrls?.length ? product.imageUrls : [product.imageUrl],
-})));
+}), z.transform(product => {
+    // The API mixes absolute storefront URLs and root-relative paths for the same file;
+    // one form per image gives every consumer one optimizer URL and one download.
+    const imageUrl = storefrontImageSource(product.imageUrl);
+    return {
+        ...product,
+        imageUrl,
+        imageUrls: product.imageUrls?.length ? product.imageUrls.map(storefrontImageSource) : [imageUrl],
+    };
+}));
 
 export const ProductListSchema = z.array(ProductSchema);
 

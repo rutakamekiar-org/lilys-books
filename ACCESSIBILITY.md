@@ -59,6 +59,13 @@ and the shared dialog trap still cycles through its controls. Close and Escape r
 focus to the visible opener and preserve the chosen edition. This is a fix, not an
 additional axe exception.
 
+ZVY-78 found the same violation on the production deploy, which predates this fix, at
+1440, 390 and 320 px. `tests/e2e/book-excerpt.spec.ts` now also runs at 320×720, waits
+for the real `zvychajna.html` response and its first paragraph rather than the loading
+state, checks that the text overflows its area many times over, and scans with axe
+before any interaction. With the region's `tabIndex`, role and name removed, that scan
+fails with `scrollable-region-focusable` at every tested width.
+
 ## Accepted exceptions
 
 ### `color-contrast` — brand colour, deliberate
