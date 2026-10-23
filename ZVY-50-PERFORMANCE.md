@@ -603,3 +603,398 @@ ZVY-79.
   100 layout objects; confirm it on Linux/PageSpeed before acting.
 - Measure the TBT cost of GA4 and Clarity in field-like conditions, and agree an analytics loading policy with
   the owner that balances main-thread cost against pageview accuracy.
+
+## ZVY-79 deployed verification of the follow-up fixes — 2026-10-23
+
+[ZVY-79](https://linear.app/zvychajna/issue/ZVY-79) rechecks production after ZVY-75 to ZVY-78 went live. It changes no
+application code: only this section, the README pointer and the evidence in
+[docs/performance/zvy-79](docs/performance/zvy-79) are new. No deploy was triggered.
+
+**Outcome.** All four fixes are live and behave as intended. The two deployed axe failures from 2026-10-05 are
+gone, events no longer shift, and every product page requests its cover once. Across 33 fresh PageSpeed
+captures, median LCP and score improve on 10 of 11 routes against 2026-10-05. Slow samples (4.8–5.0 s) remain on
+four routes. One new finding: product pages show small layout shifts (0.012–0.054 in 8 of 18 Google product
+runs). That was not present in the 2026-10-05 samples, so it becomes a follow-up issue. The existing deployed
+suite fails 9 phone/gallery tests on locators that predate the ZVY-60 phone layout. Phone-aware equivalents of
+the same behaviour pass, and updating the suite is a follow-up. The owner agreed that the protected-preview check is not applicable, because production is the
+same build. Search Console still has no field data for either device type (see
+[Items that need the owner](#items-that-need-the-owner)), so no field Core Web Vitals pass is claimed.
+
+### Deployment evidence
+
+[Netlify production deploy 6adb23b7](https://app.netlify.com/projects/astounding-douhua-45280d/deploys/6adb23b79e5548a32e3c9d66)
+is `ready`, context `production`, branch `main`, commit `e3fa5055b4cbda1bbbcbc455cb2156a794c95047`. It was created
+at 09:07:03 UTC and published at 09:07:47.271 UTC on 2026-10-23 (12:07:47 Europe/Kiev, UTC+03:00), after a 41 s
+build. The site's `published_deploy` in Netlify's public API is this deploy. The previous production deploy was
+6ad51cd1 (`5440f05`, 2026-10-18 19:24:47 UTC). [deployment.json](docs/performance/zvy-79/deployment.json) retains the
+provider record. The owner separately confirmed the same deploy ID, commit, 12:07 Kyiv publication and 41 s
+deploy, and the previous deploy (`main@5440f05`, 2026-10-18 22:24 Kyiv), matching the provider record.
+
+| Fix | PR | Merge commit | Fix commits | In `e3fa505` |
+| --- | --- | --- | --- | --- |
+| ZVY-76 event date line | #57 | `f997905` | `7e844b1`, `1bd7fd7` | yes |
+| ZVY-78 excerpt keyboard scrolling (test-only PR) | #56 | `fc0163a` | source fix `132025f` (ZVY-60), already live since `5440f05` | yes |
+| ZVY-75 single cover request, hero priority | #58 | `ab81939` | `3847cd8`, `2679eb1` | yes |
+| ZVY-77 catalog alt, event link names | #59 | `e3fa505` | `153eee4` | yes |
+
+The deployed HTML and chunks were checked directly at 09:10 UTC:
+
+- **Catalog:** all six `/books` card covers render `alt=""`.
+- **Event links:** each link reads "Перейти" plus a visually hidden " до події: <title>", for Brno, Vienna and
+  Krakow. The shared `aria-label` is gone.
+- **Home hero:** the `<img>` has `fetchPriority="high" loading="eager"`, and its image preload link also carries
+  `fetchPriority="high"`.
+- **Product pages:** the HTML contains only the root-relative cover URL. All 18 Google product runs request
+  exactly one cover.
+- **Event dates:** the events CSS reserves the phone date line
+  (`.heroBelowDate{min-height:1.4em;line-height:1.4;display:block}`).
+- **Excerpt:** the excerpt chunk renders the body as `role="region"`, `aria-label="Текст уривку"`, `tabIndex:0`.
+
+### PageSpeed method and provenance
+
+- **Runner:** Google PageSpeed Insights web UI, Mobile. Lighthouse 13.5.0 on HeadlessChrome 153.0.8010.36,
+  emulated Moto G Power (2022) at 412×823 and DPR 1.75. Simulated throttling: 150 ms RTT, 1,638 kbps, CPU
+  multiplier 1.2. Initial page load, single-page session. Benchmark index 464.5–1,314 across runs.
+- **Same profile as before:** this is the Lighthouse version and runner profile used on 2026-10-03 and 2026-10-05.
+- **Protocol:** three rounds over all 11 routes, one route at a time, between 09:12:19 and 09:23:37 UTC. Captures of the
+  same route are 2.3–6.3 minutes apart.
+- **No cached repeats:** every capture has its own Lighthouse `fetchTime`, later than the publication time, and
+  none repeats another. Nothing had to be excluded.
+- **Field data:** CrUX returned "record not found" for every URL and the origin, so there is no field data.
+- **CDN:** Google's runner location and CDN temperature are unknown. In our own requests, HTML came from Netlify's
+  durable cache with `Netlify Edge; fwd=miss`, as in ZVY-75. Google's observed server response was 2–79 ms
+  (median 11 ms).
+- **Overlap:** round 3 overlapped the single-worker deployed Playwright suite. That traffic came from our network,
+  not Google's runner.
+- **Units:** the tables use PageSpeed's displayed values, as the earlier evidence did. FCP, LCP and Speed Index
+  are in seconds, TBT in ms, CLS is unitless. Capture times are Lighthouse `fetchTime` in Europe/Kiev.
+- **Retained data:** [mobile-samples.json](docs/performance/zvy-79/mobile-samples.json) keeps the UTC capture
+  times, the displayed report-header creation times, precise numeric metrics, user agents and throttling.
+
+### Fresh samples
+
+| Route | Capture (Kiev) | Score | FCP | LCP | TBT | CLS | Speed Index | Evidence |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| `/` | 12:12:19 | 96 | 0.9 | 2.1 | 130 | 0.001 | 3.9 | [Run 1](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/zfy59psaym?form_factor=mobile) |
+| `/` | 12:18:35 | 94 | 0.9 | 2.8 | 160 | 0.001 | 1.7 | [Run 2](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/7z0e23q5lh?form_factor=mobile) |
+| `/` | 12:22:02 | 77 | 1.4 | 4.9 | 190 | 0 | 4.2 | [Run 3](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua/ply57f3f6u?form_factor=mobile) |
+| `/books` | 12:14:08 | 96 | 1.2 | 2.3 | 140 | 0 | 3 | [Run 4](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books/0de2dzlzla?form_factor=mobile) |
+| `/books` | 12:18:52 | 78 | 1.4 | 5 | 110 | 0 | 4.7 | [Run 5](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books/covxcrqpej?form_factor=mobile) |
+| `/books` | 12:22:18 | 100 | 0.9 | 1.9 | 20 | 0 | 0.9 | [Run 6](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books/3n3cqylp86?form_factor=mobile) |
+| `/about` | 12:15:52 | 99 | 0.9 | 1.1 | 100 | 0 | 1.2 | [Run 7](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-about/i0x1kdoteu?form_factor=mobile) |
+| `/about` | 12:19:01 | 100 | 0.9 | 1.4 | 50 | 0 | 0.9 | [Run 8](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-about/x3646eavnh?form_factor=mobile) |
+| `/about` | 12:22:29 | 97 | 0.9 | 2 | 160 | 0 | 0.9 | [Run 9](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-about/jglrs7shob?form_factor=mobile) |
+| `/events` | 12:16:35 | 100 | 0.9 | 1.4 | 90 | 0 | 0.9 | [Run 10](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/tl9o31goxu?form_factor=mobile) |
+| `/events` | 12:19:11 | 93 | 0.9 | 2.6 | 220 | 0 | 2.4 | [Run 11](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/lbc9vn0tnl?form_factor=mobile) |
+| `/events` | 12:22:37 | 97 | 0.9 | 2.5 | 110 | 0 | 0.9 | [Run 12](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-events/1j9lezz13s?form_factor=mobile) |
+| `/return-policy` | 12:16:43 | 99 | 0.9 | 1.7 | 120 | 0 | 1.5 | [Run 13](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/4fw3f59c5e?form_factor=mobile) |
+| `/return-policy` | 12:19:20 | 96 | 0.9 | 1.2 | 210 | 0 | 0.9 | [Run 14](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/8qc185itr3?form_factor=mobile) |
+| `/return-policy` | 12:22:44 | 99 | 1.5 | 1.8 | 20 | 0 | 2.7 | [Run 15](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-return-policy/e4i3k1shhq?form_factor=mobile) |
+| `/books/zvychajna` | 12:16:53 | 96 | 0.9 | 1.3 | 220 | 0.033 | 0.9 | [Run 16](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/s41bgxe00o?form_factor=mobile) |
+| `/books/zvychajna` | 12:19:37 | 92 | 1.4 | 3 | 140 | 0 | 2.6 | [Run 17](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/17i8tjh92b?form_factor=mobile) |
+| `/books/zvychajna` | 12:23:03 | 77 | 1.4 | 4.9 | 190 | 0 | 4.1 | [Run 18](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna/qy9yfw8g90?form_factor=mobile) |
+| `/books/inaksha` | 12:13:10 | 93 | 1.2 | 2.9 | 130 | 0 | 2.8 | [Run 19](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha/h2gnj37pmk?form_factor=mobile) |
+| `/books/inaksha` | 12:18:43 | 96 | 1.2 | 2 | 170 | 0 | 2.7 | [Run 20](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha/epxmyqnjk5?form_factor=mobile) |
+| `/books/inaksha` | 12:22:11 | 94 | 1.2 | 2.9 | 50 | 0 | 3 | [Run 21](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha/zesfik6fa8?form_factor=mobile) |
+| `/books/zvychajna-and-inaksha` | 12:17:25 | 99 | 0.9 | 1.2 | 120 | 0.012 | 1.2 | [Run 22](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/u0r4dwqxu4?form_factor=mobile) |
+| `/books/zvychajna-and-inaksha` | 12:19:46 | 94 | 1.5 | 2.9 | 80 | 0 | 2.7 | [Run 23](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/c2f6bvg4hg?form_factor=mobile) |
+| `/books/zvychajna-and-inaksha` | 12:23:11 | 97 | 0.9 | 1.2 | 190 | 0.012 | 0.9 | [Run 24](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-zvychajna-and-inaksha/nftf97mcwc?form_factor=mobile) |
+| `/books/pid_shepit_snihu` | 12:17:34 | 98 | 0.9 | 1.6 | 150 | 0.036 | 1.6 | [Run 25](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/eg1wooscyp?form_factor=mobile) |
+| `/books/pid_shepit_snihu` | 12:19:55 | 98 | 0.9 | 1.3 | 160 | 0.036 | 0.9 | [Run 26](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/s2hqd4zkn9?form_factor=mobile) |
+| `/books/pid_shepit_snihu` | 12:23:21 | 92 | 0.9 | 2.8 | 210 | 0.036 | 2.2 | [Run 27](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-pid_shepit_snihu/w4vu8l74ec?form_factor=mobile) |
+| `/books/brunette-stories` | 12:17:43 | 95 | 0.9 | 2.8 | 30 | 0.054 | 2.5 | [Run 28](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-brunette-stories/uj5ukuphmd?form_factor=mobile) |
+| `/books/brunette-stories` | 12:20:04 | 98 | 0.9 | 1.6 | 150 | 0.054 | 1.3 | [Run 29](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-brunette-stories/9c015an6gj?form_factor=mobile) |
+| `/books/brunette-stories` | 12:23:29 | 79 | 1.5 | 4.8 | 130 | 0 | 4 | [Run 30](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-brunette-stories/6e3e8vcdwu?form_factor=mobile) |
+| `/books/inaksha-art` | 12:17:52 | 97 | 0.9 | 1.2 | 190 | 0 | 1.9 | [Run 31](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha-art/ckkw9ks44k?form_factor=mobile) |
+| `/books/inaksha-art` | 12:20:13 | 95 | 1.2 | 2.7 | 90 | 0 | 2.5 | [Run 32](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha-art/xjo34i80ud?form_factor=mobile) |
+| `/books/inaksha-art` | 12:23:37 | 100 | 0.9 | 1.5 | 20 | 0 | 0.9 | [Run 33](https://pagespeed.web.dev/analysis/https-zvychajna-pp-ua-books-inaksha-art/fzctq1hol0?form_factor=mobile) |
+
+### Medians and ranges — 2026-10-23
+
+Each cell is the median, with the range in brackets. The 2026-10-03 and 2026-10-05 tables are in the
+[ZVY-51 section](#zvy-51-deployed-verification--2026-10-05).
+
+| Route | n | Score | FCP | LCP | TBT | CLS | Speed Index |
+| --- | ---: | --- | --- | --- | --- | --- | --- |
+| `/` | 3 | 94 (77–96) | 0.9 (0.9–1.4) | 2.8 (2.1–4.9) | 160 (130–190) | 0.001 (0–0.001) | 3.9 (1.7–4.2) |
+| `/books` | 3 | 96 (78–100) | 1.2 (0.9–1.4) | 2.3 (1.9–5) | 110 (20–140) | 0 (0–0) | 3 (0.9–4.7) |
+| `/about` | 3 | 99 (97–100) | 0.9 (0.9–0.9) | 1.4 (1.1–2) | 100 (50–160) | 0 (0–0) | 0.9 (0.9–1.2) |
+| `/events` | 3 | 97 (93–100) | 0.9 (0.9–0.9) | 2.5 (1.4–2.6) | 110 (90–220) | 0 (0–0) | 0.9 (0.9–2.4) |
+| `/return-policy` | 3 | 99 (96–99) | 0.9 (0.9–1.5) | 1.7 (1.2–1.8) | 120 (20–210) | 0 (0–0) | 1.5 (0.9–2.7) |
+| `/books/zvychajna` | 3 | 92 (77–96) | 1.4 (0.9–1.4) | 3 (1.3–4.9) | 190 (140–220) | 0 (0–0.033) | 2.6 (0.9–4.1) |
+| `/books/inaksha` | 3 | 94 (93–96) | 1.2 (1.2–1.2) | 2.9 (2–2.9) | 130 (50–170) | 0 (0–0) | 2.8 (2.7–3) |
+| `/books/zvychajna-and-inaksha` | 3 | 97 (94–99) | 0.9 (0.9–1.5) | 1.2 (1.2–2.9) | 120 (80–190) | 0.012 (0–0.012) | 1.2 (0.9–2.7) |
+| `/books/pid_shepit_snihu` | 3 | 98 (92–98) | 0.9 (0.9–0.9) | 1.6 (1.3–2.8) | 160 (150–210) | 0.036 (0.036–0.036) | 1.6 (0.9–2.2) |
+| `/books/brunette-stories` | 3 | 95 (79–98) | 0.9 (0.9–1.5) | 2.8 (1.6–4.8) | 130 (30–150) | 0.054 (0–0.054) | 2.5 (1.3–4) |
+| `/books/inaksha-art` | 3 | 97 (95–100) | 0.9 (0.9–1.2) | 1.5 (1.2–2.7) | 90 (20–190) | 0 (0–0) | 1.9 (0.9–2.5) |
+
+### Comparison with 2026-10-03 and 2026-10-05
+
+Medians, in order Oct 3 → Oct 5 → **Oct 23**. Oct 3 has 2–4 samples per route, and Oct 5 and Oct 23 have 3 each.
+
+| Route | LCP Oct 3 → Oct 5 → Oct 23 (median) | TBT | CLS | Speed Index | Score |
+| --- | --- | --- | --- | --- | --- |
+| `/` | 3.05 → 2.5 → **2.8** | 70 → 160 → **160** | 0.001 → 0.001 → **0.001** | 1.8 → 1.9 → **3.9** | 92 → 95 → **94** |
+| `/books` | 3.7 → 2.6 → **2.3** | 200 → 140 → **110** | 0 → 0 → **0** | 2.95 → 1.9 → **3** | 83.5 → 94 → **96** |
+| `/about` | 7 → 5.1 → **1.4** | 145 → 50 → **100** | 0.025 → 0 → **0** | 4.45 → 3.1 → **0.9** | 63.5 → 76 → **99** |
+| `/events` | 6.7 → 2.9 → **2.5** | 120 → 40 → **110** | 0.046 → 0.085 → **0** | 1.85 → 4.1 → **0.9** | 74.5 → 91 → **97** |
+| `/return-policy` | 2.15 → 1.9 → **1.7** | 310 → 250 → **120** | 0 → 0 → **0** | 1.55 → 1 → **1.5** | 91.5 → 94 → **99** |
+| `/books/zvychajna` | 7.4 → 5.6 → **3** | 235 → 230 → **190** | 0 → 0 → **0** | 4.7 → 3.3 → **2.6** | 64.5 → 73 → **92** |
+| `/books/inaksha` | 7.75 → 7 → **2.9** | 120 → 110 → **130** | 0 → 0 → **0** | 4.2 → 5.2 → **2.8** | 66.5 → 67 → **94** |
+| `/books/zvychajna-and-inaksha` | 5.55 → 2.5 → **1.2** | 200 → 200 → **120** | 0 → 0 → **0.012** | 3.6 → 1.8 → **1.2** | 70.5 → 79 → **97** |
+| `/books/pid_shepit_snihu` | 7 → 2.5 → **1.6** | 85 → 120 → **160** | 0 → 0 → **0.036** | 4.35 → 1.2 → **1.6** | 65 → 95 → **98** |
+| `/books/brunette-stories` | 7.1 → 5.4 → **2.8** | 120 → 150 → **130** | 0 → 0 → **0.054** | 4.4 → 1.1 → **2.5** | 63 → 79 → **95** |
+| `/books/inaksha-art` | 5.45 → 2.6 → **1.5** | 65 → 190 → **90** | 0 → 0 → **0** | 2.4 → 1.1 → **1.9** | 80 → 94 → **97** |
+
+Pooled over all 33 samples, Oct 5 → Oct 23:
+
+| Metric | Oct 5 median (range) | Oct 23 median (range) |
+| --- | --- | --- |
+| Score | 80 (63–99) | 96 (77–100) |
+| FCP (s) | 0.9 (0.9–3.1) | 0.9 (0.9–1.5) |
+| LCP (s) | 2.9 (1.6–7.4) | 2.0 (1.1–5.0) |
+| TBT (ms) | 150 (20–920) | 130 (20–220) |
+| CLS | 0 (0–0.085) | 0 (0–0.054) |
+| Speed Index (s) | 1.9 (1–5.6) | 1.9 (0.9–4.7) |
+
+| Sample count | Oct 5 | Oct 23 |
+| --- | ---: | ---: |
+| LCP ≤ 2.5 s | 11 | 20 |
+| LCP > 4 s | 16 | 4 |
+| FCP ≥ 2.5 s | 14 | 0 |
+| Score < 90 | 17 | 4 |
+
+**Interpretation, with limits.**
+
+- **Improvements:** median LCP is lower on 10 of 11 routes, and median score is higher on 10 of 11 (home 95 → 94).
+  - The 2026-10-05 slow cluster (FCP about 2.9 s, LCP 5–7.4 s) does not recur. The slowest FCP is now 1.5 s.
+  - The largest product changes are Inaksha 7 → 2.9 s, Звичайна 5.6 → 3 s and Brunette 5.4 → 2.8 s.
+- **Home is the exception:** median LCP is 2.5 → 2.8 s and median Speed Index 1.9 → 3.9 s. The ranges overlap
+  (LCP 2.3–6.4 s before, 2.1–4.9 s now), so this is not a demonstrated regression.
+- **Slow runs remain:** four runs reached LCP 4.8–5.0 s with FCP 1.4–1.5 s and Speed Index 4.0–4.7 s, on `/`,
+  `/books`, `/books/zvychajna` and `/books/brunette-stories`. Each of those routes also has a fast run.
+  - Benchmark index (465–708) and server response time (2–48 ms) do not separate the slow runs from the fast ones.
+- **TBT:** median TBT rises on `/about` (50 → 100 ms), `/events` (40 → 110 ms), Inaksha (110 → 130 ms) and the snow
+  anthology (120 → 160 ms). It is unchanged on home and falls on six routes. Every range overlaps the earlier one.
+- **No single cause:** both deploys changed several things at once (ZVY-60, PR #54/#55, ZVY-75 to ZVY-78), and
+  Google's runner and CDN state are not controlled. With three samples per route, the gains cannot be credited to
+  any one change.
+
+### Diagnostics
+
+[diagnostics.json](docs/performance/zvy-79/diagnostics.json) lists, for each of the 33 runs, the LCP element and its
+phases, layout shifts, render-blocking CSS, unused JavaScript, third parties and every image request with its
+priority. The phase breakdown comes from Lighthouse's observed (unthrottled) trace. It is kept apart from the
+simulated Slow 4G headline LCP and does not add up to it.
+
+- **Product covers:** every product run requests its cover once, at High priority, 256 px wide at Google's 412 px
+  / DPR 1.75 viewport (13–17 KB). There is no second absolute-URL request any more (ZVY-75).
+- **Home hero:** the hero is the LCP element in all three runs. It is High priority, 640 px (42 KB), and
+  Lighthouse's LCP-discovery check passes in every run.
+  - Observed phases vary a lot between runs: resource load delay 2,055 / 471 / 316 ms and render delay
+    20 / 56 / 2,112 ms.
+  - The slowest home run (4.9 s) is the one with the 2.1 s render delay.
+- **Catalog:** the first two covers are `fetchpriority=high`, the rest lazy (360 px candidates at Google's DPR).
+- **Events:** the leading images of the first two galleries are High priority and the third gallery's is Low,
+  as designed.
+- **Portrait:** the deployed suite confirms the portrait keeps its 4:3 box while its image is held back, at
+  desktop, 320 px and 390 px.
+- **Product LCP:** the LCP element is the description text on every product run except the art cards. Art cards
+  report the footer, because that page has no long description.
+  - Observed product render delay is 161–2,351 ms. Before the first paint, three render-blocking stylesheets
+    (7.8–10.7 KiB in total) load.
+  - This matches the CSS and first-layout cause described in ZVY-75. No new cause was found.
+- **Event layout shifts:** CLS is 0 in all three Google events runs, down from 0.085 / 0 / 0.085 on 2026-10-05.
+  On a normal production load at desktop, 320 px and 390 px, full Chromium records no `layout-shift` entries on
+  `/events`. The ZVY-76 fix holds in production.
+- **New: product layout shifts.**
+  - **Google:** 8 of 18 product runs report CLS 0.012–0.054 (Звичайна 0.033 once, bundle 0.012 twice, snow
+    anthology 0.036 three times, Brunette 0.054 twice). The shifting nodes are the phone `coverActions`
+    (Goodreads link) and the `specs` section. Inaksha and the art cards report 0.
+  - **Our reproduction:** on normal loads, full Chromium records 0.012–0.031 at 320 px and 0.012–0.082 at 390 px
+    on the same four products. Desktop shows ≤0.007. The shifts land 0.3–1.2 s after navigation, and the same
+    nodes move up.
+  - **Likely cause (not tested here):** the server renders the description expanded, then the hydrated
+    overflow measurement in `BookDetail` collapses it and adds "Читати далі ↓". That moves everything below the
+    description.
+  - **Not attributed to this deploy:** that code predates 2026-10-05, but ZVY-60 (2026-10-06) moved the
+    description and specs into the first phone viewport. The previous production deploy is behind Netlify
+    protection, so it could not be compared. All values are below the 0.1 "good" CLS threshold. Brunette at
+    390 px (0.082) is close to it, and this is new against the 2026-10-05 evidence, which had zero product CLS.
+- **First-use checkout code:** checkout delivery code ("Відділення Нової Пошти") is absent from the initial
+  `/return-policy` chunks and arrives on first cart use, at all three widths.
+- **JavaScript and analytics:**
+  - Unused JavaScript is 89.8–100.3 KiB per run: Google Tag Manager 68–79 KiB and the React DOM chunk about
+    21 KiB.
+  - GTM transfers 194–196 KiB with 115–357 ms of main-thread time. Clarity transfers about 27 KiB with
+    26–91 ms.
+  - Script bootup is 285–1,037 ms (simulated).
+  - This is unchanged from ZVY-75. Analytics cost remains TBT, not LCP. No icon fonts are requested on any
+    route or width.
+
+### Live smoke checks
+
+[smoke-checks.json](docs/performance/zvy-79/smoke-checks.json) keeps every test outcome, error, route evidence
+attachment and invoice-safety attachment.
+
+- **Safety:** every context blocked service workers and aborted any non-GET `/api/invoice` request. No customer
+  details were entered, and checkout stopped at empty-form validation. Across 90 invoice-safety attachments,
+  **zero invoice writes were attempted**.
+- **Existing deployed suite** (`performance-verification`, unchanged): run 09:21:48–09:26:31 UTC at desktop
+  1280×720, 320×720 and 390×844. **42 passed, 7 failed, 2 timed out.**
+  - **Passed at all three widths:**
+    - all 11 route checks: status, no document overflow, image delivery, no icon fonts, metadata, canonical
+      URLs, Product JSON-LD, and axe with only the contrast exception;
+    - the desktop cart, checkout and mixed-cart tests;
+    - first-use checkout code;
+    - portrait and event priority.
+  - **Gallery test, 3 failures:** the test expects one `<img>` for the art card in the server HTML. Since ZVY-60
+    the phone thumbnail and the first carousel slide are both in the HTML and share one URL, so it finds two.
+    Both are the first image (`inaksha-art6.png`), and no other gallery image is an `<img>` in the HTML. This is a
+    stale assertion, not a delivery regression. Because the test stopped there, its excerpt and gallery steps
+    did not run in this suite.
+  - **Phone cart tests, 4 failures at 320 and 390 px:** they failed only at their last step. They look for the
+    focused opener by the name /Купити/, but on phones that CTA becomes "Переглянути кошик" once the item is in
+    the cart. Every earlier step passed: cart and checkout axe, focus trap, quantity rule, invalid-checkout
+    errors and delivery fields.
+  - **Phone mixed-cart tests, 2 timeouts at 320 and 390 px:** they wait for a desktop-only "Додати в кошик"
+    button.
+- **ZVY-79 phone-aware checks**
+  ([zvy79-extra-checks.spec.ts.txt](docs/performance/zvy-79/zvy79-extra-checks.spec.ts.txt), run once from
+  `tests/deployment` and not committed there): **all behaviour passes at desktop, 320 px and 390 px.**
+  - **Cart and checkout, paper and digital:** focus trap, quantity rule, invalid validation, phone and Nova Poshta
+    fields only for paper, Escape, and focus back on the same CTA element that opened the cart.
+  - **Mixed cart:** the total equals paper + digital; the physical item's quantity changes and returns to one;
+    digital has no quantity control.
+  - **Gallery:** the server HTML has one image file; the next slide is `loading=lazy` and loads. Phones open the
+    image viewer first.
+  - **Loaded excerpt:** after the real `zvychajna.html` response, the region is reachable with Tab and has
+    `tabIndex` 0. PageDown/ArrowDown scroll it by 544–652 px, axe reports zero violations, and Escape returns
+    focus to «Читати уривок».
+  - **First run:** the first run had 3 failures caused by the check's own locators: it read the excerpt before the
+    loading text cleared, and on phones it looked for an inline next button. After correcting them, the 6
+    affected tests passed (6/6).
+- **Cutover suite** (`cutover`, unchanged): **10 passed, 17 skipped by design**, as on 2026-10-05. It covers
+  TLS/HSTS, `www` redirect, API health and CORS, robots and sitemap, product metadata and JSON-LD, invalid
+  checkout without an invoice, branded non-indexable error pages, and phone navigation and cart.
+
+Screenshots, inspected visually:
+[home 390](docs/performance/zvy-79/screenshots/home-390.jpg),
+[catalog 320](docs/performance/zvy-79/screenshots/catalog-320.jpg),
+[product 390](docs/performance/zvy-79/screenshots/product-390.jpg),
+[portrait desktop](docs/performance/zvy-79/screenshots/about-desktop.jpg),
+[events 390](docs/performance/zvy-79/screenshots/events-390.jpg) and
+[events 320](docs/performance/zvy-79/screenshots/events-320.jpg). On phones the event date and time sit on their
+own line under the title.
+
+### Accessibility
+
+axe ran with the existing tags (WCAG 2.0–2.2 A/AA and best practice). Only `color-contrast`, the documented brand
+exception, was skipped, and no rule was added.
+
+- **Pages and dialogs:** zero violations on all 11 routes at desktop, 320 px and 390 px, and on the paper and
+  digital cart, checkout and invalid-checkout dialogs at all three widths.
+- **`image-redundant-alt` (catalog):** gone. A targeted scan of `/books` reports no `image-redundant-alt`,
+  `image-alt` or `link-name` violation, and all six covers have `alt=""`.
+- **`scrollable-region-focusable` (loaded excerpt):** gone. The loaded excerpt scans clean at all three widths
+  and scrolls by keyboard.
+- **Event links, checked separately:** the accessible names are "Перейти до події: Презентація «Звичайної» в
+  Брно / у Відні / у Кракові". The visible "Перейти" starts each name (label-in-name). The links are no longer
+  identical, which answers Google's earlier identical-link-purpose warning.
+
+### SEO
+
+Checked on production with server-rendered HTML:
+
+- **Metadata:** every route has a non-empty title and description and the expected canonical URL, without a
+  trailing slash for `/`.
+- **Product JSON-LD:** each of the six products has exactly one Product record, with its canonical URL and UAH
+  offers.
+- **robots.txt and sitemap:** `robots.txt` allows all crawlers and names `https://zvychajna.pp.ua/sitemap.xml`.
+  The sitemap lists the 11 public routes.
+- **Missing pages:** an unknown product and an unknown page both return 404 with the branded «Сторінку не
+  знайдено» title and `noindex`.
+- **Redirects:** `/books?v=3` permanently redirects (308) to `/books`. `http://` and `www` redirect with 301.
+
+### Items that need the owner
+
+- **Protected Netlify preview: not applicable (criteria change agreed by the owner on 2026-10-23).** There is no
+  matching deploy preview, because PRs #56–#59 were all `[skip netlify]` and Netlify built none. The production
+  deploy 6adb23b7 is the build of `e3fa505`, and it was verified directly above. The owner agreed that a preview
+  check adds nothing for an already deployed revision. The protected deploy permalink was neither opened nor sent
+  to Google, and Netlify protection is unchanged.
+- **Search Console Core Web Vitals: field data unavailable.** The owner signed in and the report for the domain
+  property `sc-domain:zvychajna.pp.ua` was read on 2026-10-23. It was last updated on 2026-10-21. Mobile and desktop
+  both show «Даних про використання за останні 90 днів недостатньо для цього типу пристрою»: there is not enough
+  usage data in the last 90 days for that device type. Neither has URL groups or status counts. PageSpeed likewise
+  shows no CrUX field data for any URL or for the origin. [search-console.json](docs/performance/zvy-79/search-console.json)
+  records this. The lab results above do not establish a field Core Web Vitals pass, and none is claimed.
+
+### Acceptance criteria
+
+| # | Criterion | Result | Evidence / remaining work |
+| --- | --- | --- | --- |
+| 1 | Deployment evidence and fix-to-revision mapping; fixes present in deployed HTML | **Pass** | Deploy 6adb23b7, `e3fa505`, published 12:07:47 Kyiv, confirmed by the provider and the owner. All four fixes are ancestors of that commit and were seen in the live HTML, CSS and JS. |
+| 2 | At least 2 fresh, independent PageSpeed Mobile captures per route, compared with Oct 3 and Oct 5 | **Pass** | 33 captures (3 per route), none cached, full provenance kept. Medians and ranges are compared above; median LCP is lower on 10 of 11 routes. Slow runs (4.8–5.0 s) remain. |
+| 3 | Diagnostics: images and priority, render-blocking, portrait, event shifts, checkout code, JS and analytics | **Pass, with a new finding** | Single cover request, hero discovery passes, events CLS 0, portrait stable, checkout code deferred, JS and analytics as in ZVY-75. New product-page CLS (0.012–0.054) goes to a follow-up. |
+| 4 | Live smoke checks at desktop, 320 px and 390 px, read-only | **Pass (behaviour); the existing suite needs an update** | All behaviour passes with zero invoice attempts. The unchanged `performance-verification` suite fails 9 phone and gallery tests on locators that predate ZVY-60; this goes to a follow-up. |
+| 5 | axe on the representative pages and loaded dialogs; the two deployed failures gone; event link names | **Pass** | Zero violations apart from the contrast exception. `image-redundant-alt` and `scrollable-region-focusable` are gone. Each event link has its own name that includes the visible label. |
+| 6 | SEO: metadata, canonical URLs, JSON-LD, robots, sitemap, 404 | **Pass** | Route checks and the cutover suite pass (10 passed, 17 skipped by design). |
+| 7a | Matching protected Netlify preview check | **Not applicable (agreed criteria change)** | No deploy preview exists for `[skip netlify]` PRs #56–#59; production is the same build, verified directly. The owner agreed on 2026-10-23. |
+| 7b | Search Console Core Web Vitals availability | **Pass (documented as unavailable)** | Report last updated 2026-10-21: not enough 90-day usage data on mobile or desktop, and no URL groups. No CrUX data in PageSpeed. No field pass is claimed. |
+| 8 | Discoverable repository report with a per-criterion outcome, follow-ups and Linear drafts | **Pass** | This section, the README pointer and [docs/performance/zvy-79](docs/performance/zvy-79). |
+
+### Proposed follow-up issues
+
+- **Stabilize product-page layout when the description collapses after hydration.** Google records CLS of
+  0.012–0.054 on four product pages (up to 0.082 at 390 px locally). The shifting nodes are the Goodreads link
+  and the specs. Product CLS was 0 on 2026-10-05.
+- **Update the deployed verification suite for the phone CTA and dual cover slots.** Nine
+  `performance-verification` tests fail on locators that predate ZVY-60. The suite therefore no longer runs its
+  phone cart, mixed-cart, gallery and loaded-excerpt steps unaided. `zvy79-extra-checks.spec.ts.txt` contains
+  working phone-aware versions.
+
+The ZVY-75 proposals still apply and are not repeated as new evidence: inlined critical CSS, Netlify edge caching
+for HTML, the expensive first layout, and an analytics loading policy. The remaining 4.8–5.0 s runs, the high
+observed product render delay and the home Speed Index variation fit those items.
+
+### Draft Linear comments
+
+**ZVY-79**
+
+> Production verification of ZVY-75 to ZVY-78 is done. The report is the ZVY-79 section of
+> `ZVY-50-PERFORMANCE.md`, and the raw data is in `docs/performance/zvy-79`.
+>
+> - Deploy `6adb23b79e5548a32e3c9d66` (main@e3fa505), published 2026-10-23 12:07 Kyiv. All four fixes are in that
+>   revision and in the live HTML.
+> - **PageSpeed:** 33 fresh Mobile captures, 3 per route, none cached. Pooled median score 80 → 96 and LCP
+>   2.9 → 2.0 s against Oct 5. Median LCP is lower on 10 of 11 routes; home is 2.5 → 2.8 s, with overlapping
+>   ranges. Four runs still reach 4.8–5.0 s LCP.
+> - **Accessibility:** axe is clean on all routes and dialogs at desktop, 320 px and 390 px, apart from the
+>   contrast exception. `image-redundant-alt` and `scrollable-region-focusable` are gone, and event links are
+>   named per event. Events CLS is 0.
+> - **Smoke checks:** cart, checkout, validation, focus trap, Escape and focus restoration, gallery and excerpt
+>   keyboard scrolling all pass at 3 widths, with zero invoice attempts.
+> - **SEO:** passes.
+> - **Protected preview:** not applicable, a criteria change agreed by the owner. No deploy preview exists
+>   because PRs #56–#59 were `[skip netlify]`, and production is the same build, verified directly.
+> - **Search Console (read 2026-10-23, last updated 2026-10-21):** not enough 90-day usage data on mobile or
+>   desktop, and no URL groups. PageSpeed has no field data either. No field Core Web Vitals pass is claimed.
+> - **Follow-ups:** (1) product-page layout shift after hydration (CLS 0.012–0.054 in Google, new since Oct 5);
+>   (2) update the deployed verification suite for the ZVY-60 phone layout (9 tests fail on stale locators).
+
+**ZVY-51**
+
+> The deployed recheck of the ZVY-51 gates is complete; see ZVY-79.
+>
+> - **Accessibility:** the two deployed axe failures (catalog `image-redundant-alt`, loaded-excerpt
+>   `scrollable-region-focusable`) are fixed in production, and purchasing, dialogs, validation and SEO pass
+>   safely. That criterion is now met.
+> - **Preview gate:** replaced by direct verification of production deploy 6adb23b7, a criteria change the owner
+>   agreed on 2026-10-23.
+> - **Field data:** still unavailable. Search Console (last updated 2026-10-21) reports not enough 90-day usage
+>   data on mobile and desktop, and PageSpeed has none. This is documented; no field Core Web Vitals pass is
+>   claimed.
+>
+> With that recorded, ZVY-51 can be closed. Remaining performance work is tracked as follow-ups, not as ZVY-51
+> gates.
