@@ -1,0 +1,20 @@
+{
+  "checkedDate": "2026-10-23",
+  "checkedBy": "Owner's authenticated session (read in the main verification session)",
+  "property": "sc-domain:zvychajna.pp.ua",
+  "report": "Core Web Vitals",
+  "uiLanguage": "uk",
+  "lastUpdated": "2026-10-21",
+  "mobile": {
+    "status": "insufficient-data",
+    "message": "Даних про використання за останні 90 днів недостатньо для цього типу пристрою",
+    "urlGroups": 0
+  },
+  "desktop": {
+    "status": "insufficient-data",
+    "message": "Даних про використання за останні 90 днів недостатньо для цього типу пристрою",
+    "urlGroups": 0
+  },
+  "pageSpeedFieldData": "CrUX returned record-not-found for every tested URL and for the origin (no field data).",
+  "conclusion": "Field Core Web Vitals data is unavailable for both device types. Lab results do not establish a field Core Web Vitals pass."
+}

@@ -1,0 +1,2831 @@
+{
+ "source": "Lighthouse results embedded in the 33 PageSpeed reports listed in mobile-samples.json (same order). lcpPhasesUnthrottledMs comes from the lcp-breakdown insight, which uses the observed (unthrottled) trace; it is NOT the simulated Slow 4G headline LCP.",
+ "perSample": [
+  {
+   "route": "/",
+   "capture": "2026-10-23T09:12:19.617Z",
+   "score": 96,
+   "lcpMs": 2088,
+   "cls": 0.0007324486774951703,
+   "tbtMs": 130,
+   "ttfbMs": 46,
+   "documentCacheStatus": {
+    "kb": 11.6,
+    "durationMs": 2086
+   },
+   "lcpElement": {
+    "selector": "section.page-module___8aEwW__hero > div.page-module___8aEwW__heroInner > div.page-module___8aEwW__cover > img",
+    "label": "Інакша. Друга частина дилогії"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 46,
+    "resourceLoadDelay": 2055,
+    "resourceLoadDuration": 486,
+    "elementRenderDelay": 20
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [
+    {
+     "selector": "main#main-content > section.page-module___8aEwW__hero > div.page-module___8aEwW__heroInner > div.page-module___8aEwW__copy",
+     "score": 0.0007,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 513
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 172
+    },
+    {
+     "url": "/_next/static/chunks/29ztv67_1-yf_.css",
+     "kb": 1.7,
+     "wastedMs": 513
+    }
+   ],
+   "unusedJsKiB": 99.8,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.7
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 204
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 44
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 600,
+   "mainThreadMs": 780,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=640&q=75",
+     "priority": "High",
+     "kb": 42,
+     "startMs": 2102
+    }
+   ]
+  },
+  {
+   "route": "/books/inaksha",
+   "capture": "2026-10-23T09:13:10.713Z",
+   "score": 93,
+   "lcpMs": 2901,
+   "cls": 0,
+   "tbtMs": 132.5,
+   "ttfbMs": 40,
+   "documentCacheStatus": {
+    "kb": 13.9,
+    "durationMs": 378
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-inaksha",
+    "label": "В цукерочку до чаю додали трохи перцю чилі.\n\nЛета — більше н"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 40,
+    "elementRenderDelay": 1494
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 99.4,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 20.9
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 196.1,
+     "mainThreadMs": 219
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 62
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 709,
+   "mainThreadMs": 942,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 13.3,
+     "startMs": 398
+    }
+   ]
+  },
+  {
+   "route": "/books",
+   "capture": "2026-10-23T09:14:08.672Z",
+   "score": 96,
+   "lcpMs": 2339,
+   "cls": 0,
+   "tbtMs": 137.5,
+   "ttfbMs": 11,
+   "documentCacheStatus": {
+    "kb": 12.6,
+    "durationMs": 337
+   },
+   "lcpElement": {
+    "selector": "article.BookCard-module__o9fQEW__card > a.BookCard-module__o9fQEW__productLink > div.BookCard-module__o9fQEW__thumb > img",
+    "label": "article.BookCard-module__o9fQEW__card > a.BookCard-module__o"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 11,
+    "resourceLoadDelay": 349,
+    "resourceLoadDuration": 396,
+    "elementRenderDelay": 744
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 492
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 165
+    }
+   ],
+   "unusedJsKiB": 99,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 77.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.5
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 236
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 67
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 778,
+   "mainThreadMs": 1063,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 28.1,
+     "startMs": 362
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 10.4,
+     "startMs": 364
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=360&q=75",
+     "priority": "Low",
+     "kb": 31.8,
+     "startMs": 1482
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 20.8,
+     "startMs": 1483
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=360&q=75",
+     "priority": "Low",
+     "kb": 30.1,
+     "startMs": 1483
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=360&q=75",
+     "priority": "Low",
+     "kb": 27.1,
+     "startMs": 1483
+    }
+   ]
+  },
+  {
+   "route": "/about",
+   "capture": "2026-10-23T09:15:52.506Z",
+   "score": 99,
+   "lcpMs": 1065,
+   "cls": 0,
+   "tbtMs": 99,
+   "ttfbMs": 5,
+   "documentCacheStatus": {
+    "kb": 11.7,
+    "durationMs": 373
+   },
+   "lcpElement": {
+    "selector": "section.page-module__NfDiEG__about > div.page-module__NfDiEG__inner > div > p.page-module__NfDiEG__text",
+    "label": "Привіт) Я - Лілія Кухарець, для вас просто Ліля.\nАмбасадорка"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 5,
+    "elementRenderDelay": 574
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/10ewlesau8l4k.css",
+     "kb": 1,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 100.1,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 22.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 178
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.5,
+     "mainThreadMs": 43
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 576,
+   "mainThreadMs": 780,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fphoto_2025-09-21_20-57-11.jpg&w=640&q=75",
+     "priority": "High",
+     "kb": 95.4,
+     "startMs": 392
+    }
+   ]
+  },
+  {
+   "route": "/events",
+   "capture": "2026-10-23T09:16:35.149Z",
+   "score": 100,
+   "lcpMs": 1357,
+   "cls": 0,
+   "tbtMs": 89,
+   "ttfbMs": 6,
+   "documentCacheStatus": {
+    "kb": 12.6,
+    "durationMs": 42
+   },
+   "lcpElement": {
+    "selector": "div.ImageCarousel-module__5TEYlW__carousel > div.ImageCarousel-module__5TEYlW__carouselRail > div.ImageCarousel-module__5TEYlW__carouselSlide > img",
+    "label": "Презентація «Звичайної» у Відні"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 6,
+    "resourceLoadDelay": 54,
+    "resourceLoadDuration": 34,
+    "elementRenderDelay": 60
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/2vro9tpjg2zli.css",
+     "kb": 1.4,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 99.6,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.5
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 184
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 41
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 590,
+   "mainThreadMs": 804,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2Fa.PNG&w=750&q=75",
+     "priority": "High",
+     "kb": 60.1,
+     "startMs": 61
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2Fa.jpg&w=750&q=75",
+     "priority": "High",
+     "kb": 37.5,
+     "startMs": 62
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2Fa.JPG&w=750&q=75",
+     "priority": "Low",
+     "kb": 29.8,
+     "startMs": 132
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2FIMG_6087.jpg&w=750&q=75",
+     "priority": "High",
+     "kb": 24.9,
+     "startMs": 389
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2FIMG_20251013_102630_090.jpg&w=750&q=75",
+     "priority": "High",
+     "kb": 38.7,
+     "startMs": 389
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2FIMG_0536.JPG&w=750&q=75",
+     "priority": "Low",
+     "kb": 76.3,
+     "startMs": 392
+    }
+   ]
+  },
+  {
+   "route": "/return-policy",
+   "capture": "2026-10-23T09:16:43.808Z",
+   "score": 99,
+   "lcpMs": 1681,
+   "cls": 0,
+   "tbtMs": 124.5,
+   "ttfbMs": 10,
+   "documentCacheStatus": {
+    "kb": 11.9,
+    "durationMs": 442
+   },
+   "lcpElement": {
+    "selector": "main#main-content > section.page-module__kAT0Vq__policy > div.page-module__kAT0Vq__inner > p",
+    "label": "Повернення або обмін можливі лише у випадку, якщо товар має "
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 10,
+    "elementRenderDelay": 771
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/2pk2zfisz3b60.css",
+     "kb": 0.9,
+     "wastedMs": 492
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 492
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 165
+    }
+   ],
+   "unusedJsKiB": 100.1,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 22.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 197
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 60
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 587,
+   "mainThreadMs": 770,
+   "images": []
+  },
+  {
+   "route": "/books/zvychajna",
+   "capture": "2026-10-23T09:16:53.553Z",
+   "score": 96,
+   "lcpMs": 1282,
+   "cls": 0.03308245521848262,
+   "tbtMs": 218.5,
+   "ttfbMs": 4,
+   "documentCacheStatus": {
+    "kb": 13.4,
+    "durationMs": 44
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-zvychajna",
+    "label": "Ніяких емоційних гойдалок і розбитого скла - тільки легка, я"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 4,
+    "elementRenderDelay": 161
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > div.BookDetail-module__Y_TQtW__coverActions",
+     "score": 0.0331,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 89.8,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 68.9
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 20.9
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 338
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 58
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 1.6,
+     "mainThreadMs": 0
+    },
+    {
+     "entity": "Other Google APIs/SDKs",
+     "kb": 0.5,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 865,
+   "mainThreadMs": 1110,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 25,
+     "startMs": 66
+    }
+   ]
+  },
+  {
+   "route": "/books/zvychajna-and-inaksha",
+   "capture": "2026-10-23T09:17:25.763Z",
+   "score": 99,
+   "lcpMs": 1223,
+   "cls": 0.01178793835787335,
+   "tbtMs": 115.5,
+   "ttfbMs": 79,
+   "documentCacheStatus": {
+    "kb": 12.4,
+    "durationMs": 488
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-zvychajna-and-inaksha",
+    "label": "Повна дилогія «Звичайна» в одному комплекті: перша частина «"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 79,
+    "elementRenderDelay": 516
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__specs",
+     "score": 0.0118,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 90,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 68.4
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.6
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 232
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 26
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 1.6,
+     "mainThreadMs": 0
+    },
+    {
+     "entity": "Other Google APIs/SDKs",
+     "kb": 0.5,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 595,
+   "mainThreadMs": 816,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 5.8,
+     "startMs": 501
+    }
+   ]
+  },
+  {
+   "route": "/books/pid_shepit_snihu",
+   "capture": "2026-10-23T09:17:34.527Z",
+   "score": 98,
+   "lcpMs": 1611,
+   "cls": 0.03623923575623364,
+   "tbtMs": 145.5,
+   "ttfbMs": 47,
+   "documentCacheStatus": {
+    "kb": 13.4,
+    "durationMs": 550
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-pid_shepit_snihu",
+    "label": "Голоси то віддаляються, то завмирають. Лине світом коляда, с"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 47,
+    "elementRenderDelay": 819
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > div.BookDetail-module__Y_TQtW__coverActions",
+     "score": 0.0362,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 546
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 183
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 546
+    }
+   ],
+   "unusedJsKiB": 100.3,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.8
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 196.1,
+     "mainThreadMs": 230
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 55
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 725,
+   "mainThreadMs": 991,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+     "priority": "High",
+     "kb": 15.4,
+     "startMs": 574
+    }
+   ]
+  },
+  {
+   "route": "/books/brunette-stories",
+   "capture": "2026-10-23T09:17:43.303Z",
+   "score": 95,
+   "lcpMs": 2846,
+   "cls": 0.05431935803178466,
+   "tbtMs": 34.5,
+   "ttfbMs": 79,
+   "documentCacheStatus": {
+    "kb": 13.3,
+    "durationMs": 349
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-brunette-stories",
+    "label": "Книга для читання під звук дощу та світло настільної лампи. "
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 79,
+    "elementRenderDelay": 1415
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__specs",
+     "score": 0.0543,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 99.7,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.7
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 196.1,
+     "mainThreadMs": 134
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 43
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 483,
+   "mainThreadMs": 674,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 16.5,
+     "startMs": 366
+    }
+   ]
+  },
+  {
+   "route": "/books/inaksha-art",
+   "capture": "2026-10-23T09:17:52.970Z",
+   "score": 97,
+   "lcpMs": 1213,
+   "cls": 0,
+   "tbtMs": 188.5,
+   "ttfbMs": 10,
+   "documentCacheStatus": {
+    "kb": 12.4,
+    "durationMs": 259
+   },
+   "lcpElement": {
+    "selector": "body > footer",
+    "label": "Контакти\n© 2026 Лілія Кухарець. Усі права захищені.\nlillykuk"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 10,
+    "elementRenderDelay": 388
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 99.1,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 77.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.6
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 274
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 76
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 806,
+   "mainThreadMs": 1046,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+     "priority": "High",
+     "kb": 20,
+     "startMs": 281
+    }
+   ]
+  },
+  {
+   "route": "/",
+   "capture": "2026-10-23T09:18:35.259Z",
+   "score": 94,
+   "lcpMs": 2795,
+   "cls": 0.0007324486774951703,
+   "tbtMs": 160.99999999999977,
+   "ttfbMs": 15,
+   "documentCacheStatus": {
+    "kb": 11.6,
+    "durationMs": 463
+   },
+   "lcpElement": {
+    "selector": "section.page-module___8aEwW__hero > div.page-module___8aEwW__heroInner > div.page-module___8aEwW__cover > img",
+    "label": "Інакша. Друга частина дилогії"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 15,
+    "resourceLoadDelay": 471,
+    "resourceLoadDuration": 586,
+    "elementRenderDelay": 56
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [
+    {
+     "selector": "main#main-content > section.page-module___8aEwW__hero > div.page-module___8aEwW__heroInner > div.page-module___8aEwW__copy",
+     "score": 0.0007,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 511
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 171
+    },
+    {
+     "url": "/_next/static/chunks/29ztv67_1-yf_.css",
+     "kb": 1.7,
+     "wastedMs": 511
+    }
+   ],
+   "unusedJsKiB": 99.5,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.5
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 209
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 56
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 699,
+   "mainThreadMs": 917,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=640&q=75",
+     "priority": "High",
+     "kb": 42,
+     "startMs": 488
+    }
+   ]
+  },
+  {
+   "route": "/books/inaksha",
+   "capture": "2026-10-23T09:18:43.504Z",
+   "score": 96,
+   "lcpMs": 2048,
+   "cls": 0,
+   "tbtMs": 167,
+   "ttfbMs": 10,
+   "documentCacheStatus": {
+    "kb": 14,
+    "durationMs": 192
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-inaksha",
+    "label": "В цукерочку до чаю додали трохи перцю чилі.\n\nЛета — більше н"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 10,
+    "elementRenderDelay": 1343
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.8,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 99.2,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 218
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 58
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 717,
+   "mainThreadMs": 932,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 13.3,
+     "startMs": 209
+    }
+   ]
+  },
+  {
+   "route": "/books",
+   "capture": "2026-10-23T09:18:52.733Z",
+   "score": 78,
+   "lcpMs": 5046,
+   "cls": 0,
+   "tbtMs": 107,
+   "ttfbMs": 48,
+   "documentCacheStatus": {
+    "kb": 12.6,
+    "durationMs": 234
+   },
+   "lcpElement": {
+    "selector": "article.BookCard-module__o9fQEW__card > a.BookCard-module__o9fQEW__productLink > div.BookCard-module__o9fQEW__thumb > img",
+    "label": "article.BookCard-module__o9fQEW__card > a.BookCard-module__o"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 48,
+    "resourceLoadDelay": 208,
+    "resourceLoadDuration": 397,
+    "elementRenderDelay": 1739
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 152
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 452
+    }
+   ],
+   "unusedJsKiB": 99.6,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.6
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 239
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.7,
+     "mainThreadMs": 69
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 715,
+   "mainThreadMs": 967,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 28.1,
+     "startMs": 257
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 10.4,
+     "startMs": 257
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=360&q=75",
+     "priority": "Low",
+     "kb": 31.8,
+     "startMs": 1384
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=360&q=75",
+     "priority": "Low",
+     "kb": 20.8,
+     "startMs": 1384
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=360&q=75",
+     "priority": "Low",
+     "kb": 30.1,
+     "startMs": 1384
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=360&q=75",
+     "priority": "Low",
+     "kb": 27.1,
+     "startMs": 1384
+    }
+   ]
+  },
+  {
+   "route": "/about",
+   "capture": "2026-10-23T09:19:01.410Z",
+   "score": 100,
+   "lcpMs": 1357,
+   "cls": 0,
+   "tbtMs": 54.5,
+   "ttfbMs": 15,
+   "documentCacheStatus": {
+    "kb": 11.6,
+    "durationMs": 55
+   },
+   "lcpElement": {
+    "selector": "section.page-module__NfDiEG__about > div.page-module__NfDiEG__inner > div > p.page-module__NfDiEG__text",
+    "label": "Привіт) Я - Лілія Кухарець, для вас просто Ліля.\nАмбасадорка"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 15,
+    "elementRenderDelay": 147
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/10ewlesau8l4k.css",
+     "kb": 1,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 99.8,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.8
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 157
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.5,
+     "mainThreadMs": 37
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 473,
+   "mainThreadMs": 646,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fphoto_2025-09-21_20-57-11.jpg&w=640&q=75",
+     "priority": "High",
+     "kb": 95.4,
+     "startMs": 71
+    }
+   ]
+  },
+  {
+   "route": "/events",
+   "capture": "2026-10-23T09:19:11.311Z",
+   "score": 93,
+   "lcpMs": 2595,
+   "cls": 0,
+   "tbtMs": 221.5,
+   "ttfbMs": 10,
+   "documentCacheStatus": {
+    "kb": 12.6,
+    "durationMs": 295
+   },
+   "lcpElement": {
+    "selector": "div.ImageCarousel-module__5TEYlW__carousel > div.ImageCarousel-module__5TEYlW__carouselRail > div.ImageCarousel-module__5TEYlW__carouselSlide > img",
+    "label": "Презентація «Звичайної» у Відні"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 10,
+    "resourceLoadDelay": 311,
+    "resourceLoadDuration": 324,
+    "elementRenderDelay": 825
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/2vro9tpjg2zli.css",
+     "kb": 1.4,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 99.6,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.6
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 357
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 58
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 1037,
+   "mainThreadMs": 1414,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2Fa.PNG&w=750&q=75",
+     "priority": "High",
+     "kb": 60.1,
+     "startMs": 322
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2Fa.jpg&w=750&q=75",
+     "priority": "High",
+     "kb": 37.5,
+     "startMs": 323
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2Fa.JPG&w=750&q=75",
+     "priority": "Low",
+     "kb": 29.9,
+     "startMs": 422
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2FIMG_6087.jpg&w=750&q=75",
+     "priority": "Low",
+     "kb": 24.9,
+     "startMs": 1470
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2FIMG_20251013_102630_090.jpg&w=750&q=75",
+     "priority": "Low",
+     "kb": 38.7,
+     "startMs": 1470
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2FIMG_0536.JPG&w=750&q=75",
+     "priority": "Low",
+     "kb": 76.3,
+     "startMs": 1470
+    }
+   ]
+  },
+  {
+   "route": "/return-policy",
+   "capture": "2026-10-23T09:19:20.633Z",
+   "score": 96,
+   "lcpMs": 1206,
+   "cls": 0,
+   "tbtMs": 213.5,
+   "ttfbMs": 4,
+   "documentCacheStatus": {
+    "kb": 11.8,
+    "durationMs": 35
+   },
+   "lcpElement": {
+    "selector": "main#main-content > section.page-module__kAT0Vq__policy > div.page-module__kAT0Vq__inner > p",
+    "label": "Повернення або обмін можливі лише у випадку, якщо товар має "
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 4,
+    "elementRenderDelay": 164
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/2pk2zfisz3b60.css",
+     "kb": 0.9,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 99.6,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 77.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 22.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 282
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 69
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 825,
+   "mainThreadMs": 1097,
+   "images": []
+  },
+  {
+   "route": "/books/zvychajna",
+   "capture": "2026-10-23T09:19:37.951Z",
+   "score": 92,
+   "lcpMs": 2988,
+   "cls": 0,
+   "tbtMs": 143,
+   "ttfbMs": 24,
+   "documentCacheStatus": {
+    "kb": 13.4,
+    "durationMs": 144
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-zvychajna",
+    "label": "Ніяких емоційних гойдалок і розбитого скла - тільки легка, я"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 24,
+    "elementRenderDelay": 1278
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 543
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 543
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 182
+    }
+   ],
+   "unusedJsKiB": 90,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 68.9
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 225
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 53
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 1.6,
+     "mainThreadMs": 0
+    },
+    {
+     "entity": "Other Google APIs/SDKs",
+     "kb": 0.5,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 678,
+   "mainThreadMs": 895,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 25,
+     "startMs": 163
+    }
+   ]
+  },
+  {
+   "route": "/books/zvychajna-and-inaksha",
+   "capture": "2026-10-23T09:19:46.473Z",
+   "score": 94,
+   "lcpMs": 2900,
+   "cls": 0,
+   "tbtMs": 83.5,
+   "ttfbMs": 24,
+   "documentCacheStatus": {
+    "kb": 12.4,
+    "durationMs": 261
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-zvychajna-and-inaksha",
+    "label": "Повна дилогія «Звичайна» в одному комплекті: перша частина «"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 24,
+    "elementRenderDelay": 1398
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 152
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 452
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 452
+    }
+   ],
+   "unusedJsKiB": 91.1,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 69.3
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.7
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 196.1,
+     "mainThreadMs": 203
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 47
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 1.6,
+     "mainThreadMs": 0
+    },
+    {
+     "entity": "Other Google APIs/SDKs",
+     "kb": 0.5,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 595,
+   "mainThreadMs": 783,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 5.8,
+     "startMs": 278
+    }
+   ]
+  },
+  {
+   "route": "/books/pid_shepit_snihu",
+   "capture": "2026-10-23T09:19:55.967Z",
+   "score": 98,
+   "lcpMs": 1282,
+   "cls": 0.03623923575623364,
+   "tbtMs": 158.5,
+   "ttfbMs": 10,
+   "documentCacheStatus": {
+    "kb": 13.3,
+    "durationMs": 181
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-pid_shepit_snihu",
+    "label": "Голоси то віддаляються, то завмирають. Лине світом коляда, с"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 10,
+    "elementRenderDelay": 310
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > div.BookDetail-module__Y_TQtW__coverActions",
+     "score": 0.0362,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 98.8,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 77
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.8
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 195.2,
+     "mainThreadMs": 247
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 53
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 767,
+   "mainThreadMs": 1027,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+     "priority": "High",
+     "kb": 15.4,
+     "startMs": 203
+    }
+   ]
+  },
+  {
+   "route": "/books/brunette-stories",
+   "capture": "2026-10-23T09:20:04.409Z",
+   "score": 98,
+   "lcpMs": 1594,
+   "cls": 0.05431935803178466,
+   "tbtMs": 147.5,
+   "ttfbMs": 8,
+   "documentCacheStatus": {
+    "kb": 13.3,
+    "durationMs": 432
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-brunette-stories",
+    "label": "Книга для читання під звук дощу та світло настільної лампи. "
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 8,
+    "elementRenderDelay": 645
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__specs",
+     "score": 0.0543,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 178
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 532
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 532
+    }
+   ],
+   "unusedJsKiB": 99.7,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.7
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 244
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 56
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 746,
+   "mainThreadMs": 1010,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 16.5,
+     "startMs": 455
+    }
+   ]
+  },
+  {
+   "route": "/books/inaksha-art",
+   "capture": "2026-10-23T09:20:13.358Z",
+   "score": 95,
+   "lcpMs": 2742,
+   "cls": 0,
+   "tbtMs": 85.5,
+   "ttfbMs": 14,
+   "documentCacheStatus": {
+    "kb": 12.5,
+    "durationMs": 197
+   },
+   "lcpElement": {
+    "selector": "body > footer",
+    "label": "Контакти\n© 2026 Лілія Кухарець. Усі права захищені.\nlillykuk"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 14,
+    "elementRenderDelay": 1335
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 98.8,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 77
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.8
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 243
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 37
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 597,
+   "mainThreadMs": 866,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+     "priority": "High",
+     "kb": 20,
+     "startMs": 210
+    }
+   ]
+  },
+  {
+   "route": "/",
+   "capture": "2026-10-23T09:22:02.621Z",
+   "score": 77,
+   "lcpMs": 4890,
+   "cls": 0,
+   "tbtMs": 194.5,
+   "ttfbMs": 2,
+   "documentCacheStatus": {
+    "kb": 11.6,
+    "durationMs": 298
+   },
+   "lcpElement": {
+    "selector": "section.page-module___8aEwW__hero > div.page-module___8aEwW__heroInner > div.page-module___8aEwW__cover > img",
+    "label": "Інакша. Друга частина дилогії"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 2,
+    "resourceLoadDelay": 316,
+    "resourceLoadDuration": 45,
+    "elementRenderDelay": 2112
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/29ztv67_1-yf_.css",
+     "kb": 1.7,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 99.8,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.8
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 324
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.7,
+     "mainThreadMs": 84
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 990,
+   "mainThreadMs": 1316,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=640&q=75",
+     "priority": "High",
+     "kb": 42,
+     "startMs": 321
+    }
+   ]
+  },
+  {
+   "route": "/books/inaksha",
+   "capture": "2026-10-23T09:22:11.049Z",
+   "score": 94,
+   "lcpMs": 2914,
+   "cls": 0,
+   "tbtMs": 53,
+   "ttfbMs": 25,
+   "documentCacheStatus": {
+    "kb": 14,
+    "durationMs": 420
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-inaksha",
+    "label": "В цукерочку до чаю додали трохи перцю чилі.\n\nЛета — більше н"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 25,
+    "elementRenderDelay": 1551
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.8,
+     "wastedMs": 543
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 182
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 543
+    }
+   ],
+   "unusedJsKiB": 99.1,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 167
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.7,
+     "mainThreadMs": 52
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 588,
+   "mainThreadMs": 846,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 13.3,
+     "startMs": 442
+    }
+   ]
+  },
+  {
+   "route": "/books",
+   "capture": "2026-10-23T09:22:18.842Z",
+   "score": 100,
+   "lcpMs": 1890,
+   "cls": 0,
+   "tbtMs": 20.5,
+   "ttfbMs": 5,
+   "documentCacheStatus": {
+    "kb": 12.6,
+    "durationMs": 177
+   },
+   "lcpElement": {
+    "selector": "article.BookCard-module__o9fQEW__card > a.BookCard-module__o9fQEW__productLink > div.BookCard-module__o9fQEW__thumb > img",
+    "label": "article.BookCard-module__o9fQEW__card > a.BookCard-module__o"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 5,
+    "resourceLoadDelay": 184,
+    "resourceLoadDuration": 88,
+    "elementRenderDelay": 23
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 452
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 152
+    }
+   ],
+   "unusedJsKiB": 100,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.5
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 196.1,
+     "mainThreadMs": 115
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 32
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 356,
+   "mainThreadMs": 576,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 28.1,
+     "startMs": 190
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 10.4,
+     "startMs": 190
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 31.8,
+     "startMs": 277
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha%2Finaksha.webp&w=360&q=75",
+     "priority": "High",
+     "kb": 20.8,
+     "startMs": 281
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=360&q=75",
+     "priority": "Low",
+     "kb": 30.1,
+     "startMs": 281
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=360&q=75",
+     "priority": "Low",
+     "kb": 27.1,
+     "startMs": 282
+    }
+   ]
+  },
+  {
+   "route": "/about",
+   "capture": "2026-10-23T09:22:29.027Z",
+   "score": 97,
+   "lcpMs": 2037,
+   "cls": 0,
+   "tbtMs": 156,
+   "ttfbMs": 6,
+   "documentCacheStatus": {
+    "kb": 11.7,
+    "durationMs": 170
+   },
+   "lcpElement": {
+    "selector": "section.page-module__NfDiEG__about > div.page-module__NfDiEG__inner > div > p.page-module__NfDiEG__text",
+    "label": "Привіт) Я - Лілія Кухарець, для вас просто Ліля.\nАмбасадорка"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 6,
+    "elementRenderDelay": 325
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/10ewlesau8l4k.css",
+     "kb": 1,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 100.1,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 22.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 261
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 85
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 778,
+   "mainThreadMs": 1073,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fphoto_2025-09-21_20-57-11.jpg&w=640&q=75",
+     "priority": "Low",
+     "kb": 95.4,
+     "startMs": 192
+    }
+   ]
+  },
+  {
+   "route": "/events",
+   "capture": "2026-10-23T09:22:37.297Z",
+   "score": 97,
+   "lcpMs": 2495,
+   "cls": 0,
+   "tbtMs": 108.99999999999955,
+   "ttfbMs": 9,
+   "documentCacheStatus": {
+    "kb": 12.6,
+    "durationMs": 179
+   },
+   "lcpElement": {
+    "selector": "div.ImageCarousel-module__5TEYlW__carousel > div.ImageCarousel-module__5TEYlW__carouselRail > div.ImageCarousel-module__5TEYlW__carouselSlide > img",
+    "label": "Презентація «Звичайної» у Відні"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 9,
+    "resourceLoadDelay": 188,
+    "resourceLoadDuration": 343,
+    "elementRenderDelay": 61
+   },
+   "lcpDiscoveryScore": 1,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/2vro9tpjg2zli.css",
+     "kb": 1.4,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 99.6,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.6
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 183
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 44
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 615,
+   "mainThreadMs": 831,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2Fa.PNG&w=750&q=75",
+     "priority": "High",
+     "kb": 60.1,
+     "startMs": 198
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2Fa.jpg&w=750&q=75",
+     "priority": "High",
+     "kb": 37.5,
+     "startMs": 198
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2Fa.JPG&w=750&q=75",
+     "priority": "Low",
+     "kb": 29.9,
+     "startMs": 252
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-27-presentation-brno%2FIMG_6087.jpg&w=750&q=75",
+     "priority": "High",
+     "kb": 24.9,
+     "startMs": 511
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-12-the-ordirnary-presentation-vienna%2FIMG_20251013_102630_090.jpg&w=750&q=75",
+     "priority": "High",
+     "kb": 38.7,
+     "startMs": 512
+    },
+    {
+     "url": "/_next/image?url=%2Fimages%2Fevents%2F2025-10-04-the-ordirnary-presentation-krakow%2FIMG_0536.JPG&w=750&q=75",
+     "priority": "Low",
+     "kb": 76.3,
+     "startMs": 512
+    }
+   ]
+  },
+  {
+   "route": "/return-policy",
+   "capture": "2026-10-23T09:22:44.989Z",
+   "score": 99,
+   "lcpMs": 1823,
+   "cls": 0,
+   "tbtMs": 18,
+   "ttfbMs": 15,
+   "documentCacheStatus": {
+    "kb": 11.9,
+    "durationMs": 294
+   },
+   "lcpElement": {
+    "selector": "main#main-content > section.page-module__kAT0Vq__policy > div.page-module__kAT0Vq__inner > p",
+    "label": "Повернення або обмін можливі лише у випадку, якщо товар має "
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 15,
+    "elementRenderDelay": 1434
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/2pk2zfisz3b60.css",
+     "kb": 0.9,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 601
+    }
+   ],
+   "unusedJsKiB": 100.2,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 22.1
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 117
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 31
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 285,
+   "mainThreadMs": 501,
+   "images": []
+  },
+  {
+   "route": "/books/zvychajna",
+   "capture": "2026-10-23T09:23:03.528Z",
+   "score": 77,
+   "lcpMs": 4882,
+   "cls": 0,
+   "tbtMs": 193.5,
+   "ttfbMs": 11,
+   "documentCacheStatus": {
+    "kb": 13.5,
+    "durationMs": 191
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-zvychajna",
+    "label": "Ніяких емоційних гойдалок і розбитого скла - тільки легка, я"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 11,
+    "elementRenderDelay": 2351
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 90.4,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 69.4
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 196.1,
+     "mainThreadMs": 315
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.7,
+     "mainThreadMs": 65
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 1.6,
+     "mainThreadMs": 0
+    },
+    {
+     "entity": "Other Google APIs/SDKs",
+     "kb": 0.5,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 920,
+   "mainThreadMs": 1185,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna%2Fbook.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 25,
+     "startMs": 214
+    }
+   ]
+  },
+  {
+   "route": "/books/zvychajna-and-inaksha",
+   "capture": "2026-10-23T09:23:11.748Z",
+   "score": 97,
+   "lcpMs": 1206,
+   "cls": 0.01178793835787335,
+   "tbtMs": 191,
+   "ttfbMs": 14,
+   "documentCacheStatus": {
+    "kb": 12.3,
+    "durationMs": 59
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-zvychajna-and-inaksha",
+    "label": "Повна дилогія «Звичайна» в одному комплекті: перша частина «"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 14,
+    "elementRenderDelay": 211
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__specs",
+     "score": 0.0118,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 90.3,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 68.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.9
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 323
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 57
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 1.6,
+     "mainThreadMs": 0
+    },
+    {
+     "entity": "Other Google APIs/SDKs",
+     "kb": 0.5,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 898,
+   "mainThreadMs": 1191,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fzvychajna-and-inaksha%2Fzvychajna-and-inaksha.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 5.8,
+     "startMs": 84
+    }
+   ]
+  },
+  {
+   "route": "/books/pid_shepit_snihu",
+   "capture": "2026-10-23T09:23:21.168Z",
+   "score": 92,
+   "lcpMs": 2834,
+   "cls": 0.03623923575623364,
+   "tbtMs": 211,
+   "ttfbMs": 10,
+   "documentCacheStatus": {
+    "kb": 13.3,
+    "durationMs": 183
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-pid_shepit_snihu",
+    "label": "Голоси то віддаляються, то завмирають. Лине світом коляда, с"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 10,
+    "elementRenderDelay": 1326
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [
+    {
+     "selector": "div.BookDetail-module__Y_TQtW__grid > div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > div.BookDetail-module__Y_TQtW__coverActions",
+     "score": 0.0362,
+     "causes": []
+    }
+   ],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 151
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    }
+   ],
+   "unusedJsKiB": 100,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 78
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.9
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 273
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 91
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 901,
+   "mainThreadMs": 1236,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fpid_shepit_snihu%2Fpid_shepit_snihu.jpg&w=256&q=75",
+     "priority": "High",
+     "kb": 15.4,
+     "startMs": 215
+    }
+   ]
+  },
+  {
+   "route": "/books/brunette-stories",
+   "capture": "2026-10-23T09:23:29.420Z",
+   "score": 79,
+   "lcpMs": 4830,
+   "cls": 0,
+   "tbtMs": 131,
+   "ttfbMs": 11,
+   "documentCacheStatus": {
+    "kb": 13.2,
+    "durationMs": 129
+   },
+   "lcpElement": {
+    "selector": "div.BookDetail-module__Y_TQtW__content > div.BookDetail-module__Y_TQtW__detailBody > section.BookDetail-module__Y_TQtW__descriptionPanel > div#book-description-brunette-stories",
+    "label": "Книга для читання під звук дощу та світло настільної лампи. "
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 11,
+    "elementRenderDelay": 2292
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.2,
+     "wastedMs": 182
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.7,
+     "wastedMs": 544
+    },
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 544
+    }
+   ],
+   "unusedJsKiB": 99.4,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 77.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.9
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 269
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 64
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 811,
+   "mainThreadMs": 1090,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Fbrunette-stories%2Fbrunette-stories.webp&w=256&q=75",
+     "priority": "High",
+     "kb": 16.5,
+     "startMs": 154
+    }
+   ]
+  },
+  {
+   "route": "/books/inaksha-art",
+   "capture": "2026-10-23T09:23:37.270Z",
+   "score": 100,
+   "lcpMs": 1513,
+   "cls": 0,
+   "tbtMs": 18,
+   "ttfbMs": 15,
+   "documentCacheStatus": {
+    "kb": 12.5,
+    "durationMs": 199
+   },
+   "lcpElement": {
+    "selector": "body > footer",
+    "label": "Контакти\n© 2026 Лілія Кухарець. Усі права захищені.\nlillykuk"
+   },
+   "lcpPhasesUnthrottledMs": {
+    "timeToFirstByte": 15,
+    "elementRenderDelay": 290
+   },
+   "lcpDiscoveryScore": null,
+   "layoutShifts": [],
+   "renderBlocking": [
+    {
+     "url": "/_next/static/chunks/35h3xsibcs66y.css",
+     "kb": 2.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3n5iguxh0lnuo.css",
+     "kb": 6.6,
+     "wastedMs": 451
+    },
+    {
+     "url": "/_next/static/chunks/3ec9miytx_mo1.css",
+     "kb": 1.3,
+     "wastedMs": 151
+    }
+   ],
+   "unusedJsKiB": 99.2,
+   "unusedJsTop": [
+    {
+     "url": "https://www.googletagmanager.com/gtag/js?id=G-G99TKQS1G1",
+     "wastedKiB": 77.5
+    },
+    {
+     "url": "/_next/static/chunks/426yanh6k0-ft.js",
+     "wastedKiB": 21.7
+    }
+   ],
+   "thirdParties": [
+    {
+     "entity": "Google Tag Manager",
+     "kb": 194.2,
+     "mainThreadMs": 119
+    },
+    {
+     "entity": "Clarity",
+     "kb": 27.4,
+     "mainThreadMs": 29
+    },
+    {
+     "entity": "Google Analytics",
+     "kb": 0.8,
+     "mainThreadMs": 0
+    }
+   ],
+   "bootupMs": 359,
+   "mainThreadMs": 556,
+   "images": [
+    {
+     "url": "/_next/image?url=%2Fimages%2Fproducts%2Finaksha-art%2Finaksha-art6.png&w=256&q=75",
+     "priority": "High",
+     "kb": 20,
+     "startMs": 215
+    }
+   ]
+  }
+ ]
+}
