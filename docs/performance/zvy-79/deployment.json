@@ -1,0 +1,94 @@
+{
+  "verifiedDate": "2026-10-23",
+  "timezone": "Europe/Kiev (UTC+03:00, EEST)",
+  "provider": "Netlify",
+  "siteId": "33b0cd6f-930d-44fc-a206-e31dd69c24f0",
+  "source": "Netlify public deploy API (api.netlify.com/api/v1/deploys/<id> and the site's published_deploy), read anonymously; cross-checked with the public deploy list in the Netlify UI.",
+  "production": {
+    "deploymentId": "6adb23b79e5548a32e3c9d66",
+    "buildId": "6adb23b79e5548a32e3c9d64",
+    "context": "production",
+    "state": "ready",
+    "branch": "main",
+    "commit": "e3fa5055b4cbda1bbbcbc455cb2156a794c95047",
+    "deployMessage": null,
+    "createdAt": "2026-10-23T09:07:03.681Z",
+    "publishedAt": "2026-10-23T09:07:47.271Z",
+    "publishedAtLocal": "2026-10-23T12:07:47.271+03:00",
+    "buildSeconds": 41,
+    "url": "https://zvychajna.pp.ua",
+    "permalink": "https://6adb23b79e5548a32e3c9d66--astounding-douhua-45280d.netlify.app",
+    "providerUrl": "https://app.netlify.com/projects/astounding-douhua-45280d/deploys/6adb23b79e5548a32e3c9d66",
+    "currentPublishedDeployConfirmedByProvider": true,
+    "previousProductionDeploy": {
+      "deploymentId": "6ad51cd136bce579f36d6e47",
+      "commit": "5440f0535d3a8941a4cb159292cc5e2a07517fed",
+      "publishedAt": "2026-10-18T19:24:47.795Z"
+    },
+    "triggeredByThisTask": false,
+    "ownerConfirmation": {
+      "date": "2026-10-23",
+      "statement": "The owner confirmed production deploy 6adb23b79e5548a32e3c9d66 of main@e3fa505 on project astounding-douhua-45280d (zvychajna.pp.ua), published 2026-10-23 12:07 Europe/Kyiv (09:07 UTC), deployed in 41 s; previous production deploy main@5440f05 on 2026-10-18 at 22:24 Europe/Kyiv.",
+      "matchesProviderRecord": true
+    }
+  },
+  "fixMapping": [
+    {
+      "issue": "ZVY-76",
+      "pr": 57,
+      "mergeCommit": "f997905",
+      "fixCommits": [
+        "7e844b1",
+        "1bd7fd7"
+      ],
+      "ancestorOfPublishedCommit": true
+    },
+    {
+      "issue": "ZVY-78",
+      "pr": 56,
+      "mergeCommit": "fc0163a",
+      "fixCommits": [
+        "132025f (ZVY-60 source fix, already in 5440f05)"
+      ],
+      "note": "Test-only PR; the source fix was first published by deploy 6ad51cd1 (5440f05) on 2026-10-18.",
+      "ancestorOfPublishedCommit": true
+    },
+    {
+      "issue": "ZVY-75",
+      "pr": 58,
+      "mergeCommit": "ab81939",
+      "fixCommits": [
+        "3847cd8",
+        "2679eb1"
+      ],
+      "ancestorOfPublishedCommit": true
+    },
+    {
+      "issue": "ZVY-77",
+      "pr": 59,
+      "mergeCommit": "e3fa505",
+      "fixCommits": [
+        "153eee4"
+      ],
+      "ancestorOfPublishedCommit": true
+    }
+  ],
+  "deployedHtmlChecks": {
+    "checkedAt": "2026-10-23T09:10:29Z",
+    "cacheStatusSample": "\"Next.js\"; hit, \"Netlify Durable\"; fwd=stale, \"Netlify Edge\"; fwd=miss (Cache-Control public,max-age=0,must-revalidate)",
+    "ZVY-77 catalog cover alt": "All six /books card covers render alt=\"\" inside the title link.",
+    "ZVY-77 event link names": "Each /events link is 'Перейти' + visually hidden ' до події: <title>' (Brno, Vienna, Krakow); the shared aria-label is gone.",
+    "ZVY-75 hero priority": "Home hero <img> has fetchPriority=\"high\" loading=\"eager\" and its <link rel=preload as=image> carries fetchPriority=\"high\".",
+    "ZVY-75 single product cover": "/books/inaksha and /books/zvychajna HTML reference only the root-relative cover URL (no url=https%3A... variant). All 18 PageSpeed product runs request exactly one cover image.",
+    "ZVY-76 reserved phone date line": "Events CSS chunk 2vro9tpjg2zli.css contains .heroBelowDate{min-height:1.4em;line-height:1.4;display:block} in the phone media query.",
+    "ZVY-78 excerpt region": "Chunk 1pbnj1qxxpx31.js renders the excerpt body with role=\"region\", aria-label=\"Текст уривку\", tabIndex:0."
+  },
+  "preview": {
+    "matchingDeployPreview": null,
+    "status": "not-applicable",
+    "criteriaChange": "Agreed by the owner on 2026-10-23: no matching deploy preview exists because PRs #56-#59 were [skip netlify], and production deploy 6adb23b79e5548a32e3c9d66 is the same build of e3fa505, verified directly.",
+    "protectedPermalinkOpened": false,
+    "googleReportsRequested": false,
+    "protectionChanged": false
+  }
+}
